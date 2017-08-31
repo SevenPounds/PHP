@@ -1,0 +1,53 @@
+<include file="../Public/header" />
+<div class="posbox">&nbsp;&nbsp;您现在的位置：
+	<a href="{:U('msgroup/Index/index', array('gid' => $gid))}" class="blue">{$msgroup_data.group_name}</a>
+	&gt;
+	<if condition="$announceType eq 1">
+		<a class="blue" href="{:U('/Index/announcelist',array('gid'=>$gid))}">通知公告</a>
+	<elseif condition="$announceType eq 2"/>
+		<a class="blue" href="{:U('/Index/subjectresearch',array('gid'=>$gid))}">课题研究</a>
+		&gt;
+		<a class="blue" href="{:U('/Index/affairlist',array('gid'=>$gid))}">工作动态</a>
+	<elseif condition="$announceType eq 3"/>
+		<a class="blue" href="{:U('/Index/subjectresearch',array('gid'=>$gid))}">课题研究</a>
+		&gt;
+		<a class="blue" href="{:U('/Index/achievementlist',array('gid'=>$gid))}">研究成果</a>
+	<elseif condition="$announceType eq 4"/>
+		<a class="blue" href="{:U('/Index/teachingresearch',array('gid'=>$gid))}">教学研讨</a>
+		&gt;
+		<a class="blue" href="{:U('/Index/essaylist',array('gid'=>$gid))}">教学论文</a>
+	<else/>
+		<a class="blue" href="{:U('/Index/teachingresearch',array('gid'=>$gid))}">教学研讨</a>
+		&gt;
+		<a class="blue" href="{:U('/Index/journallist',array('gid'=>$gid))}">教学日志</a>
+	</if>
+	&gt;
+	<span class="sgray" style="margin-left:6px;">{$announce['title']}</span>
+</div>
+<div class="tp_box">
+	<div class="tp_top">
+		<p class="tp_title">{$announce['title']}</p>
+		<p class="font1">
+			<span class="black2">作者：</span><span class="black1">{$announce['uid']|getUserName}</span>
+			<span class="pl20 black2">发表时间：</span><span class="black1"><php>echo(date('Y年n月d日', $announce['ctime']));</php></span>
+			<span class="pl20 black2">浏览量：</span><span class="orange">{$announce['viewcount']}</span>
+		</p>
+	</div>
+	<div class="tp_con">
+		<div class="max-img" id="dt_content" style="display:none;">{$announce['content']}</div>
+        <iframe id="frame_1" width="100%" height="100%" scrolling="no" frameborder="0">
+	    </iframe>
+		<script>
+		window.onload=function(){
+			jQuery("#dt_content").find("a").attr('target','_blank');
+			document.getElementById('frame_1').contentWindow.document.body.innerHTML =  document.getElementById('dt_content').innerHTML;
+			document.getElementById('frame_1').contentWindow.document.body.scrollHeight;
+			jQuery("#frame_1").height(document.getElementById('frame_1').contentWindow.document.body.scrollHeight+20);
+		};
+		</script>
+		<form>
+			{:W('ResourceAttach',array('paper_id'=>$announce['id'],'app_name'=>"msgroup",'inputname'=> 'attach', 'to_action'=>'preview', 'attachIds' => $attachIds))}
+		</form>
+	</div>
+</div>
+<include file="__THEME__/public_footer" />

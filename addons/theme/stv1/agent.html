@@ -1,0 +1,22 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+    <script type="text/javascript">
+       var preHeight = parseInt(window.location.hash.substring(1),10),
+        ifrmae = window.top.document.getElementById("platformIframe");
+
+        ifrmae.height = preHeight;
+        setInterval(function(){
+            var newHeight = parseInt(window.location.hash.substring(1),10);
+            if (newHeight !== preHeight){
+            ifrmae.height = newHeight;
+            preHeight = newHeight;
+            }
+        },200);   
+    </script>
+</body>
+</html>

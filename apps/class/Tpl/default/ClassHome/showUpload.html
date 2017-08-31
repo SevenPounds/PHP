@@ -1,0 +1,358 @@
+<div class="pop_box1">
+	<input id="mid" value="{$mid}" type="hidden">
+	<div class="pop_con">
+		<div class="pop_line1">
+			<p class="pop_title">选择资源:</p>
+			<p class="style1"><input value="{$uname}" type="hidden" id="uname" /><input value="{$classid}" type="hidden" id="classid" /><!-- <input type="text" value=""  id="title" readonly="readonly"/> -->
+			</p>
+			<form>
+	               {:W('Upload',array('uploadType'=>'file','urlquery'=>'cid='.$classid.'&uname='.$uname))}
+	        </form>
+			<!-- <p class="add_file"><input type="button" id="file_upload" value="添加文件" class="add_filenor" onMouseover="this.className='add_filehov'" onMouseOut="this.className='add_filenor'"></p> -->
+			<div class="clear"></div>
+		</div>
+		<div class="pop_line2" style="display:none;">
+			<p class="pop_title">课程:</p>
+			<div class="popcon_kc">
+                  <table cellpadding="0" cellspacing="0" border="0" style="float: left;">
+                  <tr>
+                   <td >
+		              <select id="subjectoption" class="st02" size=2 onchange="resUpload.changeValue(this);">
+		                
+		              </select>
+		          </td>
+		          <td>
+		              <select id="publisheroption" class="st02" style="display:none;" size=2 onchange="resUpload.changeValue(this)">
+		               
+		              </select>
+		         </td> 
+		         <td>
+		              <select id="gradeoption" class="st01" style="display:none;" size=2 onchange="resUpload.changeValue(this);">
+		                 
+		              </select>
+		         </td>
+		         <td>
+		               <select id="volumnoption" class="st01" style="display:none;" size=2 onchange="resUpload.changeValue(this);">
+		                 
+		              </select>
+		         </td>
+		         <td>
+		              <select id="bookoption" class="st03" style="display:none;" size=2 onchange="resUpload.changeValue(this);">
+		                
+		              </select>
+		          </td>
+		          <td>
+		              <select id="unitoption" class="st04" style="display:none;" size=2 onchange="resUpload.changeValue(this);">
+		                
+		              </select>
+		          </td>
+                  </tr>
+                </table>
+               </div>
+			<div class="clear"></div>
+		</div>
+		<div class="pop_line3">
+			<p class="pop_title">资源类型:</p>
+				<select id="res_type">
+					<volist name="res_list" id="restype">
+                   	  <option value="{$restype['code']}">{$restype['name']}</option>
+	                </volist>
+                 </select>
+			<div class="clear"></div>
+		</div>
+		<div class="pop_line4" style="display: none">
+			<p class="pop_title">资源来源:</p>
+				<select id="res_source">
+                      <option value="IFLY" selected="selected">讯飞</option>
+                      <option value="YANGGUAN">央馆</option>
+                      <option value="SHENGGUAN">省馆</option>
+                      <option value="UGC">用户上传</option>                      
+                   </select>
+			<div class="clear"></div>
+		</div>
+		<div class="pop_line5">
+			<p class="pop_title">描述:</p>
+				<textarea id="descriptor"  style="color:#999999" name="描述" title="选填，简要介绍资源的主要内容，方便资源被更多人浏览和下载" onfocus="tipInputFocus(this)" onblur="tipInputBlur(this)">选填，简要介绍资源的主要内容，方便资源被更多人浏览和下载</textarea>
+			<div class="clear"></div>
+		</div>
+		<div class="pop_line6">
+			<p class="pop_title">关键字:</p>
+			<p class="style1"><input name="" type="text"  style="color:#999999" id="keyword" name="关键词" type="text" title="建议为您的文档填写关键词,多个关键词用逗号分隔" value="建议为您的文档填写关键词,多个关键词用逗号分隔"   onfocus="tipInputFocus(this)" onblur="tipInputBlur(this)"/></p>
+			<div class="clear"></div>
+		</div>
+		<div class="pop_btn">
+			<input type="button" value="完成上传" class="add_filenor" onMouseover="this.className='add_filehov'" onMouseOut="this.className='add_filenor'" onclick="resUpload.upload();">
+			<input type="button" value="关闭" class="blue4_btn" onMouseover="this.className='blue4_btnhov'" onMouseOut="this.className='blue4_btn'" onclick="resUpload.close();">
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+function tipInputFocus(obj) {
+	if(obj.value==obj.title) {
+		obj.value='';
+		obj.style.color="black";
+	}
+}
+function tipInputBlur(obj) {
+	if(obj.value=='') {
+		obj.value=obj.title;
+		obj.style.color="#999999";
+	}
+}
+var resUpload=resUpload||{};
+resUpload.uid = jQuery("#mid").val();
+resUpload.url = U('reslib/Ajax/nodes');
+resUpload.bookurl = U('reslib/Ajax/book');
+resUpload.requestData=function(url,data,callback){
+	jQuery.ajax({
+		type: "POST",
+		url: url,
+		data:data,
+		success:function(msg){
+			callback&&callback(data['node'],msg);
+		},
+		error:function(msg){
+			
+		}
+	});
+}
+
+resUpload.callBack=function(nodename,data){
+	var nodes = eval('('+data+')');
+	var length = nodes.length;
+	var current_obj = jQuery("#"+nodename+'option');
+	var temp = ''
+    current_obj.html('');
+	if(length>0){
+		current_obj.append('<option value="000" selected="selected">请选择</option>');	
+	}
+	if(nodename=="unit"){
+		var units=nodes[0]['general']['resourcedescriptor']['units'];
+		var _len=units.length;
+		for(var i=0;i<_len;i++){
+			var unit = units[i];
+			temp+='<option unit="'+unit.Code+'" value="'+unit.Code+'">'+unit.Name+'</option>';
+			var courses = unit.Courses;
+			var len=courses.length;
+			for(var j=0;j<len;j++){
+				var course = courses[j];
+				temp+='<option unit="'+unit.Code+'" course="'+course.Code+'" value="'+course.Code+'">&nbsp;&nbsp;&nbsp;&nbsp;'+course.Name+'</option>';
+			}
+		}
+	}else{
+		for(var i=0;i<length;i++){
+			var node = nodes[i];
+			if(nodename!="book"){
+				temp+='<option value="'+node.code+'">'+node.name+'</option>';
+			}else{
+				temp+='<option bookcode="'+node.code+'" value="'+node.id+'">'+node.name+'</option>';
+			}
+		}
+	}
+	current_obj.append(temp);
+}
+
+
+resUpload.changeValue=function(obj){
+	var id=jQuery(obj).attr("id");
+  	switch(id){
+	case "subjectoption":
+		var subjectId=jQuery(obj).val();
+		if(subjectId!="000"){
+			resUpload.requestData(resUpload.url,{'node':'publisher','subject':subjectId},resUpload.callBack);
+			jQuery("#publisheroption").css("display","block");
+			jQuery("#gradeoption").css("display","none");
+			jQuery("#volumnoption").css("display","none");
+			jQuery("#bookoption").css("display","none");
+			jQuery("#unitoption").css("display","none");
+		}else{
+			jQuery("#gradeoption").css("display","none");
+			jQuery("#gradeoption").val("000");
+			jQuery("#publisheroption").css("display","none");
+			jQuery("#publisheroption").val("000");
+			jQuery("#volumnoption").css("display","none");
+			jQuery("#volumnoption").val("000");
+			jQuery("#bookoption").css("display","none");
+			jQuery("#bookoption").val("000");
+			jQuery("#unitoption").css("display","none");
+			jQuery("#unitoption").val("000");
+		}
+		break;  		
+	case "publisheroption":
+		var publisherId=jQuery(obj).val();
+		var subjectId=jQuery("#subjectoption").val();
+		resUpload.requestData(resUpload.url,{'node':'grade','subject':subjectId,'publisher':publisherId},resUpload.callBack);
+		jQuery("#gradeoption").css("display","block");
+		jQuery("#volumnoption").css("display","none");
+		jQuery("#bookoption").css("display","none");
+		jQuery("#unitoption").css("display","none");
+		break;
+	case "gradeoption":
+		var gradeId=jQuery(obj).val();
+		var subjectId=jQuery("#subjectoption").val();
+		var publisherId=jQuery("#publisheroption").val();
+		resUpload.requestData(resUpload.url,{'node':'volumn','subject':subjectId,'publisher':publisherId,'grade':gradeId},resUpload.callBack);
+		jQuery("#volumnoption").css("display","block");
+		jQuery("#bookoption").css("display","none");
+		jQuery("#unitoption").css("display","none");
+  		break;
+	case "volumnoption":
+		var volumnId=jQuery(obj).val();
+		var subjectId=jQuery("#subjectoption").val();
+		var publisherId=jQuery("#publisheroption").val();
+		var gradeId=jQuery("#gradeoption").val();
+		resUpload.requestData(resUpload.url,{'node':'book','subject':subjectId,'publisher':publisherId,'grade':gradeId,'volumn':volumnId},resUpload.callBack);
+		jQuery("#bookoption").css("display","block");
+		jQuery("#unitoption").css("display","none");
+		break;
+	case "bookoption":
+		var bookId = jQuery(obj).val();
+		resUpload.requestData(resUpload.bookurl,{'node':'unit','id':bookId},resUpload.callBack);
+		jQuery("#unitoption").css("display","block");
+		break;
+  	default:
+  		break;
+  	}
+}
+
+resUpload.getSelectValue=function(){
+	var creator = jQuery("#uname").val();
+	var cid=jQuery("#classid").val();
+	var keywords = jQuery("#keyword").val()!=jQuery("#keyword").attr("title")?jQuery("#keyword").val():'';
+	keywords = jQuery.trim(keywords);
+	var descriptor = jQuery("#descriptor").val() == jQuery("#descriptor").attr("title") ? '' : jQuery("#descriptor").val();
+	descriptor = jQuery.trim(descriptor);
+	var restype = jQuery("#res_type").val();
+	var attach_ids = jQuery("#attach_ids").val();
+	if(restype=="0000"){
+		alert("请选择资源类型！");
+		return false;
+	}
+	return {"uid":resUpload.uid,"creator":creator,"keywords":keywords,"description":descriptor,"restype":restype,"attachids":attach_ids,"classid":cid};
+}
+
+
+resUpload.clearSelectValue=function(){
+	var default_des = "选填，简要介绍资源的主要内容，方便资源被更多人浏览和下载";
+	var des_obj = jQuery("#descriptor");
+	var kw_obj = jQuery("#keyword");
+	jQuery("#title").val('');
+	des_obj.focus();
+	des_obj.html(default_des);
+	kw_obj.focus();
+	kw_obj.val(kw_obj.attr("title"));
+}
+
+resUpload.upload=function(){
+	ui.box.close();
+	window.location.reload();
+	/* var data=resUpload.getSelectValue();
+	if(data){
+		jQuery.ajax({
+			type:"POST",
+			url:U('class/Ajax/saveTreasureboxAttachInfo'),
+			data:data,
+			error:function(){
+				ui.error("请检查网络连接....");
+			},
+			success:function(data){
+				ui.box.close();
+			}
+		});
+		//jQuery("#file_upload").uploadify("upload");
+	} */
+	
+}
+
+//初始化uploadify控件
+resUpload.init_uploadify=function(){
+	jQuery("#file_upload").uploadify({
+		auto:  false,
+		multi:false,
+		queueSizeLimit:1,
+		height        : 34,
+		swf           : '__THEME__/js/uploadify/uploadify.swf',
+		uploader      : U('class/Ajax/upload'),
+		buttonImage     : "__THEME__/image/btn_add.gif",
+		buttonText      : '添加文件',   
+		fileTypeExts : "*.*",
+		queueID         : "id_div_upload_mgrwin",
+		progressData   :'all',
+		width         : 80,
+		fileSizeLimit     :'100MB',
+		debug	: false,
+		onUploadStart:function(){
+			var value = resUpload.getSelectValue();
+			jQuery("#file_upload").uploadify("settings","formData",value);
+		},
+		onSelect:function(file){
+			jQuery("#title").val(file['name']);
+		},
+		onUploadComplete:function(file){
+			resUpload.close();
+		},
+		onUploadSuccess:function(file, data, response){
+			/* data=eval('('+data+')');//包含上传文件id
+			//文件上传成功发布微博
+			$.post(U('public/Feed/PostFeed'), {body:'我上传了一个资源【'+file['name']+'】&nbsp;', "app_name":"reslib", type:'post', content:'',feed_title:file['name'],source_url:Ures('//',new Array('id='+data.data))}, function(msg) {
+				if(msg.status == 1) {
+					ui.success(file['name']+"文件上传成功");
+				} else {
+					ui.error(msg.data);
+				}
+			}, 'json');
+			//如果当前页面是同步资源页面，则在资源上传完成后进行刷新
+			var operation = jQuery("#operation").val();
+			if(5 == operation){
+				MyResLib.resPageList(1, 5);
+			} */
+		}
+	});
+	jQuery(".swfupload").css("visibility","visible");
+	
+}
+
+resUpload.destroy_uploadify=function(){	
+	jQuery("#file_upload").uploadify('cancel','*');
+}
+
+//初始化数据
+resUpload.init=function(){
+	resUpload.init_uploadify();
+	//resUpload.requestData(resUpload.url,{"node":"subject"},resUpload.callBack);
+}
+
+//关闭窗口
+resUpload.close = function(){
+
+	var swf_id = "SWFUpload_" + (SWFUpload.movieCount - 1); 
+	swfobject.removeSWF(swf_id);
+	ui.box.close();
+	/*var count = window['uploadify_file_upload'].queueData.queueLength;
+	if(count>0){
+		if(confirm("您有待上传资源或正在上传资源，是否取消？")){
+			resUpload.destroy_uploadify();
+			resUpload.clearSelectValue();
+			ui.box.close();
+		}
+	}else{
+		resUpload.destroy_uploadify();
+		resUpload.clearSelectValue();
+		ui.box.close();
+	}*/
+}
+resUpload.success=function(){
+	ui.box.close();
+	window.location.reload();
+}
+jQuery(function(){
+	resUpload.init();
+	$('#tsbox').find('.ico-close').unbind("click"); 
+	$('#tsbox').find('.ico-close').bind("click",function(){
+		var swf_id = "SWFUpload_" + (SWFUpload.movieCount - 1);
+		swfobject.removeSWF(swf_id);
+		ui.box.close();
+	}); 
+})
+
+</script>

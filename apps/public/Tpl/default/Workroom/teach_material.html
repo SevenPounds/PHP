@@ -1,0 +1,57 @@
+<include file="_work_room_header" />
+		<div class="tp_box">
+			<!-- 
+			<div class="tl_con">
+				<div class="tea_tItit3">
+					<p class="left blue">教材培训</p>
+					<div class="more right">
+						<a href="{:U('public/Workroom/instructionList', array('uid'=>$uid,'type'=>5))}">更多</a>
+						<span><img src="__APP__/images/icon_right.gif"></span>
+					</div> 
+                </div>
+				<table width="100%" cellpadding="0" cellspacing="0" border="0">
+					<volist name="instruction_list[5]" id="vo">
+						<tr>
+							<td width="80%" class="black2"><div class="title"><a href="{:U('public/Workroom/instructionDetail', array('uid'=>$uid,'type'=>5,'paper_id'=>$vo['id']))}"  title="{$vo['title']}">{$vo['title']|mStr=###,70}</a></div></td>
+							<td align="right" class="black1" width="20%">{$vo['cTime']|date="y-m-d",###}</td>
+						</tr>
+					</volist>
+				</table>
+			</div>
+			 -->
+			<div class="tl_con">
+				<div class="tea_tItit3">
+					<p class="left blue">课标解读</p>
+					<div class="more right">
+						<a href="{:U('public/Workroom/instructionList', array('uid'=>$uid,'type'=>6))}">更多</a>
+						<span><img src="__APP__/images/icon_right.gif"></span>
+					</div> 
+                </div>
+				<table width="100%" cellpadding="0" cellspacing="0" border="0">
+					<volist name="instruction_list[6]" id="vo">
+						<tr>
+							<td width="80%" class="black2"><div class="title"><a href="{:U('public/Workroom/instructionDetail', array('uid'=>$uid,'type'=>6,'paper_id'=>$vo['id']))}"  title="{$vo['title']}">{$vo['title']|mStr=###,70}</a></div></td>
+							<td align="right" class="black1" width="20%">{$vo['cTime']|date="y-m-d",###}</td>
+						</tr>
+					</volist>
+				</table>
+			</div>
+			<div class="tl_con">
+				<div class="tea_tItit3">
+					<p class="left blue">教材解读</p>
+					<div class="more right">
+						<a href="{:U('public/Workroom/instructionList', array('uid'=>$uid,'type'=>4))}">更多</a>
+						<span><img src="__APP__/images/icon_right.gif"></span>
+					</div> 
+                </div>
+				<table width="100%" cellpadding="0" cellspacing="0" border="0">
+					<volist name="instruction_list[4]" id="vo">
+						<tr>
+							<td width="80%" class="black2"><div class="title"><a href="{:U('public/Workroom/instructionDetail', array('uid'=>$uid,'type'=>4,'paper_id'=>$vo['id']))}" title="{$vo['title']}">{$vo['title']|mStr=###,70}</a></div></td>
+							<td align="right" class="black1" width="20%">{$vo['cTime']|date="y-m-d",###}</td>
+						</tr>
+					</volist>
+				</table>
+			</div>
+		</div>
+<include file="__THEME__/public_footer" />

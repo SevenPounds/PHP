@@ -1,0 +1,35 @@
+
+<div class="bottom mt20">
+	<ul>
+		<volist id="comment" name="commentLists">
+		<li class="fixed">
+
+			<div class="pic fl">			
+				<a href="{:SITE_URL.'/index.php?app=public&mod=Workroom&act=index&uid='.$comment['uid']}" target="_blank"><img src="{$comment['avatar']}" width="46" height="46" /></a>
+			</div>
+			<div class="txt fr ft12">
+				<p>
+					<a href="{:SITE_URL.'/index.php?app=public&mod=Workroom&act=index&uid='.$comment['uid']}" target="_blank" class="col5">{$comment['uname']} </a>
+					 <if condition="!empty($comment['to_login'])">
+					   <i>回复 </i> <a href="{:SITE_URL.'/index.php?app=public&mod=Workroom&act=index&uid='.$comment['to_uid']}" target="_blank" class="col5">{$comment['to_uname']}</a> 
+					 </if> 					 
+					 <i>: </i> <span>{$comment['content']}</span>
+				</p>
+				<p class="mt10">
+					<span class="fl col9">{$comment['ctime']}</span> 
+					<a href="javascript:;" onclick="appDetail.clickReplayComment({$comment['comment_id']});" class="fr reply">回复</a>
+				</p>
+				<div class="clear"></div>
+				<div class="box fixed" id="{$comment['comment_id']}" style="display:none;">
+					<input type="text" class="fl" style="margin-left: 2px;" />
+					<button class="fl"  style="cursor:pointer" onclick="appDetail.postReplayComment({$comment['comment_id']},'{$comment['login']}');"></button>
+				</div>
+			</div>
+		</li>
+		</volist>	
+	</ul>
+</div>
+<div class="clear"></div>
+<div class="page tc">
+	{$commentsPages}
+</div>

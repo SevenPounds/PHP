@@ -1,0 +1,195 @@
+body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, form, fieldset, input, textarea, p, blockquote, th, td
+{
+    margin: 0;
+    padding: 0;
+}
+
+a
+{
+    /*color: #666;*/
+    text-decoration: none;
+}
+
+textarea
+{
+    overflow: hidden;
+}
+
+.hand
+{
+    cursor: pointer;
+}
+
+a:hover
+{
+    color: #3687da;
+}
+
+a:active
+{
+    color: #666;
+}
+
+a:unknown
+{
+    outline: none;
+}
+
+.bluecolor a
+{
+    color: #1983c6;
+}
+/*---------------------pop_voice--------------------------------------------------*/
+.voice_b
+{
+    width: 250px;
+    line-height: 32px;
+    color: #888;
+}
+
+.voice_mic
+{
+    width: 18px;
+    float: left;
+    padding: 3px 15px 0 0;
+}
+
+.voice_box
+{
+    width: 182px;
+    float: left;
+    height: 32px;
+    padding: 0 10px 0 20px;
+    background: url(../images/sound_bg.png) no-repeat;
+}
+
+.voice_box_v
+{
+    float: left;
+    padding-top: 3px;
+}
+
+.voice_box_01
+{
+    width: 60px;
+    height: 26px;
+    background: url(../images/sound01.jpg) left no-repeat;
+}
+
+.voice_box_02
+{
+    height: 26px;
+    background: url(../images/sound02.jpg) left no-repeat;
+}
+
+.voice_box_r
+{
+    float: left;
+    padding-left: 15px;
+    line-height: 32px;
+}
+
+talk{
+	padding:20px;
+    width:240px;
+	}
+/*----20130501----*/
+
+/*------2013.04.28 ���ӽ������ʽ(.progress-bar-border��.progress-bar )--------*/
+.progress-bar-border {
+    position: relative;
+    float: right;
+    border: 1px #d4d4d4 solid;
+    border-left: none; /*------------2013.05.03  ȥ����߿�-------------*/
+    background-color: #fff; /*-----2013.05.03  �޸ı�����ɫ---*/
+    width: 426px; /*-----2013.5.1  �޸Ŀ��---*/
+    height: 21px; /*-----2013.5.1  �޸ĸ߶�---*/
+    line-height:20px;
+    *line-height:22px;/*--20140314 进度条line-height影响修改 chengcheng3--*/
+}
+.progress-bar-border * {
+    vertical-align: middle;
+}
+/*--20140314 时间显示 chengcheng3--*/
+.progress-bar-border SPAN {
+    font-size:12px; 
+    height:14px;
+    position:absolute;
+    left:356px;
+}
+/*--转发录音播放条--*/
+.repost-bar-border {
+    position: relative;
+    float: right;
+    border: 1px #d4d4d4 solid;
+    border-left: none;
+    background-color: #fff;
+    width: 406px;
+    height: 21px;
+    line-height:20px;
+    *line-height:22px;/*--20140314 进度条line-height影响修改 chengcheng3--*/
+}
+.repost-bar-border * {
+    vertical-align: middle;
+}
+
+/*--20140314 时间显示 chengcheng3--*/
+.repost-bar-border SPAN {
+    font-size:12px; 
+    height:14px;
+    position:absolute;
+    left:356px;
+}
+
+/*---------------20130503 �����ʽ----------------*/
+.initial-progress-bar {
+    position:absolute;
+    top:6px;
+	margin-left:10px;
+    width: 336px;
+}
+
+.initial-progress-bar1 {
+    position:absolute;
+    top:6px;
+	margin-left:10px;
+    width: 336px;
+}
+
+.record_progress-bar {
+    position: absolute;
+    /*background-color: #C0C0C0;*/
+    /*-----2013.5.1  ɾ��---*/
+    width: 0px; /*-----2013.5.2  �޸Ŀ��(����ΪĬ����ʾ�������Ϊ426)---*/
+    left: 10px;
+    top: 6px;
+    height: 8px; /*-----2013.5.1  �޸ĸ߶�---*/
+}
+
+.single_sound {
+    width: 457px;
+    height: 30px;
+    display: block;
+	padding-top:0px;
+	font-size:13px; /*--20140314 时间显示字体修改 chengcheng3--*/
+}
+.repost_sound {
+    width: 437px;
+    height: 30px;
+    display: block;
+	padding-top:0px;
+}
+
+.single_sound_btn {
+    line-height:normal;/*--20140314 进度条line-height影响不对齐问题 chengcheng3--*/
+    height: 27px;
+    width: 30px;
+    float: left;
+    display: block;
+}
+/*----20130501----*/
+.record_player{
+	display:none;
+	float:left;
+}
+

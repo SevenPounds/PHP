@@ -1,0 +1,74 @@
+.teapp_title{
+	margin:15px 0 0 20px;
+}
+
+.teapp_title span{
+	font-size:16px;
+	font-weight:bolder;
+	line-height:45px;
+}
+
+.teapp_title input{
+	width:130px;
+	height:45px;
+	cursor:pointer;
+	border:none;
+	font-size:16px;
+	color:white;
+	font-weight:bolder;
+	/*float:right;*/
+	position:relative;
+	left:500px;
+}
+.teapp_title .upload_btnnor{
+	background:url(../images/uploadbtn.jpg) top no-repeat;
+}
+.teapp_title .upload_btnhov{
+	background:url(../images/uploadbtn.jpg) bottom no-repeat;
+}
+
+hr{
+	margin-top:10px;
+}
+
+.teapp_res{
+	margin:15px 0 0 20px;
+}
+
+.teapp_res ul li{
+	display:inline-block;
+	*display:inline;
+	zoom:1;
+	width:164px;
+	height:155px;
+	margin:15px 10px 40px 10px;
+}
+
+.teapp_res ul li .restitle{
+	font-size:13px;
+	color:#056ea1;
+	font-weight:bolder;
+	line-height:30px;
+	height:30px;
+	overflow:hidden;
+	display:inline-block;
+}
+
+.teapp_res ul li .reintro{
+	font-size:12px;
+	color:#949494;
+	line-height:30px;
+}
+
+.teapp_res ul li div{
+	text-align:center;
+}
+
+#body-bg{
+	padding-top:20px;
+}
+
+.hr_sep{
+	background:url(../images/hr_line.png) center repeat-x;
+	height:20px;
+}

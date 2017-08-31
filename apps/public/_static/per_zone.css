@@ -1,0 +1,237 @@
+
+.capacity{
+	margin-bottom: 10px;
+	height: 22px;
+}/*----tjliu2--add--0904--*/
+.capacity .inner{
+	float: left;
+	width: 133px;
+	height: 3px;
+	overflow: hidden;
+	position: relative;
+	background: #d1d9dc;
+	margin: 8px  6px 0 20px;
+	display: inline;
+}/*----tjliu2--add--0904--*/
+.capacity .inner .changed{
+	position: absolute;
+	top: 0;
+	left: 0;
+	background: #56c4ff;
+	z-index: 99;
+	height: 3px;
+}/*----tjliu2--add--0904--*/
+.capacity_det{
+	width: 40px;
+	float: left;
+	display: inline;
+	font-size: 14px;
+	color: #6b696a;
+	font-weight: bold;
+}/*----tjliu2--add--0904--*/
+/*140414--yinwang add*/
+.textbook{
+    width: 540px;
+    height: 160px;
+    position: relative;
+    margin: 25px 10px 15px ;
+}
+.textbook .top,.textbook .bottom{
+    height: 4px;
+    font-size: 0;
+    line-height: 0;
+}
+.textbook .top .top_left{
+    background: url("images/per_icon.png") no-repeat 0 0;
+    width: 4px;
+    height: 4px;
+    float: left;
+    display: inline;
+}
+.textbook .top .top_center{
+    border-top: 1px solid #b7dce8;
+    background: #ecfaff;
+    height: 4px;
+    float: left;
+    display: inline;
+    width: 532px;
+}
+.textbook .top .top_right{
+    background: url("images/per_icon.png") no-repeat -31px 0;
+    width: 4px;
+    height: 4px;
+    float: left;
+    display: inline;
+}
+.textbook .center{
+    border-left: 1px solid #b7dce8;
+    border-right: 1px solid #b7dce8;
+    background: #ecfaff;
+    height: 152px;
+}
+.textbook .bottom .bot_left{
+    background: url("images/per_icon.png") no-repeat 0 -28px;
+    width: 4px;
+    height: 4px;
+    float: left;
+    display: inline;
+}
+.textbook .bottom .bot_center{
+    border-bottom: 1px solid #b7dce8;
+    background: #ecfaff;
+    height: 4px;
+    float: left;
+    display: inline;
+    width: 532px;
+}
+.textbook .bottom .bot_right{
+    background: url("images/per_icon.png") no-repeat -31px -28px;
+    width: 4px;
+    height: 4px;
+    float: left;
+    display: inline;
+}
+.textbook .txt_tit{
+    background: url("images/per_icon.png") no-repeat -1px -33px;
+    width: 112px;
+    height: 28px;
+    position: absolute;
+    left: 20px;
+    top: -15px;
+    text-align: center;
+    font-size: 16px;
+    font-family: "microsoft yahei";
+    color: #fff;
+    line-height: 28px;
+}
+.textbook .center .txt_bookList{
+    position: relative;
+}
+.textbook .center .txt_bookList .txt_pre{
+    background: url("images/per_icon.png") no-repeat -42px -1px;
+    width: 12px;
+    height: 23px;
+    position: absolute;
+    left: 10px;
+    top: 66px;
+}
+.textbook .center .txt_bookList .txt_next{
+    background: url("images/per_icon.png") no-repeat -71px -1px;
+    width: 12px;
+    height: 23px;
+    position: absolute;
+    right: 10px;
+    top: 66px;
+}
+.textbook .center .txt_bookList .txt_pre:hover,.textbook .center .txt_bookList .txt_next:hover{
+    opacity: 0.6;
+    filter: alpha(opacity=60);
+
+}
+.textbook .center .txt_bookList .txt_con{
+    width: 450px;
+    margin: 0 auto;
+    padding-top: 15px;
+}
+.textbook .center .txt_bookList .txt_con ul li{
+    width: 120px;
+    float: left;
+    display: inline;
+    margin-right: 30px;
+}
+.textbook .center .txt_bookList .txt_con ul li span{
+    background: url("images/per_icon.png") no-repeat -217px 0;
+    width: 80px;
+    height: 104px;
+    display: block;
+    padding-top: 3px;
+    margin: 0 auto 5px;
+}
+.textbook .center .txt_bookList .txt_con ul li span img{
+    width: 74px;
+    height: 100px;
+    margin: 0px auto;
+    display: block;
+}
+.textbook .center .txt_bookList .txt_con ul li span.txt_add{
+    background: url("images/per_icon.png") no-repeat -123px 0;
+    width: 64px;
+    height: 64px;
+    display: block;
+    margin: 20px auto 5px;
+}
+.textbook .center .txt_bookList .txt_con ul li span.txt_add a{
+    width: 64px;
+    height: 64px;
+    display: block;
+}
+.textbook .center .txt_bookList .txt_con ul li a.txt_add{
+    color: #999999;
+}
+.textbook .center .txt_bookList .txt_con ul li a{
+    color: #535353;
+}
+.textbook .center .txt_bookList .txt_con ul li a:hover{
+    color: #6cf;
+}
+.zyk_body{
+    width: 200px;
+    margin: 20px auto 25px;
+	padding:0px 10px 0px 0px;
+}
+.zyk_body .zyk_tit{
+    height: 27px;
+}
+.zyk_body .zyk_tit *{
+    display: inline;
+}
+.zyk_body .zyk_tit span{
+    font-size: 18px;
+    font-family: "microsoft yahei";
+    color: #333;
+}
+.zyk_body .zyk_tit font{
+    color: #535353;
+    font-size: 14px;
+    margin-top: 7px;
+    font-family: "Simsun";
+    margin:0 15px 5px;
+}
+.zyk_body .zyk_pro{
+    height: 10px;
+    background: #dfdfdf;
+    font-size: 0;
+    line-height: 0;
+   /* margin: 12px auto;*/
+    margin: 12px 15px 10px;
+}
+.zyk_body .zyk_process{
+    height: 10px;
+    background: #25bcef;
+}
+.zyk_body p{
+    color: #535353;
+    font-size: 13px;
+    text-align: center;
+}
+.zyk_body p font{
+    color: #ff7e00;
+    font-size: 20px;
+    font-family: 'Arial';
+    margin: 0 5px;
+}
+.zyk_body .btn_blue{
+    background: url("images/per_icon.png") no-repeat -2px -69px;
+    display: block;
+    width: 180px;
+    height: 42px;
+    text-align: center;
+    color: #fff;
+    line-height: 42px;
+    font-size: 14px;
+    margin: 15px auto 0;
+    font-weight: bold;
+}
+.zyk_body .btn_blue:hover{
+    background: url("images/per_icon.png") #07a5dc no-repeat -2px -115px;
+}

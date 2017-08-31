@@ -1,0 +1,13 @@
+<volist name="live" id="val">
+<li class="clearfix"><input type="hidden" id="cuttime_{$val['id']}"
+	value="{$val['countdown']}" /> <input type="hidden" id="flag_{$val['id']}" value="0"><input type="hidden"
+	id="overtime_{$val['id']}" value="{$val['overtime']}" />
+	<p class="fl" id="live_{$val['id']}" onclick="startLesson({$val['id']});" style="cursor: pointer;">
+		<span id="warn_{$val['id']}" style="cursor: pointer;" title="《{$val['name']}》">{$val['st_time']}
+			《{$val['name']|getShort=15,'...'}》</span><span class="blue">{$val['count']}</span>人报名。 <strong
+			id="warn2_{$val['id']}">距开课<span id="day_{$val['id']}"></span>天<span
+			id="hour_{$val['id']}"></span>时<span id="min_{$val['id']}"></span>分。
+		</strong>
+	</p> <a class="fr" href="javascript:;" id="invite_{$val['id']}"
+	onclick="startLesson({$val['id']});">点击进入</a></li>
+</volist>

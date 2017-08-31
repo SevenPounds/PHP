@@ -1,0 +1,15 @@
+<div id="col3" class="st-index-right">
+	<div class="right-wrap">
+	<!-- 签到-->
+	{:W('CheckIn')}
+	<div style="background-color: #000;padding: 5px;width: 180px;margin-left: 5px;display: none;">
+		<a href="{:C('TEACHERASSISTANT_URL')}index.php" target="_blank"><img src="__APP__/images/index_logo01.png" style="width: 170px;background-color: #000;" /></a>
+	</div>
+	<!-- 热门资源 -->
+	{:W('HotResource',array('tpl'=>'hot_resource'))}
+	<!-- 插件位 -->
+	<!--{:Addons::hook('home_index_right_top')}-->
+	 <!--最近来访-->
+    {:W('LastVisitors', array('uid'=>$uid, 'user_info'=>$user_info))}
+	</div>
+</div>

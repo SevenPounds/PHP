@@ -1,0 +1,538 @@
+﻿注：
+	本文件记录2014-1-1 以来所有关于192.168.77.182_thinksns_3_0库的修改。
+	其它数据库表结构或静态数据变化以此库为基础
+	添加sql记录必须含有完整的注释、时间、添加人
+	  
+
+//修正“消息”中评论类别为英文的问题 2014-01-22 by zqxiang
+INSERT INTO `ts_lang` VALUES (null, 'PUBLIC_APPNAME_RESOURCE', 'PUBLIC', 0, '资源', 'Resource', '');
+
+
+// 2014-2-13 by xrding 主题讨论，网上评课，在线答疑集成文语双显
+ALTER TABLE `thinksns_3_0`.`ts_research_post` ADD COLUMN `record_id` VARCHAR(50) NOT NULL COMMENT '文语双显音频ID' AFTER `content`;
+ALTER TABLE `thinksns_3_0`.`ts_pingke_post` ADD COLUMN `record_id` VARCHAR(50) NOT NULL COMMENT '文语双显音频ID' AFTER `content`;
+ALTER TABLE `thinksns_3_0`.`ts_onlineanswer_answer` ADD COLUMN `record_id` VARCHAR(50) NOT NULL COMMENT '文语双显音频ID' AFTER `content`;
+
+//2014-2-18 by yangli4 教研应用功能优化
+ALTER TABLE `thinksns_3_0`.`ts_research` ADD COLUMN `accessType` tinyint(4) DEFAULT '0' COMMENT '投票权限：0,所有人可参与；1，仅邀请人可参与；';
+ALTER TABLE `thinksns_3_0`.`ts_pingke` ADD COLUMN `accessType` tinyint(4) DEFAULT '0' COMMENT '投票权限：0,所有人可参与；1，仅邀请人可参与；';
+ALTER TABLE `thinksns_3_0`.`ts_vote_user` ADD COLUMN `is_new` tinyint(4) DEFAULT '0' COMMENT '用户是否点击主题 1：新主题 0：不是新主题';
+ALTER TABLE `thinksns_3_0`.`ts_vote_user` ADD COLUMN `is_invited` tinyint(4) DEFAULT '0' NOT NULL COMMENT '是否被邀请：1被邀请；0没被邀请';
+
+//2014-2-19 by chengcheng3 网络调研消息
+insert into `ts_notify_node`(`node`,`nodeinfo`,`appname`,`content_key`,`title_key`,`send_email`,`send_message`,`type`) VALUES('vote','网络调研','vote','VOTE_CONTENT','VOTE_TITLE',0,1,1);
+insert into `ts_lang`(`key`,`appname`,`zh-cn`,`en`,`zh-tw`) VALUES('VOTE_TITLE','vote','{user}邀请你参加【{content}】网络调研','{user}Invite you to join【{content}】Network vote','{user}邀请你参加【{content}】网络调研');
+insert into `ts_lang`(`key`,`appname`,`zh-cn`,`en`,`zh-tw`) VALUES('VOTE_CONTENT','vote','{user}邀请你参加【{content}】网络调研。\<a href="{sourceurl}" target="_blank"\>去看看\>\>\<\/a\>','{user}Invite you to join【{content}】Network vote.\<a href="{sourceurl}" target="_blank"\>To have a look\>\>\<\/a\>','{user}邀请你参加【{content}】网络调研。\<a href="{sourceurl}" target="_blank"\>去看看\>\>\<\/a\>');
+
+//2014-2-21 by chengcheng3 系统提示消息应用名称
+UPDATE  `ts_app`  SET `app_alias`= '网络调研',`description` ='想分享你的网络调研给你的好友么，快来发起网络调研吧' WHERE `app_name`='vote';
+UPDATE  `ts_app`  SET `app_alias`= '主题讨论',`description` ='主题讨论' WHERE `app_name`='research';
+
+// 2014-2-25 by xrding
+UPDATE thinksns_3_0.ts_app SET app_entry = 'Index/index', icon_url = 'http://192.168.62.218/sns/apps/pingke/Appinfo/icon_app.png', large_icon_url = 'http://192.168.62.218/sns/apps/pingke/Appinfo/icon_app_large.png' where app_name = 'pingke';
+//2014-2-27 by sjzhao
+UPDATE ts_lang set `zh-cn` = '{user}在主题讨论【{content}】删除了你。<a href="{sourceurl}" target="_blank">去看看>></a>' WHERE `key` = 'DELMEMBER_CONTENT'
+UPDATE ts_lang set `zh-cn` = '{user}在主题讨论【{content}】删除了你。' WHERE `key` = 'DELMEMBER_TITLE'
+
+
+
+// 2014-3-3 by yangli4 在线课堂新功能开发，新建两张表
+1、添加了表‘s_timetable_l’。
+2、添加了表‘s_lesson_l’。
+//2014-3-7 by sjzhao 网上评课删除已选成员消息缺失
+UPDATE `ts_lang` set `zh-cn` = '{user}在网上评课【{content}】删除了你。<a href=\"{sourceurl}\" target=\'_blank\'>去看看>></a>' WHERE `key` = 'PINGKE_DEL_CONTENT' AND appname = 'pingke'
+UPDATE `ts_lang` set `zh-cn` = '{user}在网上评课【{content}】删除了你。<a href=\"{sourceurl}\" target=\'_blank\'>去看看>></a>' WHERE `key` = 'PINGKE_DEL_TITLE' AND appname = 'pingke'
+//2014-3-11 by sjzhao 主题讨论语言表更新
+UPDATE ts_lang SET `zh-cn` = '主题讨论' WHERE `key` = 'PUBLIC_APPNAME_RESEARCH'
+UPDATE ts_lang SET `zh-cn` = '{user}邀请你参加【{content}】主题讨论。' WHERE `key` = 'RESEARCH_TITLE'
+UPDATE ts_lang SET `zh-cn` = '{user}邀请你参加【{content}】主题讨论。<a href="{sourceurl}" target=\'_blank\'>去看看>></a>' WHERE `key` = 'RESEARCH_CONTENT'
+
+// 2014-3-26 by yangli4 用户改密码保存验证信息，新建一张表
+DROP TABLE IF EXISTS `ts_user_pwd_verify`;
+CREATE TABLE `ts_user_pwd_verify` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `ctime` int(11) NOT NULL COMMENT '修改时间',
+  `loginname` char(255) NOT NULL COMMENT '用户登录名',
+  `key` text NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='用户修改密码，验证信息表；';
+
+// 2014-04-17 by yuliu2 云盘应用数据库 begin
+
+CREATE TABLE `ts_yunpan` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `login_name` varchar(20) NOT NULL COMMENT '用户登录名',
+  `used_capacity` bigint(20) NOT NULL COMMENT '用户已使用容量(单位是byte)',
+  `total_capacity` bigint(20) NOT NULL COMMENT '用户的总容量,单位是byte',
+  `ctime` datetime NOT NULL COMMENT '云盘创建时间',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `login_name_index` (`login_name`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='用户云盘信息';
+
+CREATE TABLE `ts_yunpan_region_upload` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `login_name` varchar(20) NOT NULL COMMENT '用户名',
+  `yunpan_fid` varchar(50) NOT NULL COMMENT '云盘文件id',
+  `resource_id` varchar(50) NOT NULL COMMENT '资源网关文件id',
+  `ctime` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=63 DEFAULT CHARSET=utf8 COMMENT='区域平台上传记录';
+
+CREATE TABLE `ts_yunpan_download` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '唯一标识id',
+  `fid` varchar(50) NOT NULL DEFAULT '' COMMENT '文件id',
+  `dateline` datetime NOT NULL COMMENT '操作时间',
+  `login_name` varchar(50) NOT NULL COMMENT '操作用户登录名',
+  `type` char(10) DEFAULT NULL COMMENT '文件类型\r\n0100 教学设计\r\n0600 教学课件\r\n0200 课堂实录\r\n1300 难点解析\r\n0300 媒体素材\r\n0400 习题精选',
+  `download_source` char(10) DEFAULT NULL COMMENT '下载来源：\r\n01 资源网关\r\n02 其他',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
+
+CREATE TABLE `ts_yunpan_publish` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `fid` varchar(50) NOT NULL COMMENT '文件id:\r\n公开位置为个人主页时存云盘文件id；\r\n公开位置为资源网关时存资源文件id；\r\n',
+  `login_name` varchar(50) DEFAULT NULL COMMENT '创建者账号',
+  `dateline` datetime DEFAULT NULL COMMENT '创建时间',
+  `type` char(10) DEFAULT '' COMMENT '文件类型\r\n0100 教学设计\r\n0600 教学课件\r\n0200 课堂实录\r\n1300 难点解析\r\n0300 媒体素材\r\n0400 习题精选',
+  `open_position` char(10) DEFAULT NULL COMMENT '公开位置：\r\n01 个人主页\r\n02 资源网关',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=utf8;
+
+// 云盘应用数据库 end
+
+// 清空原始积分规则数据 by yuliu2 2014.7.16
+
+DELETE FROM ts_credit_setting;
+
+// 积分规则 by xrding 2014.5.30
+INSERT INTO `ts_credit_setting` (name, alias, type, info, score, experience) VALUES ('upload_resource', '上传资源并公开', 'resource', '', 5, 0);
+INSERT INTO `ts_credit_setting` (name, alias, type, info, score, experience) VALUES ('collect_resource', '资源被收藏一次', 'resource', '', 1, 0);
+INSERT INTO `ts_credit_setting` (name, alias, type, info, score, experience) VALUES ('download_resource', '资源被下载一次', 'resource', '', 1, 0);
+INSERT INTO `ts_credit_setting` (name, alias, type, info, score, experience) VALUES ('award_province', '资源获得省优', 'resource', '', 50, 0);
+INSERT INTO `ts_credit_setting` (name, alias, type, info, score, experience) VALUES ('award_city', '资源获得市优', 'resource', '', 20, 0);
+INSERT INTO `ts_credit_setting` (name, alias, type, info, score, experience) VALUES ('award_district', '资源获得区优', 'resource', '', 10, 0);
+INSERT INTO `ts_credit_setting` (name, alias, type, info, score, experience) VALUES ('check_in', '签到', 'checkin', '', 1, 0);
+INSERT INTO `ts_credit_setting` (name, alias, type, info, score, experience) VALUES ('init_space', '首次登录个人中心', 'init', '', 10, 0);
+
+// 积分置为0
+UPDATE ts_credit_user SET score = 0
+
+//资源公开审核消息 by yuliu2 2014.6.16
+insert into `ts_notify_node`(`node`,`nodeinfo`,`appname`,`content_key`,`title_key`,`send_email`,`send_message`,`type`) VALUES('resource_audit','资源审核','yunpan','RESOURCE_AUDIT_CONTENT','RESOURCE_AUDIT_TITLE',0,1,2);
+insert into `ts_lang`(`key`,`appname`,`zh-cn`,`en`,`zh-tw`) VALUES('RESOURCE_AUDIT_TITLE','yunpan','资源审核','resource audit','资源审核');
+insert into `ts_lang`(`key`,`appname`,`zh-cn`,`en`,`zh-tw`) VALUES('RESOURCE_AUDIT_CONTENT','yunpan','您公开的资源：【{title}】 审核 【{content}】','{title} {content}','您公开的资源：【{title}】 审核 【{content}】');
+
+// 礼物列表
+CREATE TABLE `ts_cy_gift` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '自动增长',
+  `gift_name` varchar(100) NOT NULL COMMENT '礼物名称',
+  `score` int(11) unsigned NOT NULL COMMENT '需要的积分数',
+  `num` int(11) unsigned NOT NULL COMMENT '数量',
+  `is_delete` int(11) unsigned NOT NULL COMMENT '0:正常状态，1：已删除',
+  `img_path` varchar(255) DEFAULT NULL COMMENT '图片路径',
+  `create_time` datetime NOT NULL COMMENT '创建时间',
+  `total` int(11) NOT NULL COMMENT '礼物总数',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
+
+// 默认礼物
+INSERT INTO `ts_cy_gift` VALUES (1, 'iphone4', 1, 9981, 0, 'images/present.jpg', '2014-6-5 23:00:00', 0);
+INSERT INTO `ts_cy_gift` VALUES (2, 'ipad', 2, 10000, 0, 'images/mothDay.jpg', '2014-3-3 00:00:00', 0);
+INSERT INTO `ts_cy_gift` VALUES (3, 'iphone3gs', 3, 10000, 0, 'images/presentXF.jpg', '2014-3-3 00:00:00', 0);
+INSERT INTO `ts_cy_gift` VALUES (4, 'iphone5', 4, 710000, 0, 'images/present.jpg', '2014-3-3 00:00:00', 0);
+INSERT INTO `ts_cy_gift` VALUES (6, 'iphone5s', 1, 7209997, 0, 'images/fathDay.jpg', '2014-5-6 00:00:00', 0);
+INSERT INTO `ts_cy_gift` VALUES (7, 'iphone3', 2, 79610000, 0, 'images/present.jpg', '2014-3-3 00:00:00', 0);
+INSERT INTO `ts_cy_gift` VALUES (8, '讯飞纪念品', 19, 3010000, 0, 'images/present.jpg', '2014-6-4 08:59:00', 0);
+INSERT INTO `ts_cy_gift` VALUES (9, '教师节纪念品', 19, 2810000, 0, 'images/present.jpg', '2014-6-4 09:04:00', 0);
+INSERT INTO `ts_cy_gift` VALUES (10, '讯飞小礼物', 34, 3210000, 0, 'images/present.jpg', '2014-6-4 09:41:00', 0);
+INSERT INTO `ts_cy_gift` VALUES (11, '资源平台礼包十', 24, 3209999, 0, 'images/present.jpg', '2014-6-4 10:18:00', 0);
+INSERT INTO `ts_cy_gift` VALUES (12, '礼八个字测试礼物', 24, 2809996, 0, 'images/present.jpg', '2014-6-4 10:31:00', 0);
+
+// 增加上传和收藏记录表 by xypan 2014/07/04
+CREATE TABLE `ts_upload_record` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '记录id',
+  `login` varchar(50) NOT NULL COMMENT '登录名',
+  `count` int(11) NOT NULL DEFAULT '0' COMMENT '当天上传的次数',
+  `record_time` datetime NOT NULL COMMENT '最后一次操作的时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+CREATE TABLE `ts_yunpan_favorite` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键id',
+  `login` varchar(50) NOT NULL COMMENT '收藏资源的人的登录名',
+  `rid` varchar(50) NOT NULL COMMENT '被收藏的资源id',
+  `ctime` datetime NOT NULL COMMENT '首次收藏资源的时间',
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0' COMMENT '收藏的资源是否被删除(0表示未删除，1表示已删除）',
+  `mtime` datetime NOT NULL COMMENT '最近再次操作收藏资源的时间',
+  `fid` varchar(50) NOT NULL COMMENT '资源在云盘服务中的id',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+// 区域平台角色隐射
+CREATE TABLE `ts_user_role_map` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `cloud_role` varchar(50) NOT NULL DEFAULT 'teacher' COMMENT '云平台角色类型',
+  `role_name` varchar(20) DEFAULT NULL COMMENT '其他平台角色名',
+  `en_name` varchar(50) DEFAULT NULL COMMENT '其他平台角色英文名',
+  `app_name` varchar(20) DEFAULT NULL COMMENT '所集成应用名',
+  `creator` varchar(20) DEFAULT NULL COMMENT '创建者',
+  `role_type` int(11) DEFAULT NULL COMMENT '其他平台角色类型',
+  `create_time` datetime DEFAULT NULL COMMENT '记录创建时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8;
+
+// 区域平台角色隐射数据
+INSERT INTO `ts_user_role_map` VALUES (1, 'teacher', '校长', 'schoolmaster', 'qxpt', '系统管理员', 1, '2014-6-24 12:36:06');
+INSERT INTO `ts_user_role_map` VALUES (2, 'teacher', '教导主任', 'director', 'qxpt', '系统管理员', 1, '2014-6-24 12:36:06');
+INSERT INTO `ts_user_role_map` VALUES (3, 'teacher', '年级组长', 'gradeGroup', 'qxpt', '系统管理员', 1, '2014-6-24 12:36:06');
+INSERT INTO `ts_user_role_map` VALUES (4, 'teacher', '教研组长', 'subjectGroup', 'qxpt', '系统管理员', 1, '2014-6-24 12:36:06');
+INSERT INTO `ts_user_role_map` VALUES (5, 'teacher', '备课组长', 'lessonGroup', 'qxpt', '系统管理员', 1, '2014-6-24 12:36:06');
+INSERT INTO `ts_user_role_map` VALUES (6, 'teacher', '校级资源审查员', 'schCheckResource', 'qxpt', '系统管理员', 1, '2014-6-24 12:36:06');
+INSERT INTO `ts_user_role_map` VALUES (7, 'teacher', '校级通知管理员', 'schNoticeMng', 'qxpt', '系统管理员', 1, '2014-6-24 12:36:06');
+INSERT INTO `ts_user_role_map` VALUES (8, 'instructor', '教育局长', 'organLeader', 'qxpt', '系统管理员', 1, '2014-6-24 12:36:06');
+INSERT INTO `ts_user_role_map` VALUES (9, 'instructor', '馆长', 'departmentLeader', 'qxpt', '系统管理员', 1, '2014-6-24 12:36:06');
+INSERT INTO `ts_user_role_map` VALUES (10, 'instructor', '教研主任', 'teachingDirector', 'qxpt', '系统管理员', 1, '2014-6-24 12:36:06');
+INSERT INTO `ts_user_role_map` VALUES (11, 'instructor', '教研员', 'employee', 'qxpt', '系统管理员', 1, '2014-6-24 12:36:06');
+INSERT INTO `ts_user_role_map` VALUES (12, 'instructor', '区县、市级通知管理员', 'areaNoticeMng', 'qxpt', '系统管理员', 1, '2014-6-24 12:36:06');
+INSERT INTO `ts_user_role_map` VALUES (13, 'instructor', '区县、市级资源审查员', 'areaCheckResource', 'qxpt', '系统管理员', 1, '2014-6-24 12:36:06');
+INSERT INTO `ts_user_role_map` VALUES (14, 'admin', '省级管理员', 'provinceMng', 'qxpt', '系统管理员', 2, '2014-6-24 12:36:06');
+INSERT INTO `ts_user_role_map` VALUES (15, 'admin', '市级管理员', 'cityMng', 'qxpt', '系统管理员', 2, '2014-6-24 12:36:06');
+INSERT INTO `ts_user_role_map` VALUES (16, 'admin', '区县管理员', 'districtMng', 'qxpt', '系统管理员', 2, '2014-6-24 12:36:06');
+INSERT INTO `ts_user_role_map` VALUES (17, 'admin', '学校管理员', 'schoolMng', 'qxpt', '系统管理员', 2, '2014-6-24 12:36:06');
+INSERT INTO `ts_user_role_map` VALUES (18, 'admin', '运维管理员', 'operationMng', 'qxpt', '系统管理员', 2, '2014-6-24 12:36:06');
+INSERT INTO `ts_user_role_map` VALUES (19, 'teacher', '校级演示角色类型-勿删除', 'testrolemshen', 'qxpt', '系统管理员', 1, '2014-6-24 12:36:06');
+INSERT INTO `ts_user_role_map` VALUES (20, 'instructor', '单位演示角色类型-勿删除', 'danweitestrolemshen', 'qxpt', '系统管理员', 1, '2014-6-24 12:36:06');
+INSERT INTO `ts_user_role_map` VALUES (21, 'student', '学生', 'student', 'common', 'admin', 1, '2014-6-24 12:36:06');
+INSERT INTO `ts_user_role_map` VALUES (22, 'teacher', '老师', 'teacher', 'common', 'admin', 1, '2014-6-24 12:36:06');
+
+// 个人空间修改ts_user表中sex字段可为空值
+ALTER TABLE ts_user MODIFY sex tinyint(1) NULL
+
+// 群组修改成圈子 ,修改ts_app表中的app_alias和description字段内容 by xmsheng 2014/7/23
+update ts_app set app_alias='圈子',description='创建圈子，发起话题' where app_name='group'
+//ts_group_post表添加是否公开状态,1公开 0私密
+ALTER TABLE ts_group_topic add COLUMN is_pub tinyint(1) NOT NULL DEFAULT 1;
+
+//圈子分类修改
+DELETE from ts_group_category;
+INSERT INTO `ts_group_category` VALUES (1, '工作园地', 1, 0, '');
+INSERT INTO `ts_group_category` VALUES (2, '学习天地', 1, 0, '');
+INSERT INTO `ts_group_category` VALUES (3, '家长交流', 1, 0, '');
+INSERT INTO `ts_group_category` VALUES (4, '师生互动', 1, 0, '');
+INSERT INTO `ts_group_category` VALUES (5, '家校联系', 1, 0, '');
+INSERT INTO `ts_group_category` VALUES (6, '快乐生活', 1, 0, '');
+
+// 资源公开表新增is_del字段 2014.8.15
+ALTER TABLE ts_yunpan_publish ADD COLUMN is_del TINYINT(2) DEFAULT 0
+
+// 资源评论发消息 by xypan 204/8/18
+insert into `ts_notify_node`(`node`,`nodeinfo`,`appname`,`content_key`,`title_key`,`send_email`,`send_message`,`type`) VALUES('resource_comment','资源评论','resource','RESOURCE_COMMENT_CONTENT','RESOURCE_COMMENT_TITLE',0,1,2);
+insert into `ts_lang`(`key`,`appname`,`zh-cn`,`en`,`zh-tw`) VALUES('RESOURCE_COMMENT_TITLE','PUBLIC','{user}评论了你的资源【{filename}】','','');
+insert into `ts_lang`(`key`,`appname`,`zh-cn`,`en`,`zh-tw`) VALUES('RESOURCE_COMMENT_CONTENT','PUBLIC','{user}评论了你的资源【{filename}】:{content}\<a href="{sourceurl}" target="_blank"\>去看看\>\>\<\/a\>','','');
+
+// 资源公开表新增rid字段 2014.8.20
+ALTER TABLE ts_yunpan_publish ADD COLUMN rid VARCHAR(50)
+
+// 更新语言包微博为动态 2014.8.20
+UPDATE ts_lang SET `zh-cn` = '动态', `zh-tw` = '动态' WHERE `key` = 'PUBLIC_WEIBO'
+
+// 更新语言包新微博为新动态 2014.8.29
+UPDATE ts_lang SET `zh-cn` = '有{sum}条新动态', `zh-tw` = '有{sum}条新动态' WHERE `key` = 'PUBLIC_WEIBO_NUM'
+
+//更新资源审核通知格式 2014.8.30 by yuliu2
+UPDATE ts_lang SET `zh-cn` = '资源审核通知：您上传的资源 【{title}】 {content}' WHERE `key` = 'RESOURCE_AUDIT_CONTENT';
+UPDATE ts_lang SET `zh-tw` = '资源审核通知：您上传的资源 【{title}】 {content}' WHERE `key` = 'RESOURCE_AUDIT_CONTENT';
+
+// 更新语言包动态评论提示 2014.9.1
+UPDATE ts_lang SET `zh-cn` = '此用户进行了隐私设置，您无法对其动态进行评论', `zh-tw` = '此用戶進行了隱私設置，您無法對其动态進行評論' WHERE `key` = 'PUBLIC_CONCENT_TIPES' AND filetype = 0
+// 更新圈子话题和上传附件默认配置 by xmsheng 2014/9/3
+update `ts_system_data` set `value` = 's:1:"1";' where `key`='openBlog' and `list`='group';
+
+update `ts_system_data` set `value` = 's:1:"1";' where `key`='openUploadFile' and `list`='group';
+
+//oauth 认证数据导入 2014-9-11 by yuliu2
+INSERT INTO oauth_client_details VALUES
+('C6SakiHO', '教师助手', NULL, 'CULmDjG5dfRlIm5BADwNexdgpAQ7tTtk', '教师助手', 'read,write,delete', 'password,refresh_token,client_credentials', 'http://192.168.63.173:8090/SpringRest', 'read,write,delete', 3600, 60, NULL, NULL),
+('Hb0YhmOo', '教师机', NULL, 'R7odNVS0KPtgXJ1TKQbHAxFP6EHdSW5d', 'test', 'read,write,delete', 'password,refresh_token,client_credentials', '', 'read,write,delete', 3600, 60, NULL, NULL),
+('HWQIjW2K', 'iflybook', NULL, 'rT079mJrgd7KfbBwL4atuOERweuFjggn', 'iflybook', 'read,write,delete', 'password,refresh_token,client_credentials', '', 'read,write,delete', 3600, 60, NULL, NULL),
+('KtSNKxk3', '深圳教育云web', '', 'uX9SUH4LN9saphnjug5MZ9S4RKEkLFzN', '深圳教育云web', 'read,write,delete', 'password,refresh_token,client_credentials', '', 'read,write,delete', 3600, 60, '', ''),
+('TESTTEST', '测试token', NULL, '2fsdISmdb47J4Xn77heJfrcJYsvciXng', '测试账号', 'read,write,delete', 'password,refresh_token,client_credentials', NULL, 'read,write,delete', 10, 10, NULL, NULL);
+
+//添加应用中心评分记录表  add by xmsheng 2014/9/28
+DROP TABLE IF EXISTS `ts_appcenter_score`;
+CREATE TABLE `ts_appcenter_score` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id 主键',
+  `appid` int(11) NOT NULL COMMENT '应用id',
+  `login` varchar(20) NOT NULL COMMENT '用户登录名',
+  `ctime` datetime NOT NULL COMMENT '评分时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+//应用中心应用评论表 add by xmsheng 2014/9/29
+CREATE TABLE `ts_sns_comment` (
+  `comment_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键，评论编号',
+  `rowid` varchar(100) NOT NULL COMMENT '被评论id',
+  `app` varchar(100) NOT NULL COMMENT '对应当前应用',
+  `login` varchar(50) NOT NULL COMMENT '评论者账号',
+  `content` text NOT NULL COMMENT '评论内容',
+  `to_comment_id` int(11) NOT NULL DEFAULT '0' COMMENT '被回复的评论的编号',
+  `to_login` varchar(50) NOT NULL DEFAULT '' COMMENT '被回复的评论的作者的账号',
+  `ctime` datetime NOT NULL,
+  `is_del` tinyint(1) NOT NULL DEFAULT '0' COMMENT '标记删除（0：没删除，1：已删除）',
+  PRIMARY KEY (`comment_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=90 DEFAULT CHARSET=utf8 COMMENT='评论';
+
+//修改表结构   by  nandeng  2015/03/04  1035
+Alter table `ls_live`
+add column `send_notice_status` tinyint(2) DEFAULT 0 COMMENT '是否发送消息提醒：0未发送，1已发送，默认为0';
+
+Alter table `ls_record`
+change `record_id` `source_id` int(11) NULL  COMMENT '直播课产生的录播id的或资源id',
+change `audit_status` `audit_status` tinyint(2) DEFAULT 1  NULL  COMMENT '审核状态；0未审核；1通过；2不通过',
+change `source` `source` tinyint(2) DEFAULT 1  NULL  COMMENT '来源：0预置资源；1GENSEE；2本地上传',
+change `private` `is_private` tinyint(2) DEFAULT 1  NULL  COMMENT '是否公开',
+add column `reason` varchar(255) NULL  COMMENT '审核不通过原因',
+add column `score` float DEFAULT 0  COMMENT '资源评分';
+
+
+Alter table `ls_record`
+  change `source_id` `source_id` int(11) NOT NULL  COMMENT '直播课产生的录播id的或资源id',
+  change `name` `name` varchar(255) CHARSET utf8 COLLATE utf8_general_ci NOT NULL  COMMENT '录播名称',
+  change `ctime` `ctime` int NULL  COMMENT '创建时间',
+  change `mtime` `mtime` int NULL  COMMENT '修改时间',
+  change `rtime` `rtime` int NULL  COMMENT '发布时间',
+  change `host_name` `host_name` varchar(255) CHARSET utf8 COLLATE utf8_general_ci NOT NULL  COMMENT '主持人名称',
+  change `host` `host` bigint(20) NOT NULL  COMMENT '主持人ID',
+  change `audit_status` `audit_status` tinyint(2) DEFAULT 1  NOT NULL  COMMENT '审核状态；0未审核；1通过；2不通过',
+  change `source` `source` tinyint(2) DEFAULT 1  NOT NULL  COMMENT '来源：0预置资源；1GENSEE；2本地上传';
+
+Alter table `ls_record_part`
+change `record_part_id` `gensee_record_part_id` varchar(211) CHARSET utf8 COLLATE utf8_general_ci NULL;
+
+
+create table ts_resource_count
+(
+   id                   int not null AUTO_INCREMENT,
+   res_type             tinyint(2) not null COMMENT '来源类型：网关资源；1网盘资源；2GENSEE',
+   res_id               varchar(255) not null COMMENT '资源id',
+   comment_count        int(11) DEFAULT 0 COMMENT '评论次数',
+   score_count          int(11) DEFAULT 0 COMMENT '评分次数',
+   download_count       int(11) DEFAULT 0 COMMENT '下载次数',
+   primary key (id)
+);
+alter table ts_resource_count comment '资源统计表';
+
+/*---------------2015.03.13  by tkwang 1.4功能数据修改----------------*/
+
+ALTER TABLE ts_comment ADD COLUMN digg_count int(11) DEFAULT 0 COMMENT '评论点赞统计';
+
+
+
+--------  ts_lang表新增网络调研评论赞消息语言节点 ----------
+INSERT INTO ts_lang (`key`, `appname`, `filetype`, `zh-cn`, `en`, `zh-tw`) VALUES('NOTIFY_VOTE_COMMENT_DIGG_CONTENT', 'vote', 0,'{user} 赞了你的评论<br/>“<span class=\"space_topic_dyC\">{content}</span>”', '', '');
+INSERT INTO ts_lang (`key`, `appname`, `filetype`, `zh-cn`, `en`, `zh-tw`) VALUES ('NOTIFY_VOTE_COMMENT_DIGG_TITLE', 'vote', 0, '{user} 赞了你的评论', '', '');
+
+--------  ts_notify_node表新增网络调研评论赞消息节点 ----------
+INSERT INTO `ts_notify_node`(`node`,`nodeinfo`,`appname`,`content_key`,`title_key`,`send_email`,`send_message`,`type`) VALUES('vote_comment_digg','网络调研回复赞','vote','NOTIFY_VOTE_COMMENT_DIGG_CONTENT','NOTIFY_VOTE_COMMENT_DIGG_TITLE',0,1,1);
+
+
+--------  ts_notify_message表新增系统消息和赞消息区分类型字段----------
+
+ALTER TABLE `ts_notify_message` ADD COLUMN `type`  tinyint(11) DEFAULT 0 COMMENT '消息类型，0为系统消息，1为赞消息';
+
+CREATE TABLE `ts_vote_post` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '网络调研回复id',
+  `vote_id` int(11) DEFAULT NULL COMMENT '网络调研id',
+  `uid` int(11) DEFAULT NULL COMMENT '发表回复的用户id',
+  `content` text COMMENT '回复内容',
+  `ctime` int(11) DEFAULT NULL COMMENT '发表回复时间',
+  `agree_count` int(11) DEFAULT '0' COMMENT '赞总数',
+  `comment_count` int(11) DEFAULT '0' COMMENT '评论总数',
+  `is_del` tinyint(1) NOT NULL DEFAULT '0' COMMENT '回复是否已删除 1：已删除 0：正常',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='网络调研回复表';
+
+CREATE TABLE `ts_vote_agree` (
+  `id`  int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `post_id` int(11) DEFAULT '0' COMMENT '被赞回复的id',
+  `uid` int(11) DEFAULT '0' COMMENT '赞用户uid',
+  `ctime` int(11) DEFAULT NULL COMMENT '赞的时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='网络调研赞表';
+
+CREATE TABLE `ts_research_agree` (
+  `id`  int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `post_id` int(11) DEFAULT '0' COMMENT '被赞回复的id',
+  `uid` int(11) DEFAULT '0' COMMENT '赞用户uid',
+  `ctime` int(11) DEFAULT NULL COMMENT '赞的时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='网络调研赞表';
+
+CREATE TABLE `ts_pingke_agree` (
+  `id`  int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `post_id` int(11) DEFAULT '0' COMMENT '被赞回复的id',
+  `uid` int(11) DEFAULT '0' COMMENT '赞用户uid',
+  `ctime` int(11) DEFAULT NULL COMMENT '赞的时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='网络调研赞表';
+
+
+
+
+
+
+UPDATE `ts_lang` SET `zh-cn` = '{user} 赞了你的回复：<br/>“<span class=\"space_topic_dyC\">{content}</span>”<a class="space_topic_ck" href="{sourceurl}" target="_blank">去看看>></a>'  WHERE `key` ='NOTIFY_VOTE_COMMENT_DIGG_CONTENT';
+
+
+INSERT INTO ts_lang (`key`, `appname`, `filetype`, `zh-cn`, `en`, `zh-tw`) VALUES ('RESEARCH_POST_MESSAGE_CONTENT', 'RESEARCH', 0, '{user} 参与了你的讨论：<a href=\"{sourceurl}\" target=\"_blank\">《<span class=\"space_topic_dy\">{title}</span>》</a><br/><strong>讨论内容：</strong><span class=\"space_topic_dyC\">{content}</span>', '', '');
+INSERT INTO ts_lang (`key`, `appname`, `filetype`, `zh-cn`, `en`, `zh-tw`) VALUES ('RESEARCH_POST_MESSAGE_TITLE', 'RESEARCH', 0, '{user} 参与了你的讨论', '', '');
+
+INSERT INTO ts_lang (`key`, `appname`, `filetype`, `zh-cn`, `en`, `zh-tw`) VALUES ('PINGKE_POST_MESSAGE_CONTENT', 'PINGKE', 0, '{user} 评论了你的评课：<a href=\"{sourceurl}\" target=\"_blank\">《<span class=\"space_topic_dy\">{title}</span>》</a><br/><strong>评论内容：</strong><span class=\"space_topic_dyC\">{content}</span>', '', '');
+INSERT INTO ts_lang (`key`, `appname`, `filetype`, `zh-cn`, `en`, `zh-tw`) VALUES ('PINGKE_POST_MESSAGE_TITLE', 'PINGKE', 0, '{user} 评论了你的评课', '', '');
+
+INSERT INTO ts_lang (`key`, `appname`, `filetype`, `zh-cn`, `en`, `zh-tw`) VALUES ('VOTE_POST_MESSAGE_CONTENT', 'VOTE', 0, '{user} 参与了你的调研：<a href=\"{sourceurl}\" target=\"_blank\">《<span class=\"space_topic_dy\">{title}</span>》</a><br/><strong>回复内容：</strong><span class=\"space_topic_dyC\">{content}</span>', '', '');
+INSERT INTO ts_lang (`key`, `appname`, `filetype`, `zh-cn`, `en`, `zh-tw`) VALUES ('VOTE_POST_MESSAGE_TITLE', 'VOTE', 0, '{user} 参与了你的调研', '', '');
+
+UPDATE `ts_lang` SET `zh-cn` = '{user} 回答了你的问题:<a href=\"{sourceurl}\" target=\"_blank\">《<span class=\"space_topic_dy\">{title}</span>》</a><br/><strong>回复内容：</strong><span class=\"space_topic_dyC\">{content}</span>' WHERE `key` = 'ANSWER_CONTENT';
+
+
+INSERT INTO ts_notify_node (`node`, `nodeinfo`, `appname`, `content_key`, `title_key`, `send_email`, `send_message`, `type`) VALUES ('research_comment', '主题讨论的讨论', 'research', 'RESEARCH_POST_MESSAGE_CONTENT', 'RESEARCH_POST_MESSAGE_TITLE', 0, 1, 1);
+
+INSERT INTO ts_notify_node (`node`, `nodeinfo`, `appname`, `content_key`, `title_key`, `send_email`, `send_message`, `type`) VALUES ('pingke_comment', '网上评课的讨论', 'pingke', 'PINGKE_POST_MESSAGE_CONTENT', 'PINGKE_POST_MESSAGE_TITLE', 0, 1, 1);
+
+INSERT INTO ts_notify_node (`node`, `nodeinfo`, `appname`, `content_key`, `title_key`, `send_email`, `send_message`, `type`) VALUES ('vote_comment', '网络调研的讨论', 'vote', 'VOTE_POST_MESSAGE_CONTENT', 'VOTE_POST_MESSAGE_TITLE', 0, 1, 1);
+
+
+
+--------  ts_lang表新增网上评课赞消息语言节点 ----------
+INSERT INTO ts_lang (`key`, `appname`, `filetype`, `zh-cn`, `en`, `zh-tw`) VALUES('NOTIFY_PINGKE_COMMENT_DIGG_CONTENT', 'pingke', 0,'{user} 赞了你的评论：<br/>“<span class=\"space_topic_dyC\">{content}</span>”<a class="space_topic_ck" href="{sourceurl}" target="_blank">去看看>></a>', '', '');
+INSERT INTO ts_lang (`key`, `appname`, `filetype`, `zh-cn`, `en`, `zh-tw`) VALUES ('NOTIFY_PINGKE_COMMENT_DIGG_TITLE', 'pingke', 0, '{user} 赞了你的评论', '', '');
+
+--------  ts_notify_node表新增网上评课赞消息节点 ----------
+INSERT INTO `ts_notify_node`(`node`,`nodeinfo`,`appname`,`content_key`,`title_key`,`send_email`,`send_message`,`type`) VALUES('pingke_comment_digg','网上评课回复赞','pingke','NOTIFY_PINGKE_COMMENT_DIGG_CONTENT','NOTIFY_PINGKE_COMMENT_DIGG_TITLE',0,1,1);
+
+
+--------  ts_lang表新增主题讨论赞消息语言节点 ----------
+INSERT INTO ts_lang (`key`, `appname`, `filetype`, `zh-cn`, `en`, `zh-tw`) VALUES('NOTIFY_RESEARCH_COMMENT_DIGG_CONTENT', 'research', 0,'{user} 赞了你的讨论：<br/>“<span class=\"space_topic_dyC\">{content}</span>”<a class="space_topic_ck" href="{sourceurl}" target="_blank">去看看>></a>', '', '');
+INSERT INTO ts_lang (`key`, `appname`, `filetype`, `zh-cn`, `en`, `zh-tw`) VALUES ('NOTIFY_RESEARCH_COMMENT_DIGG_TITLE', 'research', 0, '{user} 赞了你的讨论', '', '');
+
+--------  ts_notify_node表新增主题讨论赞消息节点 ----------
+INSERT INTO `ts_notify_node`(`node`,`nodeinfo`,`appname`,`content_key`,`title_key`,`send_email`,`send_message`,`type`) VALUES('research_comment_digg','主题讨论回复赞','research','NOTIFY_RESEARCH_COMMENT_DIGG_CONTENT','NOTIFY_RESEARCH_COMMENT_DIGG_TITLE',0,1,1);
+
+
+
+UPDATE `ts_lang` SET `zh-cn` = '{user} 赞了你的回复：<br/>“<span class=\"space_topic_dyC\">{content}</span>”<a class="space_topic_ck" href="{sourceurl}" target="_blank">去看看>></a>'  WHERE `key` ='NOTIFY_VOTE_COMMENT_DIGG_CONTENT';
+UPDATE `ts_lang` SET `zh-cn` = '{user} 赞了你的讨论：<br/>“<span class=\"space_topic_dyC\">{content}</span>”<a class="space_topic_ck" href="{sourceurl}" target="_blank">去看看>></a>'  WHERE `key` ='NOTIFY_RESEARCH_COMMENT_DIGG_CONTENT';
+UPDATE `ts_lang` SET `zh-cn` = '{user} 回答了你的问题：<a href=\"{sourceurl}\" target=\"_blank\">《<span class=\"space_topic_dy\">{title}</span>》</a><br/><strong>回复内容：</strong><span class=\"space_topic_dyC\">{content}</span>' WHERE `key` ='ANSWER_CONTENT';
+UPDATE `ts_lang` SET `zh-cn` = '{user} 赞了你的回复' WHERE `key` ='NOTIFY_VOTE_COMMENT_DIGG_TITLE';
+
+
+-------by  nandeng   2015.03.13
+ALTER TABLE `ts_research_post` ADD COLUMN `comment_count`  int(11) DEFAULT 0 COMMENT '评论总数';
+ALTER TABLE `ts_research_post` ADD COLUMN `agree_count`  int(11) DEFAULT 0 COMMENT '赞总数';
+
+
+ALTER TABLE `ts_pingke_post` ADD COLUMN `comment_count`  int(11) DEFAULT 0 COMMENT '评论总数';
+ALTER TABLE `ts_pingke_post` ADD COLUMN `agree_count`  int(11) DEFAULT 0 COMMENT '赞总数';
+
+
+UPDATE `ts_comment` SET `app` ='onlineanswer' WHERE  `table` ='onlineanswer_answer';
+
+
+ALTER TABLE `ts_onlineanswer_question` ADD COLUMN `isHot`  tinyint(3) DEFAULT 0 COMMENT '是否精华或者置顶; 0:普通，1:置顶，2:精华';
+ALTER TABLE `ts_research` ADD COLUMN `isHot`  tinyint(3) DEFAULT 0 COMMENT '是否精华或者置顶; 0:普通，1:置顶，2:精华';
+ALTER TABLE `ts_pingke` ADD COLUMN `isHot`  tinyint(3) DEFAULT 0 COMMENT '是否精华或者置顶; 0:普通，1:置顶，2:精华';
+ 
+/*---------------增加赞的标题 by tkwang 2015-3-31 ----------------------------*/
+INSERT INTO ts_lang (`key`, `appname`, `filetype`, `zh-cn`, `en`, `zh-tw`) VALUES('PUBLIC_MESSAGE_DIGG', 'PUBLIC', 0,'收到的赞', 'Digg', '收到的贊');
+
+
+
+/*---------------增加日志赞消息行为表和系统消息提醒 by tkwang 2015-3-31 ----------------------------*/
+CREATE TABLE `ts_comment_digg` (
+  `id`  int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `comment_id` int(11) DEFAULT '0' COMMENT '被赞回复的id',
+  `uid` int(11) DEFAULT '0' COMMENT '赞用户uid',
+  `ctime` int(11) DEFAULT NULL COMMENT '赞的时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='评论赞表';
+
+
+INSERT INTO ts_lang (`key`, `appname`, `filetype`, `zh-cn`, `en`, `zh-tw`) VALUES('NOTIFY_BLOG_COMMENT_DIGG_CONTENT', 'BLOG', 0,'{user} 赞了你的回复：<br/>“<span class=\"space_topic_dyC\">{content}</span>”<a class="space_topic_ck" href="{sourceurl}" target="_blank">去看看>></a>', '', '');
+INSERT INTO ts_lang (`key`, `appname`, `filetype`, `zh-cn`, `en`, `zh-tw`) VALUES ('NOTIFY_BLOG_COMMENT_DIGG_TITLE', 'BLOG', 0, '{user} 赞了你的回复', '', '');
+
+
+INSERT INTO `ts_notify_node`(`node`,`nodeinfo`,`appname`,`content_key`,`title_key`,`send_email`,`send_message`,`type`) VALUES('blog_comment_digg','日志回复赞','BLOG','NOTIFY_BLOG_COMMENT_DIGG_CONTENT','NOTIFY_BLOG_COMMENT_DIGG_TITLE',0,1,1);
+
+UPDATE `ts_comment` SET `app`='blog' where `table` ='blog' 
+/*------------------在线答疑的赞消息修改----------------*/
+UPDATE `ts_lang` SET `zh-cn` ='{user} 赞了你的回答：<br/>“<span class="space_topic_dyC">{content}</span>”<a class="space_topic_ck" href="{sourceurl}" target="_blank">去看看>></a>' WHERE `key` = 'AGREEANSWER_CONTENT';
+UPDATE `ts_lang` SET `zh-cn` ='{user} 赞了你的回答' WHERE `key` = 'AGREEANSWER_TITLE'
+
+
+/*---------------增加索引优化by ttchu 2015-5-7 ----------------------------*/
+-- 用户应用标签表索引
+ALTER TABLE ts_app_tag ADD INDEX idx_row_id(row_id);
+
+-- 用户应用数据索引
+ALTER TABLE ts_appcenter_userapps ADD INDEX IX_login(login);
+
+-- 日志表查询索引
+ALTER TABLE ts_blog ADD INDEX isHot_status_private(isHot,status,private);
+ALTER TABLE ts_blog ADD INDEX status_private(status,private);
+ALTER TABLE ts_blog ADD INDEX uid(uid);
+
+-- 用户签到表查询索引
+ALTER TABLE ts_check_info ADD INDEX ix_uid_ctime(uid,ctime);
+ALTER TABLE ts_check_info ADD INDEX ctime(ctime);
+
+-- 积分纪录索引
+ALTER TABLE ts_credit_record ADD INDEX create_time_action(create_time,action);
+
+-- 用户积分索引
+ALTER TABLE ts_credit_user ADD INDEX score(score);
+
+-- 用户说说动态索引
+ALTER TABLE ts_feed ADD INDEX idx_is_audit(is_audit);
+ALTER TABLE ts_feed ADD INDEX idx_uid_classid_isdel(uid,class_id,is_del,is_audit);
+ALTER TABLE ts_feed ADD INDEX is_del2(is_del);
+ALTER TABLE ts_feed ADD INDEX muti(uid,is_del,is_audit);
+ALTER TABLE ts_feed_digg ADD INDEX ix_uid_feedid(uid,feed_id);
+
+-- 用户登录记录索引
+ALTER TABLE ts_login_record ADD INDEX idx_uid(uid);
+
+-- 用户未读消息索引
+ALTER TABLE ts_message_member ADD INDEX IDX_msg_num(message_num,is_del);
+ALTER TABLE ts_message_member ADD INDEX ix_uid_new_listid(member_uid,new,list_id);
+
+-- 名师工作室通知消息索引
+-- ALTER TABLE ts_msgroup_notice ADD INDEX type(type,gid,isDeleted,ctime);
+
+-- 用户paper表查询索引
+ALTER TABLE ts_paper ADD INDEX idx_uid(uid);
+
+-- 用户信息查询索引
+ALTER TABLE ts_user ADD INDEX idx_cyuid(cyuid);
+ALTER TABLE ts_user ADD INDEX idx_subject(subject);
+ALTER TABLE ts_user ADD INDEX idx_ts_user_area(area);
+ALTER TABLE ts_user ADD INDEX ix_lastposttime_uid(last_post_time,uid);
+ALTER TABLE ts_user ADD INDEX school_id(school_id);
+
+-- 用户数据表查询索引
+ALTER TABLE ts_user_data ADD INDEX idx_ts_user_data_key_uid_value(uid,`value`(10),`key`);
+
+-- 用户关注状态查询索引
+ALTER TABLE ts_user_follow ADD INDEX ctime_fid(ctime,fid);
+ALTER TABLE ts_user_follow ADD INDEX uid_fid(uid,type,fid);
+
+-- 用户角色查询索引
+ALTER TABLE ts_user_role ADD INDEX idx_rolename(rolename);
+ALTER TABLE ts_user_role ADD INDEX idx_uid(uid);
+
+-- 作业中心作业查询索引
+ALTER TABLE yun_homework ADD INDEX publishertime(publishertime,isdel,source);
+ALTER TABLE yun_homework ADD INDEX publishertime_2(publishertime,source);
+
+-- 主题查询索引
+ALTER TABLE yun_topic ADD INDEX IDX_classid_time(addtime,is_del,classid);
+

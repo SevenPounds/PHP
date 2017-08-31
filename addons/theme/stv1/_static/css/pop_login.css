@@ -1,0 +1,224 @@
+/* CSS Document */
+/*-----------��Դ����------------------*/
+.eva_top{
+	height:36px;
+	width:480px;
+}
+.eva_topleft{
+	float:left;
+	height:38px;
+	width:12px;
+	background:url(../image/pop_evatop_left.gif) no-repeat;
+}
+.eva_topcen{
+	float:left;
+	height:38px;
+	width:457px;
+	background:url(../image/pop_evatop_cen.gif) repeat-x;
+}
+.eva_topright{
+	float:left;
+	height:38px;
+	width:11px;
+	background:url(../image/pop_evatop_right.gif) no-repeat;
+}
+.eva_toptxt{
+	float:left;
+	color:#666;
+	font-size:16px;
+}
+.eva_toptxt span{
+	display:block;
+	float:left;
+	height:26px;
+	line-height:26px;
+	margin-top:8px;
+	font-weight:bold;
+	padding-right:5px;
+}
+.eva_close{
+	float:right;
+	width:24px;
+	height:24px;
+	margin-top:6px;
+}
+.eva_close input{
+	cursor:pointer;
+	border:none;
+	height:24px;
+	width:24px;
+}
+.eva_closenor{
+	background:url(../image/pop_evatop_close.gif) no-repeat;
+}
+.eva_closehov{
+	background:url(../image/pop_evatop_closehov.gif) no-repeat;
+}
+.eva_con{
+	width:476px;
+	border-left:2px solid #cacaca;
+	border-right:2px solid #cacaca;
+	background:#fff;
+    padding-top:10px;
+    height:210px;
+}
+.eva_box{
+	width:330px;
+	margin:30px auto 0;
+}
+.eva_boxtop{
+	height:10px;
+	overflow:hidden;
+}
+.eva_box .top_left{
+	float:left;
+	height:10px;
+	width:10px;
+	background:url(../image/eva_con_topleft.gif) no-repeat;
+}
+.eva_box .top_cen{
+	float:left;
+	height:10px;
+	width:310px;
+	background:url(../image/eva_con_topcen.gif) repeat-x;
+}
+.eva_box .top_right{
+	float:left;
+	height:10px;
+	width:10px;
+	background:url(../image/eva_con_topright.gif) no-repeat;
+}
+.eva_boxcon{
+	background:#fff8da;
+	border-left:1px solid #ffea92;
+	border-right:1px solid #ffea92;
+	overflow:hidden;
+	width:328px;
+}
+.eva_all{
+	float:left;
+	font-size:16px;
+	font-weight:bold;
+	padding:10px 0 10px 46px;
+}
+.eva_explain{
+	font-size:12px;
+	color:#666;
+	padding:6px 0 10px 136px;
+}
+.star_box{
+	width:160px;
+	float:left;
+	padding:8px 0 0 10px;
+}
+.star_box img{
+	float:left;
+	padding:0 4px;
+}
+.eva_boxbot{
+	height:10px;
+	overflow:hidden;
+}
+.eva_box .bot_left{
+	float:left;
+	height:10px;
+	width:10px;
+	background:url(../image/eva_con_botleft.gif) no-repeat;
+}
+.eva_box .bot_cen{
+	float:left;
+	height:10px;
+	width:310px;
+	background:url(../image/eva_con_botcen.gif) repeat-x;
+}
+.eva_box .bot_right{
+	float:left;
+	height:10px;
+	width:10px;
+	background:url(../image/eva_con_botright.gif) no-repeat;
+}
+.little_tip{
+	font-size:12px;
+	padding:16px 0 10px 120px;
+}
+.little_tip span{
+	float:left;
+	display:block;
+}
+.eva_btn{
+	width:118px;
+	height:41px;
+	margin:0 auto 10px;
+}
+.eva_btn input{
+	width:118px;
+	height:41px;
+	cursor:pointer;
+	border:none;
+	font-size:14px;
+	font-weight:bold;
+	color:#fff;
+}
+.eva_btnnor{background:url(../image/eva_btn.gif) top no-repeat;}
+.eva_btnhov{background:url(../image/eva_btn.gif) bottom no-repeat;}
+.eva_bot{
+	height:12px;
+	width:480px;
+}
+.eva_botleft{
+	float:left;
+	height:12px;
+	width:12px;
+	background:url(../image/pop_evabot_left.gif) no-repeat;
+}
+.eva_botcen{
+	float:left;
+	height:12px;
+	width:456px;
+	background:url(../image/pop_evabot_cen.gif) repeat-x;
+}
+.eva_botright{
+	float:left;
+	height:12px;
+	width:12px;
+	background:url(../image/pop_evabot_right.gif) no-repeat;
+}
+
+/*--------------------��¼--------------------*/
+.eva_tip{
+	height:24px;
+	padding:12px 0 0 116px;
+	font-size:14px;
+}
+.eva_tip span{
+	display:block;
+	float:left;
+	height:24px;
+	line-height:27px;
+	padding-right:5px;
+	font-weight:bold;
+}
+.eva_con table{
+	margin:8px auto 10px;
+}
+.eva_con tr{
+	height:46px;
+}
+.eva_con td input{
+	height:26px;
+	border:1px solid #ccc;
+	width:200px;
+	line-height:26px;
+	padding:0 5px;
+}
+.eva_forget{
+	padding:0 0 10px 312px;
+}
+.eva_forget a{
+	text-decoration:underline;
+}
+.width03{
+	width:16px;
+}
+
+

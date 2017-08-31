@@ -1,0 +1,58 @@
+<style type="text/css">
+.black2 a{
+	color:#229bd7;
+}
+</style>
+<dl class="pk_con">
+	  <volist name="postList" id="item">  
+	  	<dd class="comment_{$item['id']}" model-node="post">
+	  	<p class="pk_tx">
+	  	<a href="{$item['user_info']['space_url']}" event-node="face_card" show="no" uid="{$item['user_info']['uid']}">
+								<img src="{$item.user_info.avatar_small}" />
+								</a>
+	  	</p>
+								<div class="left pl20"  model-node="answer">
+									<p class="online_name">
+									<a href="{$item['user_info']['space_url']}" event-node="face_card" show="no" uid="{$item['user_info']['uid']}">
+									{$item.user_info.uname}
+									</a></p>
+									<p class="pk_nr" style="line-height:1.5;">
+									{$item.content|parse_html}
+									</p>
+									<div class="online_infor pt5">
+										<p class="left">{$item.ctime|friendlyDate}</p>
+										<p class="right black2">
+                                            <if condition="$agreeArray[$item['id']] eq 0">
+                                               <span id='agree{$item["id"]}' rel='{$item["agree_count"]|default="0"}'>
+                                               <a href="javascript:void(0)" onclick="addAgree({$item['id']})" >赞<if condition="$item['agree_count'] neq 0">({$item['agree_count']})</if></a>
+                                               </span>
+                                            <else />  
+                                            <span><img src='./apps/onlineanswer/_static/images/zan.gif' />已赞({$item['agree_count']})</span>
+                                            </if>
+                                            &nbsp;&nbsp;|&nbsp;&nbsp;
+                                            <a event-node ="comment" href= "javascript:void(0)" event-args ='row_id={$item.id}&app_uid={$voteUid}&to_comment_id=&to_uid=&app_name=vote&table=vote_post&canrepost=0&cancomment=1&cancomment_old=1&ajax_page=1' >{:L('PUBLIC_STREAM_COMMENT')}<if condition="$item['comment_count'] neq 0">(<span id="span_{$item.id}" style="display:inline;float:none;">{$item.comment_count}</span>)</if></a>&nbsp;&nbsp;\
+                                            <if condition="$item['user_info']['uid'] eq $mid">
+                                            |&nbsp;&nbsp;<a style="cursor:pointer" onclick='delComment({$item.id});'>删除</a>
+                                        	</if>
+                                        </p>
+										
+										<!-- <php>if($item['user_info']['uid'] == $mid):</php>
+										<p class="right blue"><a href="javascript:void(0);" onclick='delComment({$item.comment_id});'>删除</a></p>
+										<php>endif;</php> -->
+									<!-- 	<if condition="!empty($item['attach'])">
+										<volist name="item['attach']" id="attach">
+										<p class="mt5">附件{$i}：<span class="blue"> <a href="{:U('widget/Upload/down',array('attach_id'=>$attach['attach_id']))}">{$attachInfo[$attach['attach_id']]['name']}下载</a></span></p>
+										</volist>
+									</if> -->
+										<div class="clear"></div>
+									</div>
+									<div model-node ="comment_detail" class="repeat_box" style ="display:none;"></div>
+								</div>
+								<div class="clear"></div>
+	  	
+		</dd>
+	  </volist>
+	  	<div class="page">
+		{$page}
+		</div>
+	</dl>

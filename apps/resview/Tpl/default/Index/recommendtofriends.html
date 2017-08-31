@@ -1,0 +1,67 @@
+<link type="text/css" href="__APP__/css/resview.css" rel="stylesheet"></link>
+<div style="height:375px;">
+	<div style="width:210px;height:310px;float:left;padding:10px;overflow-y:auto;">
+		<div style="border:1px solid #999;line-height:20px;">
+			<span style="margin:5px;">好友列表</span>
+		</div>
+		<div style="border-left:1px solid #999;border-bottom:1px solid #999;border-right:1px solid #999;height:285px;">
+			<div class="ep_search">
+				<div class="ep_searchbar">
+					<div class="ep_searchleft"></div>
+					<div class="ep_searchcen">
+						<p class="left"><input type="text" id="keyword"/></p>
+						<p class="right"><a href="javascript:void(0);" onclick="search_friends()"><img src="__APP__/image/search.gif" /></a></p>
+					</div>
+					<div class="ep_searchright"></div>
+				</div>
+			</div>
+			<ul class="grouplist">
+			</ul>
+		</div>
+	</div>
+	<div style="width:210px;height:310px;border-left:1px solid #999;float:left;padding:10px;overflow-y:auto;">
+		<div style="border:1px solid #999;line-height:20px;">
+			<span style="margin:5px;">已选择好友</span>
+		</div>
+		<div style="border-left:1px solid #999;border-bottom:1px solid #999;border-right:1px solid #999;height:285px;">
+			<ul id="selectedfriendlist" style="height:280px;overflow-y:auto;">
+			</ul>
+			<input type="hidden" id="hiddenselfriends">
+			<input type="hidden" id="hiddenselfriendsid">
+		</div>
+	</div>
+	<div class="clear"></div>
+	<div>
+		<span id="recprogress"></span>
+		<input type="button" value="确定" class="blue5_btn" style="position:relative;left:160px;" onMouseover="this.className='blue5_btnhov'" onMouseOut="this.className='blue5_btn'" onclick = "confirmrec();">
+		<input type="button" value="取消" class="blue4_btn" style="position:relative;left:170px;" onMouseover="this.className='blue4_btnhov'" onMouseOut="this.className='blue4_btn'" onclick="closerec();">
+	</div>
+	<!-- <div class="clear" style="border-top:1px solid #999;"></div>
+		<div style="margin:5px 0 0 160px;width:160px;">
+			<span id="recprogress"></span>
+			<input type="button" value="确定" class="blue5_btn" style="display:inline;" onMouseover="this.className='blue5_btnhov'" onMouseOut="this.className='blue5_btn'" onclick = "confirmrec();">
+			<input type="button" value="取消" class="blue4_btn" style="display:inline;" onMouseover="this.className='blue4_btnhov'" onMouseOut="this.className='blue4_btn'" onclick="closerec();">
+		</div> -->
+</div>
+<script type="text/javascript">
+$(function(){
+	$.get("index.php?app=resview&mod=Ajax&act=getGrouplist",function(data){
+		$(".grouplist").html(data);
+	});
+	
+	search_friends = function(){
+		var kw= $.trim($("#keyword").val());
+		if(kw == ""){
+			$.get("index.php?app=resview&mod=Ajax&act=getGrouplist",function(data){
+				$(".grouplist").html(data);
+			});
+		}
+		else{
+			$.get("index.php?app=resview&mod=Ajax&act=getFriendlist&gid=-1&kw=" + encodeURI(kw),function(data){
+				$(".grouplist").html("");
+				$(".grouplist").html(data);
+			});
+		}
+	};
+})
+</script>

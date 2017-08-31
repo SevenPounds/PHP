@@ -1,0 +1,17 @@
+<volist name="data" id="vo">
+<ul>
+				<li>
+					<div class="c_boxleft"></div>
+					<div class="c_boxcen">
+						<a href="{:getHomeUrl($vo)}" event-node="face_card" show="no" orgType="{$vo['type']}" cid="{$vo['id']}"><img src="{$vo['id']|getCampuseAvatar=###,$vo['type'],'avatar_big'}" /></a>
+						<p class="c_name green"><a href="{:getHomeUrl($vo)}" event-node="face_card" show="no" orgType="{$vo['type']}" cid="{$vo['id']}">{$vo.name}</a></p>
+						<p class="c_foucs">
+						{:W('FollowBtn', array('fid'=>$vo['id'], 'uname'=>$vo['name'], 'follow_state'=>$follow_state[$vo['id']], 'type'=>'campus','ftype'=>$vo['type']))} 
+						</p>
+						{:getInfoBoxHtml($vo)}
+					</div>
+					<div class="c_boxright"></div>
+					<div class="clear"></div>
+				</li>
+</ul>
+</volist>

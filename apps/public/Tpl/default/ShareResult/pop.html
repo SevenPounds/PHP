@@ -1,0 +1,247 @@
+<link rel="stylesheet" href="__APP__/ShareResult/c_pop.css">
+<link rel="stylesheet" type="text/css"	href="__APP__/js/fancyBox/jquery.fancybox.css" />
+<script src="__APP__/js/fancyBox/jquery.fancybox.js" type="text/javascript"></script>
+<script src="__APP__/js/ShareResult.js" type="text/javascript"></script>
+<link type="text/css" href="__THEME__/js/ztree/zTreeStyle.css" rel="stylesheet" />
+<script type="text/javascript" src="__THEME__/js/ztree/jquery.ztree.all-3.5.js"></script>
+<script type="text/javascript" src="__THEME__/js/uploadify/jquery.uploadify.min.js"></script>
+<style>
+.space_share .space_pop_option span {
+margin: 10px 5px 0 -10px;
+}
+</style>
+<div class="pop_wp" style="width: 466px;display:none;">
+    <div class="pop_tips clearfix">
+        <span class="tips_tit fl">确认删除</span>
+        <a href="javascript:;" class="pop_close"></a>
+    </div>
+    <span class="tips_text">确认要把所选文件放入回收站吗？<br>(删除的文件可以在回收站还原)</span>
+    <div class="pop_btn2">
+        <a href="#" class="share_btn">确定</a>
+        <a href="#" class="cancle_btn">取消</a>
+    </div>
+</div>
+
+
+<!---------    start 选择云端弹出框  -------->
+<!-- <a id="show_chooce_box"  class="pop_a" href="#chooce_box" style="display:none"></a>
+<div class="pop_selectRea pop_wp" style="display:none;" id="chooce_box">
+    <div class="pop_tips clearfix" >
+        <span class="tips_tit fl">选择云端资源</span>
+        <a href="javascript:;" class="pop_close" onclick="window.closeBox('show_space_chooce');"></a>
+    </div>
+    <div class="pop_resourceStyle clearfix">
+        <div class="list" >
+           <ul id="myTree" class="ztree"></ul>
+        </div>
+        <div class="fr">
+            <ul class="pop_resourceItem" id="pop_resourceItem">             
+            </ul>
+        </div>
+    </div>
+    <div class="pop_btn2 clearfix">
+        <span class="fl" id="choiceNum"></span>
+        <a href="javascript:;" class="cancle_btn fr"  onclick="window.closeBox('show_space_chooce');">取消</a>
+        <a href="javascript:;" class="share_btn fr" id="sure_select_res">确定</a>
+    </div>
+</div> -->
+<!----- end  选择云端弹出框   ----->
+
+<!------ start 分享到班级 ------>
+<a id="show_select_class"  class="pop_a" href="#select_class" style="display:none"></a>
+<div class="pop_selectRea pop_wp" style="display:none;" id="select_class">
+    <div class="pop_tips clearfix">
+        <span class="tips_tit fl">分享到班级</span>
+        <a href="#" class="pop_close"></a>
+    </div>
+    <div class="pop_choice_class">
+        <ul class="clearfix">
+            <li>
+                <a href="#">
+                    <img src="">
+                    <p>
+                        <span>太阳花班</span>
+                        <font>三年级（1）班</font>
+                    </p>
+                </a>
+            </li>
+            <li class="cur">
+                <a href="#">
+                    <img src="">
+                    <p>
+                        <span>太阳花班</span>
+                        <font>三年级（1）班</font>
+                    </p>
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="pop_btn2 clearfix">
+        <span class="fl">已选：2</span>
+        <a href="javascript:;" class="cancle_btn fr">取消</a>
+        <a href="javascript:;" class="share_btn fr">确定</a>
+    </div>
+</div>
+<!-- end 分享到班级 -->
+<!-------- start 分享到同步资源 --------->
+<!-- <a id="show_share_chooce"   class="pop_a" href="#share_chooce" style="display:none"></a>
+<div class="pop_wp pop_share_resource pop_selectRea" style="display:none;" id="share_chooce">
+    <div class="pop_tips clearfix">
+        <span class="tips_tit fl">分享到同步资源</span>
+         <a href="javascript:;" class="pop_close" onclick="window.closeBox('show_space_chooce');"></a>
+    </div>
+    <div class="pop_class">
+        <div class="pop_resource_type clearfix">
+            <strong>资源类型：</strong>
+            <select id="res_type"></select>
+        </div>
+        <div class="pop_resource_type clearfix">
+            <strong>请选择学科信息：</strong>
+        </div>
+        <div class="pop_reBox clearfix">
+           	<select size="9" style="height: 150px; width: 120px;" id="subject"></select>                              
+            <select size="9" style="height:150px;width:120px;display:none;" id="edition"></select>                               
+            <select  size="9"style="height:150px;width:120px;display:none;" id="stage"></select>
+            <input type="hidden" id="book" book-id="" book-code=""></input>                              
+            <select size="9" style="height:150px;width:120px;display:none;" id="unit1"></select>
+            <select size="9" style="height:150px;width:120px;display:none;" id="unit2"></select> 
+            <select size="9" style="height:150px;width:120px;display:none;" id="unit3"></select>   
+        </div>
+    </div>
+        <div class="pop_btn2 clearfix">
+        <a href="javascript:;" class="cancle_btn fr" onclick="window.closeBox('show_space_chooce');">取消</a>
+        <a href="javascript:;" class="share_btn fr" id="shareToSysRes">确定</a>
+    </div>
+</div> -->
+<!---------- end 分享到同步资源 ------->
+
+<!------ start 分享到好友 ------------>
+<a id="show_share_freinds"  class="pop_a" href="#share_friends" style="display:none"></a>
+<div class="pop_wp pop_selectRea" style="display:none;" id="share_friends">
+    <div class="pop_tips clearfix">
+        <span class="tips_tit fl">分享到好友</span>
+        <a href="#" class="pop_close"></a>
+    </div>
+    <div class="pop_box">
+        <div class="pop_friend clearfix">
+            <div class="pop_frMenu">
+                <ul>
+                    <li class="cur">所有好友(<span>100</span>)</li>
+                    <li>常用好友(25)</li>
+                    <li>互相关注(25)</li>
+                    <li>我的关注(25)</li>
+                    <li>我的粉丝(25)</li>
+                </ul>
+            </div>
+            <div class="pop_frList">
+                <div class="pop_search clearfix">
+                    <input type="text" placeholder="搜索好友" class="sea_text">
+                    <input type="button" class="sea_btn">
+                </div>
+                <ul class="pop_frUser clearfix">
+                    <li>
+                        <img src="" width="20" height="20">
+                        <span>用户姓名</span>
+                        <a href="#" class="pop_frClose"></a>
+                    </li>
+                    <li>
+                        <img src="" width="20" height="20">
+                        <span>用户姓名</span>
+                        <a href="#" class="pop_frGre"></a>
+                    </li>                 
+                </ul>
+            </div>
+        </div>
+        <div class="pop_frSelect">
+            <h3>已选（3）</h3>
+            <ul class="pop_frUser clearfix">
+                <li>
+                    <img src="" width="20" height="20">
+                    <span>用户姓名</span>
+                    <a href="#" class="pop_frClose"></a>
+                </li>
+                <li>
+                    <img src="" width="20" height="20">
+                    <span>用户姓名</span>
+                    <a href="#" class="pop_frGre"></a>
+                </li>
+                <li>
+                    <img src="" width="20" height="20">
+                    <span>用户姓名</span>
+                    <a href="#" class="pop_frOrg"></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="pop_btn2 clearfix">
+        <a href="#" class="cancle_btn fr">取消</a>
+        <a href="#" class="share_btn fr">确定</a>
+    </div>
+</div>
+<!------------ start 分享到好友 ---------------->
+
+
+<!-- start 分享最外层弹出框 -->
+<a id="show_space_chooce" class="pop_a" href="#space_share" style="display:none"></a>
+<div class="space_share" id="space_share" style="display:none">
+    <div class="space_resource" >
+        <div class="space_res upload" style="height:80px;" id="share_res_list">          
+        </div>
+        <div class="space_res normal" id="shoose_where_share">
+           <a href="javascript:;" id="choice_cloud_res">选择云端资源</a>
+        </div>
+    </div>
+    <div class="space_trends">
+        <textarea id="desc"  onfocus="desFocus();" onblur="desBlur();">描述一下您的资源吧</textarea>
+       <!-- 
+        <label>0/500</label>
+        -->
+    </div>
+    <div class="space_pop_option clearfix">
+        <span>分享到：</span>
+        <input type="checkbox" class="check_position" id="per_page"/>
+        <span>我的主页</span>
+      <!--
+        <input type="checkbox" class="check_position" id="per_friend" />
+        <span>好友</span>
+        <input type="checkbox" class="check_position" id="per_class"/>
+        <span>班级</span>
+      -->
+        <input type="checkbox" class="check_position"  id="sys_res"/>
+        <span>同步资源</span>
+        <a href="javascript:;" class="space_cancel" onclick="window.closeBox(1);">取消</a>
+        <a href="javascript:;" id="space_sure" is_sub="true" class="space_sure">发布</a>
+    </div>
+    <div class="clear"></div>
+</div>
+<!-- end 分享最外层弹出框 -->
+
+<script type="text/javascript">
+jQuery('.pop_a').fancybox({
+	'width' : '100%',
+	'height' : '100%',
+	'padding' : 0,
+	'margin' : 0,
+	'scrolling' : false,
+	'autoScale' : false,
+	'modal' : true,
+	 helpers:{
+         overlay:{
+             closeClick : false,
+             locked:false
+         }
+     }
+});
+function desFocus(){	
+	if(jQuery("#desc").val() == '描述一下您的资源吧'){
+		jQuery("#desc").val('');
+	}
+};
+
+function desBlur(){
+	if(jQuery("#desc").val() == ''){
+		jQuery("#desc").val('描述一下您的资源吧');
+	}
+};
+</script>

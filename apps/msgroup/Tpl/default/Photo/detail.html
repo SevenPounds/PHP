@@ -1,0 +1,78 @@
+<include file="../Public/header" />
+<script type="text/javascript" src='__APP__/js/MSGroupPhoto.js' ></script>
+<style>
+.ep_title{
+	margin:15px 15px 0;
+}
+.ep_title .title_left{
+	float:left;
+	font-size:18px;
+	color:#3535353;
+	font-weight:bold;
+}
+.ep_title .title_right{
+	float:right;
+	display:inline;
+	*margin-right:-15px;
+}
+.ep_title .title_right input{
+	cursor:pointer;
+	border:none;
+	height:28px;
+	width:92px;
+	color:#fff;
+}
+
+.pre_box{
+	border:1px solid #c9dbe4;
+	background:#FFF;
+	margin-top:14px;
+}
+
+.pre_box .pre_tit{
+	background:#f2f2f2;
+	height:25px;
+}
+
+.pre_box .pre_tit input{
+	vertical-align:bottom;
+	border:none;
+	position:relative;
+	margin:2px;
+}
+
+
+
+.pre_box .pre_font{
+	padding:1px;
+	width:738px;
+	text-align:center;
+	min-height:64px;
+	_height:64px;
+    margin-top:2px;
+    margin-bottom:2px;
+}
+
+</style>
+<div class="posbox">&nbsp;&nbsp;您现在的位置：<a href="{:U('msgroup/Index/index', array('gid' => $gid))}" class="blue">{$msgroup_data.group_name}</a>&gt<a <if condition="$level eq 3">href="{:U('msgroup/Config/index', array('gid' => $gid))}"<else />href="{:U('msgroup/Resource/index', array('gid' => $gid))}"</if> class="blue">工作室维护</a>&gt;&nbsp;<a class="blue" href="{:U('msgroup/Photo/index', array('gid' => $gid))}">荣誉信息管理</a></div>
+<div class="wy_box" style="width:1000px; overflow:hidden;">
+	{:W('LeftMenu', array('gid' => $gid, 'level' => $level))}
+	<div class="right">
+	<div class="ep_title">
+		<div class="title_left" title="{$photo['photo_name']}">{$photo['photo_name']|getShort=30}</div>
+			<div class="clear"></div>
+		</div>
+		<div class="black1 pl15">发布日期：{$photo['upload_time']|friendlyDate} </div>
+		<div class="tp_pic">
+			<div class="pre_box" >
+				<div class="pre_font" id="preview" style="width:656px;height:530px;">
+		    		<img alt="预览图片" src="{:getImageUrl($photo['savepath'])}" style="width:736px;height:530px;"/>
+		    	</div>
+			</div>
+		</div>
+	</div>
+	<div class="clear"></div>
+</div>
+<include file="__THEME__/public_footer" />
+
+

@@ -1,0 +1,70 @@
+<style>
+	.nr_btn a{
+		float:left;
+	}
+	.ts_line p span a{
+		cursor:pointer;
+	}
+
+	.wdp70 {
+		width:70%;
+	}
+</style>
+
+<div class="ts_line">
+	<p class="right pl10"><span>共有符合条件的用户</span><span class="red">{$totalcount}</span><span>个</span></p>
+	<p class="left pr10" id='orderoperator'><span>排序方式：</span>
+	<span><a  onclick="javascript:PeopleSelector.FieldOrder(this);" <php>if(!$field||!$order):</php> class="red" <php>else:</php> class="blue" <php>endif;</php> order='0' field='0'>默认</a></span><span class="blue pl5 pr5">|</span>
+	<span ><a onclick="javascript:PeopleSelector.FieldOrder(this);" <php>if($field=='uploadCount'):</php> class="red" <php>else:</php> class="blue" <php>endif;</php>  order='{$order}' field='uploadCount' >资源数</a></span>
+	<span class="pl5"><img  <php>if($field=='article'&&$order=='asc'):</php>  src="__APP__/images/xxjt.gif"  <php>elseif($field=='article'&& $order=='desc'):</php>  src="__APP__/images/xsjt.gif" <php>else: </php> src="__APP__/images/xxjt.gif" <php>endif;</php>  /></span><span class="pl5 pr5">|</span>
+	<span ><a onclick="javascript:PeopleSelector.FieldOrder(this);" <php>if($field=='follower'):</php> class="red" <php>else:</php> class="blue" <php>endif;</php>  order='{$order}' field='follower'>粉丝数</a></span>
+	<span class="pl5"><img <php>if($field=='follower'&&$order=='asc'):</php>  src="__APP__/images/xxjt.gif"  <php>elseif($field=='follower'&& $order=='desc'):</php>  src="__APP__/images/xsjt.gif" <php>else: </php> src="__APP__/images/xxjt.gif" <php>endif;</php>  /></span><span class="pl5 pr5"></span>
+	<!-- <span ><a onclick="javascript:PeopleSelector.FieldOrder(this);" <php>if($field=='visitor'):</php> class="red" <php>else:</php> class="blue" <php>endif;</php>  order='{$order}' field='visitor'>访问量</a></span>
+	<span class="pl5"><img <php>if($field=='visitor'&& $order=='asc'):</php> src="__APP__/images/xxjt.gif"  <php>elseif($field=='visitor'&& $order=='desc'):</php>  src="__APP__/images/xsjt.gif" <php>else: </php> src="__APP__/images/xxjt.gif" <php> endif;</php>  /></span></p>  -->
+	<div class="clear"></div>
+</div>
+
+<div class="see_box">
+	<ul>
+		<volist name='data' id='vo'>
+		<li>
+		<div class="see_pic">
+			<a href="{:U('public/Profile/index',array('uid'=>$vo['uid']))}" uid="{$vo['uid']}" target="_blank"><img style="width: 53px;height: 53px;" src="{$vo['image']['avatar_small']}" /></a>
+		</div>
+		<div class="see_con">
+			<p class="mt5">
+			<span class="see_name blue03">
+				<a href="{:U('public/Profile/index',array('uid'=>$vo['uid']))}" uid="{$vo['uid']}" target="_blank" title="{$vo['uname']}">{$vo['uname']|getShort=4,'...'}</a>
+			</span>
+			<php>if($mid):</php>
+			<if condition="$mid != $vo['uid']">
+			<if condition="0 eq $vo['following']">
+			    <a event-node="doFollow" event-args="uid={$vo['uid']}&uname={$uname}&following={$vo['following']}&follower={$vo['follower']}&refer={$refer}&isrefresh={$isrefresh}&type=studio" href="{:U('public/Follow/doFollow', array('fid'=>$vo['uid']))}" class="see_add"></a>
+			<else/>
+			    <a event-node="unFollow" event-args="uid={$vo['uid']}&uname={$uname}&following={$vo['following']}&follower={$vo['follower']}&refer={$refer}&isrefresh={$isrefresh}&type=studio" href="{:U('public/Follow/unFollow', array('fid'=>$vo['uid']))}" class="see_add"></a>
+			</if>
+
+			<span class="see_message"><a onclick='javascript:ui.sendmessage({$vo['uid']}, 0);' style='cursor:pointer'>发私信</a></span>
+			</if>
+			<php>else:</php>
+			<a class="see_add" onclick="javascript:showLogin();" style='cursor:pointer'>关注</a>
+			<span class="see_message"><a onclick="javascript:showLogin();" style='cursor:pointer'>发私信</a></span>
+			<php>endif;</php>
+			</p>
+			<div class="clear"></div>
+			<p class="font1 mt10">
+			<span class="see_sj">资源数：{:(int)$vo['uploadCount']}</span>
+			<span class="see_sj">粉丝数：{:(int)$vo['followerCount']}</span>
+			
+			 <php>$score_value =$vo['creditCount']>9999?'9999+':$vo['creditCount']; </php>
+        					<span title = "{$vo['creditCount']|default=0}">积分数：
+        					{$score_value|default=0}
+			</span>
+			</p>
+		</div>
+		</li>
+		</volist>
+	</ul>
+	<div class="clear"></div>
+</div>
+{$page}

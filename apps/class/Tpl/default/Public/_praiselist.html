@@ -1,0 +1,43 @@
+<div class="tab_b"><b>表扬栏</b><p class="btn"><input type="button" value="表扬" class="green_s"  onmouseover="this.className='green_shover'" onmouseout="this.className='green_s'" onclick="window.location.href='index.php?app=class&mod=ClassHome&act=class_praise&cid={$org['id']}'"/></p></div>
+				<div class="cw_con">
+					<div class="by_tab">
+						<div class="by_tabbox">
+							<div class="left">按时间段查看：</div>
+							<div class="by_sr">
+								<input class="Wdate" type="text" onClick="WdatePicker()" />
+								
+							</div>
+							<div class="left pl10 pr10">到</div>
+							<div class="by_sr">
+								<input class="Wdate" type="text" onClick="WdatePicker()" />
+								
+							</div>
+							<div class="by_btn">
+								<input type="button" value="确定" class="green6_btn"  onmouseover="this.className='green6_btnhov'" onmouseout="this.className='green6_btn'" />
+							</div>
+						</div>
+					</div>
+					<dl>
+						 <volist name="prasie_list.data" id="vo">
+						<dd>
+							<div class="byl_one"><img src="{$user_info[$vo['uid']]['avatar_small']}" /></div>
+							<div class="byl_two">
+								<p class="pt2">
+									<span class="green1"><a href="{$user_info[$vo['uid']]['space_url']}" event-node='face_card' uid='{$vo['uid']}' style="font-size:14px">{$user_info[$vo['uid']]['uname']}</a></span>
+									<span class="black1">获得了<font class="black4 pl4 pr4">表扬</font>{$vo.praise_name}</span>
+								</p>
+								<p class="pt2">
+									<span class="black4">来自：</span>
+									<span class="green1"><a href="#">{$vo.grant_uid|getUserName}</a></span>
+								</p>
+								<p class="pt2"><span class="black4">寄语：</span><span class="black1">{$vo.message}</span></p>
+								<p class="black4 pt2"> {$vo['ctime']|friendlyDate}</p>
+							</div>
+							<div class="byl_three"><a href="#"><img src="{$vo.logo|getPraiseIconUrl=###}" /></a></div>
+							<div class="clear"></div>
+						</dd>
+						</volist>
+					</dl>
+					<div class="page" >{$prasie_list.html}</div>
+				</div>
+	<script type="text/javascript" src="__APP__/js/My97DatePicker/WdatePicker.js"></script>			

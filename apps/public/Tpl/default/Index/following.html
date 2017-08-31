@@ -1,0 +1,172 @@
+<include file="__THEME__/public_header" />
+<link href="__APP__/main.css" rel="stylesheet" type="text/css" />
+<div id="page-wrap">
+    <div id="main-wrap">
+    	<div id="st-index-grid" class="st-grid">
+            <div class="st-section boxShadow content-bg">
+            	<include file="__THEME__/public_right" />
+                <div id="col5" class="st-index-main">
+                <div class="extend-foot">
+				<!--tab menu-->
+                <div class="feed-nav clearfix">
+                	<div class="my-feed-title">
+                		<h4>我关注的人(共<span id="follow_count" event-node="following_count" event-args="uid={$GLOBALS['ts']['mid']}">{$followingCount|default=0}</span>人)</h4>
+					    <div class="mod-feed-tab mt10 clearfix" id="mod-feed-tab" <php>if(!isset($_GET['feed_type']) && empty($_GET['feed_key'])){</php><php>}</php> >
+	                        <span class="right"><a class="btn-att-green mr5" href="javascript:;" event-node="addFollowgroup"><i class="ico-add-white"></i>创建分组</a><a class="btn-att-green" href="javascript:;" event-node="editFollowgroup">管理分组</a>
+						    </span>
+	                        <ul class="inner-feed-nav">
+	                        	<volist name="groupList" id="vo" offset="0" length="$groupNums">
+	                        		<li <eq name="gid" value="$vo['gid']">class="current"</eq>><a title="{$vo['title']}" href="{:U('public/Index/following', array('gid'=>$vo['gid']))}">{$vo['title']}</a></li>
+	                        	</volist>
+	                        	<php>if(!in_array($gid, $topGroup)):</php>
+	                        	<li class="current"><a title="{$gTitle}" href="{:U('public/Index/following', array('gid'=>$gid))}">{$gTitle}</a></li>
+	                        	<php>elseif(count($groupList) > $groupNums):</php>
+	                        	<li <eq name="gid" value="$groupList[$groupNums]['gid']">class="current"</eq>><a title="{$groupList[$groupNums]['title']}" href="{:U('public/Index/following', array('gid'=>$groupList[$groupNums]['gid']))}">{$groupList[$groupNums]['title']}</a></li>
+	                        	<php>endif;</php>
+	                    		<php>if(count($groupList) > $groupNums + 1):</php>
+	                    		<li><a href="javascript:;" event-node="more_follow_group">更多</a></li>
+	                    		<php>endif;</php>
+	                        </ul>
+                    	</div>
+                	</div>
+
+					<div class="sperson-feedlist" >
+					<php>if($data){</php>
+						<volist name="data" id="vo">
+						<php>if($vo['type']==0):</php>
+							<dl class="feed_list" model-node="following_list_item">
+								<dt class="face">
+								   <a href="{$vo.space_url}"><img title="{$vo.uname}" src="{$vo.avatar_small}" width="50" height="50"/></a></dt>
+								<dd class="person-info">
+								  <div class="info-right right">
+										{:W('FollowGroup', array('uid'=>$mid, 'fid'=>$vo['uid'], 'follow_group_status'=>$followGroupStatus[$vo['uid']], 'tpl'=>'btn'))}
+										<span class="right">{:W('FollowBtn', array('fid'=>$vo['uid'], 'uname'=>$vo['uname'], 'follow_state'=>$vo['followState'], 'refer'=>'following_list'))}</span>
+								  </div>
+								  <div class="info-left">
+									<p class="hd">
+										<span style="font-size:14px">{$vo.space_link}</span>
+										<volist name="userGroupData[$vo['uid']]" id="v1">
+                                			<img style="width:auto;height:auto;display:inline;cursor:pointer;vertical-align:-3px" src="{$v1['user_group_icon_url']}" title="{$v1['user_group_name']}" />&nbsp;
+                              			</volist>
+										{:W('Remark', array('uid'=>$vo['uid'], 'remark'=>$vo['remark']))}	
+									</p>
+									<p class="area"><span><i class="<?php if($vo['sex'] == 1){echo 'ico-male';}else if($vo['sex'] == 2){echo 'ico-female';}?>"></i><php>if(!empty($vo['sex'])):</php>&nbsp;<php>endif;</php>{$vo.location}</span></p>
+									<p class="action">									
+										{:L('PUBLIC_FOLLOWING')}：<a href="{:U('public/Profile/following', array('uid'=>$vo['uid']))}">{$vo.following_count|default=0}</a>
+										<i class="vline">|</i>
+										{:L('PUBLIC_FOLLOWERS')}：<a href="{:U('public/Profile/follower', array('uid'=>$vo['uid']))}">{$vo.follower_count|default=0}</a>
+										<i class="vline">|</i>
+										{:L('PUBLIC_WEIBO')}：<a href="{:U('public/Profile/index', array('uid'=>$vo['uid']))}">{$vo.feed_count|default=0}</a>
+									</p>
+									<php>if($vo['intro']){</php>
+										<p class="info">
+											{:L('PUBLIC_PROFILESET_INTRO')}：{$vo.intro}
+										</p>
+									<php>}</php>
+									<php>if($user_tag[$vo['uid']]){</php>
+										<p class="info">
+											{:L('PUBLIC_TAG')}：<volist name="user_tag[$vo['uid']]" id="u_t_v"><a href="{:U('public/Search/index',array('t'=>3,'a'=>'public','k'=>$u_t_v))}">{$u_t_v}</a>&nbsp;&nbsp;&nbsp;</volist>
+										</p>
+									<php>}</php>
+								  </div>	
+								</dd>
+							</dl>
+							<php>elseif($vo['type'] !=3):</php>
+							<dl class="feed_list" model-node="following_list_item">
+								<dt class="face">
+								   <a href="{:getHomeUrl($vo)}"><img title="{$vo.name}" src="{$vo['id']|getCampuseAvatar=###,$vo['type'],'avatar_small'}"" width="50" height="50"/></a></dt>
+								<dd class="person-info">
+								  <div class="info-right right">
+										<span class="right">{:W('FollowBtn', array('fid'=>$vo['id'], 'uname'=>$vo['name'], 'follow_state'=>$orgnization_follow_state[$vo['id']], 'type'=>'campus','ftype'=>$vo['type'],'widget_appname'=>'class'))}</span>
+								  </div>
+								  <div class="info-left">
+									<p class="hd">
+										<span style="font-size:14px"><a href="{:getHomeUrl($vo)}"  event-node="face_card" show="no" orgType="{$vo['type']}" cid="{$vo['id']}">{$vo.name}</a></span>
+									</p>
+									<p class="area"><span>{$vo.location}</span></p>
+									<p class="action">									
+										{:L('PUBLIC_FOLLOWERS')}：<a href="{:getHomeUrl($vo)}" id="follower_{$vo['id']}">{:getCountByType('follower',$vo)}</a>
+<!-- 										<i class="vline">|</i>
+										{:L('PUBLIC_WEIBO')}：<a href="{$vo.spaceurl}">{$vo.feed_count|default=0}</a> -->
+									</p>
+									<p class="info">
+										<php>if($vo['type']==1):</php> 学校简介：{:getOrgnizationIntro($vo['id'],1)}<php>else:</php> 班级简介： {:getOrgnizationIntro($vo['id'],2)} <php>endif;</php>
+									</p>
+								  </div>	
+								</dd>
+							</dl>	
+							<php>else:</php>
+							<dl class="feed_list" model-node="following_list_item">
+								<dt class="face">
+								   <a href="{:U('msgroup/Index/index',array('gid'=>$vo['gid']))}"><img title="{$vo.group_name}" src="{$vo['image']['avatar_small']}"" width="50" height="50"/></a></dt>
+								<dd class="person-info">
+								  <div class="info-right right">
+										<span class="right">{:W('FollowBtn', array('fid'=>$vo['gid'], 'uname'=>$vo['group_name'], 'follow_state'=>$msgroup_follow_state[$vo['gid']], 'type'=>'ms_studio'))}</span>
+								  </div>
+								  <div class="info-left">
+									<p class="hd">
+										<span style="font-size:14px"><a href="{:U('msgroup/Index/index',array('gid'=>$vo['gid']))}"  >{$vo.group_name}</a></span>
+									</p>
+									<p class="action">									
+										{:L('PUBLIC_FOLLOWERS')}：<a href="{:U('msgroup/Index/index',array('gid'=>$vo['gid']))}" id="follower_{$vo['id']}">{$vo['follower_count']| default = 0}</a>
+										成员数：<a href="{:U('msgroup/Index/index',array('gid'=>$vo['gid']))}" id="follower_{$vo['id']}">{$vo['member_count'] | default = 0}</a>
+<!-- 										<i class="vline">|</i>
+										{:L('PUBLIC_WEIBO')}：<a href="{$vo.spaceurl}">{$vo.feed_count|default=0}</a> -->
+									</p>
+									<p class="info">
+										 工作室简介：{$vo['discription']}
+									</p>
+								  </div>	
+								</dd>
+							</dl>	
+							<php>endif;</php>
+								
+						</volist>
+						<div id="page" class="page">{$html}</div>
+					<php>}else{</php>
+                        <div class="loading">您还没有相互关注的好友</div>
+                    <php>}</php>
+					</div>
+					
+                </div>
+                </div>
+            	</div>
+        	</div>
+    	</div>
+	</div>
+</div>
+
+<script type="text/javascript" src="__THEME__/js/module.weibo.js"></script>
+<script type="text/javascript">
+// 事件监听
+M.addEventFns({
+	more_follow_group: {
+		load: function() {
+			var offset = $(this).offset();
+			var top = offset.top + 22;
+			var left = offset.left;
+			var list = "";
+	        <volist name="groupList" id="vo" offset="$groupNums">
+	        <php>if($gid != $vo['gid']):</php>
+	        	<php>if($i !== 1 || !in_array($gid, $topGroup)):</php>
+	        		list += '<li><a title="{$vo['title']}" href="{:U('public/Index/following', array('gid'=>$vo['gid']))}">{$vo['title']}</a></li>';
+	        	<php>endif;</php>
+	        <php> endif;</php>
+	        </volist>
+			var html = '<div id="more_follow_group" class="layer-list" style="display:none;position:absolute;top:'+(top+13)+'px;left:'+left+'px;">\
+						<ul>'+list+'</ul>\
+				        </div>';
+			$("body").append(html);
+		},
+		click: function() {
+			if($('#more_follow_group').css('display') == 'none') {
+				$('#more_follow_group').css('display', '');
+			} else {
+				$('#more_follow_group').css('display', 'none');
+			}
+		}
+	}
+});
+</script>
+
+<include file="__THEME__/public_footer" />

@@ -1,0 +1,25 @@
+<include file="../Public/header" />
+<link rel="stylesheet" type="text/css" href="__THEME__/css/pop_upload.css" />
+<script type="text/javascript" src='__APP__/js/MSGroupPhoto.js' ></script>
+<link rel="stylesheet" type="text/css" href="__THEME__/js/uploadify/uploadify.css" />
+<script type="text/javascript" src="__THEME__/js/uploadify/jquery.uploadify.min.js"></script>
+<script>
+jQuery(function(){
+	var gid = "<php> echo $gid;</php>";
+	photo.request(1,gid);
+})
+</script>
+<div class="posbox">&nbsp;&nbsp;您现在的位置：<a href="{:U('msgroup/Index/index', array('gid' => $gid))}" class="blue">{$msgroup_data.group_name}</a>&gt;<a <if condition="$level eq 3">href="{:U('msgroup/Config/index', array('gid' => $gid))}"<else />href="{:U('msgroup/Resource/index', array('gid' => $gid))}"</if> class="blue">工作室维护</a>&gt;&nbsp;<a class="blue" href="{:U('msgroup/Photo/index', array('gid' => $gid))}">荣誉信息管理</a></div>
+<div class="wy_box" style="width:1000px; overflow:hidden;">
+	{:W('LeftMenu', array('gid' => $gid, 'level' => $level))}
+	<div class="right">
+		<div class="teaWS_rgt">
+			<div class="teaWSR_tit"><h3>荣誉信息管理</h3></div>
+			<div class="teaWSR_con">
+				<!-- <include file="../Public/_photolist" /> -->
+			</div>
+		</div>
+	</div>
+	<div class="clear"></div>
+</div>
+<include file="__THEME__/public_footer" />

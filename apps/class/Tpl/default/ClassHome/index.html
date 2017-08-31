@@ -1,0 +1,196 @@
+<include file="__THEME__/public_header" />
+<link href="__APP__/css/fonts.css" rel="stylesheet" type="text/css" />
+<link href="__APP__/css/main.css" rel="stylesheet" type="text/css" />
+<div class="cloud">
+	<include file="__THEME__/public_class_menu" />
+	<div class="content">
+	<include file="_top" />
+		<div class="class_info">
+			<div class="bj_left">
+				<div class="board_box">
+					<div class="board">
+						<p class="board_topleft"></p>
+						<p class="board_topright"></p>
+						<p class="board_botleft"></p>
+						<p class="board_botright"></p>
+						<ul class="board_list">
+							<li>
+								<div class="board_tips">作业</div>
+								<dl class="board_tipcon" id="classhomework1">
+								 <dt>{$newhomework|default="没有相关作业"}</dt>
+								</dl>
+								<dl class="board_tipcon" id="classhomework2" style="display:none;">
+								</dl>
+								<div class="board_arrow" <elt name="homeworklength" value="0">style="display:none;"</elt> ><a href="javascript:void(0)"><img src="__APP__/image/icon_arrowdown.gif" onclick="classindex.changestatus(1,this)" tag="2"/></a></div>
+								<div class="clear"></div>
+							</li>
+							<li>
+								<div class="board_tips">通知</div>
+								<dl class="board_tipcon" id="classnotice1">
+								</dl>
+								<dl class="board_tipcon" id="classnotice2" style="display:none;">
+								</dl>
+								<div class="board_arrow"><a href="javascript:void(0)"><img src="__APP__/image/icon_arrowdown.gif" onclick="classindex.changestatus(2,this)" tag="2"/></a></div>
+								<div class="clear"></div>
+							</li>
+							<li>
+								<div class="board_tips">今日课表</div>
+								<dl class="board_tipcon" id="todayschedule1">
+								<dt>{$sch}&nbsp;&nbsp;&nbsp;&nbsp;<a class="green" href="index.php?app=class&mod=ClassHome&act=class_schedule&cid={$cid}">查看更多>></a></dt>
+								</dl>
+								<div class="clear"></div>
+							</li>
+						</ul>
+					</div>
+				</div>
+			
+				<div class="tab_b mt14"><b>相册</b><if condition="$photo_count gt 0"><font class="gray">大家记录了{$photo_count}个美好瞬间</font></if><p class="btn"><input type="button" value="上传照片" class="green_sc"  onmouseover="this.className='green_schover'" onmouseout="this.className='green_sc'" onclick="window.location.href='index.php?app=class&mod=ClassAlbum&act=classflash&cid={$classId}'"/><input type="button" value="查看全部照片" class="green_m"  onmouseover="this.className='green_mhover'" onmouseout="this.className='green_m'" onclick="window.location.href='index.php?app=class&mod=ClassAlbum&act=classalbums&cid={$classId}'"/></p></div>
+				<ul class="pic_list">
+				<volist name="photo_data.data" id="vo" empty="尚未创建班级相册">
+					<li><a href="{:U('class/ClassAlbum/classalbum',array('id'=>$vo['id'],'cid'=>$classId))}"><img src="{$vo.id|get_album_cover=###,$li,66,66}" /></a></li>
+				</volist>
+				<!-- 	<li><img src="__APP__/image/pic_use.jpg" /></li>
+					 -->
+					<div class="clear"></div>
+				</ul>
+				<include file="../Public/_bloglist" />
+			</div>
+			<include file="_right" />
+			<div class="clear"></div>
+		</div>
+	</div>
+	
+</div>
+<script type="text/javascript">
+  var classindex=classindex||{};
+  classindex.cid='<php> echo $cid;</php>';
+  classindex.loadhomework=function(type,num){
+	  $.ajax({
+			type: "POST",
+			url: U('class/Ajax/getHNT'),
+			data:{"type":type,"num":num,"cid":classindex.cid},
+			success:function(msg){
+				msg=eval('('+msg+')');
+				var tmp1='',
+				    tmp2='',
+				    data=msg['data'];
+					tmp1+='<dt>'+data[0].content+'</dt>';
+					for(var i=1;i<data.length;i++){
+						tmp2+='<dd>'+data[i].content+'</dd>';
+					}
+					tmp2=tmp1+tmp2;
+				jQuery("#classhomework2").html("").html(tmp2);
+			},
+			error:function(msg){
+				ui.error(msg);
+			}
+		});
+  }
+  classindex.loadnotice=function(type,num){
+	  $.ajax({
+			type: "POST",
+			url: U('class/Ajax/getHNT'),
+			data:{"type":type,"num":num,"cid":classindex.cid},
+			success:function(msg){
+				msg=eval('('+msg+')');
+				var tmp1='',
+				    tmp2='',
+				    data=msg['data'];
+					tmp1+='<dt>'+data[0].content+'</dt>';
+					for(var i=1;i<data.length;i++){
+						tmp2+='<dd>'+data[i].content+'</dd>';
+					}
+					tmp2=tmp1+tmp2;
+				jQuery("#classnotice1").html("").html(tmp1);
+				jQuery("#classnotice2").html("").html(tmp2);
+			},
+			error:function(msg){
+				ui.error(msg);
+			}
+		});
+  }
+  classindex.loadschedule=function(type,num){
+	  $.ajax({
+			type: "POST",
+			url: U('class/Ajax/getHNT'),
+			data:{"type":type,"num":num,"cid":classindex.cid},
+			success:function(msg){
+				msg=eval('('+msg+')');
+				var tmp1='',
+				    tmp2='',
+				    data=msg['data'];
+					tmp1+='<dt>'+data[0].content+'</dt>';
+					for(var i=1;i<data.length;i++){
+						tmp2+='<dd>'+data[i].content+'</dd>';
+					}
+					tmp2=tmp1+tmp2;
+				jQuery("#todayschedule1").html("").html(tmp1);
+				jQuery("#todayschedule2").html("").html(tmp2);
+			},
+			error:function(msg){
+				ui.error(msg);
+			}
+		});
+  }
+  classindex.init=function(){
+	  classindex.loadhomework(1,5);
+	  classindex.loadnotice(2,1);
+	  //classindex.loadschedule(3,1);
+  }
+  classindex.changestatus=function(type,obj){
+	  switch(type){
+	      case 1:
+	    	  obj=jQuery(obj);
+	    	  if(obj.attr("tag")==2){
+	    		 obj.attr("tag","1");
+	    		 obj.attr("src","__APP__/image/icon_arrowup.gif");
+	    		 jQuery("#classhomework1").slideUp("fast",function(){
+	    			 jQuery("#classhomework2").slideDown("normal");
+	    		 });
+	    	  }else{
+	    		 jQuery("#classhomework2").slideUp("fast",function(){
+		    			 jQuery("#classhomework1").slideDown("normal");
+		         });
+	    		 obj.attr("tag","2");
+		    	 obj.attr("src","__APP__/image/icon_arrowdown.gif");
+	    	  }
+	    	  break;
+	      case 2:
+	    	  obj=jQuery(obj);
+	    	  if(obj.attr("tag")==2){
+	    		 obj.attr("tag","1");
+	    		 obj.attr("src","__APP__/image/icon_arrowup.gif");
+	    		 jQuery("#classnotice1").slideUp("fast",function(){
+	    			 jQuery("#classnotice2").slideDown("normal");
+	    		 });
+	    	  }else{
+	    		 jQuery("#classnotice2").slideUp("fast",function(){
+		    			 jQuery("#classnotice1").slideDown("normal");
+		         });
+	    		 obj.attr("tag","2");
+		    	 obj.attr("src","__APP__/image/icon_arrowdown.gif");
+	    	  }
+	    	  break;
+	      case 3:
+	    	  obj=jQuery(obj);
+	    	  if(obj.attr("tag")==2){
+	    		 obj.attr("tag","1");
+	    		 obj.attr("src","__APP__/image/icon_arrowup.gif");
+	    		 jQuery("#todayschedule1").slideUp("fast",function(){
+	    			 jQuery("#todayschedule2").slideDown("normal");
+	    		 });
+	    	  }else{
+	    		 jQuery("#todayschedule2").slideUp("fast",function(){
+		    			 jQuery("#todayschedule1").slideDown("normal");
+		         });
+	    		 obj.attr("tag","2");
+		    	 obj.attr("src","__APP__/image/icon_arrowdown.gif");
+	    	  }
+	    	  break;
+	  }
+  }
+  jQuery(document).ready(function(){
+	  classindex.init();
+  });
+</script>
+<include file="__THEME__/public_footer" />

@@ -1,0 +1,96 @@
+<div class="left teaWS_menu">
+	<if condition="$level eq 3">
+	<div>
+		<p <php>if (in_array(APP_NAME . '/' . MODULE_NAME, array('msgroup/Config'))):</php> style="display:none;" <php>else:</php>style="display:block;"<php>endif;</php> ><span><a href="{:U('msgroup/Config/index', array('gid' => $gid))}">基础信息维护</a></span></p>
+		<dl <php>if (in_array(APP_NAME . '/' . MODULE_NAME, array('msgroup/Config'))):</php> style="display:block;" <php>else:</php>style="display:none;"<php>endif;</php> >
+			<dt class="teaWScur" style="background-image:none;">基础信息维护</dt>
+		</dl>
+	</div>
+	<div>
+		<p <php>if (in_array(APP_NAME . '/' . MODULE_NAME, array('msgroup/Member'))):</php> style="display:none;" <php>else:</php>style="display:block;"<php>endif;</php> ><span><a href="{:U('msgroup/Member/index', array('gid' => $gid))}">工作室成员管理</a></span></p>
+	    <dl <php>if (in_array(APP_NAME . '/' . MODULE_NAME, array('msgroup/Member'))):</php> style="display:block;" <php>else:</php>style="display:none;"<php>endif;</php> >
+			<dt class="teaWScur" style="background-image:none;">工作室成员管理</dt>
+		</dl>
+	</div>
+	</if>
+	<!--
+	<div>
+		<p><span><a href="#">权限管理</a></span></p>
+	</div>
+	-->
+	<div>
+		<p <php>if (in_array(APP_NAME . '/' . MODULE_NAME, array('msgroup/Resource'))):</php> style="display:none;" <php>else:</php>style="display:block;"<php>endif;</php> ><span><a href="{:U('msgroup/Resource/index', array('gid' => $gid))}">教学资源管理</a></span></p>
+	    <dl <php>if (in_array(APP_NAME . '/' . MODULE_NAME, array('msgroup/Resource'))):</php> style="display:block;" <php>else:</php>style="display:none;"<php>endif;</php> >
+			<dt class="teaWScur" style="background-image:none;">教学资源管理</dt>
+		</dl>
+	</div>
+	<div>
+		<p <php>if (in_array(APP_NAME . '/' . MODULE_NAME, array('msgroup/Announce'))):</php> style="display:none;" <php>else:</php>style="display:block;"<php>endif;</php> ><span><a href="{:U('msgroup/Announce/index', array('gid' => $gid))}">通知公告管理</a></span></p>
+		<dl <php>if (in_array(APP_NAME . '/' . MODULE_NAME, array('msgroup/Announce'))):</php> style="display:block;" <php>else:</php>style="display:none;"<php>endif;</php> >
+			<dt class="teaWScur" style="background-image:none;">通知公告管理</dt>
+		</dl>
+		<dl id="id_up" <php>if (in_array(APP_NAME . '/' . MODULE_NAME, array('msgroup/Article'))):</php> style="display:block;" <php>else:</php>style="display:none;"<php>endif;</php> >
+			<dt class="teaWScur">资讯文章管理</dt>
+			<dd>
+			<ul>
+				<li <php>if (in_array(MODULE_NAME . '/' . ACTION_NAME, array('Article/dynamic')) || ((ACTION_NAME == 'add' || ACTION_NAME == 'edit' || ACTION_NAME == 'detail')  && $_REQUEST['type'] == 2)):</php> class="teaWSlicur" <php>else:</php>class=""<php>endif;</php> ><a href="{:U('msgroup/Article/dynamic', array('gid' => $gid))}">工作动态</a></li>
+				<li <php>if (in_array(MODULE_NAME . '/' . ACTION_NAME, array('Article/research')) || ((ACTION_NAME == 'add' || ACTION_NAME == 'edit' || ACTION_NAME == 'detail') && $_REQUEST['type'] == 3)):</php> class="teaWSlicur" <php>else:</php>class=""<php>endif;</php> ><a href="{:U('msgroup/Article/research', array('gid' => $gid))}">研究成果</a></li>
+				<!--<li <php>if (in_array(MODULE_NAME . '/' . ACTION_NAME, array('Article/thesis')) || ((ACTION_NAME == 'add' || ACTION_NAME == 'edit' || ACTION_NAME == 'detail') && $_REQUEST['type'] == 4)):</php> class="teaWSlicur" <php>else:</php>class=""<php>endif;</php> ><a href="{:U('msgroup/Article/thesis', array('gid' => $gid))}">教学论文</a></li>-->
+				<!--<li <php>if (in_array(MODULE_NAME . '/' . ACTION_NAME, array('Article/blog')) || ((ACTION_NAME == 'add' || ACTION_NAME == 'edit' || ACTION_NAME == 'detail') && $_REQUEST['type'] == 5)):</php> class="teaWSlicur" <php>else:</php>class=""<php>endif;</php> ><a href="{:U('msgroup/Article/blog', array('gid' => $gid))}">教学日志</a></li>-->
+			</ul>
+			</dd>
+		</dl>
+	</div>
+	<div id="id_down" <php>if (in_array(APP_NAME . '/' . MODULE_NAME, array('msgroup/Article'))):</php> style="display:none;" <php>else:</php>style="display:block;"<php>endif;</php>>
+		<p onclick="switchMenu(this,'down','{$gid}')"><span><a href="javascript:void(0)">资讯文章管理</a></span></p>
+	</div>
+	<div>
+		<p <php>if (in_array(APP_NAME . '/' . MODULE_NAME, array('msgroup/Photo'))):</php> style="display:none;" <php>else:</php>style="display:block;"<php>endif;</php> ><span><a href="{:U('msgroup/Photo/index', array('gid' => $gid))}">荣誉信息管理</a></span></p>
+		<dl <php>if (in_array(APP_NAME . '/' . MODULE_NAME, array('msgroup/Photo'))):</php> style="display:block;" <php>else:</php>style="display:none;"<php>endif;</php> >
+			<dt class="teaWScur" style="background-image:none;">荣誉信息管理</dt>
+		</dl>
+		
+		<dl id="id_jxyt" class="nc_jxyt" style="display:none;">
+			<dt class="ncteaWScur" onclick="switchMenu('id_jxyt','jxytup')" style="cursor:pointer">教学研讨管理</dt>
+			<dd>
+			<ul>
+				<li onmouseover="this.className='teaWSlicur'" onmouseout="this.className=''"><a href="{:U('research/Index/index')}" target="_blank">主题讨论</a></li>
+				<li onmouseover="this.className='teaWSlicur'" onmouseout="this.className=''"><a href="{:U('onlineanswer/Index/index')}" target="_blank">在线答疑</a></li>
+				<li onmouseover="this.className='teaWSlicur'" onmouseout="this.className=''"><a href="{:U('pingke/Index/index')}" target="_blank">网上评课</a></li>
+				<li onmouseover="this.className='teaWSlicur'" onmouseout="this.className=''"><a href="{:U('vote/Index/index')}" target="_blank">网络调研</a></li>
+			</ul>
+			</dd>
+		</dl>
+		
+	</div>
+	
+	<div id="id_jxytdown">
+		<p onclick="switchMenu('id_jxyt','jxytdown')"><span><a href="javascript:void(0)">教学研讨管理</a></span></p>
+	</div>
+	
+</div>
+<script type="text/javascript">
+	function switchMenu(obj,type,gid) {
+		var _obj1 = jQuery(obj.parent);
+        switch(type){
+            case 'up':
+            	jQuery("#id_up").css("display","none");
+            	jQuery("#id_down").css("display","block");
+            	break;
+            case 'down':
+            	jQuery("#id_up").css("display","block");
+            	jQuery("#id_down").css("display","none"); 
+            	window.location.href="index.php?app=msgroup&mod=Article&act=dynamic&gid="+gid;
+            	break;
+            case 'jxytdown':
+            	jQuery("#id_jxyt").css("display","block");
+            	jQuery("#id_jxytdown").css("display","none"); 
+            	break;
+            case 'jxytup':
+            	jQuery("#id_jxyt").css("display","none");
+            	jQuery("#id_jxytdown").css("display","block"); 
+            	break;
+        
+        }
+	}
+</script>

@@ -1,0 +1,19 @@
+<include file="__THEME__/public_header" />
+<link rel="stylesheet" href="__THEME__/css/base.css">
+<link rel="stylesheet" href="__THEME__/css/common.css">
+<link rel="stylesheet" href="__ROOT__/apps/public/_static/css/person_center.css">
+<link href="__APP__/fonts.css" rel="stylesheet" type="text/css" />
+<link href="__APP__/per_zone.css" rel="stylesheet" type="text/css" />
+    <div id="page-wrap">
+        <div id="feedback" class="feedback-fixed"><a href="{:U('public/Index/feedback')}" target="_blank">{:L('PUBLIC_FEEDBACK')}</a></div>
+        <div id="main-wrap">
+            <div id="st-index-grid" class="st-grid content-bg">
+                <!--左边 -->
+                <include file="__THEME__/public_left" />
+                <div class="st-section" style="border-left:1px solid #e1e1e1;background-color: #fff">                          
+                   <iframe src="{$platUrl}" width="769px" marginwidth="0" marginheight="0" frameborder="0" scrolling="no" id="platformIframe" style="padding: 0px 10px 0px 10px;min-height: 1600px"></iframe>               
+                </div>
+            </div>
+        </div>
+    </div>     
+<include file="__THEME__/public_footer" />

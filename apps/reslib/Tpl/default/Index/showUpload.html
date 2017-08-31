@@ -1,0 +1,699 @@
+<style>
+.select_box {
+    position: relative;
+    cursor: pointer;
+    height: 238px;
+}
+.select_cont {
+    padding: 0 16px;
+    font-size: 16px;
+}
+.select_cont.current {
+    color: #16936b;
+}
+.select_cont, .select_btn {
+    background-color: #f4f4f4;
+    border: 1px solid #dedede;
+    display: inline;
+    float: left;
+    height: 38px;
+    line-height: 38px;
+}
+.select_list_wrap {
+	position: relative;
+    left: 70px;
+    width: 100%;
+}
+.select_btn {
+    background-image: url("__APP__/images/dir-icon.png");
+    background-position: center center;
+    background-repeat: no-repeat;
+    border-left: medium none;
+    width: 38px;
+}
+</style>
+<div class="pop_box1">
+	<input id="cyuid" value="{$cyuid}" type="hidden">
+	<input id="refresh" value="{$refresh}" type="hidden">
+	<input id="file_size" value="" type="hidden"/>
+	<input id="used_capacity" value="{$usedCapacity}" type="hidden"/>
+	<input id="total_capacity" value="{$totalCapacity}" type="hidden"/>
+	<input id="msgid" value="{$msgid}" type="hidden">
+	<div class="pop_con">
+		<div class="pop_line1">
+			<p class="pop_title">选择资源:</p>
+			<p class="style1"><input value="{$uname}" type="hidden" id="uname" /><input value="not_uploaded" type="hidden" id="upload_status" /><input value="" type="hidden" id="rid" /><input type="text" value=""  id="title" readonly="readonly"/></p>
+			<p class="add_file"><input type="button" id="file_upload" value="添加文件" class="add_filenor" onMouseover="this.className='add_filehov'" onMouseOut="this.className='add_filenor'"></p>
+			<div class="clear"></div>
+			<div id="word_reminder" style="margin-left:70px;display:none;">
+				<font class="reminder" style="color:red;">该资源包含敏感词，请选择其他资源！</font><!--140505-->
+			</div>
+		</div>
+		<div id="uploadQueue" style="margin-left:70px;">
+		</div>
+		<if condition="$sync eq 'true'">
+			<div>
+				<input type="checkbox" id='sync_to_res' checked="checked">将附件同步至学科资源
+			</div>
+		</if>
+		<div class="select_box clearfix" style="height:auto;">
+			<p class="pop_title">课程：</p>
+			<p id="show_course_info" class="select_cont current">请选择课程信息</p>
+			<span id="course_info" class="select_btn"></span>
+			<div class="clear"></div>
+			<div id="set_course_info" style="display:none;" class="select_list_wrap clearfix">
+				<select id="subject" style="height:158px;width:130px;" size=4>
+				</select>
+				<select id="edition" style="display:none;height:158px;width:130px;" size=2>
+				</select>
+				<select id="stage" style="display:none;height:158px;width:130px;" size=2>
+				</select>
+				<input type="hidden" id="book" />
+				<select id="unit" style="display:none;height:158px;width:130px;" size=2>
+				</select>
+			</div>
+		</div>
+		<div class="pop_line3">
+			<p class="pop_title">资源类型:</p>
+				<select id="res_type">
+					<volist name="res_list" id="restype">
+                   	  <option value="{$restype['code']}">{$restype['name']}</option>
+	                </volist>
+                 </select>
+			<div class="clear"></div>
+		</div>
+		<div class="pop_line4" style="display: none;">
+			<p class="pop_title">资源来源:</p>
+				<select id="res_source">
+                      <option value="IFLY" >讯飞</option>
+                      <option value="YANGGUAN">央馆</option>
+                      <option value="SHENGGUAN">省馆</option>
+                      <option value="UGC" selected="selected">用户上传</option>                      
+                   </select>
+			<div class="clear"></div>
+		</div>
+		<div class="pop_line5">
+			<p class="pop_title">描述:</p>
+				<textarea id="descriptor"  style="color:#999999" name="描述" title="选填，简要介绍资源的主要内容，方便资源被更多人浏览和下载" onfocus="tipInputFocus(this)" onblur="tipInputBlur(this);">选填，简要介绍资源的主要内容，方便资源被更多人浏览和下载</textarea>
+			<div class="clear"></div>
+			<div id="descriptor_reminder" class="word-reminder" style="margin-left:70px;display:none;">
+				<font class="reminder" style="color:red;">描述中包含敏感词，请检查后重新输入！</font><!--140505-->
+			</div>
+		</div>
+		<div class="pop_line6">
+			<p class="pop_title">关键词:</p>
+			<p class="style1"><input name="" type="text"  style="color:#999999" id="keyword" name="关键词" type="text" title="建议为您的文档填写关键词,多个关键词用逗号分隔" value="建议为您的文档填写关键词,多个关键词用逗号分隔"   onfocus="tipInputFocus(this)" onblur="tipInputBlur(this);"/></p>
+			<div class="clear"></div>
+			<div id="keyword_reminder" class="word-reminder" style="margin-left:70px;display:none;">
+				<font class="reminder" style="color:red;">关键词中包含敏感词，请检查后重新输入！</font><!--140505-->
+			</div>
+		</div>
+		<div class="pop_btn">
+			<input id="submit_upload" type="button" value="上传" class="add_filenor" onMouseover="this.className='add_filehov'" onMouseOut="this.className='add_filenor'" onclick="resUpload.upload();">
+			<input type="button" value="关闭" class="blue4_btn" onMouseover="this.className='blue4_btnhov'" onMouseOut="this.className='blue4_btn'" onclick="resUpload.close();">
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+function tipInputFocus(obj) {
+	if(obj.value==obj.title) {
+		obj.value='';
+		obj.style.color="black";
+	}
+}
+function tipInputBlur(obj) {
+	if(obj.value=='') {
+		obj.value=obj.title;
+		obj.style.color="#999999";
+	}
+}
+var RS_SITE_URL = '<php>echo C("RS_SITE_URL");</php>';
+var resUpload=resUpload||{};
+var upload_btnlock = 0;
+var RESLIB_VIEW_APP = '<php>echo C("RESLIB_VIEW_APP")</php>';
+var auditMode = "<php>echo C('RES_AUDIT_MODE');</php>";
+
+resUpload.uid = $("#cyuid").val();
+resUpload.check = true;
+resUpload.sync = '<php>echo $sync;</php>';
+resUpload.url = U('reslib/Ajax/nodes');
+resUpload.bookurl = U('reslib/Ajax/book');
+resUpload.subject_url = U('reslib/Ajax/subject');
+resUpload.request_data = {"PHPSESSID":"<php>echo $_session_id;</php>","login":"<php>echo $GLOBALS['ts']['user']['login'];</php>"};
+
+resUpload.requestData=function(url,data,callback){
+	jQuery.ajax({
+		type: "POST",
+		url: url,
+		data:data,
+		success:function(msg){
+			callback&&callback(data['node'],msg);
+		},
+		error:function(msg){
+			
+		}
+	});
+}
+
+resUpload.getSelectValue=function(){
+	var msgid = jQuery("#msgid").val();
+	var title = jQuery("#title").val();
+	var subject = jQuery("#subject").val();	
+	var edition = jQuery("#edition").val();
+	var stage = jQuery("#stage").val();
+	var book = jQuery("#book").val();
+	var unit = jQuery("#unit").val();
+	var keywords = jQuery("#keyword").val()!=jQuery("#keyword").attr("title")?jQuery("#keyword").val():'';
+	keywords = jQuery.trim(keywords);
+	var descriptor = jQuery("#descriptor").val() == jQuery("#descriptor").attr("title") ? '' : jQuery("#descriptor").val();
+	descriptor = jQuery.trim(descriptor);
+	var restype = jQuery("#res_type").val();
+	var ressource = jQuery("#res_source").val();
+	var rid = jQuery("#rid").val();
+	var size = jQuery("#file_size").val();
+	if(title == ""){
+		ui.error("文件不能为空！");
+		return;
+	}
+	if(resUpload.check == true){
+		if(subject=="000" || subject == null){
+			ui.error("请选择学科！");
+			return false;
+		}if(edition=="000" || edition == null){
+			ui.error("请选择出版社！");
+			return false;
+		}if(stage=="000" || stage == null){
+			ui.error("请选择年级！");
+			return false;
+		}if(unit===undefined || unit == null){
+			ui.error("请选择课时！");
+			return false;
+		}if(restype=="0000"){
+			ui.error("请选择资源类型！");
+			return false;
+		}
+		return {"title":title,"subject":subject,"edition":edition,"stage":stage,"book":book,"unit":unit,"keywords":keywords,"description":descriptor,"restype":restype,"ressource":ressource,'rid':rid,"size":size,"msgid":msgid};
+	}
+	return {"title":title,"keywords":keywords,"description":descriptor,"ressource":ressource,'rid':rid,"size":size};
+}
+
+resUpload.clearSelectValue=function(){
+	var default_des = "选填，简要介绍资源的主要内容，方便资源被更多人浏览和下载";
+	var des_obj = jQuery("#descriptor");
+	var kw_obj = jQuery("#keyword");
+	jQuery("#title").val('');
+	des_obj.focus();
+	des_obj.html(default_des);
+	kw_obj.focus();
+	kw_obj.val(kw_obj.attr("title"));
+	jQuery("#subjectoption").val("000");
+	jQuery("#subjectoption").trigger('change');
+}
+
+//检测输入的内容是否包含敏感词
+resUpload.checkInputWord = function(obj,tipid,key){
+	var word = jQuery.trim(jQuery(obj).val());
+	word = word.replace(" ","");
+	jQuery.ajax({
+		url : U('reslib/Ajax/textFilter'),
+		async : false,
+		type : 'post',
+		data : {content : word},
+		success : function(result){
+			result = eval('(' + jQuery.trim(result) + ')');
+			if(result.status == '1'){
+				jQuery("#"+tipid).show();
+				isFirstClick = true;
+				flag[key] = false;
+			}else{
+				flag[key] = true;
+				jQuery("#"+tipid).hide();
+			}
+		}
+	});
+};
+var flag = {keyword : false, descriptor : false};
+// 检测输入的内容是否包含敏感词
+resUpload.checkWord = function(obj){
+	var word = jQuery.trim(jQuery(obj).val());
+	word = word.replace(" ","");
+	word = word.replace(fileType,"");
+	resUpload.checkInputWord(jQuery("#descriptor")[0],'descriptor_reminder','descriptor');
+	resUpload.checkInputWord(jQuery("#keyword")[0],'keyword_reminder','keyword');
+	if(flag.keyword && flag.descriptor){
+		jQuery.ajax({
+			url : U('reslib/Ajax/textFilter'),
+			type : 'post',
+			data : {content : word},
+			success : function(result){
+				result = jQuery.trim(result);
+				if(result != ''){
+					result = eval('(' + result + ')');
+					if(result.status == '1'){
+						// 包含敏感词
+						jQuery("#word_reminder").show();
+						isFirstClick = true;
+					}else if(result.status == '0'){
+						jQuery("#word_reminder").hide();
+						resUpload.submitUpload();
+					}
+				}else{
+					jQuery("#word_reminder").hide();
+					resUpload.submitUpload();
+				}
+			}
+		});
+	}
+};
+
+// 提交上传
+resUpload.submitUpload = function(){
+	//是否刷新当前页面
+	var refresh = jQuery("#refresh").val();
+	//资源信息选择
+	if(d = resUpload.getSelectValue()){
+		//资源上传状态
+		var upload_status = jQuery("#upload_status").val();
+		if(upload_status == "uploaded"){
+			//避免重复上传
+			if (upload_btnlock == 0) {
+				upload_btnlock = 1;
+			} else {
+				//如果弹出提示，感觉是向堆栈里push弹窗事件，下次的事件可能会弹出上次未响应的弹框
+				//ui.error('正在上传请勿重复点击！');
+				return false;
+			}
+			//将上传资源的资料更新到网关中
+			jQuery.ajax({
+				type:'POST',
+				url:U('reslib/Ajax/complete_upload'),
+				data:d,
+				success:function(json){
+					data=eval('('+json+')');//包含上传文件id
+					if(data.status == 1){
+						jQuery("#upload_status").val("complete");
+						//保存资源的id和title，用户上传附件
+						if(resUpload.sync == 'true'){
+							//var attachments = attachments || {};
+							var ary = new Array();
+							ary.push(data.id);
+							ary.push(d['title']);
+							attachments.push(ary);
+						}
+						resUpload.close();
+						// 动态类型
+						var type = "post";
+						if(d){
+							switch(d['restype']){
+							case '0100' : type = "teaching_design";break;
+							case '0200' : type = "teaching_class";break;
+							case '0300' : type = "teaching_material";break;
+							case '0600' : type = "teaching_ware";break;
+							default : type = "post";
+							}
+						}
+						if(resUpload.check == true){
+							if('undefined' != typeof gid && parseInt(gid) > 0){
+								if(auditMode == 1){
+									//文件上传成功发布微博
+									$.post(U('public/Feed/PostFeed'), {body:'@'+uname+' 上传了一个资源【'+d['title']+'】 ', "app_name":"msgroup", gid:gid,type:'msgroup', content:'',feed_title:d['title'],source_url:Ures('//',new Array('id='+data.id))}, function(msg) {
+										if(msg.status == 1 && data.currentStatus == '200') {
+	                                        jQuery.jBox.tip("<span style='font-size:14px; color:#535353;'>资源上传成功,积分</span><span style='color:#ff6600;'>+5</span>", 'success');
+										}else if(msg.status == 1){
+	                                        ui.success("资源上传成功!");
+	                                    }else {
+											ui.error(msg.data);
+										}
+									}, 'json');
+								}else{
+                                    if(data.currentStatus == '200') {
+                                        jQuery.jBox.tip("<span style='font-size:14px; color:#535353;'>资源上传成功,积分</span><span style='color:#ff6600;'>+5</span>", 'success');
+                                    }else{
+                                        ui.success("资源上传成功!");
+                                    }
+								}
+							}else{
+								if(auditMode == 1){
+									//文件上传成功发布微博
+									$.post(U('public/Feed/PostFeed'), {body:'我上传了一个资源【'+d['title']+'】 ', "app_name":"reslib", type:type, content:'',feed_title:d['title'],source_url:Ures('//',new Array('id='+data.id))}, function(msg) {
+										if(msg.status == 1 && data.currentStatus == '200') {
+	                                        jQuery.jBox.tip("<span style='font-size:14px; color:#535353;'>资源上传成功,积分</span><span style='color:#ff6600;'>+5</span>", 'success');
+										}else if(msg.status == 1){
+	                                        ui.success("资源上传成功!");
+	                                    } else {
+											ui.error(msg.data);
+										}
+									}, 'json');
+								}else{
+                                    if(data.currentStatus == '200') {
+                                        jQuery.jBox.tip("<span style='font-size:14px; color:#535353;'>资源上传成功,积分</span><span style='color:#ff6600;'>+5</span>", 'success');
+                                    }else{
+                                        ui.success("资源上传成功!");
+                                    }
+								}
+							}
+						}
+						//如果当前页面是同步资源页面，则在资源上传完成后进行刷新
+						var operation = jQuery("#operation").val();
+						if(5 == operation){
+							MyResLib.resPageList(1, 5);
+						} else if("true" == refresh){
+							//是否刷新资源上传页面
+							setTimeout(function(){
+									window.location.reload();
+							},1500);
+						} 
+						
+					} else{
+						ui.error("文件上传失败");
+					}
+					//成功返回解除上传按钮锁
+					upload_btnlock = 0;
+					isFirstClick = true;
+				}
+			});
+		}else if(upload_status =="uploading"){
+			ui.showMessage("资源上传中，请稍等！", 1, 2);
+			isFirstClick = true;
+		} else {
+			isFirstClick = true;
+			ui.confirmBox("提示", "资源上传失败，请重新上传！", function(){});
+		}
+	}else{
+		isFirstClick = true;
+	}
+};
+
+/**
+ * 上传资源信息
+ */
+var isFirstClick = true;
+resUpload.upload=function(){
+	if(isFirstClick){
+		isFirstClick = false;
+		resUpload.checkWord(jQuery("#title")[0]);
+	}
+};
+
+/**
+ * 初始化uploadify控件
+ */
+var fileType = '';
+resUpload.init_uploadify = function(){
+	jQuery("#file_upload").uploadify({
+		auto:  true,
+		multi: false,
+		queueSizeLimit:1,
+		width         : 70,
+		height        : 28,
+		swf           : '__THEME__/js/uploadify/uploadify.swf',
+		uploader      : U('reslib/Ajax/upload'),
+		buttonImage     : "__THEME__/image/green_btn_addfile.gif",
+		buttonText      : '添加文件',
+		fileTypeExts : "{$file_extensions}",
+		queueID         : "uploadQueue",
+		progressData   :'all',
+		fileSizeLimit     :'<php>echo C("RESLIB_FILE_SIZE_LIMIT");</php>',
+		successTimeout  : 3600,//将时间变60分钟，不然上传大文件时出现错误，The number of seconds to wait for Flash to detect the server's response after the file has finished uploading
+		debug	: false,
+		formData        : resUpload.request_data, 
+		onSelect:function(file){
+			jQuery("#title").val(file['name'].replace(file.type,""));
+			jQuery("#upload_status").val('uploading');
+			upload_btnlock = 0;
+			jQuery("#word_reminder").hide();
+			fileType = file.type;
+			
+			/*-------------做资源库容量判断 by xypan 10.10--------------*/
+			var usedCapacity = jQuery("#used_capacity").val();
+			var toalCapacity = jQuery("#total_capacity").val();
+
+			usedCapacity = parseInt(usedCapacity);
+			toalCapacity = parseFloat(toalCapacity);
+			
+			// 如果容量不足,则取消上传
+			if((usedCapacity + file.size)>toalCapacity){
+				jQuery("#file_upload").uploadify('cancel',file.id);
+				jQuery("#upload_status").val('capacity_exceeded');
+			}else{
+				jQuery("#file_size").val(file.size);
+			}
+			/*-------------------------end-----------------------*/
+		},
+		onUploadSuccess:function(file, data, response){
+			if("undefined" != typeof data && data){
+				data=eval('('+data+')');//包含上传文件id
+				if(data.status == 1 && data.id){
+					jQuery("#rid").val(data.id);
+					jQuery("#upload_status").val('uploaded');
+					return;
+				}
+			}
+			jQuery("#upload_status").val('faield');
+			ui.error("上传失败，请重新上传！");
+		},
+		onUploadError:function(file, errorCode, errorMsg){
+			var _upload_status = jQuery("#upload_status").val();
+			if(_upload_status == "capacity_exceeded"){
+				ui.error("资源库容量不足!");
+				setTimeout(function(){
+					resUpload.close();
+				},1500);
+			} else{
+				ui.error("上传出错，请稍后重新上传!");
+			}
+			jQuery("#upload_status").val('faield');
+		}
+	});
+	jQuery(".swfupload").css("visibility","visible");
+	
+}
+
+resUpload.destroy_uploadify=function(){	
+	jQuery("#file_upload").uploadify('cancel','*');
+}
+//获取设置的所有课程信息
+resUpload.getConditions = function(){
+	var cond = {};
+	var subject = jQuery("#subject").val();
+	if(subject != '000' && typeof(subject) != 'object'){
+		cond.subject = subject;
+	}
+	var edition = jQuery("#edition").val();
+	if(edition != '000' && typeof(edition) != 'object'){
+		cond.edition = edition;
+	}
+	var stage = jQuery("#stage").val();
+	if(stage != '000' && typeof(stage) != 'object'){
+		cond.stage = stage;
+	}
+	var unit = jQuery("#unit").val();
+	if(unit != '000' && typeof(unit) != 'object'){
+		cond.unit = unit;
+		cond.unitName = jQuery("#unit").find("option:selected").attr('title');
+	}
+	return cond;
+};
+//展示已选中的课程信息
+resUpload.showCourseInfo = function(){
+	var info = '';
+	var subject = jQuery("#subject").find("option:selected").text();
+	if(subject != '请选择' && typeof(subject) != 'undefined'){
+		info = info + subject;
+	}
+	var edition = jQuery("#edition").find("option:selected").attr('title');
+	if(edition != '请选择' && typeof(edition) != 'undefined'){
+		info = info + '-' + edition;
+	}
+	var stage = jQuery("#stage").find("option:selected").attr('title');
+	if(stage != '请选择' && typeof(stage) != 'undefined'){
+		info = info + '-' + stage;
+	}
+	var unit = jQuery("#unit").find("option:selected").attr('title');
+	if(unit != '请选择' && typeof(unit) != 'undefined'){
+		info = info + '-' + unit;
+	}
+	jQuery("#show_course_info").html(info);
+};
+
+/**
+ * 在上一级下拉菜单值变化时刷新下拉菜单内容
+ * @param options 新的下拉菜单值数组
+ * @param select 目标下拉菜单id
+ */
+ resUpload.refreshOptions = function(condition,select){
+	jQuery.ajax({
+		url : 'index.php?app=reslib&mod=Ajax&act=getNodes',
+		type : 'post',
+		data : condition,
+		success : function(result){
+			var options = eval('(' + result + ')');
+			select = jQuery("#"+select);
+			var option_str = '<option value="000">请选择</option>';
+			for(var i=0; i<options.length; i++){
+				if(options[i].name != '其他' && options[i].name != '演示'){
+					var str = options[i].name;
+					if(str.length > 8){
+						str = str.substr(0,8) + '...';
+					}
+					if(condition.node == 'book'){
+						option_str += '<option value="' + options[i].id + '" code="'+ options[i].code +'" title="' + options[i].name + '">' + str + '</option>';
+					}else{
+						option_str += '<option value="' + options[i].code + '" title="' + options[i].name + '">' +  str  + '</option>';
+					}
+				}
+			}
+			jQuery(select).empty();
+			jQuery(select).html(option_str);
+			jQuery(select).show();
+		},
+		error : function(msg){
+		}
+	});
+};
+//获取指定类型的结点列表
+resUpload.getNodeList = function(type){
+	var cond = resUpload.getConditions();
+	cond.node = type;
+	resUpload.refreshOptions(cond,type);
+};
+//初始化数据
+resUpload.init=function(){
+	resUpload.initCourseInfo();
+	resUpload.getNodeList('subject');
+	resUpload.init_uploadify();
+}
+resUpload.initCourseInfo = function(){
+	// 课程信息隐藏和展示
+	jQuery("#course_info").click(function(){
+		var display = jQuery("#set_course_info").css("display");
+		if(display == 'none'){
+			jQuery("#set_course_info").slideDown();
+		}else{
+			jQuery("#set_course_info").slideUp();
+		}
+	});
+}
+//关闭窗口
+resUpload.close = function(){
+	var swf_id = "SWFUpload_" + (SWFUpload.movieCount - 1); 
+	swfobject.removeSWF(swf_id);
+	//上传资源完成后，提交资源信息失败时，将上传的资源删除
+	var upload_status = jQuery("#upload_status").val();
+	if('uploaded' == upload_status){
+		var rid = jQuery("#rid").val();
+		if(rid){
+			$.post(U('reslib/Ajax/deleteRid'), {"rid":rid}, function(msg) {
+				jQuery("#rid").val("");
+			}, 'json');
+		}
+	}
+	//关闭窗口
+	ui.box.close();
+}
+
+var gid = "<php> echo $msgid;</php>";
+var uname ="<php> echo $GLOBALS['ts']['user']['uname'];</php>";
+//解决弹出框的关闭问题
+jQuery(function(){
+	resUpload.init();
+	if(resUpload.sync == 'true'){
+		$("#sync_to_res").change(function(){
+			var checked = $(this).attr("checked");
+			if(undefined == checked){
+				$(".pop_line2").css("display","none");
+				$(".pop_line3").css("display","none");
+				resUpload.check = false;
+			}else{
+				$(".pop_line2").css("display","block");
+				$(".pop_line3").css("display","block");
+				resUpload.check = true;
+			}
+		})
+	}
+	$('#tsbox').find('.ico-close').unbind("click"); 
+	$('#tsbox').find('.ico-close').bind("click",function(){
+		var swf_id = "SWFUpload_" + (SWFUpload.movieCount - 1);
+		swfobject.removeSWF(swf_id);
+		ui.box.close();
+	}); 
+});
+
+// 学科下拉框变化事件
+jQuery("#subject").change(function(){
+	resUpload.clearSelect('edition');
+	resUpload.clearSelect('stage');
+	resUpload.clearSelect('volumn');
+	resUpload.clearSelect('book');
+	resUpload.clearSelect('unit');
+	if(jQuery(this).val() != '000'){
+		resUpload.getNodeList('edition');
+	}
+	resUpload.showCourseInfo();
+});
+	
+// 出版社下拉框变化事件
+jQuery("#edition").change(function(){
+	resUpload.clearSelect('stage');
+	resUpload.clearSelect('volumn');
+	resUpload.clearSelect('book');
+	resUpload.clearSelect('unit');
+	if(jQuery(this).val() != '000'){
+		resUpload.getNodeList('stage');
+	}
+	resUpload.showCourseInfo();
+});
+	
+// 年级下拉框变化事件
+jQuery("#stage").change(function(){
+	resUpload.clearSelect('unit');
+	if(jQuery(this).val() != '000'){
+		resUpload.getUnits();
+	}
+	resUpload.showCourseInfo();
+});
+	
+// 单元下拉框变化事件
+jQuery("#unit").change(function(){
+	if(jQuery(this).val() != '000'){
+		resUpload.showCourseInfo();
+		jQuery("#set_course_info").slideUp();
+	}
+});
+
+// 清空下拉框内容
+resUpload.clearSelect = function(id){
+	jQuery("#" + id).html('');
+	jQuery("#" + id).hide();
+};
+
+//获取单元列表
+resUpload.getUnits = function(){
+	var cond = resUpload.getConditions();
+	jQuery.ajax({
+		url : 'index.php?app=reslib&mod=Ajax&act=getUnits',
+		type : 'post',
+		data : cond,
+		success : function(result){
+			var options = eval('('+ result +')');
+			var book=options.book;
+			jQuery('#book').val(book.id);
+			options=options.data;
+			var option_str = '<option value="000">请选择</option>';
+			for(var i=0; i<options.length; i++){
+				if(options[i].Name != '其他' && options[i].Name != '演示'){
+					var str = options[i].Name;
+					if(str.length > 8){
+						str = str.substr(0,8) + '...';
+					}
+					option_str += '<option value="' + options[i].Code + '" title="' + options[i].Name + '">' +  str  + '</option>';
+				}
+			}
+			jQuery("#unit").html(option_str);
+			jQuery("#unit").show();
+		},
+		error : function(msg){
+		}
+	});
+};
+</script>

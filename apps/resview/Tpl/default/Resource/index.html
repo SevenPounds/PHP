@@ -1,0 +1,63 @@
+<include file="__THEME__/public_header" />
+<link rel="stylesheet" href="__APP__/css/common.css">
+<link rel="stylesheet" href="__APP__/css/base.css">
+<link rel="stylesheet" href="__APP__/css/view.css">
+<link rel="stylesheet" type="text/css"
+	href="__THEME__/js/fancyBox/jquery.fancybox.css" />
+<link type="text/css" rel="stylesheet"
+	href="__APP__/css/style_resource_view.css">
+<script src="__THEME__/js/fancyBox/jquery.fancybox.js"
+	type="text/javascript"></script>
+<script src="__APP__/js/flexpaper/flexpaper_flash.js"
+	type="text/javascript"></script>
+<script src="__APP__/js/jquery.media.js" type="text/javascript"></script>
+<script src="__THEME__/js/flowplayer/flowplayer-3.2.11.min.js"
+	type="text/javascript"></script>
+<script src="__APP__/js/flexpaper/swfobject.js" type="text/javascript"></script>
+<script src="__APP__/js/res_common.js" type="text/javascript"></script>
+<script type="text/javascript" src="__APP__/js/rescenterDetail.js"></script>
+<script type="text/javascript" src="__APP__/js/rescenter/detail.js"></script>
+<script src="./videoretrieval/Scripts/flowplayerController.js"
+	type="text/javascript"></script>
+<script src="./videoretrieval/Scripts/videoCaptionController.js"
+	type="text/javascript"></script>
+<IE:clientCaps ID="oClientCaps"
+	style="behavior:url(#default#clientcaps)" />
+<script type="text/javascript">
+	jQuery(function() {
+		resourceDetail.videoDetail = '{$videoDetail}';
+		resourceDetail.preview("{$resourceDetail['extension']}",
+				"{$resourceDetail['previewurl']}");
+	})
+</script>
+<include file="__THEME__/login_pop" />
+
+
+<!--wrapper-->
+<div class="wrapper">
+	<php>if($showPersonInfo=='show'){</php>
+	<div class="container wy_mbx">
+		<div class="wy_mbx_con">
+			<img src="{$createData['avatar_small']}" /><a
+				href="{:U('public/Workroom/index',array('uid'=>$createData['uid']))}">{$createData['uname']|getShort=7,'...'}</a>
+			&gt;<a
+				href="{:U('teachingapp/Index/index',array('uid'=>$createData['uid']))}">资源列表</a>
+			&gt;<span>{$resourceDetail['res_title']|getShort=34,'...'}</span>
+		</div>
+	</div>
+	<php>}</php>
+	<!--main-->
+	<div class="main">
+		<div class="container">
+			<div class="main_cont clearfix">
+				<include file="detail/detail_left" />
+				<include file="detail/detail_right" />
+			</div>
+		</div>
+	</div>
+	<!--main-->
+</div>
+<input type="hidden" id="hidden_id" value="{$resourceDetail['fid']}" />
+<input type="hidden" id="user_id" value="{$createData['uid']}">
+
+<include file="__THEME__/public_footer" />

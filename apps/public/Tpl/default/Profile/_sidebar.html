@@ -1,0 +1,114 @@
+<style>
+.r40{
+	float:right;
+}
+.r40 a{
+	padding-left:0px;
+}
+</style>
+<div id="col3" class="st-index-right">
+   <div class="right-wrap">
+   <php>if(!$is_Researcher){</php>
+     <div class="right-box mb20 clearfix border-b" style="display:none;">
+		<div >
+			<h3><span class="right f12" event-node='up_down' event-args='id=myclass&from=pcenter'>{:L('PUBLIC_FOLD')}</span>所在班级</h3>
+				<hr color='green'/>
+			<!--<span class="zk"><a href="#">展开</a></span>-->
+			<div class="clear"></div>
+		</div>
+	<div class="myclass" id="myclass" style="padding-top:10px;">
+		<ul>
+	     <volist name='orglist.class' id='vo' offset='0' length='2'>
+			 <li >
+	       <div class="left com_left">
+	        <a href="{:U('class/ClassHome/index',array('cid'=>$vo['id']))}" event-node="face_card" show="no" orgType="{$vo['type']}" cid="{$vo['id']}" ><img alt="" src="__THEME__/image/class_photo.png"></a>
+	       </div>
+	       <div class="left com_right">
+	       <div style="float:left;">
+	         <p class="class_name"><a href="{:U('class/ClassHome/index',array('cid'=>$vo['id']))}" event-node="face_card" show="no" orgType="{$vo['type']}" cid="{$vo['id']}" >{$vo.name|getShort=5}</a></p>
+	         <p class="font_tea" >身份：<span><php>if($rolelist&&!empty($rolelist)){</php>
+			<volist name='rolelist' id='vo' offset='0' length='1'>{$vo.name}</volist>
+					<php>}</php></span></p>
+			</div>
+			<div class='r40'>
+	        {:W('FollowBtn', array('fid'=>$vo['id'],'uname'=>$vo['name'], 'follow_state'=>$class_follow_state[$vo['id']], 'type'=>'campus','ftype'=>2))}
+	       </div>		
+	       </div>
+	       <div class="clear"></div>
+	     </li>
+		</volist>
+	   </ul>
+	</div>
+</div>
+
+<div class="right-box mb20 clearfix border-b" style="display:none;">
+   	<div>
+			<h3><span  event-node='up_down' event-args='id=myschool&from=pcenter' class="right f12">{:L('PUBLIC_FOLD')}</span>所在学校</h3>
+			<hr  color='green'/>
+			<div class="clear"></div>
+		</div>
+   <div class="myschool" id="myschool"  style="padding-top:10px;">
+	   <ul>
+	    <volist name='orglist.school' id='vo' offset='0' length='2'>
+	     <li >
+	       <div class="left com_left">
+	         <a href="{:U('class/CampusHome/schoolIndex',array('cid'=>$vo['id']))}" event-node="face_card" show="no" orgType="{$vo['type']}" cid="{$vo['id']}" ><img alt="" src="__THEME__/image/class_photo.png"></a>
+	       </div>
+	       <div class="left com_right">
+	         <div style="float:left;">
+	         <p class="school_name"><a href="{:U('class/CampusHome/index',array('cid'=>$vo['id']))}" event-node="face_card" show="no" orgType="{$vo['type']}" cid="{$vo['id']}" >{$vo.name|getShort=5}</a></p>
+	         <p class="font_tea">身份:<span><php>if($rolelist&&!empty($rolelist)){</php>
+			<volist name='rolelist' id='vo' offset='0' length='1'>{$vo.name}</volist>
+					<php>}</php></span></p>
+				</div>
+			<div class='r40'>
+				{:W('FollowBtn', array('fid'=>$vo['id'], 'uname'=>$vo['name'], 'follow_state'=>$school_follow_state[$vo['id']], 'type'=>'campus','ftype'=>1))}
+			</div>
+	       </div>
+	       <div class="clear"></div>
+	     </li>
+	     </volist>
+	   </ul>
+   </div>
+</div>
+<php>}</php>
+
+    <php>if($verifyInfo){</php>
+        <div class="official-aut mb20 border-b">
+            <p class="aut-bg"><img src="__THEME__/image/authentication.png" /></p>
+            <p class="aut-info">{$verifyInfo}</p>
+        </div>
+    <php>}</php>
+    {:W('MedalList',array('uid'=>$user_info[$uid]['uid']))}
+    <php>if($sidebar_following_list['data']){</php>
+        <div class="right-box mb20 clearfix border-b">
+            <h3><a href="{:U('public/Profile/following',array('uid'=>$user_info[$uid]['uid']))}" class="right f12">更多</a><php>if($user_info[$uid]['uid']==$mid){</php>我<php>}else{</php>TA<php>}</php>的关注({$userData.following_count|default=0})</h3>
+            <ul>
+                <volist name="sidebar_following_list['data']" id="vo">
+                <php>if($vo['type']==0):</php>
+                    <li><a href="{:U('public/Profile/index',array('uid'=>$vo['fid']))}" class="face" uid="{$vo['fid']}" event-node="face_card"><img src="{$user_info[$vo['fid']]['avatar_small']}" /></a><a href="{:U('public/Profile/index',array('uid'=>$vo['fid']))}" class="face" uid="{$vo['fid']}" event-node="face_card"><span>{$user_info[$vo['fid']]['uname']|getShort=4}</span></a></li>
+                <php>else:</php>
+                	<li><a href="{$orgListData[$vo['fid']]['spaceurl']}" class="face" cid="{$vo['fid']}" orgType="{$vo['type']}" event-node="face_card"><img src="{$vo['fid']|getCampuseAvatar=###,$vo['type'],'avatar_small'}" /></a><a href="{$orgListData[$vo['fid']]['spaceurl']}"  class="face" cid="{$vo['fid']}"  orgType="{$vo['type']}" event-node="face_card"><span>{$orgListData[$vo['fid']]['name']|getShort=4}</span></a></li>
+                <php>endif;</php>
+                </volist>
+            </ul>
+        </div>
+    <php>}</php>
+    <php>if($sidebar_follower_list['data']){</php>
+        <div class="right-box mb20 clearfix border-b">
+            <h3><a href="{:U('public/Profile/follower',array('uid'=>$user_info[$uid]['uid']))}" class="right f12">更多</a><php>if($user_info[$uid]['uid']==$mid){</php>我<php>}else{</php>TA<php>}</php>的粉丝({$userData.follower_count|default=0})</h3>
+            <ul>
+                <volist name="sidebar_follower_list['data']" id="vo">
+                    <li><a href="{:U('public/Profile/index',array('uid'=>$vo['fid']))}" class="face"><img src="{$user_info[$vo['fid']]['avatar_small']}" uid="{$vo['fid']}" event-node="face_card" /></a><a href="{:U('public/Profile/index',array('uid'=>$vo['fid']))}" class="face" uid="{$vo['fid']}" event-node="face_card"><span>{$user_info[$vo['fid']]['uname']|getShort=4}</span></a></li>
+                </volist>
+            </ul>
+        </div>
+    <php>}</php>
+    <!-- 主页右下广告 -->
+    <div style="width:230px;overflow:hidden;">
+    {:Addons::hook('show_ad_space', array('place'=>'profile_right'))}    
+    </div>
+    <!--最近来访-->
+    {:W('LastVisitors', array('uid'=>$uid, 'user_info'=>$user_info, 'from'=>'profile'))}
+    </div>
+</div>

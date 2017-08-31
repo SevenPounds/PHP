@@ -1,0 +1,85 @@
+<style>
+
+.u-rshare-tabs {
+  float: right;
+}
+
+.u-rshare-tabs .u-rshare-sele {
+    color: #93C896;
+}
+
+.u-rshare-tabs a {
+    color: #DDDDDD;
+    font-family: Simsun;
+    padding-left: 5px;
+}
+.disnone {
+	display: none;
+}
+
+</style>
+<script type="text/javascript">
+
+$(function(){
+	$("#{$content_div_id} #{$content_div_id}_fblog").hover(function(){
+	    $(this).addClass("u-rshare-sele");
+	    $("#{$content_div_id} #{$content_div_id}_sblog").removeClass("u-rshare-sele");
+	    $("#{$content_div_id} #{$content_div_id}_es_2").addClass("disnone");
+	    $("#{$content_div_id} #{$content_div_id}_es_1").removeClass("disnone");
+	});
+	$("#{$content_div_id} #{$content_div_id}_sblog").hover(function(){
+	    $(this).addClass("u-rshare-sele");
+	    $("#{$content_div_id} #{$content_div_id}_fblog").removeClass("u-rshare-sele");
+	    $("#{$content_div_id} #{$content_div_id}_es_1").addClass("disnone");
+	    $("#{$content_div_id} #{$content_div_id}_es_2").removeClass("disnone");
+	});
+});
+
+</script>
+
+<div class="c_rightbox mt30" id="{$content_div_id}">
+				<p class="title3">
+					<span class="left">{$title}</span>	
+				    <span id="rightShareTabs" class="u-rshare-tabs">
+								<a id="{$content_div_id}_fblog" data-index="0" href="javascript:;" class="u-rshare-sele" >●</a>
+								<a id="{$content_div_id}_sblog" data-index="1" href="javascript:;" class="">●</a>
+					</span>
+			  		<div class="clear"></div>
+			  	</p>
+			  	
+			<div id="{$content_div_id}_es_1">	
+			  	<volist name="data[0]" id="vo">
+				<span class="c_rightpic"><a uid="{$vo['uid']}" href="{$vo.space_url}" class="face" event-node="face_card"><img src="{$vo.avatar_small}" width="50" height="50"/></a></span>
+				<span class="c_rightcon">
+					<p class="green"><a event-node="face_card" uid="{$vo.uid}" target="_blank" href="{$vo.space_url}">{$vo.uname|getShort=###,7}</a></p>
+					<p class="c_foucs2">
+						<!-- <input type="button" value="" class="c_foucsnor"  onmouseover="this.className='c_foucshov'" onmouseout="this.className='c_foucsnor'" /> -->
+						{:W('FollowBtn', array('fid'=>$vo['uid'], 'uname'=>$vo['uname'], 'follow_state'=>$vo['followState'], 'refer'=>'following_right'))}
+					</p>
+					<p class="mt7 black">{$vo['intro']}</p>
+				</span>
+				<div class="clear"></div>
+				<p class="c_righttxt">{$vo['lastfeed']}</p>
+				<div class="c_rightline"></div>
+				</volist>
+			</div>
+			
+			<div id="{$content_div_id}_es_2" class="disnone">	
+			  	<volist name="data[1]" id="vo">
+				<span class="c_rightpic"><a  uid="{$vo['uid']}" href="{$vo.space_url}" class="face" event-node="face_card"><img src="{$vo.avatar_small}" width="50" height="50"/></a></span>
+				<span class="c_rightcon">
+					<p class="green"><a  uid="{$vo.uid}" target="_blank" href="{$vo.space_url}">{$vo.uname|getShort=###,7}</a></p>
+					<p class="c_foucs2">
+						<!-- <input type="button" value="" class="c_foucsnor"  onmouseover="this.className='c_foucshov'" onmouseout="this.className='c_foucsnor'" /> -->
+						{:W('FollowBtn', array('fid'=>$vo['uid'], 'uname'=>$vo['uname'], 'follow_state'=>$vo['followState'], 'refer'=>'following_right'))}
+					</p>
+					<p class="mt7 black">{$vo['intro']}</p>
+				</span>
+				<div class="clear"></div>
+				<p class="c_righttxt">{$vo['lastfeed']}</p>
+				<div class="c_rightline"></div>
+				</volist>
+			</div>
+			
+			</div>
+			

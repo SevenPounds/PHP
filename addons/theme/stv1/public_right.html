@@ -1,0 +1,90 @@
+<div id="col3" class="st-index-right">
+	<div class="right-wrap">
+	<!-- <div class="space ml5">
+     	 <div class="title1">网盘容量</div>
+         <div class="space_all">
+              <div class="space_use"><em></em></div>
+         </div>
+         <span class="pan_capacity"></span>--><!--141022
+         <ul class="pan_info clearfix">
+             <li>已用容量<font id='used'></font></li>
+             <li>网盘总量<strong id='all'></strong></li>
+         </ul>
+     </div> -->
+	<!-- 签到-->
+	{:W('CheckIn')}
+	<div class="search-mod">
+		<input type="text" class="fl" id="search_friend" value="输入想要搜索的好友姓名"/>
+		  <a href="javascript:void(0);" class="fr" onclick="submit_search_friend();">搜索</a>
+	</div>
+	<!-- 热门资源 -->
+	{:W('HotResource',array('tpl'=>'hot_resource'))}
+	<!-- 插件位 -->
+	{:Addons::hook('home_index_right_top')}
+	 <!--最近来访-->
+    {:W('LastVisitors', array('uid'=>$uid, 'user_info'=>$user_info))}
+	</div>
+</div>
+<script>
+$(function(){
+	calculate_capacity();
+});
+
+function calculate_capacity(){
+    $.ajax({
+        url:U('yunpan/Ajax/getCapacity'),
+        type:'Post',
+        data:{},
+        dataType:'json',
+        success:function(data){
+            var flag = true;
+            if(data.status == '1'){
+            	if(parseFloat(data.percent) >= 100){
+            		$(".space_use").css("width","100%");
+            	}else{
+            		$(".space_use").css("width",data.percent);
+            	}
+            	$("#used").empty().html(data.used);
+            	$("#all").empty().html(data.total);
+                //$(".pan_capacity").empty().html(data.used+' / '+data.total);
+            }else{
+//                notif({ msg: data.info });
+            }
+        },
+        error:function(){
+//            notif({ msg: '网络错误!' });
+            ab.flag = true;
+        }
+
+    });
+}
+
+$(document).ready(function(){
+	 $('#search_friend').focus(function(){
+		 if(this.value=="输入想要搜索的好友姓名"){
+			  this.value='';
+		 }
+	  });
+	  $('#search_friend').blur(function(){
+		  if(this.value==""||this.value.replace(/[ ]/g,"")==""){
+			  this.value='输入想要搜索的好友姓名';
+		  }
+	  });
+	  $(document).keyup(function(event) {
+			if (event.keyCode == 13) {
+				submit_search_friend();
+			}
+	  });
+});
+
+function submit_search_friend(){
+	 var serach_val=$('#search_friend').val();
+	 var search_values =serach_val.replace(/[ ]/g,"");
+	 if(search_values==''||serach_val==""||serach_val=="输入想要搜索的好友姓名"){
+	     return ;
+	 }else{
+		 window.location.href=U("public/Search/index")+'&k='+serach_val;
+	 }
+
+}
+</script>

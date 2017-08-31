@@ -1,0 +1,13 @@
+<php>if(!empty($attachInfo)){</php>
+	<div uploadcontent="file" class="input-content" >
+		<ul>
+			<volist name='attachInfo' id='a' key="k">
+			<li>
+				附件{$k}：
+				<i class="ico-{$a.extension}-small"></i>
+				<a href="{$a.download_url}">{$a.name}</a><span>({$a.size|byte_format})</span></li>
+			</volist>
+		</ul>
+		<input type="hidden" id="{$inputname}_ids" name="{$inputname}_ids" feedtype="file" value="|{$attachIds}|" class="attach_ids">
+	</div>	
+<php>}</php>

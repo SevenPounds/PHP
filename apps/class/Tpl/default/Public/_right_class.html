@@ -1,0 +1,27 @@
+<div class="mainbox_appR">
+<div class="mod_create mb20">
+    <a href="{:U('class/ClassBlog/addBlog',array('cid'=>$classId))}" title="发表日志" class="btn-create">写日志</a>
+</div>
+
+<div class="right-list">
+    <h3>推荐日志</h3>
+    <php>if(empty($relist)){</php>暂无推荐日志<php>}</php>
+        <ul>    
+        <volist name="relist" id="vo">
+            <li><i class="ico-piece"></i><div class="info"><a href="{:U('class/Index/show', array('id'=>$vo['id'], 'mid'=>$vo['uid']))}">{$vo.title}</a></div></li>
+        </volist>
+        </ul>    
+</div>
+
+<eq name="ACTION_NAME" value="my_class">
+<div class="right-list clearfix">
+    <h3>日志分类（<span><a href="{:U('class/ClassBlog/admin',array('cid'=>$classId))}" style="padding-left: 0px;" >管理</a></span>）</h3>
+    <ul>
+    <li><a href="{:U('class/ClassBlog/my_class',array('cid'=>$classId))}" <php>if(!$_GET['cateId']){</php>class="current"<php>}</php>>所有分类</a></li>
+    <php>foreach( $category as $key=>$value ) {</php>
+    <li><i class="ico-piece"></i><div class="info"><a href="{:U('class/ClassBlog/my_class', array('cid'=>$classId,'cateId'=>$value['id']))}" <php>if($_GET['cateId']==$value['id']){</php>class="current"<php>}</php>>{$value['name']} ( {$value['count']} )</a></div></li>
+    <php>}</php>
+    </ul>
+</div>
+</eq>
+</div>

@@ -1,0 +1,68 @@
+<include file="__THEME__/public_header" />
+<div id="page-wrap">
+    <div id="main-wrap">
+      <div class="profile-title  boxShadow">
+                <include file="_top"/> 
+            </div>
+    	      <div id="col" class="st-grid boxShadow minh content-bg">
+                <php>if($userPrivacy['space'] != 1){</php>
+            <div id="" class="boxShadow">
+                <div class="extend border minh">
+                <!-- tag-menu -->
+                <include file="_follow_tab" />
+				        <div class="search-main clearfix">
+                    <php>if($following_list['data']){</php>
+                    <!--搜索列表-->
+	               	<div class="sperson-feedlist<php> echo t($_GET['show']);</php> clearfix">
+                        <volist name="following_list.data" id="_following">
+                          <php> $img = !empty($_GET['show']) ? $orgListData[$_following['fid']]['avatar_big']:$orgListData[$_following['fid']]['avatar_middle']; </php>
+                    	<dl model-node="following_list_item" class="feed_list">
+                            <dt class="face"><a href="{$orgListData[$_following['fid']]['spaceurl']}"><img src="{$_following['fid']|getCampuseAvatar=###,$_following['type'],'avatar_middle'}" event-node='face_card'  show="no" orgType="{$_following['type']}" cid='{$_following['fid']}' width="50" height="50"></a></dt>
+                            <dd class="person-info">
+                                <div class="info-right right">
+                                <!--关注分组end-->                                   
+                                <span class="right">
+									<php>if($mid){</php>
+                                        {:W('FollowBtn', array('fid'=>$_following['fid'],'widget_appname'=>'class', 'uname'=>$orgListData[$_following['fid']]['name'], 'follow_state'=>$orgnization_follow_state[$_following['fid']], 'type'=>'campus','ftype'=>$orgListData[$_following['type']]['type']))}
+                                    <php>}</php>
+                                </span>
+                            	</div>
+                                <div class="info-left">
+                           	  <p class="hd"><a href="{:getHomeUrl($orgListData[$_following['fid']])}" event-node='face_card'  show="no" orgType="{$_following['type']}" cid='{$_following['fid']}'  style="font-size:14px">{$orgListData[$_following['fid']]['name']}</a>
+                           	  </p>
+                              <p class="area"><span>&nbsp;{$orgListData[$_following['fid']]['location']}</span></p>
+                                <p class="action">
+                                   	 学生：<a href="{:getHomeUrl($orgListData[$_following['fid']])}">{:getCountByType('student',$orgListData[$_following['fid']])}</a>
+                                    <i class="vline">|</i>
+                           		             家长：<a href="{:getHomeUrl($orgListData[$_following['fid']])}">{:getCountByType('parents',$orgListData[$_following['fid']])}</a>
+                                    <i class="vline">|</i>
+                               		    教师：<a href="{:getHomeUrl($orgListData[$_following['fid']])}">{:getCountByType('teacher',$orgListData[$_following['fid']])}</a>
+                              		<i class="vline">|</i>
+                                     {:L('PUBLIC_FOLLOWERS')}：<a href="{:getHomeUrl($orgListData[$_following['fid']])}"  id="follower_{$_following['fid']}">{:getCountByType('follower',$orgListData[$_following['fid']])}</a>
+                                </p>
+                                 <p class="info">
+                                       <php>if($vo['type']==1):</php> 学校简介： {:getOrgnizationIntro($orgListData[$_following['fid']]['id'],1)}<php>else:</php> 班级简介：   {:getOrgnizationIntro($orgListData[$_following['fid']]['id'],2)}<php>endif;</php>
+                                 </p>
+                              </div>                                                           
+                          </dd>
+                        </dl>
+                        </volist>
+                    </div>
+                    <!--搜索列表/end-->
+                    <!--页码-->
+                    <div id="page" class="page">{$following_list.html}</div>
+                    <!--页码/end-->
+                    <php>}else{</php>
+                        <p>TA还没有关注任何人</p>
+                    <php>}</php>
+                </div>
+                </div>
+                <php>}else{</php>
+                    <p class="extend">-_-。sorry！根据对方隐私设置，您无权查看TA的主页</p>
+                <php>}</php>
+            </div>
+            
+    	</div>
+    </div>
+</div>
+<include file="__THEME__/public_footer" />

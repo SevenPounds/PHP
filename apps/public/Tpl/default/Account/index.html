@@ -1,0 +1,159 @@
+<include file="__THEME__/public_header" />
+<script type="text/javascript" src="__APP__/js/slide.js"></script>
+<link href="__APP__/css/nav_message_left.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="__APP__/create.js"></script>
+<div id="page-wrap">
+  <div id="main-wrap">
+    <div id="col" class="st-grid content-bg">
+      <div id="col4" class="main-left">
+        <!--tab菜单-->
+        <include file="_tabs" />
+      </div>
+      <div id="col7" class="main-right">
+        <div class="extend minh person-set">
+          <div class="set-hd"><h3>{$tabName}</h3></div>
+          <!--信息设置项 基本信息-->
+          <form action="{:U('public/Account/doSaveProfile')}" method="post" model-node='account_save'>
+            <dl class="form-set">            
+              <dd>
+                <div class="form-tt"><font color="red"> * </font>{:L('PUBLIC_NICKNAME')}：</div>
+                <div class="form-row">
+                  <input event-node="uname" event-args="old_name={$user_info['uname']}" name="uname" checkurl="{:U('public/Register/isUnameAvailable')}" autocomplete="off" type="text" value="{$user_info['uname']}" />
+                </div>
+                <input type="hidden" name="old_name" value="{$user_info['uname']}" />
+              </dd>
+              <dd>
+                <div class="form-tt"><font color="red"> * </font>{:L('PUBLIC_GENDER')}：</div>
+                <div class="form-row">
+                  <label><input name="sex" type="radio" value="1" class="s-ck" <if condition="1 eq $user_info['sex']">checked="checked"</if> />{:L('PUBLIC_MALE')}</label>
+                  <label><input name="sex" type="radio" value="2" class="s-ck" <if condition="2 eq $user_info['sex']">checked="checked"</if> />{:L('PUBLIC_FEMALE')}</label>
+                </div>
+              </dd>
+
+
+                <php>
+                    switch($roleEnName){
+                    case UserRoleTypeModel::RESAERCHER:
+                    case UserRoleTypeModel::TEACHER:
+                </php>
+                <dd>
+                    <div class="form-tt">工作室名称：</div>
+                    <div class="form-row">
+                        <input  class="s-txt" type="text" name="space_name"  maxlength="20"  value="{$user_info['space_name']|html_entity_decode=###|htmlentities}"></input>
+                    </div>
+                </dd>
+                <php>
+                    break;
+                    case UserRoleTypeModel::STUDENT:
+                    case UserRoleTypeModel::PARENTS:
+                    break;
+                    }
+                </php>
+              <dd>
+                <div class="form-tt"> 个人简介：</div>
+                <div class="form-row">
+                  <textarea class="s-textarea" id="description" name="intro">{$user_info['intro']|html_entity_decode=###|htmlentities}</textarea>
+                  <div style=""><b id="num">0</b>/50</div>
+                </div>
+              </dd>
+			
+			<php>if($roleEnName != UserRoleTypeModel::EDUADMIN && $user_info['school']){</php>
+			<dd>
+                <div class="form-tt"><font color="red"> * </font>所属<php>if($roleEnName == UserRoleTypeModel::RESAERCHER || $roleEnName == UserRoleTypeModel::EDUADMIN){</php>单位<php>}else{</php>学校<php>}</php> ：</div>
+                <div class="form-row">{:W('CyArea',array('province'=>$user_info['province'],'city'=>$user_info['city'],'district'=>$user_info['area'],'disable'=>true))}</div>
+             </dd>
+			<dd>
+			 	<div class="form-tt"></div>
+			 	<div class="form-row">
+				 	<input type="text" readonly="readonly" id="schoolName" value="{$user_info['school']}"></input>
+	 				<input type="hidden" id="schoolId"  value="{$user_info['school_id']}"></input>
+			 		<div class="clear"></div>
+			 	</div>
+			 </dd>
+			 <php>}</php>
+
+       <php>if($roleEnName == UserRoleTypeModel::EDUADMIN){</php>
+          <dd>
+            <div class="form-tt"><font color="red"> * </font>所属单位 ：</div>
+            <div class="form-row">
+              <input type="text" readonly="readonly" id="schoolName" value="{$user_info['school']}"></input>
+              <div class="clear"></div>
+            </div>
+          </dd>
+          <dd>
+            <div class="form-tt"><font color="red"> * </font>级别</div>
+            <div class="form-row">
+              <volist name="levelList" id="level">
+                <if condition="$level.code eq $cyuser['level']">
+                    <input type="text" readonly="readonly" id="level" value="{$level.name}"></input>
+                </if>
+              </volist>
+              <div class="clear"></div>
+            </div>
+           </dd>
+           <dd>
+           <div class="form-tt"><font color="red"> * </font>所辖区域</div>
+            <div class="form-row">
+              <volist name="areas" id="area">
+                <input type="text" readonly="readonly" value="{$area['province']['name']}" />
+                <input type="text" readonly="readonly" value="{$area['city']['name']}" />
+                <input type="text" readonly="readonly" value="{$area['district']['name']}" />
+              </volist>
+              <div class="clear"></div>
+            </div>
+           </dd>
+       <php>}</php>
+			 
+             
+			<php>
+			switch($roleEnName){
+				case UserRoleTypeModel::RESAERCHER:
+				</php>
+					<include file="_instructor_setting" />
+				<php>
+					break;
+				case UserRoleTypeModel::TEACHER:
+				</php>
+					<include file="_teacher_setting" />
+				<php>
+				 	break;
+				case UserRoleTypeModel::STUDENT:
+				</php>
+				<include file="_student_setting" />
+				<php>
+				 	break;
+				case UserRoleTypeModel::PARENTS:
+				</php>
+				<include file="_parent_setting" />
+				<php>
+					break;
+
+        case UserRoleTypeModel::EDUADMIN:
+        </php>
+        <include file="_eduadmin_setting" />
+        <php>
+          break;
+			}  
+			</php>
+			
+              <dd>
+                <div class="form-tt"></div>
+                <div class="form-row">
+                  <a event-node="submit_btn" href="#" class="btn-green-big">{:L('PUBLIC_SAVE')}</a>
+                </div>
+                <input type="text" style="display:none">
+              </dd>
+            </dl>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="__THEME__/js/module.form.js"></script>
+<script type="text/javascript">
+var editUserCategory = function(){
+    ui.box.load("{:U('public/Account/editUserCategory')}", '修改身份');
+};
+</script>
+<include file="__THEME__/public_footer" />

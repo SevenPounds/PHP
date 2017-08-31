@@ -1,0 +1,58 @@
+<include file="__THEME__/public_header" />
+<link href="__APP__/css/fonts.css" rel="stylesheet" type="text/css" />
+<link href="__APP__/css/main.css" rel="stylesheet" type="text/css" />
+<div class="cloud">
+	<include file="__THEME__/public_class_menu" />
+	<div class="content">
+	<include file="_top" />
+	
+		<div class="class_info">
+			<div class="bj_left">
+				<div class="tab_b"><b>班级粉丝</b></div>
+				<div class="faculty_box">
+				<ul>
+					<volist name="follower_list.data" id="_follower">
+					<li>
+						<div class="fac_pic"><a href="{$user_info[$_follower['fid']]['space_url']}"> <img src="{$user_info[$_follower['fid']]['avatar_middle']}" event-node='face_card' uid='{$_follower['fid']}' width="64" height="64"></a></div>
+						<div class="fac_gz" style="margin-top:0px">
+							<php>if($mid){</php>
+                     	    <if condition="$mid neq $_follower['fid']">
+                                 {:W('FollowBtn', array('fid'=>$_follower['fid'], 'uname'=>$user_info[$_follower['fid']]['uname'], 'follow_state'=>$follow_state[$_follower['fid']], 'type'=>'normal'))}
+                          	</if>
+                			<php>}</php>
+						</div>
+						<div class="fac_infor2">
+							<p class="pt10"><span class="green font2"><a href="{$user_info[$_follower['fid']]['space_url']}" event-node='face_card' uid='{$_follower['fid']}' style="font-size:14px">{$user_info[$_follower['fid']]['uname']}</a>
+							<volist name="userGroupData[$_follower['fid']]" id="vo">
+                                    <img style="width:auto;height:auto;display:inline;cursor:pointer;vertical-align:-3px" src="{$vo['user_group_icon_url']}" title="{$vo['user_group_name']}" />&nbsp;
+                            </volist>
+							</span></p>
+							<p class="pt5 black">
+								<a href="{:U('public/Profile/following', array('uid'=>$_follower['fid']))}">{:L('PUBLIC_FOLLOWING')}<span class="green">{:(int)$user_count[$_follower['fid']]['following_count']}</span></a>
+								<span class="pl4 pr4">|</span>
+								<a href="{:U('public/Profile/follower', array('uid'=>$_follower['fid']))}">{:L('PUBLIC_FOLLOWERS')}<span class="green">{:(int)$user_count[$_follower['fid']]['follower_count']}</span></a>
+								<span class="pl4 pr4">|</span>
+								<a href="{$user_info[$_follower['fid']]['space_url']}">{:L('PUBLIC_WEIBO')}<span class="green">{:(int)$user_count[$_follower['fid']]['weibo_count']}</span></a>
+							</p>
+							<p class="pt5">个人简介:
+							<span class="pl6 black"><php>if($user_info[$_follower['fid']]['intro']){</php>
+                            {$user_info[$_follower['fid']]['intro']}        
+                            <php>}</php></span>
+							</p>
+						</div>
+						
+						<div class="clear"></div>
+					</li>
+					</volist>
+				</ul>
+				</div>
+				<div class="page online_page">
+					{$page}
+				</div>
+			</div>
+			<include file="_right" />
+			<div class="clear"></div>
+		</div>
+	</div>
+</div>
+<include file="__THEME__/public_footer" />

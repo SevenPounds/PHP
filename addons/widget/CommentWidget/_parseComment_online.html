@@ -1,0 +1,11 @@
+ <li class="comment_list" model-node="comment_list">
+	<div class="left_head"><a href="{$userInfo.space_url}"><img width="30" height="30" src="{$userInfo.avatar_small}"></a></div>
+	<div class="right_con">
+		<p><span class="blue"><a href="{$userInfo.space_url}">{$userInfo.uname}：</a></span>{$content}</p>
+		<div class="pt4">
+			<p class="left black1">{:L('PUBLIC_JUST')}</p>
+			<p class="right black2 font1"><a href="javascript:void(0);" event-args='row_id={$row_id}&app_uid={$app_uid}&to_comment_id={$comment_id}&to_uid={$userInfo.uid}&to_comment_uname={$userInfo.uname}' event-node="reply_comment">回复</a>&nbsp;&nbsp;<php>if($iscommentdel){</php>|&nbsp;&nbsp;<a href="javascript:void(0);" event-node="comment_del" event-args="comment_id={$comment_id}">删除</a><php>}</php></p>
+		</div>
+	</div>
+	<div class="clear"></div>
+</li>

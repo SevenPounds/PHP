@@ -1,0 +1,10 @@
+
+<div class="class_left">
+			<div class="left_title"><span class="pl10">{$tab_title}</span></div>
+			<ul>
+			<volist name="tab_list" id="tab">
+				<li <if condition=" $tab['field_key'] eq ACTION_NAME "><php>$tabName = $tab['field_name'];</php> class="current"</if>><a href="<if condition="$tab['url']">{$tab.url}<else />{:U('class/'.$tab_action.'/'.$tab['field_key'],array('cid'=>$_GET['cid']))}</if>">{$tab.field_name}</a></li>
+				 </volist>
+			</ul>
+		</div>
+

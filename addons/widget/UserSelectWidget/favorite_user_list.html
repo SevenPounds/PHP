@@ -1,0 +1,16 @@
+<ul>
+	<volist name="favoriteUsers" id="user">
+        <li onclick="userSelect.selectUser('{$user.uid}','{$user.uname}','{$user.avatar_small}')">
+            <p class="member_head add_cursor"><img src="{$user.avatar_small}"></p>
+            <p class="left pl10 pt10 add_cursor">
+                <font title="{$user.uname}">{$user.uname|mStr=###,8,"UTF-8"}</font><br>
+                <font class="black2" title="{$user.org}">{$user.org|mStr=###,8,"UTF-8"}</font>
+            </p>
+        </li>
+	</volist>
+</ul>
+<div class="clear"></div>
+<div class="page">
+	{$page}
+</div>
+<div class="clear"></div>

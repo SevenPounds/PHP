@@ -1,0 +1,128 @@
+<if condition="$status !=0 && !$isVisitor">	
+	<div class="book_txt">
+		<div model-node="mini_editor" class="relative_area">
+			<textarea id="post_content"></textarea>
+            <span><b>0</b>/140</span>
+		</div>
+		<input type="hidden" id="hidden_id" value="{$rid}"/>
+		<div class="book_btn3 acts">
+			
+	    	<a class="face-block" href="javascript:;" event-node="comment_insert_face"><i class="face"></i>表情</a>
+			
+			<!-- <span class="pl15">
+				<a href="#"><img src="__APP__/images/mic_btn.jpg" /></a>
+			</span>  -->
+			<!-- <span class="pl10 black3">点击麦克风开始说话</span>  -->
+			<!--
+			<a class="file-block" href="javascript:;"><i class="file"></i>附件
+				<form style='display:inline;padding:0;margin:0;border:0;outline:none;' >
+					<input type="file" name="attach" inputname="attach" onchange="core.plugInit('uploadFile',this,'','file');" urlquery="" limit="0" event-node="uploadinput">
+				</form>
+				 <input type="button" value="添加附件" class="gray_btn2" onMouseover="this.className='gray_btn2hov'" onMouseOut="this.className='gray_btn2'"> 
+			</a>
+		-->
+			<p class="right">
+				<input type="button"  value="发表" class="green_btn3" onclick='addcomment();'
+					onMouseover="this.className='green_btn3hov'"
+					onMouseOut="this.className='green_btn3'">
+			</p>
+		</div>
+		<div class="clear"></div>
+		<div model-node="faceDiv"></div> 
+	</div>
+</if>
+<script>
+var row_id= '{$rid}';
+var mid= "{$GLOBALS['ts']['uid']}";
+var delComment = function(comment_id){
+	ui.confirmBox('删除回复','是否确定删除这条回复',function(){
+		$.post(U('vote/Ajax/delComment'),{comment_id:comment_id},function(msg){
+			if(msg.status=='200'){
+				//删除精彩回复中的数据
+				removeCommentPost(comment_id);
+				$('.comment_'+comment_id).remove();
+				$('.online_infor .comment_count').html(parseInt($('.online_infor .comment_count').text())-1);
+			}else if(msg.status="400"){
+				jQuery('#login_popup').trigger("click");
+			}else{
+				ui.error(msg.msg);
+			}
+		},'json');
+		
+	})
+	
+};
+var addcomment = function(){
+	
+	if(!wordLimit($('#post_content'),140,true)){
+		
+		ui.confirmBox('字数限制','回复字数超过140个字，是否截取后发布？',function(){
+			wordLimit($('#post_content'),140);
+			_addComment();
+		},function(){
+			return ;
+		});
+	}else{
+		_addComment();
+	}
+	
+};
+
+var _addComment =function(){
+	var content= jQuery.trim($('#post_content').val());
+	if(content == ''){
+		ui.error("请输入要发表的内容!");
+		return false;
+	}
+	$.post(U('vote/Ajax/addComment'),{
+		vote_id:row_id,
+		content:content
+		},function(msg){
+			if(msg.status=='200'){
+				if(typeof getPostByAjax != undefined)
+					getPostByAjax(1);
+			  	//输入字数颜色和内容变为0
+			    $('#post_content').next().find("b").text(0);  
+			    $('#post_content').next().find("b").css("color", "#333");
+				//重置
+				$('#post_content').val('');
+				$('.online_infor .comment_count').html(parseInt($('.online_infor .comment_count').text())+1);
+			}else if(smsg.status="400"){
+				jQuery('#login_popup').trigger("click");
+			}else{
+				ui.error(msg.msg);
+			}
+		
+		},'json');
+}
+var agreeFlag =false;
+//一级回复赞
+var addAgree =function(comment_id){
+	if(agreeFlag){
+		ui.error('请勿重复点击');
+		return false;
+	}
+	agreeFlag =true;
+	$.post(U('vote/Ajax/addAgree'),{
+		post_id:comment_id,
+		},function(msg){
+			if(msg.status=='200'){
+				 ui.success('赞成功');
+				 agreeCount= parseInt($('#agree'+comment_id).attr('rel'))+1;
+				 $('#agree'+comment_id).html("<img src='__THEME__/image/zan.gif' />已赞("+agreeCount+")");
+				 $('#digg'+comment_id).html("<img src='./apps/onlineanswer/_static/images/zan.gif' />已赞("+agreeCount+")");
+			}else if(smsg.status="400"){
+				jQuery('#login_popup').trigger("click");
+			}else{
+				ui.error(msg.msg);
+			}
+			agreeFlag =false;
+		},'json');
+}
+$(window).load(function(){
+	$('#post_content').keyup(function(){
+		wordLimit($(this),140);
+	});
+})
+</script>
+

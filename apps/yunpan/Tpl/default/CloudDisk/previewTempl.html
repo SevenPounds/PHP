@@ -1,0 +1,33 @@
+<!--资源预览弹出层-->
+<style>
+ .popup2{
+        border: 1px solid #ccc;
+        z-index: 1001;
+        background-color: #fff;
+        color: #535353;
+    }
+</style>
+<div class="popup2 popup_res popup_review" id="preview_res">
+    <div class="popup_tit">
+        <a href="javascript:;" class="closeBtn hiddenText closePop" title="关闭">关闭</a>
+        <span id="res_review_name">
+            {$filename}
+        </span>
+    </div>
+    <div class="res_review_wrap" >
+        <div class="res_review_img" id="preview"></div>
+    </div>
+    <div class="addBook_choice del_choice">
+        <a href="javascript:;" class="enterBtn opacityed dl_btn" data-value='{$fid}'  filename='{$filename}.{$extension}' title="下载">下载</a>
+    </div>
+</div>
+<script type="text/javascript">
+var extension = "{$extension}";
+var previewurl = "{$previewurl}";
+var VOD_URL="{:C('VOD_URL')}";
+jQuery(function(){
+	previewRes(extension,previewurl);
+})
+</script>
+
+<!--资源预览弹出层结束-->

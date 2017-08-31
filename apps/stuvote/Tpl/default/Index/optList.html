@@ -1,0 +1,20 @@
+<volist name="vote_opts" id="vo" key="k">
+<li class="nrtj_color_{$k}"><php>if( $has_vote == true ||
+	$vote['deadline'] <= time() || $has_access == false){ $css =
+	"disabled"; }</php> <php>if( $vote['type'] == 0){</php> <input
+	name="vote_opt" type="radio" value="{$vo.name}" id="{$vo.id}" {$css}/>
+	<php>}else{</php> <input name="vote_opt" type="checkbox"
+	value="{$vo.name}" id="{$vo.id}" {$css}/> <php>}</php> &nbsp;<font>{$vo.name}</font><span
+	class="nrtj_jd01"> <em style="width: 0%;"></em></span> <strong
+	class="black3">{$vo.num}({$vote_pers[$k-1]}%)</strong></li>
+</volist>
+<script>
+$(function(){
+<php>
+foreach($vote_pers as $k=>$v){
+//if($v == 100) $v=97;
+echo '$(".nrtj_color_'.($k+1).' em").animate( { width: "'.$v.'%"}, 2000);';
+}
+</php>
+});
+</script>

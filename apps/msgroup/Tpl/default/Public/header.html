@@ -1,0 +1,56 @@
+<include file="__THEME__/public_header" />
+<link href="__APP__/main.css" rel="stylesheet" type="text/css" />
+<link href="__APP__/common.css" rel="stylesheet" type="text/css" />
+<link href="__APP__/style_center.css" rel="stylesheet" type="text/css" />
+
+<div class="in_bg2  wy_font">
+	<div id="wrapper">
+        <div class="in_head">
+			<div class="in_logo">
+				<a href="#">
+					<php>if(strtolower(C('PRODUCT_CODE'))==='changyan'):</php>
+						<img src="__APP__/images/img_logo_cy1.png" />
+					<php>else:</php>
+						<img src="__APP__/images/img_logo.gif" />
+					<php>endif;</php>
+				</a>
+			</div>
+			<!--1211--><div class="teaWS_mark"><strong><span><font>{$msgroup_data.group_name}</font></span></strong></div><!--1211-->
+		</div>
+		<div class="mainnav">
+			<ul>
+				<li <php>if (in_array(APP_NAME . '/' . MODULE_NAME . '/' . ACTION_NAME, array('msgroup/Index/index'))):</php> class="mainnav_hov" <php>else:</php> class="mainnav_nor" onmouseover="this.className='mainnav_hov'" onmouseout="this.className='mainnav_nor'"<php>endif;</php>  onclick="window.location.href='{:U('msgroup/Index/index', array('gid' => $gid))}'">首页</li>
+				<li class="mainnav_line"></li>
+				<li <php>if (in_array(APP_NAME . '/' . MODULE_NAME . '/' . ACTION_NAME, array('msgroup/Index/announcelist')) || ($announceType == 1)):</php> class="mainnav_hov" <php>else:</php> class="mainnav_nor" onmouseover="this.className='mainnav_hov'" onmouseout="this.className='mainnav_nor'"<php>endif;</php> onclick="window.location.href='{:U('msgroup/Index/announcelist', array('gid' => $gid))}'">通知公告</li>
+				<li class="mainnav_line"></li>
+				<li <php>if (in_array(APP_NAME . '/' . MODULE_NAME . '/' . ACTION_NAME, array('msgroup/Index/teachingresource', 'msgroup/Index/designlist', 'msgroup/Index/warelist', 'msgroup/Index/materiallist'))):</php> class="mainnav_hov" <php>else:</php> class="mainnav_nor" onmouseover="this.className='mainnav_hov'" onmouseout="this.className='mainnav_nor'"<php>endif;</php> onclick="window.location.href='{:U('msgroup/Index/teachingresource', array('gid' => $gid))}'">教学资源</li>
+				<li class="mainnav_line"></li>
+				<li <php>if (in_array(APP_NAME . '/' . MODULE_NAME . '/' . ACTION_NAME, array('msgroup/Index/subjectresearch', 'msgroup/Index/affairlist', 'msgroup/Index/achievementlist'))  || ($announceType == 2 || $announceType == 3)):</php> class="mainnav_hov" <php>else:</php> class="mainnav_nor" onmouseover="this.className='mainnav_hov'" onmouseout="this.className='mainnav_nor'"<php>endif;</php> onclick="window.location.href='{:U('msgroup/Index/subjectresearch', array('gid' => $gid))}'">课题研究</li>
+				<li class="mainnav_line"></li>
+				<li <php>if (in_array(APP_NAME . '/' . MODULE_NAME . '/' . ACTION_NAME, array('msgroup/Index/teachingresearch', 'msgroup/Index/essaylist', 'msgroup/Index/journallist', 'msgroup/Index/votelist', 'msgroup/Index/onlinelist', 'msgroup/Index/pingkelist', 'msgroup/Index/researchlist'))  || ($announceType == 4 || $announceType == 5)):</php> class="mainnav_hov" <php>else:</php> class="mainnav_nor" onmouseover="this.className='mainnav_hov'" onmouseout="this.className='mainnav_nor'"<php>endif;</php> onclick="window.location.href='{:U('msgroup/Index/teachingresearch', array('gid' => $gid))}'">教学研讨</li>
+				<li class="mainnav_line"></li>
+				<li <php>if (in_array(APP_NAME . '/' . MODULE_NAME . '/' . ACTION_NAME, array('msgroup/Hornor/index','msgroup/Index/photoPreview'))):</php> class="mainnav_hov" <php>else:</php> class="mainnav_nor" onmouseover="this.className='mainnav_hov'" onmouseout="this.className='mainnav_nor'" <php>endif;</php> onclick="window.location.href='{:U('msgroup/Index/index', array('gid' => $gid))}#photo_anchor'">荣誉室</li>
+				<if condition="$level neq 0">
+				<li class="mainnav_line"></li>
+				
+					<if condition="$level eq 3">
+					<li <php>if (in_array(APP_NAME . '/' . MODULE_NAME, array('msgroup/Config', 'msgroup/Announce', 'msgroup/Article', 'msgroup/Member', 'msgroup/Resource'))||in_array(APP_NAME . '/' . MODULE_NAME . '/' . ACTION_NAME, array('msgroup/Photo/index','msgroup/Photo/detail'))):</php> class="mainnav_hov" <php>else:</php> class="mainnav_nor" onmouseover="this.className='mainnav_hov'" onmouseout="this.className='mainnav_nor'"<php>endif;</php> onclick="window.location.href='{:U('msgroup/Config/index', array('gid' => $gid))}'">工作室维护</li>
+					<else />
+					<li <php>if (in_array(APP_NAME . '/' . MODULE_NAME, array('msgroup/Config', 'msgroup/Announce', 'msgroup/Article', 'msgroup/Member', 'msgroup/Resource'))||in_array(APP_NAME . '/' . MODULE_NAME . '/' . ACTION_NAME, array('msgroup/Photo/index','msgroup/Photo/detail'))):</php> class="mainnav_hov" <php>else:</php> class="mainnav_nor" onmouseover="this.className='mainnav_hov'" onmouseout="this.className='mainnav_nor'"<php>endif;</php> onclick="window.location.href='{:U('msgroup/Resource/index', array('gid' => $gid))}'">工作室维护</li>
+					</if>
+				</if>
+				<div class="clear"></div>
+			</ul>
+			<!--
+			<div class="wy_serch">
+				<input type="text" />
+				<a href="#">站内搜索</a>
+			</div>
+			-->
+		</div>
+
+		<style>
+			.title{
+				font-size:12px;
+			}
+		</style>

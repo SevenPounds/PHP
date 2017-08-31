@@ -1,0 +1,33 @@
+body,div,span,p{
+    padding: 0;
+    margin: 0;
+}
+html,body,.error{
+    height: 100%;
+}
+.error{
+    background: url("../images/error.jpg") no-repeat center ;
+}
+.error-txt{
+    position: absolute;
+    left: 50%;
+    top: 40%;
+    margin-left: -500px;
+    margin-top: -139px;
+    padding: 150px 0 0 518px;
+    width: 472px;
+    background: url("../images/error_con.png") no-repeat 160px top;
+    height: 128px;
+}
+.error-txt span{
+    font-size: 48px;
+    font-weight: bold;
+    font-family: arial;
+    color: #ff7800;
+}
+.error-txt p{
+    margin-top: 10px;
+    font-size: 26px;
+    color: #333;
+    font-family: "microsoft yahei";
+}

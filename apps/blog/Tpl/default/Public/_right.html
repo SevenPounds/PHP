@@ -1,0 +1,97 @@
+<div class="mainbox_appR">
+    <!--<div class="person-info mb20 clearfix">
+        <dl class="person-info-t clearfix">
+            <dt><img src="__APP__/images/face80.jpg" width="100" height="100"/></dt>
+            <dd>
+                <strong class="mb10">去旅行_环游世界</strong>
+                <p class="f9 mb10">日志数：666</p>
+                <p class="f9 mb10">收藏数：100</p>
+                <a href="" class="btn-cancel"><span><b class="ico-add-black"></b>关注</span></a>
+            </dd>
+        </dl>
+    </div>-->
+    <div class="right_f20">
+        <if condition="(strtolower(ACTION_NAME) eq 'show')">
+    <div class="studio_id">
+        <div class="id_top"></div>
+        <div class="id_box">
+            <div class="id_pic"><a href="{:U('public/Workroom/index',array('uid'=>$user_info['uid']))}"><img src="{$user_info['avatar_big']}"  width="86px" height="86px"/></a></div>
+            <div class="id_infor">
+                <a href="{:U('public/Workroom/index',array('uid'=>$user_info['uid']))}"><p class="name" title="{$user_info['uname']}">{$user_info['uname']|getShort=6,'...'}</p></a>
+                <php>$subject_level=$subject.' '.$levelName;</php>
+                <p class="id_xx"><span title="{$subject_level}">{$subject_level|getShort=10,'...'}</span></p>
+                <p class="id_xx" title="{$user_info['location']}"><span>{$user_info['location']|getShort=10,'...'}</span></p>
+                <php>if($mid != $user_info['uid']):</php>
+                <ul class="cy_mr_profileOption clearfix">
+                    <li><a href="{:U('blog/Index/personal',array('uid'=>$user_info['uid']))}" class="cy_pro_daily">日志</a></li>
+                    <li><a href="{:U('photo/Index/albums',array('uid'=>$user_info['uid']))}" class="cy_pro_photo">照片</a></li>
+                </ul>
+                <php>endif;</php>
+            </div>
+            <div class="clear"></div>
+             <php>if($mid):</php>
+	            <if condition="$mid != $user_info['uid']">
+	                <div class="focus_mod">
+	                    {:W('FollowBtn', array('fid'=>$user_info['uid'], 'uname'=>$user_info['uname'],'follow_state'=>$follow_state, 'type'=>'studio'))}
+	                    <a class="see_message" onclick='javascript:ui.sendmessage({$user_info["uid"]}, 0);' style='cursor:pointer'>私信</a>
+	                    <div class="clear"></div>
+	                </div>
+	            </if>
+	              <div class="focus_quantity">
+		              	 <if condition="$mid != $user_info['uid']">
+			                <p><a href="{:U('teachingapp/index/index',array('uid'=>$user_info['uid']))}" ><span class="orange" title="{$resourceCount|default=0}">{$resourceCount|default=0|mStr=###,4}</span><strong>资源</strong></a></p>
+			             <else />
+			                <p><a href="{:U('public/Profile/following',array('uid'=>$user_info['uid']))}" ><span class="orange" title="{$userData.following_count|default=0}">{$userData.following_count|default=0|mStr=###,4}</span><strong>关注</strong></a></p>
+			             </if>
+		                 <p><a href="{:U('public/Profile/follower',array('uid'=>$user_info['uid']))}" ><span class="orange" title="{$userData.follower_count|default=0}">{$userData.follower_count|default=0|mStr=###,4}</span><strong>粉丝</strong></a></p>
+		                 <if condition="$mid == $user_info['uid']">
+		                 <p class="focus_none">
+                             <!--<a href="{:U('public/Credit/index')}" >-->
+                                 <span class="orange" title="{$userCredit.credit.score.value|default=0}">{$userCredit.credit.score.value|default=0|mStr=###,4}</span><strong>积分</strong>
+                             <!--</a>-->
+                         </p>
+		                 </if>
+		                  <if condition="$mid != $user_info['uid']">
+		                   <p class="focus_none"><span class="orange" title="{$userCredit.credit.score.value|default=0}">{$userCredit.credit.score.value|default=0|mStr=###,4}</span><strong>积分</strong></p>
+		                  </if>
+		            <php>else:</php>
+		            <div class="focus_mod">
+		                <a onclick='javascript:ui.error("请先登录");' style='cursor:pointer' class="see_add">关注</a>
+		                <a onclick='javascript:ui.error("请先登录");' style='cursor:pointer' class="see_message">私信</a>
+		                <div class="clear"></div>
+		            </div>
+		            <div class="focus_quantity">
+		               <p><a href="{:U('teachingapp/index/index',array('uid'=>$user_info['uid']))}"; ><span class="orange" title="{$resourceCount|default=0}">{$resourceCount|default=0|mStr=###,4}</span><strong>资源</strong></a></p>
+		                <p><a href="javascript:void(0);" onclick='javascript:ui.error("请先登录");' ><span class="orange" title="{$userData.follower_count|default=0}">{$userData.follower_count|default=0|mStr=###,4}</span><strong>粉丝</strong></a></p>
+		                <p class="focus_none"><a href="javascript:void(0);" onclick='javascript:ui.error("请先登录");'><span class="orange" title="{$userCredit.credit.score.value|default=0}">{$userCredit.credit.score.value|default=0|mStr=###,4}</span><strong>积分</strong></a></p>
+		            <php>endif;</php>
+		               <div class="clear"></div>
+	            </div>
+        </div>
+    </div>
+        </if>
+ <php> if(!empty($mid)):</php>
+<div class="mod_create mb20">
+    <a href="{:U('blog/Index/addBlog')}" title="发表{$ts['app']['app_alias']}" class="btn-create">写日志</a>
+    <!--<h4><a href="{:U('blog/Index/my')}">进入我的日志首页</a></h4>-->
+</div>
+<php>endif;</php>
+<eq name="ACTION_NAME" value="my">
+<div class="right-list clearfix">
+    <h3>日志分类（<span><a href="{:U('blog/Index/admin')}" style="padding-left: 0px;" >管理</a></span>）</h3>
+    <ul>
+    <li><a href="{:U('blog/Index/my')}" <php>if(!$_GET['cateId']){</php>class="current"<php>}</php>>所有分类</a></li>
+    <php>foreach( $category as $key=>$value ) {</php>
+    <li><i class="ico-piece"></i><div class="info"><a href="{:U('blog/Index/my', array('cateId'=>$value['id']))}" <php>if($_GET['cateId']==$value['id']){</php>class="current"<php>}</php>>{$value['name']} ( {$value['count']} )</a></div></li>
+    <php>}</php>
+    </ul>
+</div>
+</eq>
+<!-- 日志详情页展示精彩回复 -->
+<php>if(ACTION_NAME == "show"):</php>
+{:W('CommentExcellent',array('app_name'=>'blog','table'=>'blog','row_id'=>$blog['id'],'tpl'=>'blog'))}
+<php>endif;</php>
+<!-- 推荐日志 -->
+{:W('ExcellentShare',array('block'=>'right','blogId'=>$blog['id']))}
+</div>
+</div>

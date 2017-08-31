@@ -1,0 +1,42 @@
+<!--和首页weibo_send_box_tab.html有冲突-->
+<input type="hidden" id="contribute" value=""/>
+<!--<div class="contribute_box" style="border-top:2px solid #ddd; padding:10px 0;overflow:hidden;">-->
+<!--<input type="hidden" id="contribute" value=""/>-->
+<!--<span style="display:block; padding-bottom:10px;">请选择分类：</span>-->
+	<!--<div class="kh_content"style="width:500px;">-->
+			<!--<ul>-->
+				<!--<li class="top">小&nbsp;&nbsp;&nbsp;学</li>-->
+				<!--<volist name="data" id="xiaovo">-->
+					<!--<eq value="10" name="xiaovo.pid"><li><input type="checkbox" value="{$xiaovo.channel_category_id}" id="ck{$xiaovo.channel_category_id}" onclick="selectcategory()" class="check_category"><label for="ck{$xiaovo.channel_category_id}" <php>if($color == 'black'){</php>style="color:#000000;"<php>}</php>>{$xiaovo.title}</label></li></eq>-->
+				<!--</volist>-->
+			<!--</ul>-->
+			<!--<p class="content_line"></p>-->
+			<!--<ul>-->
+				<!--<li class="top">中&nbsp;&nbsp;&nbsp;学</li>-->
+				<!--<volist name="data" id="zhong">-->
+					<!--<eq value="11" name="zhong.pid"><li><input type="checkbox" value="{$zhong.channel_category_id}" id="ck{$zhong.channel_category_id}" onclick="selectcategory()" class="check_category"><label for="ck{$xiaovo.channel_category_id}" <php>if($color == 'black'){</php>style="color:#000000;"<php>}</php>>{$zhong.title}</label></li></eq>-->
+				<!--</volist>-->
+			<!--</ul>-->
+			<!--<p class="content_line"></p>-->
+			<!--<ul>-->
+				<!--<li class="top">专题类</li>-->
+				<!--<volist name="data" id="zhuanvo">-->
+					<!--<eq value="12" name="zhuanvo.pid"><li><input type="checkbox" value="{$zhuanvo.channel_category_id}" id="ck{$zhuanvo.channel_category_id}" onclick="selectcategory()" class="check_category"><label for="ck{$zhuanvo.channel_category_id}" <php>if($color  == 'black'){</php>style="color:#000000;"<php>}</php>>{$zhuanvo.title}</label></li></eq>-->
+				<!--</volist>-->
+			<!--</ul>-->
+		<!--</div>-->
+<!--</div>-->
+<script>
+function selectcategory(){
+	var cData = [];
+	$('.check_category').live('click', function() {
+		$('#contribute').val('');
+		$('input:checked').filter('.check_category').each(function() {
+			cData.push(this.value);
+		});
+		if(cData.length>0){
+			$('#contribute').val(cData.join(','));
+		}
+	});
+}
+</script>

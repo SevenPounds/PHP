@@ -1,0 +1,68 @@
+<ul>
+	<volist name="appList" id="app">
+		<li onmouseover="Appcenter.showOperate(this);" onmouseout="Appcenter.hideOperate(this);">
+			<div class="pic fl">
+				<php>if(in_array($app['app_en_name'],array_keys($clientApps))):</php>
+					<a onclick="Appcenter.addAppCount(this);" data-appid="{$app['appid']}" href="{:U('appcenter/Index/appDetail',array('appid'=>$app['appid']))}" target="_blank">
+				<php>elseif(empty($app['is_login'])):</php>
+					<a href="javascript:void(0);" onclick="$('#login_popup').trigger('click');">
+				<php>elseif($app['access']):</php>
+					<a href="{$app['url']}" onclick="Appcenter.addAppCount(this);" target="_blank" data-appid="{$app['appid']}">
+				<php>else:</php>
+					<a href="javascript:void(0);" onclick="ui.error('您无此应用使用权限！');">
+				<php>endif;</php>
+					<img src="__APP__/app_icon/{$app['app_icon']}" width="80" height="80" />
+				</a>
+			</div>
+			<div class="txt fl ml10">
+				<p class="ft16 col1 lh23">
+					<php>if(in_array($app['app_en_name'],array_keys($clientApps))):</php>
+						<a onclick="Appcenter.addAppCount(this);" data-appid="{$app['appid']}" href="{:U('appcenter/Index/appDetail',array('appid'=>$app['appid']))}" target="_blank">
+					<php>elseif(empty($app['is_login'])):</php>
+						<a href="javascript:void(0);" onclick="$('#login_popup').trigger('click');">
+					<php>elseif($app['access']):</php>
+						<a href="{$app['url']}" onclick="Appcenter.addAppCount(this);" target="_blank" data-appid="{$app['appid']}">
+					<php>else:</php>
+						<a href="javascript:void(0);" onclick="ui.error('您无此应用使用权限！');">
+					<php>endif;</php>
+						{$app['app_zh_name']}
+					</a>
+				</p>
+                <div class="appcenter-app-info" style="display:block;">
+                    <p class="col9 ft14 lh30">
+                        <php>if(!in_array($app['app_en_name'],array_keys($clientApps))):</php>
+                            <em class="col2">{$app['usercount']}</em>人添加
+                        <php>else:</php>
+                            <em class="col2">{$app['downloadcount']}</em>人添加
+                        <php>endif;</php>
+                    </p>
+                    <p class="star mt5">
+                        <php>echo getStar($app['score'],false);</php>
+                    </p>
+                </div>
+                <div class="appcenter-app-operate" style="display:none;">
+                    <!-- 检查是否为客户端应用 -->
+                    <php>if(!in_array($app['app_en_name'],array_keys($clientApps))):</php>
+                    <!-- 检查是否有权限 -->
+                    <php>if(empty($app['is_login'])):</php>
+                    <div style="display:<?php if($app['is_add']){echo 'none';}?>;" onclick="$('#login_popup').trigger('click');" data-appid="{$app['appid']}" data-app="{$app['app_en_name']}" class="add appcenter-app-add-{$app['app_en_name']}"></div>
+                    <php>elseif($app['access']):</php>
+                    <div style="display:<?php if($app['is_add']){echo 'none';}?>;" onclick="Appcenter.appOperate(this,'add');" data-appid="{$app['appid']}" data-app="{$app['app_en_name']}" class="add appcenter-app-add-{$app['app_en_name']}"></div>
+                    <php>else:</php>
+                    <div style="display:<?php if($app['is_add']){echo 'none';}?>;" onclick="ui.error('您无此应用使用权限！');" class="add appcenter-app-add"></div>
+                    <php>endif;</php>
+                    <div style="display:<?php if(!$app['is_add']){echo 'none';}?>;" onclick="Appcenter.appOperate(this,'delete');" data-appid="{$app['appid']}" data-app="{$app['app_en_name']}" class="del appcenter-app-delete-{$app['app_en_name']}"></div>
+                    <php>else:</php>
+                    <div onclick="Appcenter.addDownloadCount(this);" data-appid="{$app['appid']}" data-download="{$clientApps[$app['app_en_name']]['download_url']}" class="download"></div>
+                    <php>endif;</php>
+                </div>
+			</div>
+			<div class="clear"></div>
+			<div class="box tc">{$app['cname']}</div>
+		</li>
+	</volist>
+</ul>
+<div class="clear"></div>
+<div id="app_list_paging" class="page tc">
+	{$paging}
+</div>

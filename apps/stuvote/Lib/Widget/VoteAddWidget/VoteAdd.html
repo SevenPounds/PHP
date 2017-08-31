@@ -1,0 +1,346 @@
+<script src="__PUBLIC__/js/date.js" type="text/javascript" charset="utf-8"></script>
+<script src="__PUBLIC__/js/jquery.datapicker.js" type="text/javascript" charset="utf-8"></script>
+<link rel="stylesheet" href="__PUBLIC__/js/jquery.datapicker.css" type="text/css" media="screen" charset="utf-8" />
+<form id='voteForm{$rand}'>
+<div class="an_line pl15 pt10">
+        <div><p class="left font2">投票主题:</p>
+        <p class="right blue"><a onclick="Vote.showMore()" class="blue" style="cursor: pointer;">{:L('advance_setting')}</a><!--高级设置--></p>
+        </div>
+        <div class="clear">
+    </div>
+    <p class="style6 pt5"><input type="text" value="" id="title{$rand}"/></p>
+    </div>
+         
+         <div class="add_box moreSet{$rand}" style="display:none;overflow:hidden;*zoom:1">
+         	<p class="advance_set blue" ><img src="__APP__/images/set.gif" />高级设置
+            </p>
+			<div class="add_top" ></div>
+				<div class="add_cen">
+					<div class="dyms">
+                    	<p class="black4 pl15">投票描述:</p>
+                    	{:W('Editor',array('contentName'=>'explain'.$rand,'value'=>'','height'=>'100px',width=>'710px','mode'=>'vote'))}
+                       <!-- <textarea  id="explain{$rand}"></textarea> -->
+                    </div>
+                    <div class="jzrq">
+                    	<p class="black4 pl15 left">截止日期:</p>
+						<p class="left">
+						<select name="date" onchange="Vote.customDeadLine($(this))" id="date{$rand}" autocomplete="off">
+							<option value='7' selected>{:L('a_week')}</option>
+							<option value='30' >{:L('a_month')}</option>
+							<option value='180' >{:L('half_year')}</option>
+							<option value='365' >{:L('a_year')}</option>
+							<option value='custom'>{:L('custom')}</option>
+						</select>
+						</p>               
+                        <div class="clear"></div>     
+                    </div>
+                    <div class="vote_dealtime_custom{$rand} mt5" style="display:none;margin:2px 0 0 15px">	
+						<input type="text" id="deadline{$rand}" class="date-pick" readonly/>
+						<select name="hour" id="hour{$rand}" class="mr5" style="vertical-align:middle">
+							<php>for($i=0;$i<=23;$i++){</php>
+							<option value="{$i}">{$i}</option>
+							<php>}</php>
+						</select>
+						{:L('clock')}
+					</div>
+				</div>
+				<div class="add_bottom"></div>
+			</div>
+            
+			<div class="an_line pt20 pl15">
+            	<div class="add_xx">
+                	<p class="xx_title">添加选项:</p>
+                    <div class="xx_box">
+                        <ul id="list_vote{$rand}">
+							<php>for ($i = 1; $i <= $count; $i++) {</php>
+                            <li  name="opt_list{$rand}" >
+                                <p class="xx_input"><input type="text" class=" vote_opt{$rand}"/></p>
+                                <p class="delete_xx vote_delete hover" style="display:none;"><a href="javascript:void(0)" ></a></p>
+                                <div class="clear"></div>
+                            </li>
+                            <php>}</php>
+                        </ul>
+                        <p class="blue pr5 pt10" align="right"><a href="javascript:void(0);"  onclick="Vote.more(this)" id="ops"><strong>＋</strong>添加新选项</a></p>
+                    </div>
+                    <div class="xx_set">
+                    	<p class="pl10">选项设置：</p>
+                        <p><span><input type="radio" name="option{$rand}" value="0" checked/></span><span>单选</span></p>
+                        <p class="pl15"><span><input type="radio"  name="option{$rand}" value="1"/></span><span>可多选，最多</span><span>
+						<select  id="type{$rand}"  name="type">
+						<php>for($i = 1; $i < 10; $i++) {</php>
+						<option value="{$i}">{$i+1}</option>
+						<php>}</php>
+						</select>
+						</span><span>{:L('options_most')}</span></p>
+                        <div class="clear"></div>
+                    </div>
+                </div>
+            </div>  
+            
+            
+        
+                
+		<!-- 	<div class="publish">
+				<span class="font2">发布到：</span>
+				<p class="left pr20 pl5"><span><input type="checkbox" /></span><span>我的工作室</span></p>
+				<p class="left pr20"><span><input type="checkbox" /></span><span>我的工作室</span></p>
+				<p class="left"><span><input type="checkbox" /></span><span>我的工作室</span></p>
+				<div class="clear"></div>
+			</div> -->
+
+			<div class="cr_btn">
+				<input type="button" value="确定" class="create_btnnor" onMouseover="this.className='create_btnhov'" onMouseOut="this.className='create_btnnor'" onclick="Vote.check_vote();">
+				<php>if($exit){</php>
+				<input type="button" value="取消" class="canclebtn_nor" onMouseover="this.className='canclebtn_hov'" onMouseOut="this.className='canclebtn_nor'" onclick="window.location.href='index.php?app=stuvote&mod=Index&act=index'">
+				<php>}</php>
+			</div>
+</form>
+<script>
+	jQuery(function(){
+		jQuery('.contents').css('margin','5px 0 10px 16px'); //富文本位置
+        jQuery('.add_member').css('display','none');
+        var type = jQuery('#authoritytype').val();
+        //指定对象权限
+        if(parseInt(type)==1){
+                jQuery('.add_member').css('display','block');
+        }else{
+                jQuery('#user_ids').val('|');
+                jQuery('.add_member').css('display','none');
+        }
+        jQuery('#authoritytype').change(function(){
+            if(parseInt(jQuery(this).val())==1){
+                 jQuery('.add_member').css('display','block');
+            }else{
+                 userSelect.clear()
+                 jQuery('#user_ids').val('|');
+                 jQuery('.add_member').css('display','none');
+            }
+        });
+	});
+	var Vote = (function() {
+		var flag  = 1, num_limit = 10, moreDiv = '.moreSet{$rand}';
+
+		return {
+			date : function(){
+				$('.date-pick').datePicker({
+					clickInput : true,
+					createButton : false
+				});
+			},
+
+			check_vote : function(){
+				var title = $.trim($("#title{$rand}").val());
+				var data ={};
+
+				if (!title) {
+					ui.error("标题不能为空！");
+					return false;
+				}
+
+				if (getLength(title) >50) {
+					ui.error("标题长度不大于100个字符");
+					return false;
+				}
+
+				var flag = 0;
+				$(".vote_opt{$rand}").each(function (i) {
+					if($.trim($(this).val())) flag++;									
+				})
+
+				if(flag<2){
+					ui.error("{:L('least_two_options')}");
+					return false;
+				}
+
+				//判断是单选还是多选  chengcheng3
+				var option = $('input[name="option{$rand}"]:checked').val();
+				if(parseInt(option)==1){
+					var type = $('#type{$rand}').val();
+					if (type > flag-1) {
+						var optLimit = parseInt(type) + 1;
+						ui.error("最少填写" + optLimit + "个选项");
+						return false;
+					}
+				}
+			
+				data.opt = [];
+				data.title = $('#title{$rand}').val();
+
+				var mustReturn = false;
+				$(".vote_opt{$rand}").each(function(i) {
+					data.opt[i] = $.trim($(this).val());
+					if (getLength(data.opt[i]) > 50) {
+						ui.error("候选项名称不能大于100个字符");//选项最多20个字符
+						mustReturn = true;
+						return false;
+					}
+					if (data.opt[i] == '' || getLength(data.opt[i].replace(/\s+/g,"")) == 0) {
+						ui.error("请填写完整候选项内容");
+						mustReturn = true;
+						return false;
+					}
+				});
+
+				if (mustReturn) {
+					return;
+				}
+		
+				//判断是单选还是多选  chengcheng3
+				if(parseInt(option)==1){
+					data.type = $('#type{$rand}').val();
+				}else{
+					data.type = option;
+				}
+
+				//参与权限  chengcheng3
+                if(parseInt(jQuery('#authoritytype').val())==1){
+                    data.userIds = $("#user_ids").val();
+                    if(!(data.userIds.replace(/\|/g,''))){
+                        ui.error("还未选择研讨人员!");
+                        return false;
+                    }
+                }
+                
+                data.accessType = jQuery('#authoritytype').val();//投票权限类型
+
+				data.date = $('#date{$rand}').val();
+				//data.gid = $("#gid").val();
+				//发布到多个名师工作室
+			    var _gids = [];
+			    $('input[name="gids"]:checked').each(function(i){
+			        _gids[i] = $(this).val();
+			    });
+			    data.gid = _gids;
+				
+                //发布到我的工作室
+                $('input[name="to_space"]:checked').each(function(i){
+                    data['to_space'] = 1;
+                });
+
+				if (data.date == 'custom') {
+					data.deadline = {year : null, month : null, hour : null};
+					var deadlineValue = $("#deadline{$rand}").val();
+					var deadline = deadlineValue.split('-');
+
+					data.deadline.year = deadline.shift();
+					data.deadline.month = deadline.shift();
+					data.deadline.day = deadline.shift();
+					data.deadline.hour = $("#hour{$rand}").val();
+				}
+                E.sync();
+				data.explain = $('#explain{$rand}').val();
+
+
+				// 标签id
+				data.tag_ids = $('#ts_tag_search_value').val();
+
+				$.post(U('stuvote/Index/add'), data, function(result){
+					var res = eval('(' + result + ")");
+					if (res.status){
+						<php>if ($inner):</php>
+							ui.success(res.info);
+							window.location.href = res.data.url;
+						<php>else:</php>
+							CallBack.Vote.addSuccess(res.data, result);
+							ui.success(res.info);
+						<php>endif;</php>
+					} else {
+						ui.error(res.info);
+					}
+				});
+			},
+
+			exit : function() {
+				$('.vote_dealtime_custom{$rand}').hide();
+				<php>if ($inner):</php>
+					document.getElementById("voteForm{$rand}").reset()
+				<php>else:</php>
+					CallBack.Vote.exit();
+				<php>endif;</php>
+			},
+
+			showMore : function() {
+				$(moreDiv).toggle();
+			},
+
+			more : function(obj) {
+				var new_vote = $($("li[name*='opt_list']").get(0)).clone();
+				var flag = $("li[name*='opt_list']").size();
+
+				if (num_limit <= flag) {
+					$(obj).parent().hide();
+					return;
+				}
+
+				new_vote.children('span').html("{:L('option')}" + flag + ":");
+				new_vote.find('input').val('');
+				new_vote.attr('id', '');
+				new_vote.show();
+
+				$("li[name*='opt_list']").last().after(new_vote);
+
+				this.removeNode();
+				this.resort();
+
+				flag++;
+				if (num_limit <= flag) {
+					$(obj).parent().hide();
+					return;
+				}
+
+			},
+
+			customDeadLine : function(obj) {
+				if (obj.val() == "custom") {
+					$('.vote_dealtime_custom{$rand}').show();
+				} else {
+					$('.vote_dealtime_custom{$rand}').hide();
+				}
+			},
+
+			resort : function() {
+				var size = $("li[name*='opt_list']").size();
+				if (size <= 2) {
+					//最少保留2个
+					$('.vote_delete').hide();
+				} else {
+					$('.vote_delete').show();
+				}
+
+				$('.vote_num{$rand}').each(function(key) {
+					$(this).html("{:L('option')}" + (key + 1) + ":");
+				});
+			},
+
+			removeNode : function() {
+				var self =this;
+				$('.vote_delete').click(function() {
+					$(this).parent().remove();
+					self.resort();
+
+					var size = $("li[name*='opt_list']").size();
+					if (size < num_limit) {
+						$('#ops').parent().show();
+					}
+				});
+			},
+
+			init : function(month,today) {
+				var self = this;
+				//截止时间
+				this.date();
+
+				if ($('#date{$rand}').val() == 'custom') {
+					this.customDeadLine($('#date{$rand}'));
+				}
+
+				$("#day{$rand} option[value='{$date.day|intval}']").attr('selected',true);
+				$("#hour{$rand} option[value='{$date.hour|intval}']").attr('selected',true);
+
+				this.removeNode();
+			}
+		}
+	})();
+	Vote.init({$time.mon}, {$time.mday});
+</script>
+	  

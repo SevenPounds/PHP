@@ -1,0 +1,242 @@
+<include file="__THEME__/public_header" />
+<link href="__APP__/fonts.css" rel="stylesheet" type="text/css" />
+<link href="__APP__/per_zone.css" rel="stylesheet" type="text/css" />
+<link href="__APP__/css/public_homepage.css" rel="stylesheet" type="text/css" />
+<link href="__THEME__/css/feedlistwidget.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="__THEME__/css/base.css">
+<link rel="stylesheet" href="__THEME__/css/qh/common.css">
+<link rel="stylesheet" href="__ROOT__/apps/public/_static/css/person_center.css">
+<script src="./apps/yunpan/_static/js/uploadbox.js" type="text/javascript"></script>
+<script type="text/javascript">
+var browser_title = document.title;
+var YUNPANUPLOAD = '{$YUNPANUPLOAD}';
+var _userid = '{$_userid}';
+var fileTypes = '{$fileTypes}';
+var timeId ;
+var timeId2 ;
+var is_hideBanner = '{$is_hideBanner}';
+/**$(function(){
+	if(is_hideBanner != '1'){
+		$("body").css({overflow:"hidden"});    //禁用滚动条
+		timeId = setTimeout(function(){
+			jQuery("#bannerId").slideDown(500,function(){
+				 timeId2 = setTimeout("closeBanner()",2000); 
+			});
+		},5000);
+	}
+})**/
+
+/**
+ * 监听键盘，阻止滚动
+ */
+var move=function(e){
+	e.preventDefault && e.preventDefault();
+	e.returnValue=false;
+	e.stopPropagation && e.stopPropagation();
+	return false;
+}
+var keyFunc=function(e){
+	if(37<=e.keyCode && e.keyCode<=40){
+		return move(e);
+	}
+}
+
+
+/**
+ * 关闭banner框
+ */
+function closeBanner(){
+		jQuery("#bannerId").slideUp(900,function(){
+			$('.mask_layer').hide();
+			$("body").css({overflow:""});    //启用滚动条
+			//jQuery("#openBannerId").css("display","block");
+		});
+} 
+
+/**
+ * 手动关闭
+ */
+function closeBanner2(event){
+	clearTimeout(timeId);
+	clearTimeout(timeId2);
+	$("#bannerId").stop(true);
+	jQuery("#bannerId").slideUp(900,function(){
+		$('.mask_layer').hide();
+		$("body").css({overflow:""});    //启用滚动条
+		/* jQuery("#openBannerId").css("display","block"); */
+	});
+	$.ajax({
+		url:"index.php?app=public&mod=Index&act=closeBanner",
+		data:{},
+		type:"post",
+		dataType:"json",
+		success:function(){
+		},error:function(){
+		}
+		
+	})
+	event.cancelBubble = true ; 
+}
+
+function bannerClick(url){
+	window.location.href = url ;
+}
+</script>
+<style>
+.mask_layer{
+	background:#000000;
+	position:absolute;
+	left:0;
+    top:0;
+	width:100%;
+	height:100%;
+	z-index:999;  
+	filter: alpha(opacity=50); /* IE的透明度 */
+    opacity: 0.5;  /* 透明度 */
+}
+.banner{
+    width: 1000px;
+    height: 330px;
+    cursor: pointer;
+    position: absolute;
+	z-index:1000;
+	left:50%;
+	top:200px;
+	margin-left:-500px;
+
+	background:url(__APP__/images/banner_pop.png?v=20160411) no-repeat 0 0 ;
+}
+
+.banner-close {
+	cursor: pointer;
+    height: 35px;
+    position: absolute;
+    right: -25px;
+    top: -35px;
+    width: 34px;
+    z-index: 1000;
+	background-image: url(__APP__/images/fancybox_sprite.png);
+}
+</style>
+ <div id="page-wrap">
+    <div id="feedback" class="feedback-fixed"><a href="{:U('public/Index/feedback')}" target="_blank">{:L('PUBLIC_FEEDBACK')}</a></div>
+    <div id="main-wrap">
+        <div id="st-index-grid" class="st-grid content-bg">
+           <!--左边 -->
+           <include file="__THEME__/public_left" />
+           <!--右边 -->
+           <div class="st-section">       
+            	<include file="__THEME__/public_right" />
+	            <div class="cy_mr">
+		           <div class="cy_mr_cont clearfix">
+		            	<include file="_public_right_left" />
+		            </div>
+	           </div>
+            </div>
+        </div>
+    </div>
+</div>  
+
+<div class="layer-group-list" style="display:none" model-node='layer_group_list'>
+	<div class="inner">
+		<ul>
+		    <li><a href="{:U('public/Index/index')}">{:L('PUBLIC_ACTIVITY_STREAM')}</a></li>
+		    <volist name='followGroup' id ='f'>
+		    <li><a href="{:U('public/Index/index',array('fgid'=>$f['follow_group_id']))}" class='group_title' gid='{$f['follow_group_id']}'>{$f.title}</a></li>
+		    </volist>
+		    <li class="line"></li>
+		    <php> if(count($followGroup) < 10): </php>                                
+		    <li><a href="javascript:void(0)" event-node='addFollowgroup'>{:L('PUBLIC_CREATE_GROUP')}</a></li>
+		    <php>endif;</php>
+		    <!-- <li><a href="javascript:void(0)" event-node="editFollowgroup">{:L('PUBLIC_MANAGE_GROUP')}</a></li> -->
+		</ul>
+	</div>
+</div>
+
+<div class="layer-channel-group-list" style="display:none" model-node="layer_channel_group_list">
+    <div class="inner">
+        <ul>
+            <li><a href="{:U('public/Index/index',array('type'=>'channel'))}">订阅</a></li>
+            <volist name='channelGroup' id ='f'>
+            <li><a href="{:U('public/Index/index',array('type'=>'channel','fgid'=>$f['channel_category_id']))}" class="group_title" gid="{$f['channel_category_id']}">{$f.title}</a></li>
+            </volist>
+        </ul>
+    </div>
+</div>
+<include file="__THEME__/public_footer" />
+
+<script>
+//弹出分享框
+function shareResult(){
+	$("#show_space_chooce").trigger("click");	
+	//清空分享脏数据	
+	window.SHAREFILES={};
+	//清空选中资源列表
+	$("#share_res_list").html('');
+	//清空位置选中复选框
+	$(".check_position").attr("checked",false);
+	//清空内容评论
+	$("#desc").val('描述一下您的资源吧');
+	//重置提交分享按钮
+	$("#space_sure").attr("is_sub","true");
+}
+
+// 展示或隐藏说说发布框
+function showOrHide(id){
+	var area = $("#" + id);
+	var display = area.css("display");
+	if(display == 'none'){
+		area.show();
+	}else{
+		area.hide();
+	}
+};
+
+$('ul.feed_file_list').each(function() {
+    
+    $(this).find('li').each(function(i) {
+        if(i % 2 == 0) {
+            $(this).css("background","#fafafa");
+        }
+    });
+});
+
+var firstLoginTag = '<php> echo $firstLoginTag;</php>';
+jQuery(function(){
+
+    jQuery(".cy_pro_share").click(function(){
+        jQuery(".cy_model").hide();
+        jQuery(".cy_mr_profileOption").find("li").removeClass('current');
+        jQuery(this).addClass('current');
+    })
+
+    jQuery(".cy_pro_hot").click(function(){
+        jQuery(".cy_model").show();
+        jQuery("#share_res_area").hide();
+        jQuery(".cy_mr_profileOption").find("li").removeClass('current');
+        jQuery(this).addClass('current');
+    })
+
+    if(typeof(firstLoginTag)!= 'undefined' && firstLoginTag){
+        jQuery.jBox.tip("<span style='font-size:14px; color:#535353;'>首次登录个人中心,积分</span><span style='color:#ff6600;'>+10</span>", 'success');
+    }
+});
+
+/**
+ * 跳转到网盘，在上传完资源分享之后调用
+ */
+function jumpToPan(){
+	var pan_url = "{:C('PAN_SITE_URL')}";
+	//延时1.5秒跳转
+	setTimeout("jumpUrl('"+pan_url+"')",1500);
+}
+
+/**
+ * 跳转到指定的页面
+ */
+function jumpUrl(urlPath){
+	location.href=urlPath;
+}
+</script>
+<script type="text/javascript" src="__THEME__/js/home/module.home.js"></script>
+<script type="text/javascript" src="__THEME__/js/module.weibo.js"></script>

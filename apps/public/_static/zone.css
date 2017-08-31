@@ -1,0 +1,308 @@
+@CHARSET "UTF-8";
+/*------------------2013.8.30------zone-----------------*/
+.common h2{
+	height: 25px;
+	width: 200px;
+	position: relative;
+	border-bottom: 1px solid #e7e7e7;
+	padding-bottom: 2px;
+}
+.common h2 a{
+	display: block;
+	position: absolute;
+	top: 5px;
+	right: 20px;
+}
+.common h2 p{
+	color: #666563;
+	font-size: 14px;
+	font-weight:bold;
+	padding-bottom:15px;
+	margin-right: 8px;
+	height: 20px;
+	line-height: 20px;
+	/*width: 50px;*/
+}
+.com_left{
+	height: 40px;
+	width: 40px;
+	margin: 0 10px 8px 18px;
+	display: inline;
+
+}
+.com_right{
+	
+}
+.class_name,.school_name{
+	color: #2399d7;
+	font-weight: bold;
+	margin-bottom: 3px;
+}
+.class_name{
+	line-height:40px;
+}
+.school_name{
+	line-height:40px;
+}
+.font_tea{
+	color: #737373;
+}
+.work_btn{
+	margin:20px 0px 20px 20px;
+}
+.app_show li {
+	clear: both;
+}
+.app_show li .app_rig{
+	padding: 0;
+}
+.app_show li p{
+	color: #6e6a6b;
+	height: 37px;
+	line-height: 37px;
+}
+.app_rig a{
+	color: #6f6969;
+	font-size: 14px;
+}
+/* -----------------------------资源库------------------------------ */
+.resouce{
+	margin-bottom: 20px;
+}
+.resouce .tit {
+	color: #999F9F;
+	font-size: 14px;
+	margin: 10px 0 5px 10px;
+}
+/*----tjliu2--modify--0904--*/
+.go_btn a{
+	color: #fff;
+	font-size: 16px;
+	font-weight: bold;
+	height: 43px;
+	width: 178px;
+	text-align: center;
+	line-height: 43px;
+	display: block;
+	margin: 0 auto 15px;
+	background: url(image/resouce_bg.png);
+}
+.go_btn a:hover{
+	text-decoration: none;
+}
+.resouce .detail li{
+	text-align: center;
+	width: 45px;
+	border-right:1px solid #CCCCCC;
+	float: left;
+	font-size: 14px;
+}
+.resouce .detail .no-border{
+	border-right:0 none;
+}
+.resouce .detail span{
+    color: #333333;
+    display: block;
+    font-size: 12px;
+    font-weight: normal;
+    line-height: 20px;
+	margin:0 0 5px;
+}
+.resouce .detail strong{
+    color: #333333;
+    font-family: tahoma;
+    font-size: 14px;
+    font-weight: normal;
+}
+.resouce .detail{
+	margin-left:40px;
+	padding-top: 0px;
+}/*----tjliu2--modify--0904--*/
+/* -------------------------0904add--------------- */
+.capacity {
+	margin-bottom: 10px;
+	height: 22px;
+}
+/*----tjliu2--add--0904--*/
+.capacity .inner{
+	width: 177px;
+	height: 3px;
+	overflow: hidden;
+	position: relative;
+	background: #d1d9dc;
+	margin: 8px  6px 0 12px;
+}/*----tjliu2--add--0904 modify by xypan 1011--*/ 
+.capacity .inner .changed{
+	position: absolute;
+	top: 0;
+	left: 0;
+	background: #56c4ff;
+	z-index: 99;
+	height: 3px;
+}/*----tjliu2--add--0904--*/
+.capacity_det{
+	text-align:right;
+    margin-right:10px;
+	margin-top:5px;
+	font-size: 14px;
+	color: #6b696a;
+	font-weight: bold;
+}/*----tjliu2--add--0904--*/
+/* -----------------------------公告------------------------------ */
+.notice li, .ke_ti li {
+    line-height: 24px;
+}
+.notice ul, .ke_ti ul {
+    padding: 10px 5px 25px 15px;
+}
+.notice .icon, .ke_ti .icon {
+	width: 4px;
+	margin-right: 8px;
+	height: 4px;
+	float: left;
+	display: inline;
+	padding-top: 10px;
+}
+.notice .cont, .ke_ti .cont {
+    color: #9B999A;
+}
+.notice .time, .ke_ti .time {
+	color: #D0CCCD;
+	font-size: 12px;
+}
+ul, ol {
+    list-style: none;
+}
+/* -----------------------------资源推荐------------------------------ */
+.tab{
+	text-align:center;
+	padding:0;
+}
+.tui_jian .tab {
+    padding: 4px 0 0 0;
+}
+.tui_jian .tab li {
+    float: left;
+}
+/*----tjliu2--modify--0904--*/
+.tui_jian .tab li a.current{
+	background: #d1d1d1;
+	color: #fff;
+}
+.tab_cont{
+	padding-top: 5px;
+	padding-left: 18px;
+}
+.tab_cont li{
+	color: #9a9a9a;
+	line-height: 24px;
+}/*----tjliu2--modify--0904--*/
+.tui_jian .tab li a {
+	padding: 3px 6px;
+	color: #989898;
+	font-size: 13px;
+}
+/*********头像***********/
+.user_avatar_right{
+	width: 80px;
+	padding:5px 0px 0px 10px;
+}
+.user_avatar_right li{
+	margin-bottom: 8px;
+	height: 15px;
+	line-height: 15px;
+	width: 100px;
+}
+.user_avatar_right ul span{
+	color: #747273;
+	font-size: 13px;
+	margin-right: 9px;
+}
+
+/*---------------------------我参与的----xypan 0904-----------------*/
+.join .pnav {
+    padding: 4px 0 0 0;
+}
+.join .pnav li {
+    float: left;
+}
+
+.join .pnav li a.current{
+	background: #d1d1d1;
+	color: #fff;
+}
+.pnav-list{
+	padding-top: 5px;
+	padding-left: 18px;
+}
+
+.pnav-list li{
+	color: #9a9a9a;
+	line-height: 24px;
+}
+
+.join .pnav li a {
+	padding: 3px 6px;
+	color: #989898;
+	font-size: 13px;
+}
+
+/*---------------------------最新问题----xypan 0905-----------------*/
+.new-list{
+	padding-left: 18px;
+}
+
+.new-list li{
+	color: #9a9a9a;
+	line-height: 24px;
+}
+
+.new-question{
+	padding-bottom: 12px;
+}
+/* ---------------------------0906晚上---------------------- */
+.title {
+	height: 31px;
+	line-height: 31px;
+	font-size: 14px;
+	color: #666;
+	border-bottom: 1px solid #E7E7E7;
+	overflow: hidden;
+	_background: url(image/title_line.jpg) left top no-repeat;
+	margin-left: 2px;
+	margin-bottom: 5px;
+}
+.work_table a {
+	width: 180px;
+	height: 44px;
+	text-align: center;
+	color: white;
+	font-size: 16px;
+	line-height: 44px;
+	font-weight: bold;
+	display: block;
+	background: url(image/bluebtn.png) no-repeat;
+	margin: 0 auto 10px;
+}
+.work_table a:hover{
+	color: white;
+}
+/* ---------------------------0906晚上---------------------- */
+.sq {
+	background: url(image/c_sq.gif) no-repeat right;
+	font-size: 12px;
+	padding-right: 14px;
+	margin-right: 10px;
+	color: #787878;
+	float: right;
+    cursor:pointer;
+}
+.zk {
+	background: url(image/c_zk.gif) no-repeat right;
+	font-size: 12px;
+	padding-right: 14px;
+	margin-right: 10px;
+	color: #787878;
+	float: right;
+    cursor:pointer;
+}

@@ -1,0 +1,77 @@
+<div class="pop_box2">
+	<!-- <div class="pop_head">
+		<div class="left pl15">结束主题</div>
+		<div class="pop_close" onMouseover="this.className='pop_closehov'" onMouseOut="this.className='pop_close'"></div>
+	</div> -->
+	<div class="pop_con">
+		<p class="pt5">
+			<span>主题名称:</span>
+			<span style="font-weight:normal">{$data.title}</span>
+		</p>
+		<p class="pt15">
+			<span>主题时间:</span>
+			<span style="font-weight:normal">{$data.createtime|friendlyDate=###,'ymd'}至{:friendlyDate(time(),'ymd')}</span>
+		</p>
+		<p class="pt15">
+			<span>成员数量:</span>
+			<span style="font-weight:normal">{$data.member_count}人</span>
+			<span class="pl30">帖子总数:</span>
+			<span style="font-weight:normal">{$data.discuss_count}</span>
+		</p>
+		<div class="pe_line">
+			<span class="pe_span">上传主题总结:</span>
+			<form tyle='display:inline;padding:0;margin:0;border:0'>									   
+            	{:W('Upload',array('uploadType'=>'file','inputname'=>'attach','urlquery'=>'attach_type=res_summary_file','limit'=>'1','attachIds'=>''))}
+            </form>
+
+		</div>
+		<div class="pe_line" style="height:28px;">
+			<span class="pe_span">是否公开成果:</span>
+			<span class="pl3 pe_span"><input type="radio" name="c1" value="1" class="pr5" checked="checked"/>&nbsp;公开</span>
+			<span class="pl20 pe_span"><input type="radio" name="c1" value="0"/>&nbsp;不公开</span>
+			<div class="clear"></div>
+		</div>
+		<div class="clear"></div>
+		<div class="pop_btn2">
+		    <input type="hidden" id="res_id" value="{$data.id}"/>
+			<input type="button" id="finish_btn" value="确定" class="blue5_btn" onMouseover="this.className='blue5_btnhov'" onMouseOut="this.className='blue5_btn'" onclick="update()">
+			<!-- <input type="button" value="取消" class="blue4_btn" onMouseover="this.className='blue4_btnhov'" onMouseOut="this.className='blue4_btn'"> -->
+		</div>
+	</div>
+</div>
+<script>
+
+function validata(){
+	if($("#attach_ids").val()==undefined){
+		ui.error("请选择上传主题总结");
+		return false;
+	}
+	return true;
+}
+
+
+function  update(){
+	if(!validata()){
+		return ;
+	}
+	var data = {};
+	data['res_id'] = $("#res_id").val();
+	data['summaryids'] = $("#attach_ids").val();
+	data['public'] = $("input:radio[name=c1]:checked").val();
+	$.ajax({
+		type:"POST",
+		dataType:'json',
+		url:"index.php?app=research&mod=Index&act=finish",
+		data:data,
+		success:function(msg){
+			if(msg.status==1){
+				ui.success("创建成功");
+				location.reload();
+			}else{
+				ui.error("创建失败");
+			}
+		}
+	
+	})
+}
+</script>

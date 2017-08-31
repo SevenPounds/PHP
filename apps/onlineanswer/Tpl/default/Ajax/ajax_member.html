@@ -1,0 +1,8 @@
+<volist name="members" id="memb">
+<li>
+<a href="{:U('public/Profile/index', array('uid'=>$memb['uid']))}" event-node="face_card" show="no" uid="{$memb['uid']}">
+ <img src="{$memb['avatar_small']}" />
+</a>
+</li>
+</volist>
+{$page}

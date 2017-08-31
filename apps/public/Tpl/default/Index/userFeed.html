@@ -1,0 +1,71 @@
+<include file="__THEME__/public_header" />
+<link href="__THEME__/css/feedlistwidget.css" rel="stylesheet" type="text/css" />
+<link href="./apps/public/_static/css/person_index.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="__APP__/js/timeline.js"></script>
+<script type="text/javascript" src="__THEME__/js/plugins/core.weibo.js"></script>
+<script type="text/javascript" src="__THEME__/js/module.weibo.js"></script>
+<script type="text/javascript" src="./addons/widget/FeedListWidget/TimelineFeedList.js"></script>
+<div class="talk" id="talk" tag="" style="display:none;"></div>
+<script>
+jQuery(document).ready(function(){
+	loadSTT(2500, "talk");
+	AudioPlayer.init();
+});
+</script>
+<style type="text/css">
+body{background:#f2f2f2;}
+</style>
+<div class="wrapper">
+	<div class="container">
+        <div style="padding-top:10px;">
+            <a href="{:U('public/Workroom/index',array('uid'=>$user_info['uid']))}">{$user_info['uname']}</a>&gt;&gt;<a>说说</a>
+        </div>
+    </div>
+    <div class="mt20 w1000 clearfix" style="margin-top:20px;">
+        <div id="date_tip" class="time_line fl" style="top:55px;">
+            <php>$i = 0;</php>
+            <php>foreach($dates as $key=>$date):</php>
+	            <div class="time_item <?php if($i == 0){echo 'cur';}?>">
+	            	<h3><a href="#year-{$key}">{$key}年</a></h3>
+	            	<php>$year = $key;</php>
+	            	<ul style="<?php if($i > 0){echo 'display:none;';}?>">
+		            	<volist name="date" id="item" key="key">
+							<li class="<?php if($key == 1){echo 'cur';}?>"><a id="{$year}-{$item}" class="month-tip" href="#a-{$year}-{$item}">{$item}月</a></li>
+						</volist>
+					</ul>
+	            </div>
+	            <php>$i++;</php>
+            <php>endforeach;</php>
+        </div>
+        <div class="trends fr" style="<?php if(count($dates) < 1){echo 'background:none;';}?>">
+            <div class="cy_mr_cont clearfix mt_8">
+				<div class="cy_mr_cont_l fl">
+					<php>if(count($dates) < 1):</php>
+						<img alt="这里还什么都么有哦" src="__THEME__/images/none_01.png">
+					<php>endif;</php>
+					<php>foreach($dates as $key=>$date):</php>
+						<php>$year = $key;</php>
+						<a name="year-{$year}"></a>
+						<volist name="date" id="item">
+							<a name="a-{$year}-{$item}"></a>
+							<div data-date="{$year}-{$item}" class="month cy_mr_cont_l_friend">
+								<span class="trends_mark"></span>
+								<h3 class="h3_gray">{$item}月</h3>
+								<div class="cy_mr_box">
+									<div class="cy_mr_box_top1"></div>
+									<div class="cy_mr_box_cont">
+										<div class="cy_mr_comment">
+											{:W('FeedList',array('tpl'=>'TimelineFeedList.html','date'=>$year.'-'.$item,'user_feed'=>'1','type'=>'space','feed_type'=>$feed_type,'feed_key'=>$feed_key,'fgid'=>t($_GET['fgid'])))}
+			                            </div>
+									</div>
+									<div class="cy_mr_box_bot1"></div>
+								</div>
+							</div>
+						</volist>
+					<php>endforeach;</php>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<include file="__THEME__/public_footer" />

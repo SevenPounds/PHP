@@ -1,0 +1,85 @@
+<style>
+span{
+	font-size:14px;
+	font-family: "microsoft yahei";
+}
+
+</style>
+<div class="main_cont_r fr">
+	<php>if($showPersonInfo=='show'){</php>
+	<div class="resource_item">
+		<h3 class="resource_tit clearfix">
+			<strong class="fl">贡献者</strong>
+			<if condition="$showFollowBut eq 'show' "> <eq
+				name="showFollowBut" value="$album['userId']"> <php>
+			if($createData['hasFollow']['following']==0){ </php> <a href="javascript:;"
+				class="fr" id="follow" type=1 data-tid="{$createData['uid']}"><span>+&nbsp;关注</span></a>
+			<php>}else{</php> <a href="javascript:;" class="already fr"
+				id="follow" type=2 data-tid="{$createData['uid']}"><span>已关注</span></a>
+			<php>}</php></if>
+		</h3>
+		<div class="user clearfix">
+			<img src="{$createData.avatar_small}" alt="{$createData['uname']}"
+				class="fl" width="57" height="57" />
+			<p class="fr">
+				<a	href="{:U('public/Workroom/index',array('uid'=>$createData['uid']))}"
+					target="_blank">{$createData.uname|getShort=15,'...'}</a> <span>
+					{$createData.instro|default='该用户暂无简介'|getShort=25,'...'}</span>
+			</p>
+		</div>
+		<ul class="clearfix">
+			 <li><span style="color: #21beff;">{$createData.userData.share_count|default=0}</span>
+				<span>分享</span></li> 
+			<li><span style="color: #21beff;">{$createData.userData.following_count|default=0}</span>
+				<span>关注</span></li>
+			<li><span style="color: #21beff;" id="followNum">{$createData.userData.follower_count|default=0}</span>
+				<span>粉丝</span></li>
+		</ul>
+	</div>
+	<php>}</php>
+	 	<div class="resource_intro">
+		<h3 class="resource_tit">
+			<strong>资源简介</strong>
+		</h3>
+		<p>{$resourceDetail.description|getShort=45,'...'|default='暂无简介'}</p>
+	</div>
+	<!-- <div class="material">
+		<h3 class="resource_tit">
+			<strong>相关素材</strong>
+		</h3>
+		<ul>
+			<li class="clearfix"><a href="#">西湖.ppt</a><img
+				src="__APP__/images/SynResource/sm.png" /><span>52人已引用</span></li>
+		</ul>
+	</div> -->
+	<!-- <div class="my_grade clearfix">
+		<strong class="fl">我的评分：</strong> <span class="star_box fl">
+			140714 <span class="full_star"></span> <span class="full_star"></span>
+			<span class="full_star"></span> <span class="full_star"></span> <span
+			class="half_star"></span>
+		</span> <font class="fl">非常差！</font>
+	</div> -->
+	<!-- <div class="yuntu">
+		<h3 class="resource_tit">
+			<a href="#">知识地图</a> (点击关键词可以直接搜索哦)
+		</h3>
+		<div class="yt_box"></div>
+	</div> -->
+	<!-- <div class="correlation">
+		<h3>相关推荐</h3>
+		<ul>
+			<volist name="relateResList" id="val">
+			<li><img
+				src="{$val:thumbnail_url|default='__APP__/images/default_h2.jpg'}"
+				width="213" height="160" />
+				<p class="clearfix">
+					<span class="fl view">{$val:statistics:viewcount}</span> <span
+						class="fl mesg">12345</span>
+					<font class="fr">20:01</font>
+				</p> <a href="{:U(APP_NAME.'/Rescenter/detail')}&id={$val:general:id}"
+				title="{$val:general:title}">{$val:general:title|getShort=5,'...'}</a>
+			</li>
+			</volist>
+		</ul>
+	</div> -->
+</div>

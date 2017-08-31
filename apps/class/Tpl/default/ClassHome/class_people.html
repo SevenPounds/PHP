@@ -1,0 +1,103 @@
+<include file="__THEME__/public_header" />
+<link href="__APP__/css/fonts.css" rel="stylesheet" type="text/css" />
+<link href="__APP__/css/main.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="__APP__/js/jquery.carouFredSel-6.2.1-packed.js"></script>
+<div class="cloud">
+	<include file="__THEME__/public_class_menu" />
+	  <div class="content">
+			<include file="_top" />
+	        <div class="cm_bg">
+	        	<div class="tab_b"><b>班级成员</b></div>
+	        	<div class="cm_box">
+	            	<div class="cm_one">
+	              		<div class="one_bzr">
+							<div class="one_bzrleft"></div>
+								<div class="one_bzrcen">
+									<div class="bzr_pic"><a href="#"><img src="__APP__/images/cm_pic.jpg" /></a>
+									<!-- <div class="red_card">英</div>-->
+								</div>
+								<p align="center" class="pt10 green"><a href="#">郭文哲</a></p>
+							</div>
+	                	<div class="one_bzrright"></div>
+	                	<div class="bzr">班主任</div>
+	              </div>
+	              <div class="one_rkls">
+						<div class="one_rklsleft"></div>
+	                	<div class="one_rklscen">
+	                  		<div class="rkls_cen">
+	                    		<ul id="foo">
+	                      			<volist name="teachers" id='vo'>
+									<li>
+	                        			<div class="bzr_pic">
+										<a <if condition="$vo['is_synchronous'] eq 1"> href="{:U('public/Profile/index',array('uid'=>$vo['uid']))}" event-node="face_card" show="no" uid={$vo['uid']}</if>><img src="{$vo.avatar_middle}" style="width:64px;height:64px"></a>
+										<!-- <div class="red_card">英</div>-->
+										</div>
+										<p align="center" class="pt10 green"><a <if condition="$vo['is_synchronous'] eq 1"> href="{:U('public/Profile/index',array('uid'=>$vo['uid']))}" event-node="face_card" show="no" uid={$vo['uid']}</if>>{$vo.uname}</a></p>
+									</li>
+									</volist>
+	                  			</ul>
+	                  			<div class="clearfix"></div>
+	                  			<a class="rkls_left prev" id="foo_prev" href="#">
+	                    		<!-- <input name="button" type="button" class="cm_toleft"  onmouseover="this.className='cm_tolefthov'" onmouseout="this.className='cm_toleft'" value="" /> -->
+	                  			</a>
+	                  			<a class="rkls_right next" id="foo_next" href="#">
+	                    		<!-- <input name="button" type="button" class="cm_toright"  onmouseover="this.className='cm_torighthov'" onmouseout="this.className='cm_toright'" value="" /> -->
+	                  			</a>
+	                  		</div>
+	                  		
+	                  		
+	                	</div>
+	               	 	<div class="one_rklsright"></div>
+	                	<div class="rkls">任课老师</div>
+	              	</div>
+	              	<div class="clear"></div>
+	            </div>
+	            <div class="cm_two">
+	              <div class="cm_twotop"></div>
+	              <div class="cm_twocen">
+	                <ul>
+	                  <volist name="students" id='vo'>
+	                  <li>
+	                    <div class="xs_top">
+	                      <div class="xs_topcen"><a <if condition="$vo['is_synchronous'] eq 1"> href="{:U('public/Profile/index',array('uid'=>$vo['uid']))}" event-node="face_card" show="no" uid={$vo['uid']}</if>><img src="{$vo.avatar_middle}" style="width:64px;height:64px"></a></div>
+	                    </div>
+						<p align="center" class="pt10 green" style="width:65px"><a <if condition="$vo['is_synchronous'] eq 1"> href="{:U('public/Profile/index',array('uid'=>$vo['uid']))}" event-node="face_card" show="no" uid={$vo['uid']}</if>>{$vo.uname}</a></p>
+	                  </li>
+	                  </volist>
+	                  <volist name="parents" id='vo'>
+					  <li>
+	                    <div class="xs_top">
+	                      <div class="xs_topcen"><a <if condition="$vo['is_cyuser'] neq 1"> href="{:U('public/Profile/index',array('uid'=>$vo['uid']))}" event-node="face_card" show="no" uid={$vo['uid']}</if>><img src="{$vo.avatar.avatar_middle}" style="width:64px;height:64px"></a></div>
+	                    </div>
+						<p align="center" class="pt10 green" style="width:65px"><a <if condition="$vo['is_cyuser'] neq 1"> href="{:U('public/Profile/index',array('uid'=>$vo['uid']))}" event-node="face_card" show="no" uid={$vo['uid']}</if>>{$vo.uname}</a></p>
+	                  </li>
+					  </volist>
+	                </ul>
+	                <div class="clear"></div>
+	              </div>
+	              <div class="cm_twobot"></div>
+	              <div class="xshjz">学生和家长</div>
+	            </div>
+	          </div>
+	        </div>
+	 	</div>
+	</div>
+<script type="text/javascript">
+jQuery(function() {
+	$("#foo").carouFredSel({
+		circular: false,
+		infinite: false,
+		auto    : false,
+		scroll: 1,
+		prev    : {
+		    button  : "#foo_prev",
+		    key     : "left"
+		},
+		next    : {
+		    button  : "#foo_next",
+		    key     : "right"
+		}
+	});
+});
+</script>
+<include file="__THEME__/public_footer" />

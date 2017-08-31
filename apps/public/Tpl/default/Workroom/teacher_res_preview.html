@@ -1,0 +1,93 @@
+<include file="_work_room_header" />
+		<div class="tp_box">
+			<div class="tp_top">
+				<p class="tp_title">{$resourceInfo:general:title}</p>
+				<p class="font1">
+					<span class="black2">作者：</span><span class="black1">{$resourceInfo:general:creatorName}</span>
+					<span class="pl20 black2">发表时间：</span><span class="black1">{$resourceInfo:date:uploadtime}</span>
+					<span class="pl20 black2">浏览量：</span><span class="orange">{$resourceInfo:statistics:viewcount}</span>
+				</p>
+			</div>
+			<div class="tp_con">
+				<include file="./view_part" />
+			</div>
+
+            <div class="prebtn_wy" >
+            <script type="text/javascript">
+                /**
+                * 资源下载功能
+                * @param resId 资源id
+                */
+                function downloadRes(resId,resName) {
+                	var isdownload = false;
+                    if (MID && MID != "0" && MID != '') {
+                        jQuery.ajax({
+                            url: U('reslib/Ajax/checkResExist'),
+                            type: 'post',
+                            async:false,
+                            dataType: 'json',
+                            data: { 'rid': resId },
+                            success: function (res) {
+                                if (res.status == 0) {
+                                    ui.error(res.info);
+                                } else {
+                                	isdownload = true;
+                                }
+                            },
+                            error: function (msg) {
+                                ui.error("下载出现异常！");
+                            }
+                        });
+                        if(isdownload){ //修复在ie下弹出阻止框
+                        	 var url = U('reslib/Ajax/downloadResource') + "&rid=" + resId+"&filename="+resName;
+                    		location.href = url;
+                    	}
+
+                    } else {
+                        ui.error("请重新登录");
+                    }
+                }
+                
+                /**
+                * 资源收藏功能
+                * @param resId 资源id
+                */
+                function collect(resId) {
+                    if (MID && MID != "0" && MID != '') {
+                        jQuery.ajax({
+                            type: "post",
+                            dataType:'json',
+                            url: U('reslib/Ajax/collectYunpan'),
+                            data: { "rid": resId },
+                            success: function (res) {
+                                if (res.status) {
+                                    ui.success(res.message);
+                                }else{
+                                    ui.error(res.message);
+                                }
+                            },
+                            error: function (msg) {
+                                ui.error("收藏失败");
+                            }
+                        });
+                   } else {
+                        ui.error("请重新登录");
+                   }
+                };
+            </script>
+
+        	<div class="left">
+            	<!--空间 微博 图标-->
+            </div>
+        	<div class="right">
+            	<a href="javascript:;" onclick="javascript:collect('<php>echo $resourceInfo->general->id;</php>');" class="clo_wy"></a>
+                <a href="javascript:;" onclick="javascript:downloadRes('<php>echo $resourceInfo->general->id;</php>','<php>echo addslashes($resourceInfo->general->title).'.'.$resourceInfo->general->extension;</php>');" class="down_wy"></a>
+            </div>
+            <div class="clear"></div>
+        </div>
+		</div> 
+		<div class="tp_bot1"></div>
+		<div class="tp_bot2"></div>
+	</div>
+</div>
+<include file="__THEME__/public_footer" />

@@ -1,0 +1,363 @@
+<include file="__THEME__/public_header" />
+<script src="__THEME__/js/module.weibo.js?v={$site.sys_version}"></script>
+<link href="__APP__/css/fonts.css" rel="stylesheet" type="text/css" />
+<link href="__APP__/css/main.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="__APP__/js/main.js"></script>
+<script type="text/javascript" src="__APP__/js/jquery.carouFredSel-6.2.1-packed.js"></script>
+<script>
+var loadmore=1;
+</script>
+<div class="cloud">
+	<include file="__THEME__/public_class_menu" />
+	<div class="content">
+		<div class="con_left">
+			<div class="banner" id="slides">
+				<img src="__APP__/image/banner.jpg" />
+				<img src="__APP__/image/banner.jpg" />
+				<img src="__APP__/image/banner.jpg" />
+				<img src="__APP__/image/banner.jpg" />
+			</div>
+			<!-- left_box部分 -->
+			<div>
+			<div class="image_carousel">
+					<p class="title pt12 pl20" style="">特色功能</p>
+					<ul  id="foo2">
+					<li class="box1_btn"><a href="#"><img src="__APP__/image/icon_jxhd.jpg" /></a><p class="pt5 black2"><a href="#">家校互动</a></p></li>
+					<li class="box1_btn"><a href="#"><img src="__APP__/image/icon_bjgl.jpg" /></a><p class="pt5 black2"><a href="#">班级管理</a></p></li>
+					<li class="box1_btn"><a href="#"><img src="__APP__/image/icon_zxdy1.jpg" /></a><p class="pt5 black2"><a href="#">在线订阅</a></p></li>
+					<li class="box1_btn"><a href="#"><img src="__APP__/image/icon_jgtj.jpg" /></a><p class="pt5 black2"><a href="#">监管统计</a></p></li>
+					<li class="box1_btn"><a href="#"><img src="__APP__/image/icon_ktyj.jpg" /></a><p class="pt5 black2"><a href="{:U('research/Index/index')}">主题讨论</a></p></li>
+					<li class="box1_btn"><a href="#"><img src="__APP__/image/icon_wlpk.jpg" /></a><p class="pt5 black2"><a href="#">网上评课</a></p></li>
+					<li class="box1_btn"><a href="{:U('onlineanswer/Index/index')}"><img src="__APP__/image/icon_zxdy.jpg" /></a><p class="pt5 black2"><a href="{:U('onlineanswer/Index/index')}">在线答疑</a></p></li>
+					<li class="box1_btn"><a href="#"><img src="__APP__/image/icon_wljy.jpg" /></a><p class="pt5 black2"><a href="#">网络调研</a></p></li>
+					<li class="box1_btn"><a href="#"><img src="__APP__/image/icon_zygx.jpg" /></a><p class="pt5 black2"><a href="#">资源共享</a></p></li>
+					</ul>
+				<div class="clearfix"></div>
+				<a class="prev" id="foo2_prev" href="#"><span>prev</span></a>
+				<a class="next" id="foo2_next" href="#"><span>next</span></a>	
+			</div>
+			</div>
+			<div class="left_box">
+				<p class="title pt12 pl20">活跃教研员</p>
+				<div class="ml10">
+				<volist name="activeInstructors" id="vo">
+						<div class="teacher_box">
+							<a href="{$vo.space_url}" event-node="face_card" show="no" uid="{$vo.uid}">
+								<img src="{$vo['avatar_middle']}" style="width:64px;height:64px;"/>
+							</a>
+							<p class="pt10 green">
+								<a href="{$vo.space_url}">{$vo['uname']}</a>
+							</p>
+						</div>
+					</volist>
+					<div class="clear"></div>
+				</div>
+			</div>
+			<div class="left_box">
+				<p class="title pt12 pl20">活跃教师</p>
+				<div class="ml10">
+					<volist name="activeTeachers" id="vo">
+						<div class="teacher_box">
+							<a href="{$vo.space_url}" event-node="face_card" show="no" uid="{$vo["uid"]}">
+								<img src="{$vo['avatar_middle']}" style="width:64px;height:64px;"/>
+							</a>
+							<p class="pt10 green">
+								<a href="{$vo.space_url}">{$vo['uname']}</a>
+							</p>
+						</div>
+					</volist>
+					<div class="clear"></div>
+				</div>
+			</div>
+			<div class="left_box" id="beeninschool">
+		
+				
+			
+			</div>
+			<div class="left_box" id="beeninclass">
+				
+			</div>
+			<div class="left_box">
+				<div class="tab">
+					<p class="title1 pt10 pl20 left">个人空间能为您带来什么</p>
+					<div class="right">
+						<ul>
+							<li class="present"><a href="javascript:void(0)">教研员</a></li>
+							<li class="nor3"><a href="javascript:void(0)">教师</a></li>
+							<li class="nor3"><a href="javascript:void(0)">学生</a></li>
+							<li class="nor3"><a href="javascript:void(0)">家长</a></li>
+							<li class="nor2 mr8"><a href="javascript:void(0)">教育管理者</a></li>
+						</ul>
+					</div>
+				</div>
+				<!--教研员下的div-->
+				<div class="content0" style="height:198px;">
+					<div class="advan_box pt20">
+						<div class="left"><img src="__APP__/image/icon_jyyy.jpg" /></div>
+						<div class="left" style="width:230px">
+							<p class="font2 pt4 pl20">教研应用</p>
+							<p class="font1 black pt10 pl20">提供课题研究、在线答疑、网上评课、网络调研等丰富应用,教研工作更轻松！</p>
+						</div>
+						<div class="clear"></div>
+					</div>
+					<div class="advan_box pt20">
+						<div class="left"><img src="__APP__/image/icon_jyjg.jpg" /></div>
+						<div class="left" style="width:230px">
+							<p class="font2 pt4 pl20">教育监管</p>
+							<p class="font1 black pt10 pl20">及时了解区域教学、教研情况，并开展针对性教研活动！</p>
+						</div>
+						<div class="clear"></div>
+					</div>
+					<div class="advan_box pt10">
+						<div class="left"><img src="__APP__/image/icon_jyzx.jpg" /></div>
+						<div class="left" style="width:230px">
+							<p class="font2 pt4 pl20">教育资讯</p>
+							<p class="font1 black pt10 pl20">实时的教育动态、教育资讯，与教研员、教师在线沟通交流心得！</p>
+						</div>
+						<div class="clear"></div>
+					</div>
+				</div>
+				
+				<!--教师下的div-->
+				<div class="content1" style="display:none">
+					<div class="advan_box pt20">
+						<div class="left"><img src="__APP__/image/icon_jzlx.jpg" /></div>
+						<div class="left" style="width:230px">
+							<p class="font2 pt4 pl20">教研教学</p>
+							<p class="font1 black pt10 pl20">提供课题研究、在线答疑、网上评课等丰富应用，教研、教学工作更轻松！</p>
+						</div>
+						<div class="clear"></div>
+					</div>
+					<div class="advan_box pt20">
+						<div class="left"><img src="__APP__/image/icon_dtpj.jpg" /></div>
+						<div class="left" style="width:230px">
+							<p class="font2 pt4 pl20">优质资源</p>
+							<p class="font1 black pt10 pl20">提供名师课堂、在线课堂、专递课堂等优质资源，促进教学水平提升！</p>
+						</div>
+						<div class="clear"></div>
+					</div>
+					<div class="advan_box pt10">
+						<div class="left"><img src="__APP__/image/icon_dzdt.jpg" /></div>
+						<div class="left" style="width:230px">
+							<p class="font2 pt4 pl20">家校联系</p>
+							<p class="font1 black pt10 pl20">提供发作业、发通知功能，家校沟通更加便捷、畅通！</p>
+						</div>
+						<div class="clear"></div>
+					</div>
+					<div class="advan_box pt10">
+						<div class="left"><img src="__APP__/image/icon_bzrw.jpg" /></div>
+						<div class="left" style="width:230px">
+							<p class="font2 pt4 pl20">班级管理</p>
+							<p class="font1 black pt10 pl20">提供班级日志、照片墙、投票、表扬栏等丰富应用，班级管理方法更先进！</p>
+						</div>
+						<div class="clear"></div>
+					</div>
+					<div class="clear"></div>
+				</div>
+				
+				<!--学生下的div-->
+				<div class="content2" style="display:none">
+					<div class="advan_box pt20">
+						<div class="left"><img src="__APP__/image/icon_bjdt.jpg" /></div>
+						<div class="left" style="width:230px">
+							<p class="font2 pt4 pl20">班级动态</p>
+							<p class="font1 black pt10 pl20">实时了解班级动态，作业、通知、班级活动一个不漏！</p>
+						</div>
+						<div class="clear"></div>
+					</div>
+					<div class="advan_box pt20">
+						<div class="left"><img src="__APP__/image/icon_hdjy.jpg" /></div>
+						<div class="left" style="width:230px">
+							<p class="font2 pt4 pl20">互动交友</p>
+							<p class="font1 black pt10 pl20">跟同学一起分享交流，记录成长、交流心得、展示自我多彩生活！</p>
+						</div>
+						<div class="clear"></div>
+					</div>
+					<div class="advan_box pt10">
+						<div class="left"><img src="__APP__/image/icon_kwzy.jpg" /></div>
+						<div class="left" style="width:230px">
+							<p class="font2 pt4 pl20">课外资源</p>
+							<p class="font1 black pt10 pl20">提供专题资源、专递课堂、名师课堂等丰富资源，促进探究式、自主性学习！</p>
+						</div>
+						<div class="clear"></div>
+					</div>
+					<div class="clear"></div>
+				</div>
+				
+				<!--家长下的div-->
+				<div class="content3" style="display:none">
+					<div class="advan_box pt20">
+						<div class="left"><img src="__APP__/image/icon_bjdt.jpg" /></div>
+						<div class="left" style="width:230px">
+							<p class="font2 pt4 pl20">班级动态</p>
+							<p class="font1 black pt10 pl20">实时了解孩子的班级动态，作业、通知、班级活动一个不漏！</p>
+						</div>
+						<div class="clear"></div>
+					</div>
+					<div class="advan_box pt20">
+						<div class="left"><img src="__APP__/image/icon_jtjy.jpg" /></div>
+						<div class="left" style="width:230px">
+							<p class="font2 pt4 pl20">家庭教育</p>
+							<p class="font1 black pt10 pl20">在线了解最新教育资讯、家庭教育文章，跟家长交流家庭教育心得！</p>
+						</div>
+						<div class="clear"></div>
+					</div>
+					<div class="advan_box pt10">
+						<div class="left"><img src="__APP__/image/icon_xxqk.jpg" /></div>
+						<div class="left" style="width:230px">
+							<p class="font2 pt4 pl20">学习情况</p>
+							<p class="font1 black pt10 pl20">孩子的大考小考成绩随时获知，点对点发送成绩，保护孩子隐私！</p>
+						</div>
+						<div class="clear"></div>
+					</div>
+					<div class="clear"></div>
+				</div>
+				
+				<!--教育管理者下的div-->
+				<div class="content4" style="display:none">
+					<div class="advan_box pt20">
+						<div class="left"><img src="__APP__/image/icon_jyjg.jpg" /></div>
+						<div class="left" style="width:230px">
+							<p class="font2 pt4 pl20">教育监管</p>
+							<p class="font1 black pt10 pl20">及时了解区域教学、教研情况，并开展针对性教研活动！</p>
+						</div>
+						<div class="clear"></div>
+					</div>
+					<div class="advan_box pt20">
+						<div class="left"><img src="__APP__/image/icon_jyzx.jpg" /></div>
+						<div class="left" style="width:230px">
+							<p class="font2 pt4 pl20">教育资讯</p>
+							<p class="font1 black pt10 pl20">实时的教育动态、教育资讯，与教研员、教师在线沟通交流心得！</p>
+						</div>
+						<div class="clear"></div>
+					</div>
+					<div class="clear"></div>
+				</div>
+			</div>
+		</div>
+		<div class="con_right">
+			<div class="right_box" style="display:none;">
+				<p class="title3" >
+					<span class="left">通知公告</span>
+					<span class="more"><a href="#">更多</a></span>
+				</p>
+				<ul >
+					<li><span class="style1"><a href="#">2013年暑假夏令营通知</a></span><span class="time">2013/8/15</span><div class="clear" ></div></li>
+					<li><span class="style1"><a href="#">2013年暑假夏令营通知</a></span><span class="time">2013/8/15</span><div class="clear" ></div></li>
+					<li><span class="style1"><a href="#">2013年暑假夏令营通知</a></span><span class="time">2013/8/15</span><div class="clear" ></div></li>
+					<li><span class="style1"><a href="#">2013年暑假夏令营通知</a></span><span class="time">2013/8/15</span><div class="clear" ></div></li>
+					<li><span class="style1"><a href="#">2013年暑假夏令营通知</a></span><span class="time">2013/8/15</span><div class="clear" ></div></li>
+				</ul>
+			</div>
+			<div class="right_box">
+				<p class="title3">热点推荐</p>
+				<ul>
+				    <volist name="hotrecommend" id="comm">
+			          <li><a href="index.php?app=public&mod=Profile&act=feed&feed_id={$comm['feed_id']}&uid={$comm['uid']}" title="{$comm['feed_data']['feed_title']}"><php>if(!empty($comm['feed_data']['feed_title'])){</php>{$comm['feed_data']['feed_title']}<php>}else{</php>{$comm['feed_data']['content']|parse_html}<php>}</php></a></li>     
+                    </volist>
+				</ul>
+			</div>
+			<div class="right_box">
+				<p class="title3">最新动态</p>
+				<volist name="lastFeeds" id='feed'>
+					<div class="news_box pt10" style="height: auto;">
+						<div class="news_left">
+							<a href="{$feed['user_space_url']}" event-node="face_card" show="no" uid="{$feed["uid"]}"><img src="{$feed['avatar_small']}" /></a>
+						</div>
+						<div class="news_right" style="height: auto;">
+							<p>
+								<span class="left green pt5"><a href="{$feed['user_space_url']}" event-node="face_card" show="no" uid="{$feed["uid"]}">{$feed['uname']}</a></span>
+								<span class="right time pt5">{$feed['publish_time']}</span>
+								<div class="clear"></div>
+							</p>
+							<p class="pt2">{$feed['feed_content']}</p>
+						</div>
+						<div class="clear"></div>
+					</div>
+				</volist>
+			</div>
+			<div class="right_box" >
+				<p class="title3">身边的同学</p>
+				<div style="padding-left: 10px;">
+					<volist name="activeStudents" id='vo'>
+						<div class="ss_img mt10">
+							<a href="{$vo.space_url}" event-node="face_card" show="no" uid="{$vo["uid"]}">
+								<img width="74px;" height="74px;" src='{$vo["avatar_middle"]}' />
+								<p class="pt5 green">{$vo["uname"]}</p>
+							</a>
+						</div>
+					</volist>
+				</div>
+				<div class="clear"></div>
+			</div>
+			<div class="right_box">
+				<p class="title3">可爱的家长</p>
+				<div style="padding-left: 10px;">
+					<volist name="activeParents" id='vo'>
+						<div class="ss_img mt10">
+							<a href="{$vo.space_url}" event-node="face_card" show="no" uid="{$vo["uid"]}">
+								<img width="74px;" height="74px;" src='{$vo["avatar_middle"]}' />
+								<p class="pt5 green">{$vo["uname"]}</p>
+							</a>
+						</div>
+					</volist>
+				</div>
+				<div class="clear"></div>
+			</div>
+		</div>
+		<div class="clear"></div>
+	</div>
+<script type="text/javascript" src="__APP__/js/jquery.slides.min.js""></script>
+<script type="text/javascript" language="javascript">
+$(function() {
+    $("#foo2").carouFredSel({
+        circular: false,
+        infinite: false,
+        auto    : false,
+        scroll: 1,
+        prev    : {
+            button  : "#foo2_prev",
+            key     : "left"
+        },
+        next    : {
+            button  : "#foo2_next",
+            key     : "right"
+        }
+    });
+});
+$(function() {
+    $('#slides').slidesjs({
+        width: 708,
+        height: 298,
+        navigation: false,
+        play:{
+            auto:true,
+            pauseOnHover:true,
+            interval:3000
+        }
+    });
+});
+
+$(function() {
+var t = Math.random();
+if($('#beeninschool').length > 0) {
+	$('#beeninschool').after('<div class="loading" id="beeninschool_loadMore">'+L('PUBLIC_LOADING')+'<img src="'+THEME_URL+'/image/load.gif" class="load"></div>');
+}
+if($('#beeninclass').length > 0) {
+	$('#beeninclass').after('<div class="loading" id="beeninclass_loadMore">'+L('PUBLIC_LOADING')+'<img src="'+THEME_URL+'/image/load.gif" class="load"></div>');
+}
+  $.post(U('class/Index/beeninschool'), {t:t }, function(content) {
+		$('#beeninschool').html(content.html);
+		 $('#beeninschool_loadMore').remove();
+ 	    M($('#beeninschool')[0]);
+}, 'json');
+  $.post(U('class/Index/beeninclass'), {t:t }, function(content) {
+		$('#beeninclass').html(content.html);	
+		 $('#beeninclass_loadMore').remove();
+	    M($('#beeninclass')[0]);
+}, 'json');
+});
+  
+
+</script>
+<include file="__THEME__/public_footer" />

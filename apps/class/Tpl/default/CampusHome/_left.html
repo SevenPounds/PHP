@@ -1,0 +1,50 @@
+<div class="s_left">
+			<dl>
+				<dd class="s_leftpic"><a href="{$org.spaceurl}"><img src="{$org['id']|getCampuseAvatar=###,$org['type'],'avatar_big'}" style="width:154px;height:150px;"/></a></dd>
+				<dd class="s_btn">
+					<div class="green_btn2"><input type="button" value="学校主页管理" class="green_btn2nor"  onmouseover="this.className='green_btn2hov'" onmouseout="this.className='green_btn2nor'"  onclick="window.location.href='index.php?app=class&mod=CampusHome&act=school_manage&cid={$org['id']}'"/></div><!--  -->
+					<div class="add_btn3">	{:W('FollowBtn', array('fid'=>$org['id'], 'uname'=>$org['name'], 'follow_state'=>$org['follow_state'], 'type'=>'campus','ftype'=>$org['type']))} </div>
+					<div class="clear"></div>
+				</dd>
+				<dd class="s_leftin">
+					<ul>
+						<li><a href="{$org.spaceurl}"><p class="green pt4">{$org.ccount|default = 0}</p><p class="pt2 black">班级</p></a></li>
+						<li><a href="{$org.spaceurl}"><p class="green pt4">{$org.scount|default = 0}</p><p class="pt2 black">学生</p></a></li>
+						<li><a href="{:U('class/CampusHome/campus_follower',array('cid'=>$org['id']))}"><p class="green pt4"><span class="follower_{$org['id']}">{$org.follower|default = 0}</span></p><p class="pt2 black">粉丝</p></a></li>
+						<div class="clear"></div>
+					</ul>
+				</dd>
+				<dd class="s_line"></dd>
+			</dl>
+			<dl class="s_jj">
+				<dd class="s_title1">学校简介</dd>
+				<dd class="mb8">{$org['intro']}
+				</dd>
+				<div class="clear"></div>
+				<dd class="green pl170"><a href="{:U('class/CampusHome/school_intro',array('cid'=>$org['id']))}">详情</a></dd>
+			</dl>
+			<dl class="s_jj">
+				<dd class="s_title1">校长简介</dd>
+				<dd class="master_pic"><a href="{$org.spaceurl}"><img src="__APP__/image/master_img.jpg" /></a></dd>
+				<dd><center><span class="green"><a href="{$org.spaceurl}">校长</a></span>  <span class="green"><a href="#">韩伟</a></span></center></dd>
+				<dd>安徽省名师、名校长培养对象，全国劳动模范。</dd>
+				<dd class="pt10"><a href="#"><img src="__APP__/image/pencil_icon.jpg" /><span class="green pl6">给我留言</span></a></dd>
+				<dd class="write_box">
+					<div class="write_boxtop"></div>
+					<div class="write_boxcen">
+					<textarea></textarea>
+					</div>
+					<div class="write_boxbot"></div>
+				</dd>
+				<dd class="mt7 mb16">
+					<div class="left pl6">还可输入<span class="green">140</span>字</div>
+					<div class="right"><input type="button" value="提交" class="green_s"  onmouseover="this.className='green_shover'" onmouseout="this.className='green_s'" /></div>
+					<div class="clear"></div>
+				</dd>
+			</dl>
+			<dl class="s_jj2">
+				<dd class="s_title1">联系方式</dd>
+				<dd>地址： 安徽省 合肥市 蜀山区 黄山路666号</dd>
+				<dd>电话： 0551-65309760</dd>
+			</dl>
+		</div>

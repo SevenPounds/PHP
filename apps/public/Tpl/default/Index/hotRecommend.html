@@ -1,0 +1,78 @@
+<ul class="cy_model_tab clearfix" id="hot_nav">
+	<li class="current hot_app" data-value="blog"><a
+		href="javascript:;">热门日志</a></li>
+	<li class="hot_app" data-value="research"><a href="javascript:;">主题讨论</a></li>
+	<li class="hot_app" data-value="onlineanswer"><a
+		href="javascript:;">在线答疑</a></li>
+	<li class="hot_app" data-value="vote"><a href="javascript:;">网络调研</a></li>
+	<li class="hot_app" data-value="pingke"><a href="javascript:;">网上评课</a></li>
+	<li class="hot_app" data-value="people"><a href="javascript:;">本周达人</a></li>
+	<!-- <li><a href="{:U('public/Converge/index')}" target="_blank">更多>></a></li> -->
+</ul>
+<!-- 热门应用、达人榜 -->
+<div id="hot_content" class="cy_model_cont clearfix"></div>
+
+<script type="text/javascript">
+	//绑定热门事件
+	$(window).ready(function(){
+		$("#hot_nav li").click(function(){
+			var data_value =$(this).attr('data-value');
+			if(typeof(data_value)=='undefined'){
+				return ;
+			}
+			reloadHotInfo(data_value);
+			$("#hot_nav li").each(function () {
+		        $(this).removeClass('current');
+		    });
+			$(this).addClass('current');
+		});
+		//加载最热日志数据
+		reloadHotInfo('blog');
+		
+	});
+	//鼠标浮上mini模块凸显功能
+	function changeHotmoserover(obj) {
+	    //消除上一个选中
+	    var currentid = $('#hot_content .current').attr('id');
+	    $('#hot_content .current #' + currentid + '_content1').css('display', '');
+	    $('#hot_content .current #' + currentid + '_content2').css('display', 'none');
+	    var repeat1 = $('#' + currentid + ' .cy_model_repeat');
+	    if (repeat1.length > 0) {
+	        repeat1.css('display', 'none');
+	    }
+	    $('#hot_content .current').removeClass('current');
+	
+	    //选中现在浮动的
+	    $(obj).addClass('current');
+	    var name = obj.id
+	    $('#' + name + '_content1').css('display', 'none');
+	    $('#' + name + '_content2').css('display', '');
+	    var repeat = $('#' + name + ' .cy_model_repeat');
+	    if (repeat.length > 0) {
+	        repeat.css('display', '');
+	    }
+	}
+	//获取mini模块热门信息
+	function reloadHotInfo(app_name){
+		$.ajax({
+			type:"POST",
+			url: U('public/Index/getHotAppInfoList'),
+			data:{"app_name":app_name},
+			dataType:"json",
+			beforeSend:function(XHR){
+				jQuery("#hot_content").html( '<div class="loading" id="loadMore">'+L('PUBLIC_LOADING')+'<img src="'+THEME_URL+'/image/icon_waiting.gif" class="load"></div>');
+			},
+			success:function(data){
+	            $("#hot_content").html("").html(data.data);
+	            if(app_name=='people'){
+	                M(document.getElementById('hot_peopleList'));
+	            }else{
+	            	M(document.getElementById('hot_content'));
+	            }
+			},
+			error:function(msg){
+				$("#hot_content").html("").html("<p style='padding: 19px 0px 11px 209px;'>加载失败，<a href='javascript:reloadHotInfo(\""+app_name+"\");'>请重试！</a></p>");
+			}
+		});
+	}
+</script>

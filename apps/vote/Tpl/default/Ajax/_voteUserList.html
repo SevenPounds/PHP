@@ -1,0 +1,9 @@
+<div class="pk_membername">调研成员</div>
+<ul>
+    <volist name="userList" id="item">
+    	<neq name="item['uid']" value="$data['uid']">
+    	<li><a href="{$item.space_url}" event-node="face_card" show="no" uid={$item['uid']}><img src="{$item.avatar_small}" /></a></li>
+		</neq>
+    </volist>
+</ul>
+<div class="clear"></div>

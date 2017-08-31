@@ -1,0 +1,44 @@
+<include file="__THEME__/public_header" />
+<link href="__APP__/css/fonts.css" rel="stylesheet" type="text/css" />
+<link href="__APP__/css/main.css" rel="stylesheet" type="text/css" />
+
+<div class="cloud">
+	<include file="__THEME__/public_class_menu" />
+	<div class="ccrumbs">
+		<ul>
+			<li class="pre_cen"><a href="{:U('class/ClassHome/index',array('cid'=>$_GET['cid']))}">班级主页</a></li>
+			<li>></li>
+			<li>历史上的今天</li>
+		</ul>
+		<div class="clear"></div>
+	</div>
+	<div class="his_box">
+		<embed src="{$soundurl}/{$today[0]['date']}.wav" autostart="true" loop="false" hidden="true" width="0" height=0"></embed>
+		<div class="his_top">
+			<div class="his_topleft"></div>
+			<div class="his_topcen"></div>
+			<div class="his_topright"></div>
+			<div class="clear"></div>
+			<div class="his_chain">
+				<div class="left"><img src="__APP__/images/his_chain.jpg" /></div>
+				<div class="right"><img src="__APP__/images/his_chain.jpg" /></div>
+			</div>
+		</div>
+		<div class="his_con">
+			<div class="his_time"><php>echo date("m月d日");</php></div>
+			<div class="his_title"><span class="pl6"><img src="__APP__/images/his_title.gif" /></span><span class="pl6">大事记</span></div>
+			<ul>
+				<volist name="today" id="vo">
+				<li>{$vo['content']}</li>
+		       	</volist>
+			</ul>
+		</div>
+		<div class="his_bot">
+			<div class="his_botleft"></div>
+			<div class="his_botcen"></div>
+			<div class="his_botright"></div>
+			<div class="clear"></div>
+		</div>
+	</div>
+</div>
+<include file="__THEME__/public_footer" />

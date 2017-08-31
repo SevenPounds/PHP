@@ -1,0 +1,185 @@
+<include file="__THEME__/public_header" />
+<link href="__APP__/css/fonts.css" rel="stylesheet" type="text/css" />
+<link href="__APP__/css/main.css" rel="stylesheet" type="text/css" />
+<div class="cloud">
+	<include file="__THEME__/public_class_menu" />
+	
+	<div class="content">
+	<include file="_top" />
+		<div class="class_info">
+			
+			<div class="bj_left">
+				<div class="tab_b mt14"><b>照片墙</b><if condition="$photo_count gt 0"><font class="gray">大家记录了{$photo_count}个美好瞬间</font></if><p class="btn"><input type="button" value="上传照片" class="green_s"  onmouseover="this.className='green_shover'" onmouseout="this.className='green_s'" onclick="window.location.href='index.php?app=class&mod=ClassAlbum&act=classflash&cid={$classId}'"/></p></div>
+				<ul class="pw_box">
+				<volist name="photo_list.data" id="vo" key="i">
+				  <li <if condition="$i%4 eq 1">class="mr20"<elseif condition="$i%4 eq 0"/>class=""<else />class="mr19"</if>>
+						<div class="pw_con">
+							<p class="pl2 pt2"><a href="{:U('class/ClassAlbum/classphoto',array('id'=>$vo['id'],'aid'=>$vo['albumId'],'uid'=>$vo['userId'], 'cid'=>$classId))}"><img class="pw_photo" src="{$vo['savepath']|get_photo_url=###,200,'auto',false}"  /></a></p>
+							<p class="pl10 pt10"><span class="black4">来自：</span><span class="green1"><a href="{:U('public/Profile/index',array('uid'=>$vo['userId']))}" event-node="face_card" uid="{$vo.userId}" >{$vo.userId|getUserName}</a></span></p>
+							<div class="ks_inforbox pl10 pt2">
+								<span><img src="__APP__/images/icon_fx.gif" /></span><span class="pl2"><a href="#">10</a></span>
+								<span class="pl10"><img src="__APP__/images/icon_xh.gif" /></span><span class="pl2"><a href="#">8</a></span>
+								<span class="pl10"><img src="__APP__/images/icon_pl.gif" /></span><span class="pl2"><a href="#">{$vo.commentCount}</a></span>
+							</div>
+						</div>
+				</li>
+				</volist>
+				</ul>
+				<div class="clear"></div>
+				<div class='page'>{$photo_list.html}</div>
+				
+			</div>
+			<div class="bj_right">
+				<div class="tab_a"><b>相册</b><p class="right green"><a href="javascript:create_classalbum_tab({$classId}, 1);">创建相册</a></p></div>
+				<div class="clear"></div>
+				<div class="pw_btnbox">
+					<input type="button" id="upalbum" value="" class="pw_uphov"  onmouseover="this.className='pw_uphov'" onmouseout="this.className='pw_upnor'" />
+					<!--<input type="button" value="" class="pw_updis" />-->
+				</div>
+				<ul id="classalbum">
+				<volist name="photo_data" id="vo" empty="$empty">
+				<li>
+						<div class="pw_photobox">
+							<P><span class="left green"><strong>{$vo.name|getShort=12}</strong></span><span class="right black5">({$vo.photoCount|default=0}张)</span></P>
+							<p><a href="{:U('class/ClassAlbum/classalbum',array('id'=>$vo['id'],'cid'=>$classId))}"><img class="pw_bumslist" src="{$vo.id|get_album_cover=###,$li,66,66}" /></a></p>
+							<p class="black4 pt8">{$vo.mTime|date='m月d日 H:i', ###}更新</p>
+						</div>
+						<div class="pw_photobox1"></div>
+						<div class="pw_photobox2"></div>
+				</li>
+				</volist>	
+				</ul>
+				<div class="pw_btnbox">
+					<!--<input type="button" value="" class="pw_downnor"  onmouseover="this.className='pw_downhov'" onmouseout="this.className='pw_downnor'" />-->
+					<input type="button" id="downalbum" value="" class="pw_downnor" onmouseover="this.className='pw_downhov'" onmouseout="this.className='pw_downnor'"/>
+				</div>
+			</div>
+			
+			<div class="clear"></div>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+
+//相册起点
+var start=0;
+var cid={$_GET['cid']};
+
+//初始化 置灰上翻按钮 且根据相册总数判断是否置灰下翻按钮
+$(document).ready(function(){
+	
+	$("#upalbum").attr("disabled",true);
+	if({$album_count}<=3){
+		$("#downalbum").attr("disabled",true);
+		$("#downalbum").removeClass();
+		$("#downalbum").addClass("pw_downhov");
+		if({$album_count}==2){
+			$("#classalbum").css("min-height","420px")
+		}
+		if({$album_count}==1){
+			$("#classalbum").css("min-height","210px")
+		}
+		else{
+			$("#classalbum").css("min-height","0px")
+		}
+		
+	}
+})
+
+var isLoading = false;
+$("#upalbum").click(function(){ 
+	if(!isLoading){
+		isLoading = true;
+	
+	//相册起点计数
+	--start;
+	//自身约束
+	if(start<1){
+		$("#upalbum").attr("disabled",true);
+	}
+	//下翻按钮恢复可点     样式调整
+	$("#downalbum").attr("disabled",false);
+	$("#downalbum").removeClass();
+	$("#downalbum").addClass("pw_downnor")
+	
+	var t = Math.random();
+	
+	$.ajax({
+		type: "POST",
+		url:U('class/Ajax/getAlbum'),
+		data:{start:start,cid:cid,type:0,t:t},
+		datatype:'text',
+        success: function (data) {
+        	//解析数组
+        	data = eval('('+data+')');
+        	//动画隐藏  回调删除
+        	$("#classalbum li:last").hide(200,function(){jQuery("#classalbum li:last").remove()});
+           
+           //图片链接url参数
+           var params = new Array();
+           params[0] = 'id='+data.id,
+           params[1] = 'cid='+cid,
+           
+         //插入作为作为第一个子元素
+           	$("#classalbum").prepend("<li  style='display:none'><div class='pw_photobox'><P><span class='left green'><strong>"+data.name+"</strong></span><span class='right black5'>("+data.photoCount+"张)</span></P><p><a href='"+U('class/ClassAlbum/classalbum',params)+"'><img class='pw_bumslist' src='"+data.url+"' /></a></p><p class='black4 pt8'>"+data.mTime+"更新</p></div><div class='pw_photobox1'></div><div class='pw_photobox2'></div></li>");	
+        	setTimeout(function(){
+        		$("#classalbum li:first").show(150);
+        		isLoading = false;
+        	},150);
+        },
+        error: function (msg) {
+        	isLoading = false;
+        }
+	 });
+	}
+	
+})
+
+
+$("#downalbum").click(function(){
+	if(!isLoading){
+		isLoading = true;
+	//相册起点计数
+	++start;
+	//自身约束
+	if({$album_count}==start+3){
+		$("#downalbum").attr("disabled",true);
+	}
+	//上翻按钮恢复可点     样式调整
+	$("#upalbum").attr("disabled",false);
+	$("#upalbum").removeClass();
+	$("#upalbum").addClass("pw_upnor")
+	
+	var t = Math.random();
+	$.ajax({
+		type: "POST",
+		url:U('class/Ajax/getAlbum'),
+		data:{start:start,cid:cid,type:1,t:t},
+		datatype:'text',
+        success: function (data) {
+        	//解析数组
+        	data = eval('('+data+')');
+        	
+        	//图片链接url参数
+        	var params = new Array();
+        	params[0] = 'id='+data.id,
+            params[1] = 'cid='+cid,
+             
+        	//动画隐藏  回调删除
+        	$("#classalbum li:first").hide(200,function(){jQuery("#classalbum li:first").remove()});
+           	//插入作为作为最后一个子元素
+           	$("#classalbum").append("<li style='display:none'><div class='pw_photobox'><P><span class='left green'><strong>"+data.name+"</strong></span><span class='right black5'>("+data.photoCount+"张)</span></P><p><a href='"+U('class/ClassAlbum/classalbum',params)+"'><img class='pw_bumslist' src='"+data.url+"' /></a></p><p class='black4 pt8'>"+data.mTime+"更新</p></div><div class='pw_photobox1'></div><div class='pw_photobox2'></div></li>");	     
+           	setTimeout(function(){
+         		$("#classalbum li:last").show(150);
+         		isLoading = false;
+         	},150);
+        },
+        error: function (msg) {
+        	isLoading = false;
+        }
+	 });
+	}
+}) 
+</script>
+<script src="__APP__/js/album.js" type="text/javascript"></script>
+<include file="__THEME__/public_footer" />

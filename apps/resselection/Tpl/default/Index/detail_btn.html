@@ -1,0 +1,96 @@
+<!-- 区县级遴选 -->
+<if condition="$level eq 3">
+<div class="left mt10">
+	<if condition ="$resource['audit_status'] eq 0">
+	<div class="rp_btn">审核操作：
+		<input type="button" value="通过" class="blue5_btn" onMouseover="this.className='blue5_btnhov'" onMouseOut="this.className='blue5_btn'" onclick="ResourceSelector.Pass('{$resource.rid}',1)">
+		<input type="button" value="不通过" class="blue4_btn" onMouseover="this.className='blue4_btnhov'" onMouseOut="this.className='blue4_btn'"  onclick="ResourceSelector.NotPass('{$resource.rid}',1)">
+	</div>
+	</if>
+	<if condition="($resource['county_level'] eq 0) AND ($resource['audit_status'] eq 1)" >
+		<div class="rp_btn2">遴选操作：
+			<input type="button" value="评为精品资源" class="blue_btn11" onMouseover="this.className='blue_btn11hov'" onMouseOut="this.className='blue_btn11'" onclick="ResourceSelector.ShowRecommand('{$resource.rid}',2,1)">
+			<input type="button" value="评为非精品资源" class="blue_btn10" onMouseover="this.className='blue_btn10hov'" onMouseOut="this.className='blue_btn10'" onclick="ResourceSelector.ShowRecommand('{$resource.rid}',1,1)">
+		</div>
+		<elseif condition="$resource['county_level'] neq 0" />
+		<div>
+			<div class="rp_btn2">遴选结果：<if condition="$resource['county_level'] eq 1">精品资源<else />非精品资源</if>
+			<span class="pl50">区县遴选人：{$uname['county']['uname']|default="教研员"}</span>
+			</div>
+			<if condition="($mid eq $resource['county_auditor']) AND ($resource['city_level'] eq 0) AND ($resource['province_level'] eq 0)">
+			<div class="rp_btn2">修改遴选结果：
+				<if  condition="$resource['county_level'] eq 2">
+				<input type="button" value="评为精品资源" class="blue_btn11" onMouseover="this.className='blue_btn11hov'" onMouseOut="this.className='blue_btn11'" onclick="ResourceSelector.ShowRecommand('{$resource.rid}',2,1)">
+				<else />
+				<input type="button" value="评为非精品资源" class="blue_btn10" onMouseover="this.className='blue_btn10hov'" onMouseOut="this.className='blue_btn10'" onclick="ResourceSelector.ShowRecommand('{$resource.rid}',1,1)">
+				</if>
+			</div>
+			</if>
+		</div>
+	<else />
+	</if>
+</div>
+</if>
+
+<!-- 市级遴选 -->
+	<if condition="$level eq 2">
+		<div class="left mt10">
+			<if condition="$resource['city_level'] eq 0">
+				<div class="rp_btn2"><if condition="$resource['county_level'] neq 0">区县遴选人：{$uname['county']['uname']|default="教研员"}</if></div>
+				<div class="rp_btn2">遴选操作：
+					<input type="button" value="评为精品资源" class="blue_btn11" onMouseover="this.className='blue_btn11hov'" onMouseOut="this.className='blue_btn11'" onclick="ResourceSelector.ShowRecommand('{$resource.rid}',2,1)">
+					<input type="button" value="评为非精品资源" class="blue_btn10" onMouseover="this.className='blue_btn10hov'" onMouseOut="this.className='blue_btn10'" onclick="ResourceSelector.ShowRecommand('{$resource.rid}',1,1)">
+				</div>
+			<else />
+			<div>
+			<div class="rp_btn2">遴选结果：<if condition="$resource['city_level'] eq 1">精品资源<else />非精品资源</if>
+			<if condition="$resource['county_level'] neq 0"><span class="pl50">区县遴选人：{$uname['county']['uname']|default="教研员"}</span></if>
+			<span class="pl50">市遴选人：{$uname['city']['uname']|default="教研员"}</span>
+			</div>
+			<if condition="($mid eq $resource['city_auditor']) AND ($resource['province_level'] eq 0)">
+				<div class="rp_btn2">修改遴选结果：
+				<if  condition="$resource['city_level'] eq 2">
+				<input type="button" value="评为精品资源" class="blue_btn11" onMouseover="this.className='blue_btn11hov'" onMouseOut="this.className='blue_btn11'" onclick="ResourceSelector.ShowRecommand('{$resource.rid}',2,1)">
+				<else />
+				<input type="button" value="评为非精品资源" class="blue_btn10" onMouseover="this.className='blue_btn10hov'" onMouseOut="this.className='blue_btn10'" onclick="ResourceSelector.ShowRecommand('{$resource.rid}',1,1)">
+				</if>
+				</div>
+			</if>
+			</div>
+		</if>
+	</div>
+</if>
+
+<!-- 省级遴选 -->
+<if condition="$level eq 1">
+	<div class="left mt10">
+		<if condition="$resource['province_level'] eq 0">
+		<div class="rp_btn2">
+			<if condition="$resource['county_level'] neq 0">区县遴选人：{$uname['county']['uname']|default="教研员"}</if>
+			<if condition="$resource['city_level'] neq 0"><span class="pl50">市遴选人：{$uname['city']['uname']|default="教研员"}</span></if>
+		</div>
+			<div class="rp_btn2">遴选操作：
+				<input type="button" value="评为精品资源" class="blue_btn11" onMouseover="this.className='blue_btn11hov'" onMouseOut="this.className='blue_btn11'" onclick="ResourceSelector.ShowRecommand('{$resource.rid}',2,1)">
+				<input type="button" value="评为非精品资源" class="blue_btn10" onMouseover="this.className='blue_btn10hov'" onMouseOut="this.className='blue_btn10'" onclick="ResourceSelector.ShowRecommand('{$resource.rid}',1,1)">
+			</div>
+		<else />
+		<div>
+			<div class="rp_btn2">遴选结果：<if condition="$resource['province_level'] eq 1">精品资源<else />非精品资源</if>
+			<if condition="$resource['county_level'] neq 0"><span class="pl50">区县遴选人：{$uname['county']['uname']|default="教研员"}</span></if>
+			<if condition="$resource['city_level'] neq 0"><span class="pl50">市遴选人：{$uname['city']['uname']|default="教研员"}</span></if>
+			<span class="pl50">省遴选人：{$uname['province']['uname']|default="教研员"}</span>
+			</div>
+			<if condition="$mid eq $resource['province_auditor']">
+				<div class="rp_btn2">修改遴选结果：
+				<if  condition="$resource['province_level'] eq 2">
+				<input type="button" value="评为精品资源" class="blue_btn11" onMouseover="this.className='blue_btn11hov'" onMouseOut="this.className='blue_btn11'" onclick="ResourceSelector.ShowRecommand('{$resource.rid}',2,1)">
+				<else />
+				<input type="button" value="评为非精品资源" class="blue_btn10" onMouseover="this.className='blue_btn10hov'" onMouseOut="this.className='blue_btn10'" onclick="ResourceSelector.ShowRecommand('{$resource.rid}',1,1)">
+				</if>
+				</div>
+			</if>
+		</div>
+		</if>
+	</div>
+</if>
+<div class="clear"></div>

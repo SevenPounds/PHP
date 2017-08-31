@@ -1,0 +1,33 @@
+<dl>
+	    <volist name="list" id="list" k="i">
+			<dd>
+			    <php>if ($list['deadline'] < time()):</php>
+                       <p class="pk_zt pk_end mt12"><strong>已结束</strong></p>
+				<php>else:</php>
+				       <p class="pk_zt pk_ing mt12"><strong>进行中</strong></p>
+				<php>endif;</php>
+				<div class="left pl20">
+					<p class="topic_name"><span class="pt10"><strong><a href="{:U('stuvote/Index/detail',array('id'=>$list['id']))}" title="{$list['title']}" ><php>echo htmlspecialchars(getShort(htmlspecialchars_decode($list['title']),20))</php></a></strong></span><eq name="list.is_new" value="1"><span class="red pl5">new</span></eq><div class="clear"></div></p>
+                    <p class="topic_nr pt2" style="line-height:1.5;">投票简介：<php> $explain =t($list['explain']); echo  getShort($explain,50,'...')</php></p>
+					<p class="online_infor pt4">
+						<span><img src="__APP__/images/on_01.gif" /></span>
+						<span class="pl3 pt1">{$list['cTime']|friendlyDate}</span>
+						<span class="pl15"><img src="__APP__/images/on_02.gif" /></span>
+						<span class="pl3">{$list['vote_num']|default=0}人投票</span>
+						<span class="pl15"><img src="__APP__/images/on_03.gif" /></span>
+						<span class="pl3">{$list.commentCount|default=0}个回复</span>
+						<div class="clear"></div>
+					</p>
+				</div>
+				<div class="clear"></div>
+		    </dd>
+		</volist>
+</dl>
+{$page}
+<input type="hidden" value="{$totalcount}" id="totalcount"/>
+<script>
+    if (Vote.Status  == '') { //显示全部修改数量
+        var totalcount = "{$totalcount}";
+        jQuery('#count_all').text('(' + totalcount + ')');
+    }
+</script>

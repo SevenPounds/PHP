@@ -1,0 +1,61 @@
+<include file="__THEME__/header" />
+<include file="_announce_header"/>
+<link rel="stylesheet" type="text/css" href="__THEME__/js/uploadify/uploadify.css" />
+<link rel="stylesheet" type="text/css" href="__THEME__/css/pop_upload.css" />
+<script type="text/javascript" src="__THEME__/js/uploadify/jquery.uploadify.min.js"></script>
+<script type="text/javascript" src="__APP__/js/file/edit.js"></script>
+<div id="page-wrap">
+	<div id="main-wrap">
+		<!--面包屑导航-->
+		<div class="crumbs">
+			<ul>
+				<li class="pre_cen"><a href="{:U('public/Index/index')}">个人中心</a></li>
+				<li>&gt;</li>
+				<li><a href="{:U('eduannounce/File/index')}">教研动态</a></li>
+				<li>&gt;</li>
+				<li>编辑动态</li>
+			</ul>
+			<div class="clear"></div>
+		</div>
+		<!-- 导航结束 -->
+		<div class="con_box">
+			<div class="left_box">
+				<!--左侧用户信息-->
+				<include file="__THEME__/public_left" />
+			</div>
+			<div class="right_box">
+					<div class="an_line pt15">
+						<p class="an_title">标题:</p>
+						<p class="style2">
+							<input name="title" id="title" type="text" value="{$detail['title']}" />
+							<input id="noticeId" type="hidden" value="{$detail['id']}" />
+						</p>
+						<div class="clear"></div>
+					</div>
+					<div class="an_line pt10">
+						<p class="an_title">正文:</p>
+						<div class="an_text">
+							{:W('Editor', array('width' => '678px', 'height' => '200', 'contentName' => 'content', 'value' => $detail['content']))}
+						</div>
+						<div class="clear"></div>
+					</div>
+					<div style="display:none;" class="an_line pt10">
+						<p class="an_title">附件:</p>
+						<div class="notice_attach">
+							<form>
+								{:W('ResourceAttach',array('paper_id'=>$detail['id'],'app_name'=>"notice",'inputname'=> 'attach', 'to_action'=>'edit', 'attachIds' => $attachIds))}
+							</form>
+						</div>
+						<div class="clear"></div>
+					</div>
+					<div class="cr_btn">
+						<input type="button" id="publish" value="保存" class="create_btnnor" onMouseover="this.className='create_btnhov'" onMouseOut="this.className='create_btnnor'">
+						<input type="button" onclick="window.location.href = U('eduannounce/File/index')" value="取消" class="canclebtn_nor" onMouseover="this.className='canclebtn_hov'" onMouseOut="this.className='canclebtn_nor'">
+					</div>
+	  		</div>
+	  		<div class="clear"></div>
+		</div>
+	</div>
+</div>	
+
+<include file="__THEME__/public_footer" />

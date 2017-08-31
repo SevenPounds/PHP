@@ -1,0 +1,161 @@
+<style type="text/css">
+.hover-color a:hover{color:#3fbe00;}
+</style>
+<!-- <ul class="rz_list">
+	<volist name="papers" id="value">
+	<php> $value['content'] = strip_tags($value['content']); </php>
+	<li>
+		<div class="hover-color" style="font-size:15px;font-weight:bold;">
+			<a style="color:#339900;" href="{:U('paper/Index/preview',array('uid'=>$value['uid'],'id'=>$value['id'],'uid'=>$value['uid']))}">{$value['title']}</a>
+		</div>
+		<div class="rz_pic">
+			<span class="black1">分类：
+				<a href="{:U('public/Profile/index',array('uid'=>$value['uid']))}">{$value['uname']}</a>
+				的{$nav}
+			</span>
+		</div>
+		<div class="rz_text hover-color">
+			{:getShort($value['content'],140,'...')}
+			<span><a style="color:#339900;" href="{:U('paper/Index/preview',array('uid'=>$value['uid'],'id'=>$value['id'],'uid'=>$value['uid']))}">(阅读全文)</a></span>
+		</div>
+		<div class="rz_tip">
+			<p class="left" style="width:230px;">{$value['cTime']|friendlyDate}</p>
+			<p class="right" style="width:470px;">
+				<span><img src="./apps/paper/_static/images/icon_fx.gif" /><a>分享({$value['shareCount']})</a></span>
+				<span>|</span>
+				<span><img src="./apps/paper/_static/images/icon_xh.gif" /><a>喜欢</a></span>
+				<span>|</span>
+				<span><img src="./apps/paper/_static/images/icon_pl.gif" /><a href="{:U('paper/Index/preview',array('uid'=>$value['uid'],'id'=>$value['id'],'uid'=>$value['uid']))}">评论({$value['commentCount']})</a></span>
+				<span>|</span>
+				<span><img src="./apps/paper/_static/images/icon_ll.gif" /><a href="{:U('paper/Index/preview',array('uid'=>$value['uid'],'id'=>$value['id'],'uid'=>$value['uid']))}">浏览({$value['readCount']})</a></span>
+			</p>
+		</div>
+		<div class="clear"></div>
+	</li>
+	</volist>
+</ul> -->
+<table cellpadding="0" cellspacing="0" border="0" class="online_table3">
+						<tr class="online_tabletop">
+							<th width="4%" class="pl5"><p>序号</p></th>
+							<th width="1%"><img src="__APP__/images/th_line.jpg" /></th>
+							<th width="40%" style="text-align:center;">文件名称</th>
+							<th width="1%"><img src="__APP__/images/th_line.jpg" /></th>
+							<th width="7%">
+								<div class="left pl10" style="line-height:26px;">浏览量</div>
+								<div class="left pl5">
+									<p class="pt4">
+										<a href="javascript:orderViewcount('{$order}','{$type}','{$uid}');">
+											<if condition="$order == 'uv'">
+												<img src="__APP__/images/time_up.gif" />
+												<elseif condition="$order == 'dv'" /><img src="__APP__/images/time_down.gif" />
+												<else /><img src="__APP__/images/time_dis.gif" />
+											</if>
+										</a>
+									</p>
+								</div>
+								<div class="clear"></div>
+							</th>
+							<th width="1%"><img src="__APP__/images/th_line.jpg" /></th>
+							<th width="10%" style="text-align:center;">
+								<div class="left pl20" style="line-height:26px;">发布时间</div>
+								<div class="left pl5">
+									<p class="pt4">
+										<a href="javascript:orderTime('{$order}','{$type}','{$uid}');">
+											<if condition="$order == 'ut'">
+												<img src="__APP__/images/time_up.gif" />
+												<elseif condition="$order == 'dt'" /><img src="__APP__/images/time_down.gif" />
+												<else /><img src="__APP__/images/time_dis.gif" />
+											</if>
+										</a>
+									</p>
+								</div>
+								<div class="clear"></div>
+							</th>
+							<th width="1%"><img src="__APP__/images/th_line.jpg" /></th>
+							<th width="10%" style="text-align:center;">操作</th> 
+						</tr>
+						<volist name="papers" id="vo">
+							<tr <if condition="$i%2 neq 0">style="background:#fff"<else />style="background:#f6f6f6"</if>>
+								<td align="center" class="pl5">{$j+$i}</td>
+								<td></td>
+								<td align="left" class="blue"><a href="{:U('paper/Index/preview',array('uid'=>$vo['uid'],'id'=>$vo['id'],'type'=>$vo['category']))}">{$vo.title|html_entity_decode=###|htmlentities|mStr=###,30}</a></td>
+								<td></td>
+								<td align="center">{$vo.readCount}</td>
+								<td></td>
+								<td align="center"><php>echo(date('Y-m-d',$vo['cTime']));</php></td>
+								<td></td>
+								<td align="center">
+									<span class="blue">
+										<if condition="$isself eq 1"><a href="{:U('paper/Index/edit',array('id'=>$vo['id'],'uid'=>$vo['uid'],'type'=>$vo['category']))}">编辑</a><else />--</if>
+									</span>
+									<span class="blue pl10">
+									    <!-- <a href="javascript:;" class="delete-paper">删除</a> -->
+										<if condition="$isself eq 1"><a id="del{$vo['id']}" href="javascript:del({$vo['id']},{$vo['uid']},{$vo['category']})">删除</a><else />--</if>
+									</span>
+								</td>
+							</tr>
+						</volist>
+</table>
+<script type="text/javascript">
+  function del(id,uid,type){
+	  var submitDelete=function(){
+		  var data = {};
+			data.id = id;
+			data.uid = uid;
+			data.type = type;
+			$.ajax({
+				url : 'index.php?app=paper&mod=Index&act=submitDeletePaper',
+				type : 'post',
+				data : data,
+				success : function(result){
+					result = eval('('+ result +')');
+					if(result.statuscode == '200'){
+						ui.success(result.data);
+						location.href = "index.php?app=paper&mod=Index&act=index&type=" + type;
+					}else{
+						ui.error(result.data);
+					}
+				},
+				error : function(msg){
+					ui.error(msg);
+				}
+			});
+	  }
+	  ui.confirmBox("删除提示","确定删除该论文？",submitDelete);
+  }
+  /**
+ * 时间排序
+ */
+function orderTime(order,type,uid){
+	switch(order){
+		  case 'ut':
+			  order = 'dt';
+			  break;
+		  case 'dt':
+			  order = 'ut';
+			  break;
+		  default:
+			  order = 'dt';
+		      break;
+	}
+	window.location.href = "index.php?app=paper&mod=Index&act=index&order="+order+"&type="+type+"&uid="+uid;
+}
+
+/**
+ * 浏览量排序
+ */
+function orderViewcount(order,type,uid){
+	switch(order){
+		case 'uv':
+			order = 'dv';
+			break;
+		case 'dv':
+			order = 'uv';
+			break;
+		default:
+			order = 'dv';
+		    break;
+	}
+	window.location.href = "index.php?app=paper&mod=Index&act=index&order="+order+"&type="+type+"&uid="+uid;
+}
+</script>

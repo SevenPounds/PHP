@@ -1,0 +1,49 @@
+<div class="footer">
+		<script type="text/javascript">
+		jQuery(window).ready(function(){
+			 var host = document.location.host;
+			 if(host=='huaqiang.changyan.cn'){
+				jQuery("#footer_content").html('');
+			 }
+		});
+		</script>
+		<span id="footer_content" class="mr20">版权所有：深圳市教育局 &nbsp;&nbsp;&nbsp;&nbsp;技术维护：深圳市教育信息技术中心</span>
+</div>
+<script type="text/javascript">
+	var winWidth = 0;
+	var winHeight = 0;
+	function findDimensions() //函数：获取尺寸
+	{
+		//获取窗口高度
+		if (window.innerHeight)
+			winHeight = window.innerHeight;
+		else if ((document.body) && (document.body.clientHeight))
+			winHeight = document.body.clientHeight;
+		//通过深入Document内部对body进行检测，获取窗口大小
+		if (document.documentElement  && document.documentElement.clientHeight && document.documentElement.clientWidth)
+		{
+			winHeight = document.documentElement.clientHeight;
+			winWidth = document.documentElement.clientWidth;
+		}
+
+		if(winHeight>850){
+			$("#footer").css({
+				"position":"fixed",
+				"bottom":0,
+				"left":0,
+				"Z-INDEX":999
+			});
+		}
+		if(winHeight<850){
+			$("#footer").css({
+				"position":"relative",
+				"bottom":0,
+				"left":0,
+				"Z-INDEX":999
+			});
+		}
+	}
+	findDimensions();
+	//调用函数，获取数值
+	window.onresize=findDimensions;
+</script>

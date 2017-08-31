@@ -1,0 +1,14 @@
+<div class="tab_b"><b>班级作业</b></div>
+<div class="cw_con">
+	<dl>
+	    <volist name="data" id="res">
+			<dd>
+				<p>{$res['content']}</p>
+				<p class="black pt5 mb8"><php>echo date("Y-m-d",$res['ctime'])</php></p>
+			</dd>
+		</volist>
+	</dl>
+</div>
+<div class="online_page">
+	<div class="page">{$page}</div>
+</div>

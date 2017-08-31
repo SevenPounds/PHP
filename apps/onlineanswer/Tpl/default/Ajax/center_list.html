@@ -1,0 +1,32 @@
+<table cellpadding="0" cellspacing="0" border="0" class="online_table3">
+	<tr class="online_tabletop">
+		<th width="8%" style="text-align:center;">状态</th>
+		<th width="1%"><img src="__APP__/images/th_line.jpg" /></th>
+		<th width="44%" style="text-align:center;">问题标题</th>
+		<th width="1%"><img src="__APP__/images/th_line.jpg" /></th>
+		<th width="10%" style="text-align:center;">发起者</th>
+		<th width="1%"><img src="__APP__/images/th_line.jpg" /></th>
+		<th width="10%" style="text-align:center;">参加人数</th>
+		<th width="1%"><img src="__APP__/images/th_line.jpg" /></th>
+		<th width="13%" style="text-align:center;">发起时间</th> 
+	</tr>
+	<volist name="list" id="item">
+		<tr style="background:#fff">
+		     <eq name="item.status" value="1">
+				<td align="center" class="black1">已结束</td>
+			 <else/>
+				<td align="center" class="blue">进行中</td>
+			 </eq>
+			<td></td>
+			<td class="blue"><a href="{:U('onlineanswer/Index/detail',array('qid'=>$item['qid']))}" title="{$item['title']}"><php>echo htmlspecialchars(getShort(htmlspecialchars_decode($item['title']),20,'...'))</php></a></td>
+			<td></td>
+			<td align="center">{$item.uname}</td>
+			<td></td>
+			<td align="center">{$item.answer_count}</td>
+			<td></td>
+			<td align="center">{$item['ctime']|friendlyDate}</td>
+		</tr>
+	</volist>
+</table>
+{$page}
+<input type="hidden" value="{$totalcount}" id="totalcount" autocomplete="off"/>

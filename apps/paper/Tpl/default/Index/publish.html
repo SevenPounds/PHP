@@ -1,0 +1,193 @@
+<include file="paper_header" />
+<link rel="stylesheet" type="text/css" href="__THEME__/js/uploadify/uploadify.css" />
+<link rel="stylesheet" type="text/css" href="__THEME__/css/pop_upload.css" />
+<script type="text/javascript" src="__THEME__/js/uploadify/jquery.uploadify.min.js"></script>
+<script type="text/javascript" src="./apps/paper/_static/js/attachment.js"></script>
+<script type="text/javascript" src="./apps/paper/_static/js/publish.js"></script>
+<script type="text/javascript">
+	var mid = {$mid};
+</script>
+<div class="wrap">
+	<div class="crumbs">
+		<ul>
+			<li class="pre_cen"><a href="{:U('public/Index/index')}">个人中心</a></li>
+			<li>&gt;</li>
+			<li><a href="{:U('paper/Index/index',array('type'=>$type))}">{$nav}</a></li>
+			<li>&gt;</li>
+			<li>创建{$category}</li>
+		</ul>
+		<div class="clear"></div>
+	</div>
+	<div class="con_box">
+		<div class="left_box" style="background-color:#EFF9FB;">
+			<include file="__THEME__/public_left"/>
+		</div>
+		<div class="right_box" style="background-color:#FFFFFF;">
+			<div class="an_line pt15">
+				<p class="an_title">标题:</p>
+				<p class="style2"><input name="title" id="paper_title" type="text"></p>
+				<input id="hide_category" type="hidden" value="{$type}"/>
+				<div class="clear"></div>
+			</div>
+			<div class="an_line pt15">
+				<p class="an_title">正文:</p>
+				<div class="an_text">
+					{:W('Editor',array('contentName'=>'content','value'=>'','height'=>'350px'))}
+				</div>
+				<div class="clear"></div>
+			</div>
+			<div style="display:none;" class="an_line pt20">
+				<p class="an_title2">上传附件：</p>
+				<p class="style4">
+					<!-- <span id="attachments" style="line-height:26px;color:#3366cc;text-decoration:underline;"> -->
+					</span>
+					<a href="javascript:void(0);" onclick="Paper.popup_uploadattach();" style="line-height:26px;color:#3366cc;text-decoration:underline;">请选择文件</a>
+				</p>
+				<div class="clear"></div>
+			</div>
+			<!-- 附件列表 -->
+			<div class="an_line" id="attachlist" style="display:none;">
+				<p class="an_title2"></p>
+				<ul class="weibo-file-list">
+				</ul>
+				<div class="clear"></div>
+			</div>
+			
+			<div class="an_line pt20">
+				<p class="an_title2">推荐给好友：</p>
+				<p class="style4"><input name="friendid" id="paper_recom" disabled="disabled" type="text"></p>
+				<p class="ep_friend blue"><a href="javascript:;" onclick="popup_recombox();">选择好友</a></p>
+				<input id="friendids" type="hidden" value="">
+				<div class="clear"></div>
+			</div>
+			<div class="an_line pt20">
+				<p class="an_title2">设置隐私：</p>
+				<p class="style5">
+					<select name="private" id="paper_privacy">
+						<option value="1">公开</option>
+						<!--<option value="2">仅好友可见</option>-->
+						<option value="3">仅自己可见</option>
+					</select>
+				</p>
+				<div class="clear"></div>
+			</div>
+			<div class="cr_btn">
+				<input id="paper_submit" type="button" value="发表" class="create_btnnor" onMouseover="this.className='create_btnhov'" onMouseOut="this.className='create_btnnor'">
+				<input id="paper_cancel" type="button" value="取消" class="canclebtn_nor" onMouseover="this.className='canclebtn_hov'" onMouseOut="this.className='canclebtn_nor'">
+			</div>
+		</div>
+		<div class="clear"></div>
+	</div>
+</div>
+<script type="text/javascript">
+	popup_recombox = function(){
+  		ui.box.load(U('resview/Index/recommendtofriends'),'推荐给好友');
+		$(".hd").css({'background':'#73BFEE','color':'white'});
+  	}
+	
+	//展开好友列表 by zhaoliang
+	var expandlist = function(obj,gid){
+		$li =$(obj).parent().children(".friendlist");
+		$hidden = $(obj).parent().children(".hasclicked");
+		var hasclicked = $hidden.val();
+		if(hasclicked == "1"){
+			if($li.css("display")=="none"){
+				$li.css("display","block");
+				$(obj).css("background","url(apps/resview/_static/image/ep_down.gif) no-repeat");
+			}
+			else{
+				$li.css("display","none");
+				$(obj).css("background","url(apps/resview/_static/image/ep_up.gif) no-repeat");
+			}
+		}
+		else{
+			$.get("index.php?app=resview&mod=Ajax&act=getFriendlist&gid=" + gid,function(data){
+				$li.html(data);
+				//判断是否已选择
+				var hiddenid = $("#hiddenselfriendsid").val();
+				var selfriends = hiddenid.split(" ");
+				for(i=0;i<selfriends.length;i++){
+					$("#choose_"+selfriends[i]).css("display","inline");
+				}
+			})
+			$hidden.val("1");
+			$(obj).css("background","url(apps/resview/_static/image/ep_down.gif) no-repeat");
+		}
+	}
+	
+	//推荐资源给好友---添加推荐好友 by zhaoliang
+	var insertUser = function(uid,username,avastar){
+		//判断username是否已被添加
+		var hidden = $("#hiddenselfriends").val();
+		var hiddenid = $("#hiddenselfriendsid").val();
+		var selfriends = hidden.split(" ");
+		for(i=0;i<selfriends.length;i++){
+			if(selfriends[i] == username){
+				return;
+			}
+		}
+		hidden = hidden + " " + username;
+		hiddenid = hiddenid + " " + uid;
+		
+		$("#hiddenselfriends").val(hidden);
+		$("#hiddenselfriendsid").val(hiddenid);
+		var userhtml = '<li style="margin-left:5px;line-height:20px;"><a style="float:right;margin-right:20px;" href="javascript:void(0);" onclick=\'deluser(this,"' + uid + '","' + username +'")\'><img src="__APP__/image/ep_delete.gif" width="15"></a><a class="friendli" href="javascript:void(0);"><img style="margin-right:5px;" width="15" alt="' + username + '" src="' + avastar + '">' + username + '</a></li>';
+		$("#selectedfriendlist").append(userhtml);
+		$("#choose_"+uid).css("display","inline");
+	}
+	
+	//推荐资源给好友---删除已添加的好友 by zhaoliang
+	var deluser = function(obj,uid,username){
+		var hidden = $("#hiddenselfriends").val();
+		var hiddenid = $("#hiddenselfriendsid").val();
+		var selfriends = hidden.split(" ");
+		var selfriendsid = hiddenid.split(" ");
+		hidden = "";
+		hiddenid = "";
+		for(i=0;i<selfriends.length;i++){
+			if(selfriendsid[i] != uid){
+				hidden = hidden + selfriends[i] + " ";
+				hiddenid = hiddenid + selfriendsid[i] + " ";
+			}
+		}
+		$("#hiddenselfriends").val(hidden);
+		$("#hiddenselfriendsid").val(hiddenid);
+		//删除节点
+		$(obj).parent().remove();
+		$("#choose_"+uid).css("display","none");
+	}
+	
+	//关闭推荐资源窗口 by zhaoliang
+	closerec = function(){
+		ui.box.close();
+	}
+	
+	//确认推荐资源事件 by zhaoliang
+	confirmrec = function(){
+		$("#friendids").val($("#hiddenselfriendsid").val());
+		$("#paper_recom").val($("#hiddenselfriends").val());
+		ui.box.close();
+	}
+	
+	// 发送文章推荐信息
+	sendRec = function(paperid,type){
+		var _paper_id = paperid;
+		var _paper_type = type;
+		var _paper_view_url = U("public/Workroom/instructionDetail") + "&paper_id="+_paper_id+"&uid="+UID+"&type="+_paper_type;
+		if(_paper_type == 1 || _paper_type == 2 || _paper_type == 3){
+			_paper_view_url = U("public/Workroom/summary_preview") + "&pid="+_paper_id+"&uid="+UID+"&type="+_paper_type;
+		}
+		var friendids = $("#friendids").val();
+		if(friendids != ""){
+			selfriends = friendids.split(" ");
+			for(i=0;i<selfriends.length;i++){
+				if(selfriends[i]!=""){
+					$.post("index.php?app=public&mod=Message&act=doPost",{"to":selfriends[i],"content":"给你分享一个资源：" + _paper_view_url},function(data){
+						$("#recprogress").val(i+"/"+selfriends.length);
+					})
+				}
+			}
+		}
+	}
+</script>
+<include file="__THEME__/public_footer" />

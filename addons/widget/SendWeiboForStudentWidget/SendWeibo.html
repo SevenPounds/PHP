@@ -1,0 +1,273 @@
+<style>
+.send_weibo .title1 {
+	font-size: 12px;
+	font-weight: normal;
+	color: #535353;
+}
+.voice_b{
+	width:350px;
+}
+.fd-i-title_for_student{
+	position: relative;
+	top: -85px;
+	left: 7px;
+	display: block;
+	cursor: text;
+}
+.input_tips_for_student{
+	height: 80px;
+	margin-bottom: 3px;
+}
+.num_for_student{
+	position: absolute;
+	top:105px;
+	right: 12px;
+	z-index: 11;
+}
+.num_for_student2{
+	right: 12px;
+	z-index: 11;
+}
+.send_weibo_for_student{
+	position: relative;
+}
+.action_for_student{
+	 margin-top: -34px;
+}
+.send_weibo .acts{
+	height:auto;
+}
+.send_weibo .acts *{
+	display:inline-block;
+	vertical-align:middle;
+}
+.acts .at-block,
+.acts .at-block:hover,
+.acts .topic-block,
+.acts .topic-block:hover{
+	text-decoration:none;
+}
+.acts .at-block .at,.acts .topic-block .topic{
+	display:inline-block;
+	margin-top:-2px;
+}
+.voice_mic{
+	padding: 0 2px 0 0;
+	margin-left: 5px;
+}
+.voice_b{
+	color:#999;
+}
+.content_Img{
+	float: left;
+	margin-top: 1px;
+}
+</style>
+<php>if($send_type =='send_weibo'){</php>
+	<php>if(CheckPermission('core_normal','feed_post')){</php>
+		<!-- 发布微博/微博 -->
+		<div class="send_weibo diy-send-weibo send_weibo_for_student" model-node="send_weibo">
+			<div class="title1 clearfix">
+				<div model-node="numsLeft" class="right num num_for_student2">可以输入<span>{$initNums}</span>个字</div>
+				<span>
+				<php>if(Addons::requireHooks('weibo_send_box_tab') || Addons::requireHooks('tipoff_send_box_tab')):</php>
+					<a href="javascript:void(0)" id="change_weibo_tab" class="on">微博</a><i class="line"></i>
+		     		{:Addons::hook('weibo_send_box_tab')}
+		     		<php>if(Addons::requireHooks('tipoff_send_box_tab')){</php>
+		     		<i class="line"></i>
+		     		{:Addons::hook('tipoff_send_box_tab')}
+		     		<php>}</php>
+				<php>else:</php>
+				<!-- <a>{$title|getShort=###,32}</a> -->
+				<!--<h3 class="fd-i-title">有什么心得和趣事告诉大家？</h3>-->
+				<php>endif;</php>
+				</span>
+		    </div> 
+			<div class="input" model-node="weibo_post_box">
+				<div class="input_before mb5" model-node="mini_editor" model-args="prompt={$prompt}">
+					<textarea id="inputor{$time}" name="at" class="input_tips input_tips_for_student" event-node="mini_editor_textarea" model-args='t=feed'><if condition="trim($topicHtml) neq ''">{$topicHtml} </if></textarea>
+					<div model-node="post_ok" style="display:none;text-align:center;position:absolute;left:0;top:10px;width:100%"><i class="ico-ok"></i>{:L('PUBLIC_SHARE_SUCCESS')}</div>
+				    <h3 class="fd-i-title fd-i-title_for_student" id="weibo_tip_for_student">有什么心得和趣事告诉大家？</h3>
+				</div>
+				
+				<div id="action_for_student" class="action clearfix action_for_student" model-node='send_action'>
+					<div class="kind">
+					<div class="right release">{:Addons::hook('weibo_syn_middle_publish')}
+						<a class="btn-grey-white" event-node='{$post_event}' event-args='type={$type}&app_name={$app_name}&topicHtml={$initHtml}' href="javascript:;"><span>发布</span></a>
+					</div>
+					<div class="acts acts_new">
+						<eq name="actions.face" value="true">
+						<php>if(in_array('face',$weibo_type)):</php>
+					    <a event-node="insert_face" class="face-block" href="javascript:;"><i class="face_new"></i></a>
+						<php>endif;</php>
+					    </eq>
+
+					    <eq name="actions.at" value="true">
+						<php>if(in_array('at',$weibo_type)):</php>
+					    <a event-node="insert_at" class="at-block" href="javascript:;"><i class="at_new"></i></a>
+						<php>endif;</php>
+					    </eq>
+
+					    <eq name="actions.image" value="true">
+					    <php>if(in_array('image',$weibo_type)):</php>
+					    <a event-node="insert_image" class="image-block" href="javascript:;" rel="{$post_event}"><i class="image_new"></i></a>
+					    <div class="tips-img" style="display:none"><dl><dd><i class="arrow-open"></i>jpg,png,gif,bmp,tif</dd></dl></div>
+					    <php>endif;</php>
+					    </eq>
+
+					    <eq name="actions.video" value="true">
+					    <php>if(in_array('video',$weibo_type)):</php>
+					    <input type="hidden" id="postvideourl" value="" />
+					    <a event-node="insert_video" rel="{$post_event}" class="video-block" href="javascript:;"><i class="video_new"></i></a>
+					    <php>endif;</php>
+					    </eq>
+
+					    <eq name="actions.file" value="true">
+					    <php>if(in_array('file',$weibo_type)):</php>
+					    <a class="file-block" href="javascript:;"><i class="file_new"></i>
+					    <form style='display:inline;padding:0;margin:0;border:0' >
+					    <input type="file" name="attach" inputname='attach' onchange="core.plugInit('uploadFile',this,'','all')" urlquery='attach_type=feed_file&upload_type=file' hidefocus="true">
+					    </form>
+					    </a> 
+					    <php>endif;</php>
+					    </eq>
+
+						<eq name="actions.topic" value="true">
+						<php>if(in_array('topic',$weibo_type)):</php>
+					    <a event-node="insert_topic" class="topic-block" href="javascript:;"><i class="topic_new"></i></a>
+						<php>endif;</php>
+						</eq>
+						
+						
+						<eq name="actions.topic" value="true">
+						
+						<a id="talk" class="topic-block" href="javascript:;"><i class="MC_new"></i></a>
+						</eq>
+						
+						
+						<!-- <eq name="actions.contribute" value="true">
+						<php>if(in_array('contribute',$weibo_type) && $hasChannel):</php>
+					    <a event-node="insert_contribute" class="contribute-block" href="javascript:;"><i class="contribute"></i>投稿</a>
+					    <input type="hidden" autocomplete="off" value="" id="contribute" />
+					    <php>endif;</php>
+					    </eq>此功能关闭sjzhao -->
+						{:Addons::hook('home_index_middle_publish_type',array('position'=>'index'))}
+					</div>
+					<php>if(MODULE_NAME == 'Index'){</php>
+				<!-- <div class="talk" id="talk" tag=""></div> -->
+				<script>
+				  jQuery(document).ready(function(){
+						loadSTT(2500, "talk");
+					    STTRecordPlay.SetRecordEndEvent(setRecordData,clearInput,recordCompleteFun);
+					    AudioPlayer.init();
+					  });
+				  function clearInput(talkId){
+					  jQuery("#inputor{$time}").val("");
+				  }
+				  function setRecordData(data){
+					    //jQuery("#talk").attr("tag",data.audioUrlId);
+					  	jQuery("#inputor{$time}").val(jQuery("#inputor{$time}").val() + data.content);
+				  }
+				  
+				  function recordCompleteFun(key){
+					  jQuery("#talk").attr("tag",key);
+				  }
+				</script>
+				<php>}</php>
+					
+					
+					
+					<div class="clear"></div>
+		            <div model-node ='faceDiv'></div>
+		            </div>
+		        </div>
+
+
+
+				
+				
+				
+			</div>
+		</div>
+	<php>}else{</php>
+ 		<div class="send_weibo"><div class="box-purview"><i class="ico-error"></i>{:L('PUBLIC_SENTWEIBO_ISNOT')}</div></div>
+	<php>}</php>
+<php>}else if($send_type =='repost_weibo'){</php>
+	<!-- 分享微博/微博发布框 -->
+	<div class="action clearfix mb10" ><!--<span class="faces" event-node='share_insert_face'></span>--><div class="num"  model-node="numsLeft">可以输入<span>{$initNums}</span>个字</div></div>
+	<div model-node="weibo_post_box" class="clearfix">
+		<div class="input_before" model-node="mini_editor" style='margin:0 0 5px 0' >
+		<textarea id="message_inputor" class="input_tips" event-node="mini_editor_textarea" event-args='parentHeight=60'  model-args='t=repostweibo' style="height:52px;width:97%;">{$initHtml}</textarea>
+
+		</div>
+		<div class="action clearfix">
+		<div><a href="javascript:;" class="btn-green-big right" event-node='post_share' event-args='sid={$sid}&type={$stype}&app_name={$app_name}&curid={$curid}&curtable={$curtable}'><span>{:L('PUBLIC_SHARE_STREAM')}</span></a></div>
+		<div class="acts">
+      		<a class="face-block" href="javascript:;" event-node="comment_insert_face"><i class="face"></i>表情</a>
+      		<php>if(in_array('comment',$weibo_premission) && $cancomment==1):</php> 
+	           <p><label><input type="checkbox" class="checkbox" name="comment" value='1'>{:L('PUBLIC_SENTWEIBO_TO',array('link'=>$space_link))}</label></p>
+	       <php>endif;</php>
+    	</div>
+    	<div class="clear"></div>
+      	<div model-node="faceDiv"></div>     	
+      	</div>
+	</div> 
+		  	       
+
+	</div>
+	<script>
+	$(function (){
+		setTimeout(function (){
+			core.weibo.checkNums($('#message_inputor').get(0));
+		},500);
+	});
+	</script>
+<php>}</php>
+
+<script type="text/javascript">
+var initNums = '{$initNums}';
+var initHtml = '{$initHtml}';
+core.loadFile(THEME_URL+'/js/plugins/core.at.js');
+$(function (){
+	$('#inputor{$time}').bind('focus',function(){
+			$('#weibo_tip_for_student').css('display','none');
+			$('#action_for_student').removeClass('action_for_student');
+		}).bind('blur',function(){
+		if($('#inputor{$time}').val()==''){
+			$('#weibo_tip_for_student').css('display','block');
+			$('#action_for_student').addClass('action_for_student');
+		}
+		}); 
+	$('#weibo_tip_for_student').click(function (){
+		$('#inputor{$time}').focus();
+	});
+	$('#change_weibo_tab').click(function (){
+		$('div[type="weibotab"]').hide();
+	});
+	if ( $('#inputor{$time}').get(0) != undefined ){
+		setTimeout(function (){
+			if ( initHtml ){
+				$('#inputor{$time}').focus();
+				$('#inputor{$time}').html(initHtml);
+			}
+		} , 300)
+	}
+	//$('#message_inputor').inputToEnd(initHtml);
+
+	atWho($('#inputor{$time}'));
+	atWho($('#message_inputor'));
+	
+	//修复家长，学生空间语音说说发布之后，背景文字不消失的问题
+	setInterval(function (){
+		var obj = $('#inputor{$time}');
+		if(obj.val().length>0){
+			$('#weibo_tip_for_student').hide();
+		}else{
+			var inputor = document.getElementById('inputor{$time}');
+			if (inputor != document.activeElement) {
+				$('#weibo_tip_for_student').show();
+			}
+		};
+	} , 300)
+});
+</script>

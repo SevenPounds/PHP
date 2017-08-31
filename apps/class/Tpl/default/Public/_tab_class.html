@@ -1,0 +1,18 @@
+<div class="tab-menu">
+<ul>
+ <li <php>if(ACTION_NAME=='my_class'){</php>class="current"<php>}</php>>
+   <a href="{:U('class/ClassBlog/my_class',array('cid'=>$classId))}"  >
+       <span>班级日志</span>
+   </a>
+ </li>
+ <li <php>if(ACTION_NAME=='index_class'){</php>class="current"<php>}</php>>
+   <a href="{:U('class/ClassBlog/index_class',array('cid'=>$classId))}"  >
+       <span>热门日志</span>
+   </a>
+ </li>
+ <li <php>if(ACTION_NAME=='news_class'){</php>class="current"<php>}</php> >
+   <a href="{:U('class/ClassBlog/news_class',array('cid'=>$classId))}" >
+       <span>最新日志</span></a>
+   </li>
+</ul>
+</div>

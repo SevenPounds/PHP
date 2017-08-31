@@ -1,0 +1,30 @@
+<div class="tab_b"><b>班级百宝箱</b><font class="gray">大家上传<span class="green">{$resnum}</span>个资源</font><p class="btn"><input type="button" value="上传资源" class="green_sc"  onmouseover="this.className='green_schover'" onmouseout="this.className='green_sc'" onclick="treasurebox.showUpload()"/></p></div>
+				<table cellpadding="0" cellspacing="0" border="0" class="online_table">
+					<tr class="online_tabletop">
+						<th width="28%">资料名称</th>
+						<th width="1%"><img src="__APP__/image/th_line.jpg" /></th>
+						<th width="6%">上传者</th>
+						<th width="1%"><img src="__APP__/image/th_line.jpg" /></th>
+						<th width="10%">上传时间</th>
+						<th width="1%"><img src="__APP__/image/th_line.jpg" /></th>
+						<th width="7%">下载次数</th>
+						<th width="1%"><img src="__APP__/image/th_line.jpg" /></th>
+						<th width="8%">操作</th> 
+					</tr>
+					<volist name="data" id="res">
+						<tr style="background:#fff">
+							<td align="left" class="green pl10"><a href="{:U('widget/Upload/down',array('attach_id'=>$res['attach_id'],'from'=>'treasurebox'))}" title="{$res['name']}"><img src="__APP__/image/img_doc.gif" /><span class="pl6">{$res['name']|msubstr=0,30}</span></a></td>
+							<td></td>
+							<td align="center"><a href="index.php?app=public&mod=Profile&act=index&uid={$res['uid']}">{$res['uname']}</a></td>
+							<td></td>
+							<td align="center"><php>echo date("Y-m-d",$res['ctime'])</php></td>
+							<td></td>
+							<td align="center">{$res['downloadtimes']}</td>
+							<td></td>
+							<td align="center" class="green"><a href="{:U('widget/Upload/down',array('attach_id'=>$res['attach_id'],'from'=>'treasurebox'))}">下载</a></td>
+						</tr>
+					</volist>
+			</table>
+			<div class="online_page">
+				<div class="page">{$page}</div>
+			</div>

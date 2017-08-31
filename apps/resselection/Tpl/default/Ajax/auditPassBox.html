@@ -1,0 +1,26 @@
+<link href="__APP__/css/main.css"  rel="stylesheet" type="text/css" />
+<link href="__APP__/css/font.css" rel="stylesheet" type="text/css" />
+
+<div class="pop_box2">
+	<div class="pop_head">
+		<div class="left pl15">审核通过</div>
+		<div class="pop_close" onMouseover="this.className='pop_closehov'" onMouseOut="this.className='pop_close'" onclick='ResourceSelector.AuditCancle();'></div>
+	</div>
+	<div class="pop_con">
+		<div class="ep_p3">
+			<span class="pl50"><img src="__APP__/images/icon_sigh.gif" /></span><span>通过审核的资源将会公开展现。</span>
+		</div>
+		<p class="pe_line">
+			<span>遴选意见：</span>
+			<span class="pl3"><input type="radio" name="rescheck_radio" class="pr5" value='1'  <php>if($optype==1):</php>checked<php>endif;</php>/>&nbsp;评为精品资源</span>
+			<span class="pl20"><input type="radio" name="rescheck_radio" value='2'  <php>if($optype==2):</php>checked<php>endif;</php>/>&nbsp;评为非精品资源</span>
+			<div class="clear"></div>
+		</p>
+		<p style="font-weight:normal" class="pt5 pb10">注：遴选意见为选填项，在此可对资源直接进行遴选操作，若通过审核但不在此处填写遴选意见，则资源状态标记为未遴选。
+</p>
+		<div class="pop_btn2">
+			<input type="button" value="确定" class="blue5_btn" onMouseover="this.className='blue5_btnhov'" onMouseOut="this.className='blue5_btn'" onclick='ResourceSelector.AuditPass(this,{$type});'>
+			<input type="button" value="取消" class="blue4_btn" onMouseover="this.className='blue4_btnhov'" onMouseOut="this.className='blue4_btn'" onclick='ResourceSelector.AuditCancle();'>
+		</div>
+	</div>
+</div>

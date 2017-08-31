@@ -1,0 +1,57 @@
+<link href="__APP__/css/nav_message_left.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="__ROOT__/apps/public/_static/css/person_center.css">
+<style type="text/css">
+.circle_tip{
+    margin: -18px 0 0 -5px;
+	padding-left: 7px;
+    *display: inline;
+    zoom: 1;
+    background: url("__APP__/images/circle02.png") no-repeat left center;
+    vertical-align: middle;
+    font-weight: normal;
+	display: none;
+}
+.circle_tip font{
+    background: url("__APP__/images/circle02.png") #f0f0f0 no-repeat right center;  
+    padding-right: 6px;
+    line-height: 51px;
+    display: inline-block;
+    *display: inline;
+    zoom: 1;
+    font-size: 12px;
+    color: #fff;
+}
+.slide_ul li > a .circle_tip font{
+    background: url("__APP__/images/circle02.png") #5089d5 no-repeat right center; 
+}
+</style>
+ <ul class="slide_ul message_list_container_system" id="slide_ul">
+	<li rel="unread_atme" <?php if(APP_NAME.'/'.MODULE_NAME.'/'.ACTION_NAME == 'public/Mention/index'){echo 'class="active"';}?>><a href="{:U('public/Mention/index')}"><span>@提到我的</span><strong class="circle_tip"><font></font></strong></a><b><span>@提到我的</span><strong class="circle_tip"><font></font></strong></b></li>
+	<li rel="unread_praise" <?php if(APP_NAME.'/'.MODULE_NAME.'/'.ACTION_NAME == 'public/Message/digg'){echo 'class="active"';}?>><a href="{:U('public/Message/digg')}"><span>赞</span><strong class="circle_tip"><font></font></strong></a><b><span>赞</span><strong class="circle_tip"><font></font></strong></b></li>
+	<li rel="unread_comment" <?php if(APP_NAME.'/'.MODULE_NAME.'/'.ACTION_NAME == 'public/Comment/index'){echo 'class="active"';}?>><a href="{:U('public/Comment/index',array('app_name'=>htmlentities(t($_GET['app_name'])),'type'=>'receive'))}"><span>评论</span><strong class="circle_tip"><font></font></strong></a><b><span>评论</span><strong class="circle_tip"><font></font></strong></b></li>
+	<li rel="unread_message" <?php if(in_array(APP_NAME.'/'.MODULE_NAME.'/'.ACTION_NAME ,array( 'public/Message/index', 'public/Message/detail'))){echo 'class="active"';}?>><a id="t_msg" href="{:U('public/Message/index')}"><span>我的私信</span><strong class="circle_tip"><font></font></strong></a><b><span>我的私信</span><strong class="circle_tip"><font></font></strong></b></li>
+	<li rel="unread_notify" <?php if(APP_NAME.'/'.MODULE_NAME.'/'.ACTION_NAME == 'public/Message/notify'){echo 'class="active"';}?>><a href="{:U('public/Message/notify')}"><span>系统消息</span><strong class="circle_tip"><font></font></strong></a><b><span>系统消息</span><strong class="circle_tip"><font></font></strong></b></li>
+ </ul>
+ 
+<script type="text/javascript">
+$(document).ready(function(){
+	$("#slide_ul li").each(function(){
+		$(this).click(function(){
+			$("#slide_ul li").each(function(){
+				$(this).removeClass('active');
+			});
+			$(this).addClass('active');
+		});
+	});
+	$("#slide_ul li").each(function(){
+		$(this).mouseenter(function(){
+			$(this).find('a:not(:animated)').animate({'width':'100%'},100);		
+		});
+	});
+	$("#slide_ul li").each(function(){
+		$(this).mouseleave(function(){
+			$(this).find('a').animate({'width':'2px'},100);
+		});
+	});
+});
+</script>

@@ -1,0 +1,87 @@
+<div id="hot_peopleList">
+<dl class="fl">
+    <span class="cy_dr_hy">&nbsp;</span>
+    <volist name="eredarList" id="eredar" key="k" offset="0" length="5">
+        <if condition="$k eq 1">
+            <dt class="clearfix">
+                <a href="{:U('public/Workroom/index',array('uid'=>$eredar['uid']))}" target="_blank" uid="{$eredar['uid']}" event-node="face_card" show="no"><img src="{$eredar['userInfo']['avatar_big']}" class="fl"/></a>
+                <p class="fl">
+                    <a href="{:U('public/Workroom/index',array('uid'=>$eredar['uid']))}" target="_blank" uid="{$eredar['uid']}" event-node="face_card" show="no" class="cy_model_name">{$eredar.userInfo.uname|getShort=3,'...'}</a>
+                    <span title="{$eredar.subject}">{$eredar.subject|getShort=3,'...'}</span>
+                    <if condition="$mid neq $eredar['userInfo']['uid']">
+                        {:W('FollowBtn', array('fid'=>$eredar['userInfo']['uid'], 'uname'=>$eredar['userInfo']['uname'],'follow_state'=>$eredar['follow_state'], 'type'=>'studio'))}
+                    </if>
+                </p>
+            </dt>
+            <else />
+            <dd class="clearfix">
+                <a href="{:U('public/Workroom/index',array('uid'=>$eredar['uid']))}" target="_blank" uid="{$eredar['uid']}" event-node="face_card" show="no"><img src="{$eredar['userInfo']['avatar_small']}" class="fl"/></a>
+                <p class="fl">
+                    <a href="{:U('public/Workroom/index',array('uid'=>$eredar['uid']))}" target="_blank" uid="{$eredar['uid']}" event-node="face_card" show="no" class="cy_model_name">{$eredar.userInfo.uname|getShort=3,'...'}</a>
+                    <if condition="$mid neq $eredar['userInfo']['uid']">
+                        {:W('FollowBtn', array('fid'=>$eredar['userInfo']['uid'], 'uname'=>$eredar['userInfo']['uname'],'follow_state'=>$eredar['follow_state'], 'type'=>'studio'))}
+                    </if>
+                </p>
+            </dd>
+        </if>
+    </volist>
+</dl>
+
+<div class="cy_v_line fl">&nbsp;</div>
+<dl class="fl">
+    <span class="cy_dr_fs">&nbsp;</span>
+    <volist name="followerList" id="follower" key="k" offset="0" length="5">
+        <if condition="$k eq 1">
+            <dt class="clearfix">
+                <a href="{:U('public/Workroom/index',array('uid'=>$follower['uid']))}" target="_blank" uid="{$follower['uid']}" event-node="face_card" show="no"><img src="{$follower['userInfo']['avatar_big']}" class="fl"/></a>
+                <p class="fl">
+                    <a href="{:U('public/Workroom/index',array('uid'=>$follower['uid']))}" target="_blank" uid="{$follower['uid']}" event-node="face_card" show="no" class="cy_model_name">{$follower.userInfo.uname|getShort=3,'...'}</a>
+                    <span title="{$follower.subject}">{$follower.subject|getShort=3,'...'}</span>
+                    <if condition="$mid neq $follower['userInfo']['uid']">
+                        {:W('FollowBtn', array('fid'=>$follower['userInfo']['uid'], 'uname'=>$follower['userInfo']['uname'],'follow_state'=>$follower['follow_state'], 'type'=>'studio'))}
+                    </if>
+                    <!--<a href="#" class="btn-cancel"><span><b class="ico-add-black"></b>关注</span></a>-->
+                </p>
+            </dt>
+            <else />
+            <dd class="clearfix">
+                <a href="{:U('public/Workroom/index',array('uid'=>$follower['uid']))}" target="_blank" uid="{$follower['uid']}" event-node="face_card" show="no"><img src="{$follower['userInfo']['avatar_small']}" class="fl"/></a>
+                <p class="fl">
+                    <a href="{:U('public/Workroom/index',array('uid'=>$follower['uid']))}" target="_blank" uid="{$follower['uid']}" event-node="face_card" show="no" class="cy_model_name">{$follower.userInfo.uname|getShort=3,'...'}</a>
+                    <if condition="$mid neq $follower['userInfo']['uid']">
+                        {:W('FollowBtn', array('fid'=>$follower['userInfo']['uid'], 'uname'=>$follower['userInfo']['uname'],'follow_state'=>$follower['follow_state'], 'type'=>'studio'))}
+                    </if>
+                </p>
+            </dd>
+        </if>
+    </volist>
+</dl>
+<div class="cy_v_line fl">&nbsp;</div>
+<dl class="fl">
+    <span class="cy_dr_jf">&nbsp;</span>
+    <volist name="creditList" id="credit" key="k" offset="0" length="5">
+        <if condition="$k eq 1">
+            <dt class="clearfix">
+                <a href="{:U('public/Workroom/index',array('uid'=>$credit['uid']))}" target="_blank" uid="{$credit['uid']}" event-node="face_card" show="no"><img src="{$credit['userInfo']['avatar_big']}" class="fl"/></a>
+                <p class="fl">
+                    <a href="{:U('public/Workroom/index',array('uid'=>$credit['uid']))}" target="_blank" uid="{$credit['uid']}" event-node="face_card" show="no" class="cy_model_name">{$credit.userInfo.uname|getShort=3,'...'}</a>
+                    <span title="{$credit.subject}">{$credit.subject|getShort=3,'...'}</span>
+                    <if condition="$mid neq $credit['userInfo']['uid']">
+                        {:W('FollowBtn', array('fid'=>$credit['userInfo']['uid'], 'uname'=>$credit['userInfo']['uname'],'follow_state'=>$credit['follow_state'], 'type'=>'studio'))}
+                    </if>
+                </p>
+            </dt>
+        <else />
+            <dd class="clearfix">
+                <a href="{:U('public/Workroom/index',array('uid'=>$credit['uid']))}" target="_blank" uid="{$credit['uid']}" event-node="face_card" show="no"><img src="{$credit['userInfo']['avatar_small']}" class="fl"/></a>
+                <p class="fl">
+                    <a href="{:U('public/Workroom/index',array('uid'=>$credit['uid']))}" target="_blank" uid="{$credit['uid']}" event-node="face_card" show="no" class="cy_model_name">{$credit.userInfo.uname|getShort=3,'...'}</a>
+                    <if condition="$mid neq $credit['userInfo']['uid']">
+                        {:W('FollowBtn', array('fid'=>$credit['userInfo']['uid'], 'uname'=>$credit['userInfo']['uname'],'follow_state'=>$credit['follow_state'], 'type'=>'studio'))}
+                    </if>
+                </p>
+            </dd>
+        </if>
+    </volist>
+</dl>
+</div>

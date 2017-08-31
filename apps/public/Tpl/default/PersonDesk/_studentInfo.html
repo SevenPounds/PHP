@@ -1,0 +1,63 @@
+<div class="enc-top mt20 clearfix">
+    <div class="fl enc-head">
+        <a href="{:U('public/Profile/index',array('uid'=>$data['tsUser']['uid']))}"  target="_blank" class="head-box">
+            <img src="{$data['tsUser']['userAvatarBig']}" />
+            <span></span>
+        </a>
+        <span href="#" class="user-name"><a href="{:U('public/Profile/index',array('uid'=>$data['tsUser']['uid']))}"  target="_blank">{$data['tsUser']['uname']}</a></span>
+        <ul class="clearfix enc-fans">
+            <li class="fl">
+                <a href="{:U('public/Profile/following')}">{$data['tsUser']['following']|default=0}</a>
+                <span>关注</span>
+            </li>
+            <li class="fl">
+                <a href="{:U('public/Profile/follower')}">{$data['tsUser']['follower']|default=0}
+                    <span id="new_follower_total"></span>
+                </a>
+                <span>粉丝</span>
+            </li>
+            <!--<li class="fl">-->
+                <!--<a href="{:U('public/Credit/index')}">{$data['tsUser']['creditCount']|default=0}</a>-->
+                <!--<span>积分</span>-->
+            <!--</li>-->
+        </ul>
+    </div>
+    <div class="fl enc-myitem clearfix">
+        <dl class="clearfix">
+            <dt>
+            <ul>
+                <li class="clearfix"><span class="fl">学校：<em>{$data['tSchool']['schoolName']|getShort=12,'...'}</em></span>
+                    <a href="{:C('ESCHOOL')}index.php?m=School&schoolId={$data['tSchool']['id']}"  class="fr gray-borbtn">我的学校</a>
+                </li>
+                <li class="clearfix"><span class="fl">班级：
+                                        <volist name="data.tClass" id='vo' offset="0" length='2'>
+                                            <em>{$vo.className},</em>
+                                        </volist>
+                                        </span><a href="{:C('ESCHOOL')}index.php?m=Clazz&classId={$data['tClass'][0]['id']}" class="fr gray-borbtn">我的班级</a>
+                </li>
+                <li class="clearfix"><span class="fl">昵称：<em>{$data['tsUser']['uname']}</em></span><a href="<?php echo U('public/Account/index');?>" class="fr gray-borbtn">设置个人信息</a></li>
+            </ul>
+            </dt>
+            <dd class="tc">
+                <a href="{:U('public/Index/index')}" class="org-space-btn"><em>进入我的空间</em></a>
+            </dd>
+        </dl>
+    </div>
+    <div class="fl enc-grow clearfix" style="cursor:pointer;">
+        <h3>成长记录</h3>
+        <ul class="clearfix" onclick="toArchivesPage()">
+            <li class="fl ysxy"><em></em><span>艺术修养</span></li>
+            <li class="fl sxjk"><em></em><span>身心健康</span></li>
+            <li class="fl shsj"><em></em><span>社会实践</span></li>
+            <li class="fl sxpd"><span>思想品德</span><em></em></li>
+            <li class="fl xycj"><span>学业成绩</span><em></em></li>
+        </ul>
+    </div>
+</div>
+<script>
+    var url="{:U('public/Archives/index')}";
+    function toArchivesPage(){
+        window.open(url);
+    }
+
+</script>

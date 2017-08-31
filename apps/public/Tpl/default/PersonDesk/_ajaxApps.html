@@ -1,0 +1,16 @@
+<if condition="$app !=null ">
+<div class="bor-box">
+    <ul class="clearfix">
+        <volist name="app" id='vo'  >
+            <li class="fl">
+                <a target="_blank" href="{$vo.url}"><img src="__APP__/app_icon/{$vo.appIcon}"/></a>
+                <span><a href="#">{$vo.appZhName}</a></span>
+            </li>
+        </volist>
+    </ul>
+</div>
+<else/>
+<div class="app-empty"><!--add-->
+    快去<a href="{:U('appcenter/Index/index')}" target="_blank">添加应用</a>吧
+</div>
+</if>

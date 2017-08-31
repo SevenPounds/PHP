@@ -1,0 +1,51 @@
+@CHARSET "UTF-8"; 
+.form_row_select{
+	width:136px;
+	height:22px;
+	font-size:13px;
+	margin-right:10px;
+	margin-top:3px;
+	float:left;
+}
+
+.form_row_addbtn{
+	float:left;
+	opacity:0.5;
+	padding-top:5px;
+	cursor:pointer;
+}
+
+.form_row_addbtn p{
+	font-size:12px;
+	height:24px;
+	float:left;
+	padding-top:2px;
+}
+
+.form_row_addbtn img{
+	float:left;
+	padding-top:1px;
+}
+
+.form_row_ul{
+	width:350px;
+}
+
+.delete_xx{
+	float:left;
+	height:17px;
+	width:17px;
+	padding:5px 5px 0; 
+}
+.delete_xx a{
+	display:block;
+	height:17px;
+	width:17px;
+	background:url(../image/delete_xx.gif) top no-repeat;
+}
+.delete_xx a:hover{
+	display:block;
+	height:17px;
+	width:17px;
+	background:url(../image/delete_xx.gif) bottom no-repeat;
+}

@@ -1,0 +1,12 @@
+<style>
+.hd150{
+	height:150px;
+	width:150px;
+}
+</style>
+
+<p class="title pt12 pl20">这些班级在使用</p>
+				<volist name="data" id="vo" offset='0' length='4'>
+				<div class="use_box"><a href="{:U('class/ClassHome/index',array('cid'=>$vo['id']))}" title="{$vo.name}"><img src="{$vo['id']|getCampuseAvatar=###,$vo['type'],'avatar_big'}" class="hd150" event-node="face_card" show="no" orgType="{$vo['type']}" cid="{$vo['id']}"/></a><p class="pt12 "><span class="green"><a href="{:U('class/ClassHome/index',array('cid'=>$vo['id']))}" title="{$vo.name}" event-node="face_card" show="no" orgType="{$vo['type']}" cid="{$vo['id']}"><b>{$vo.name|getShort=5}</b></a></span> <span class="black"><a href="{:U('class/CampusHome/schoolIndex',array('cid'=>$vo['parent']['id']))}" title="{$vo['parent']['name']}" event-node="face_card" show="no"  orgType="{$vo['parent']['type']}" cid="{$vo['parent']['id']}">{$vo['parent']['name']|getShort=5}</a></span></p></div>
+				</volist>
+				<div class="clear"></div>

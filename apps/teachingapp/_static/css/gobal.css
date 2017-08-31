@@ -1,0 +1,9 @@
+/* CSS Document */
+ul{margin:0; padding:0;}
+ul li{margin:0; padding:0;}
+body{background:url(../images/cloud.jpg) repeat-x #e4f3f8;}
+.wrap{
+	width:1000px;
+	margin:0 auto;
+	_margin-top:-42px;
+}

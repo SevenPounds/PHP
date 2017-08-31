@@ -1,0 +1,395 @@
+<include file="__THEME__/public_header" />
+<link href="__APP__/integral.css" rel="stylesheet" type="text/css" />
+<link href='__APP__/js/fancyBox/jquery.fancybox.css' rel="stylesheet"
+	type="text/css" />
+<div id="page-wrap">
+	<div id="main-wrap">
+		<div class="boxShadow">
+			<div class="find-type">
+				<div class="app-title clearfix">
+					<h4 class="left">
+						<span class="left"></span>&nbsp;&nbsp;积分
+					</h4>
+					<div class="app-tab-menu clearfix" style="margin: 0 0 0 130px;">
+						<ul>
+							<li><a href="{:U('public/Credit/index')}"<php>if(ACTION_NAME=='index'){</php>class="current"<php>}</php>>我的积分<eq
+										name="ACTION_NAME" value="index"> <span class="triangle"></span></eq></a><i
+								class="line"></i></li>
+							<li><a href="{:U('public/Credit/exchange')}"<php>if(ACTION_NAME=='exchange'){</php>class="current"<php>}</php>>积分兑换<eq
+										name="ACTION_NAME" value="exchange"> <span
+										class="triangle"></span></eq></a><i class="line"></i></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<div id="col" class="extend clearfix">
+				<div class="inte_info">
+					<img src="{$GLOBALS['ts']['user'].avatar_middle}" class="left mr10" />
+					<div class="inte_infoDetail left">
+						<span class="blue"><a href="{:U('public/Index/index')}" class="font2">{$GLOBALS['ts']['user'].uname}</a></span>
+						<p>
+							<span>积分：<font class="org">{$credit['credit']['score']['value']}</font></span>
+						</p>
+					</div>
+					<div class="clear"></div>
+				</div>
+				<div class="inte_exchange">
+					<div class="online_tab01box mb20">
+						<div class="online_tab">
+							<ul>
+								<li class="normal" id="integral_cards"
+									onclick="changeRoleMenu(this)" style="display: none"><a
+									href="javascript:void(0);">兑换贺卡</a></li>
+								<li class="present" id="integral_gift"
+									onclick="changeRoleMenu(this)"><a
+									href="javascript:void(0);">兑换礼物</a></li>
+								<!--140526-->
+							</ul>
+						</div>
+					</div>
+					<div style="display: block;" id="integral_gift_st">
+						<volist name="giftList" id="val">
+						<dl class="left">
+							<dt>
+								<span><img src="__APP__/{$val.img_path}" /></span> <a
+									href="#">{$val.gift_name}</a>
+							</dt>
+							<dd class="mt15">
+								<span class="left mr10">积分：{$val.score}</span> <a
+									class="inte_exchBtn left" gifts_id="{$val.id}"
+									gifts_credit='{$val.score}' gift_name="{$val.gift_name}"
+									gift_num="{$val.num}">兑换</a>
+								<div class="clear"></div>
+							</dd>
+						</dl>
+						</volist>
+						<div class="clear"></div>
+					</div>
+				</div>
+				<div class="page">{$paging}</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- fancybox弹出层 -->
+	<div id="Exchange_gifts"
+		style="width: 490px; height: 300px; display: none">
+		<div class="head"
+			style="line-height: 36px; font-weight: bold; font-size: 22px; width: 490px; height: 36px;">
+			<div class="left pl15" style="font-family:微软雅黑;font-weight:normal" >个人信息</div>
+		</div>
+		<div class="Exchange_info"
+			style="height: 50px; line-height: 50px; margin-top: 4px">
+			<p class="pl15 org">
+				您将用<span id="exchange_credit"></span>积分兑换<span id="gift_name"></span>，礼物会以快递的形式寄送给您，请填写个人信息。
+			</p>
+			<input style="display: none" id="gifts_id" value=""></input>
+		</div>
+		<div class="person_info" style="padding-left: 15px">
+			<dl>
+				<dd style="padding: 0px 0px 10px 0px">
+					<div class="form-tt" style="float: left; padding-top: 6px">
+						&nbsp&nbsp&nbsp<font color="red"> * </font>收货人：
+					</div>
+					<div class="form-row">
+						<input id="uname" autocomplete="off" type="text"
+							value="{$GLOBALS['ts']['user'].uname}" class="s-txt" maxlength="10">
+					</div>
+				</dd>
+				<dd style="padding: 0px 0px 10px 0px">
+					<div class="form-tt" style="float: left; padding-top: 6px">
+						&nbsp&nbsp&nbsp<font color="red"> * </font>手机号：
+					</div>
+					<div class="form-row">
+						<input id="phone" autocomplete="off" type="text" value=""
+							class="s-txt" maxlength="11">
+					</div>
+				</dd>
+				<dd style="padding: 0px 0px 10px 0px">
+					<div class="form-tt" style="float: left; padding-top: 6px">
+						<font color="red"> * </font>所在区域：
+					</div>
+					<div class="form-row">
+                        <div style=" width:120px; width:120px;margin-right:10px;float: left">
+						<select
+							style="height: 30px; border: #ccc solid 1px; border-top-color: #ccc; margin-left: 0px"
+							id="province" onchange="changeArea(this)">
+
+						</select>
+                        </div>
+                        <div style=" width:120px; margin-right:5px;float: left">
+                        <select
+							style="height: 30px;width: 120px; border: #ccc solid 1px; border-top-color: #ccc; margin-left: 0px"
+							id="city" onchange="changeArea(this)">
+
+						</select>
+                        </div>
+                        <div style=" width:120px; margin-right:5px;float: left">
+                        <select
+							style="height: 30px;width: 120px; border: #ccc solid 1px; border-top-color: #ccc; margin-left: 0px"
+							id="area" onchange="changeArea(this)">
+
+						</select>
+                        </div>
+                        <div class="clear"></div>
+					</div>
+				</dd>
+				<dd style="padding: 0px 0px 10px 0px">
+					<div class="form-tt" style="float: left; padding-top: 6px">
+						<font color="red"> * </font>街道地址：
+					</div>
+					<div class="form-row">
+						<input id="street" autocomplete="off" type="text" value=""
+							class="s-txt" maxlength="40">
+					</div>
+				</dd>
+			</dl>
+		</div>
+		<div class="pop_inteBtn">
+			<p class="exchange_loading" style="display: none; text-align: center">
+				<img src="__APP__/images/loading1.gif"> <span>处理中</span>
+			</p>
+			<a href="javascript:;" class="pop_inteCan"
+				onclick="$.fancybox.close();">取消</a> <a href="javascript:;"
+				class="pop_inteSure">确定</a>
+			<div class="clear"></div>
+		</div>
+	</div>
+	<!-- 兑换礼物弹出层结束 -->
+
+</div>
+<script>
+	function changeRoleMenu(obj) {
+		jQuery(".online_tab li").each(function() {
+			jQuery(this).removeClass('present');
+			jQuery(this).removeClass('normal');
+		});
+		jQuery(".online_tab li").each(function() {
+			if (jQuery(this).attr('id') != obj.id) {
+				jQuery(this).addClass('normal');
+			} else {
+				jQuery(this).addClass('present');
+			}
+		});
+		jQuery("#integral_cards_st").css('display', 'none');
+		jQuery("#integral_gift_st").css('display', 'none');
+		jQuery('#' + obj.id + '_st').css('display', 'block');
+	}
+	//兑换按钮	
+	$(".inte_exchBtn").click(function() {
+		var credit={$credit['credit']['score']['value']};
+		var gift_num = $(this).attr('gift_num');
+		var gifts_id = $(this).attr('gifts_id');
+		var gifts_credit = $(this).attr('gifts_credit');
+		var gift_name = $(this).attr('gift_name');
+		//礼物ID
+		$("#gifts_id").val(gifts_id);
+		//礼物兑换所需积分
+		$("#exchange_credit").html(gifts_credit);
+		//礼物名称
+		$("#gift_name").html(gift_name);
+		//初始化弹出层内容
+		$('.pop_inteCan').show();
+		$('.pop_inteSure').show();
+		$('.exchange_loading').hide();
+		$('.fancybox-close').show();
+		//清空数据
+		$('#street').val("");
+		$('#phone').val("");
+		$('#province').val('0');
+		$('#city').val('0');
+		$('#area').val('0');
+		
+		
+		$.fancybox({
+			'scrolling' : 'no',
+			'href' : '#Exchange_gifts',
+			'beforeLoad' : function() {
+				if (gift_num <= 0) {
+					ui.error("被抢光了哦，再等等吧！");
+					return false;
+				}else if(credit<gifts_credit){
+					ui.error("积分不足，再接再厉吧！");
+					return false;
+				}
+			},
+			'afterLoad'	: function(){
+				$('.fancybox-lock').css("overflow","visible");
+				$('.fancybox-lock .fancybox-overlay').css("overflow-y",'visible');
+			}
+		});
+
+	})
+	//确认兑换
+	$(".pop_inteSure").click(function() {
+		var gifts_id = $("#gifts_id").val();
+		var uname = $("#uname").val();
+		var province = $("#province").find("option:selected").text();
+		var city = $("#city").find("option:selected").text();
+		var area = $("#area").find("option:selected").text();
+		var street = $("#street").val();
+		var phone = $("#phone").val();
+		//电话正则
+		var phonePatrn = /^1[3|4|5|8][0-9]\d{4,8}$/;
+
+		if ('' == uname || uname == null) {
+			$("#uname").focus();
+			ui.error('请填写收货人!');
+			return;
+		}
+		if ('' == phone || phone == null) {
+			$("#phone").focus();
+			ui.error('请填写手机号!');
+			return;
+		}
+		if (!phonePatrn.test(phone)) {
+			$("#phone").focus();
+			ui.error('请正确填写手机号!');
+			return;
+		}
+		if ('请选择省份' == province || province == null) {
+			$("#province").focus();
+			ui.error('请选择省份!');
+			return;
+		}
+		if ('请选择城市' == city || city == null) {
+			ui.error('请选择城市!');
+			return;
+		}
+		if ('请选择城区' == area || area == null) {
+			ui.error('请选择城区!');
+			return;
+		}
+		if ('' == street || area == null) {
+			$("#street").focus();
+			ui.error('请填写街道地址!');
+			return;
+		}
+
+		var data = {
+			gifsId : gifts_id,
+			umane : uname,
+			province : province,
+			city : city,
+			area : area,
+			street : street,
+			phone : phone
+		};
+		$.ajax({
+			url : 'index.php?app=public&mod=Credit&act=exchangGift',
+			type : "POST",
+			data : data,
+			dataType : 'json',
+			beforeSend : function() {
+				$('.pop_inteCan').hide();
+				$('.pop_inteSure').hide();
+				$('.exchange_loading').show();
+				$('.fancybox-close').hide();
+			},
+			success : function(data) {
+				$.fancybox.close();
+				if (data.status == 0) {
+					ui.error(data.info,2);
+				} else {
+					ui.success(data.info,3);
+					setTimeout(function(){
+						window.location.reload();
+					},3000)
+				}
+				
+			},
+			error : function() {
+				$.fancybox.close();
+				ui.error("网络连接错误......",2);
+			}
+		});
+	})
+</script>
+<script>
+	//地区初始化
+	var init = function() {
+		// 获取树形结构的子树
+		var areaChild = getArea(100000);
+		var option1 = '<option value="0">请选择省份</option>';
+		$.each(areaChild,
+				function(i, n) {
+					option1 += '<option value="' + n.code + '">' + n.name
+							+ '</option>';
+				});
+		var option2 = '<option value="0">请选择城市</option>';
+		var option3 = '<option value="0">请选择城区</option>';
+		$('#province').append(option1);
+		$('#city').append(option2);
+		$('#area').append(option3);
+	};
+	/**
+	 * 地区信息请求
+	 */
+	var getArea = function(areaCode) {
+		var areaChild = new Array();
+		$.ajax({
+			url : U('widget/CyArea/area'),
+			type : 'POST',
+			dataType : 'JSON',
+			data : {
+				areaCode : areaCode
+			},
+			async : false,
+			success : function(res) {
+				if (res.status == 1) {
+					areaChild = res.data;
+				} else {
+					areaChild = null;
+				}
+			},
+			error : function() {
+
+			}
+		});
+		return areaChild;
+	};
+
+	// 改变地区方法
+	var changeArea = function(obj) {
+		var areaChild = new Array();
+		var id = $(obj).attr('id');
+		var val = $(obj).val();
+		switch (id) {
+		case 'province':
+			if (val == 0) {
+				$('#city').html('<option value="0">请选择城市</option>');
+				$('#area').html('<option value="0">请选择城区</option>');
+				break;
+			}
+			areaChild = getArea(val);
+			if (areaChild !== null) {
+				var select = '<option value="0">请选择城市</option>';
+				$.each(areaChild, function(i, n) {
+					select += '<option value="' + n.code + '">' + n.name
+							+ '</option>';
+				});
+				$('#city').html(select);
+				$('#area').html('<option value="0">请选择城区</option>');
+			}
+			break;
+		case 'city':
+			if (val == 0) {
+				$('#area').html('<option value="0">请选择城区</option>');
+				break;
+			}
+			areaChild = getArea(val);
+			if (areaChild !== null) {
+				var select = '<option value="0">请选择城区</option>';
+				$.each(areaChild, function(i, n) {
+					select += '<option value="' + n.code + '">' + n.name
+							+ '</option>';
+				});
+				$('#area').html(select);
+			}
+			break;
+		}
+	}
+	init();
+</script>
+<script src="__APP__/js/fancyBox/jquery.fancybox.js"></script>
+<include file="__THEME__/public_footer" />

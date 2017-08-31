@@ -1,0 +1,21 @@
+<div class="comment_lists" id="ajax_div_{$row_id}">
+    <neq name='list.data' value=''>
+    <php>$iscommentdel = CheckPermission('core_normal','comment_del');
+     	 $iscommentadmindel = CheckPermission('core_admin','comment_del');
+    </php>    
+    <volist name='list.data' id='vo'>
+    <li class="comment_list" model-node="comment_list">
+		<div class="left_head"><a href="{$vo.user_info.space_url}"><img width="30" height="30" src="{$vo.user_info.avatar_small}"/></a></div>
+		<div class="right_con">
+			<p><span class="blue"><a href="{$vo.user_info.space_url}">{$vo.user_info.uname}：</a></span>{$vo.content}</p>
+			<div class="pt4">
+				<p class="left black1">{$vo.ctime|friendlyDate}</p>
+				<p class="right black2 font1"><eq name='cancomment' value="1"><a href="javascript:void(0)" event-args='row_id={$vo.row_id}&app_uid={$vo.app_uid}&to_comment_id={$vo.comment_id}&to_uid={$vo.uid}&to_comment_uname={$vo.user_info.uname}&app_name={$app_name}&table={$table}' event-node="reply_comment">回复</a></eq>&nbsp;&nbsp; <if condition="$vo['user_info']['uid'] eq $GLOBALS['ts']['mid']">|&nbsp;<a href="javascript:void(0);" event-node="comment_del" event-args="comment_id={$vo.comment_id}">删除</a></if></p>
+			</div>
+		</div>
+		<div class="clear"></div>
+	</li>
+    </volist> 
+    <div class="page" style="float:right">{$page}</div>
+    </neq>
+</div>

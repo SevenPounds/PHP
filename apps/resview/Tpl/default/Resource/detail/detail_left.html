@@ -1,0 +1,165 @@
+<style type="text/css">
+.resource_optionV .pt10 {
+	padding-top: 0px;
+}
+
+#preview h3 {
+	background: #2d2d2d;
+	color: #fff;
+	height: 39px;
+	line-height: 39px;
+	padding-left: 15px;
+	border-bottom: 1px solid #171717;
+	font-size: 20px;
+	font-family: "微软雅黑";
+	font-weight: normal;
+}
+
+.resource_optionV .widebox02 {
+	width: 702px;
+}
+
+.resource_optionV .narrowbox02 {
+	position: relative;
+	height: 268px;
+}
+
+.viode_search {
+	float: left;
+	margin-left: 5px;
+	_margin-left: -2px;
+}
+
+.viode_search_left,.viode_search_right {
+	width: 2px;
+	height: 30px;
+	float: left;
+}
+
+.viode_search_middle {
+	float: left;
+}
+
+.result_li {
+	font-size: 14px;
+	height: 40px;
+	line-height: 40px;
+	border-top: 1px solid #353535;
+	position: absolute;
+	bottom: 5px;
+	left: 0px;
+	width: 690px;
+	text-align: right;
+	padding-right: 10px;
+}
+</style>
+
+<div class="main_cont_l fl">
+	<div class="resource_view clearfix">
+		<div class="fl clearfix">
+			<h3 class="clearfix">
+				<img
+					src="__APP__/images/{$resourceDetail['extension']|getShortImg}"
+					alt="{$resourceDetail['title']}" class="fl"> <strong
+					class="fl" title="{$resourceDetail['title']}">{$resourceDetail['res_title']|getShort=14,'...'}</strong>
+				<!--  <span
+					class="star_box"> <span class="full_star"></span> <span
+					class="full_star"></span> <span class="full_star"></span> <span
+					class="full_star"></span> <span class="half_star"></span>
+				</span> <font class="fl">(1211)</font> -->
+			</h3>
+			<p>
+				<font>大小：<php>if(empty($packageRes)){</php>{$resourceDetail['length']|getResSize}<php>} else {</php>未知<php>}</php></font><font>上传时间：{$resourceDetail['dateline']|strtotime|date='Y-m-d',###}</font>
+			</p>
+		</div>
+		<div class="resource_btnV fr" style="z-index: 10">
+			 <a href="javascript:collect('{$resourceDetail.fid}','{$createData.cyuid}');"
+				class="save" isclick ="0" >
+				<span>保存到我的文档</span></a> <a
+				href="javascript:download('{$resourceDetail.fid}', '{$createData.cyuid}');"
+				class="down"><span>下载</span></a> <a href="javascript:void(0);"
+				id="share_btn" class="share"><span>分享</span></a> <img
+				src="__APP__/images/sm.png" alt="{$resourceDetail['res_title']}二维码" class="resource_ewm" />
+				<php>if(!empty($mid)&&!empty($resourceDetail["downloadurl"])){</php>
+                <div class="wxsm" style="display:none">
+                    <span></span>
+                    <img src="{:U(APP_NAME.'/Ajax/qrcode')}&url={$resourceDetail.downloadurl}" class="decoded">
+                    <font>扫描二维码，下载文件到移动端</font>
+                </div>
+				<php>}</php>
+		</div>
+		<div class="clear"></div>
+		<div class="share_box" style="display: none">
+			<div class="share_area">
+				<textarea id="share_body" rows="" cols=""></textarea>
+				<label><b>0</b>/140</label>
+			</div>
+			<div class="resource_item">
+				<h3 class="clearfix">
+					<a href="javascript:void(0);" class="already fr" id="share_cancel"><span>取消</span></a>
+					<a href="javascript:void(0);" class="fr" id="share_publish"><span>发布</span></a>
+				</h3>
+			</div>
+		</div>
+	</div>
+
+	<div class="resource_optionV">
+		<!-- 140719 -->
+		<div id="player_video">
+			<php>if(empty($packageRes)){</php>
+			<div class="resource_optionV">
+				<div id="preview"></div>
+				<div class="movie_con" id="no_preview" style="display: none;">
+					<div class="default_tips">
+						<span></span>
+					</div>
+				</div>
+				<div class="clear"></div>
+			</div>
+			<php>}else{</php>
+			<div id="packageResList">
+				<include file="detail/packageResList" />
+			</div>
+			<php>}</php>
+			<!-- <div class="narrowbox02" id="right_div">
+				<div class="viode_search_middle clearfix">
+					<input type="text" id="inputSearch"
+						style="outline: none; cursor: text;" class="iatinput" iatinput="">
+					<button onclick="videoCaptionCtrl.search();">在视频内搜索</button>
+				</div>
+				<div class="play_movbox">
+					<ul style="" id="segments_div">
+						<li><span class="time">00:00:00</span>同学们，大家好，今天，我们将一起走进<span
+							class="redcolor">西湖</span> ，去感受一下她迷人的魅力。</li>
+						<li><span class="time">00:00:00</span>同学们，大家好，今天，我们将一起走进<span
+							class="redcolor">西湖</span> ，去感受一下她迷人的魅力。</li>
+						<li><span class="time">00:00:00</span>同学们，大家好，今天，我们将一起走进<span
+							class="redcolor">西湖</span> ，去感受一下她迷人的魅力。</li>
+						<li><span class="time">00:00:00</span>同学们，大家好，今天，我们将一起走进<span
+							class="redcolor">西湖</span> ，去感受一下她迷人的魅力。</li>
+						<li><span class="time">00:00:00</span>同学们，大家好，今天，我们将一起走进<span
+							class="redcolor">西湖</span> ，去感受一下她迷人的魅力。</li>
+						<li id="seg_0" starttime="00:00:00" endtime="00:00:09"
+							onclick="videoCaptionCtrl.playClick(this);"
+							onmouseover="this.style.cursor='pointer'"
+							onmouseout="this.style.cursor='text'"><a class="voide_li"
+							href="javascript:;" style="display: none;"></a> <span
+							class="time">00:00:00</span>同学们，大家好，今天，我们将一起走进<span
+							class="redcolor">西湖</span> ，去感受一下她迷人的魅力。</li>
+					</ul>
+				</div>
+			</div> -->
+		</div>
+		<!-- 140719 -->
+	</div>
+	<!-- 评论 -->
+	<!-- <div class="resource_comment">
+		<div class="resource_comBox clearfix">
+			<input type="text" value="" id="comment_content" /> <a
+				href="javascript:void(0)" id="commit_comment">发表评论</a>
+		</div>
+		<div id="comment_list"></div>
+	</div> -->
+
+
+</div>

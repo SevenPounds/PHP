@@ -1,0 +1,78 @@
+<div class="bj_right">
+				<div class="tab_a"><b>班主任</b><!--<p><a href="#">查看</a></p>--></div>
+				<dl class="vip_box">
+					<dt><img src="__APP__/image/new_img.jpg" /></dt>
+					<dd><span class="green"><a href="#">吴富荣</a></span><img src="__APP__/image/vip.gif" /></dd>
+				</dl>
+				<div class="tab_a"><b>表扬栏</b><p><a href="#">查看</a></p></div>
+				<div class="byl_box"><img src="__APP__/image/byl_img.jpg" /></div>
+				<div class="tab_a"><b>超级小明星</b><!--<p><a href="#">查看</a></p>--></div>
+				<div class="piclist_box">
+					<ul class="piclist">
+						<li>
+							<div class="left"><img src="__APP__/image/new_img.jpg" /></div>
+							<div class="right"><p class="green"><a href="#">王思如</a></p><p class="gray">共获得1个表扬</p></div>
+							<div class="clear"></div>
+						</li>
+						<li>
+							<div class="left"><img src="__APP__/image/new_img.jpg" /></div>
+							<div class="right"><p class="green"><a href="#">王思如</a></p><p class="gray">共获得1个表扬</p></div>
+							<div class="clear"></div>
+						</li>
+						<li class="none">
+							<div class="left"><img src="__APP__/image/new_img.jpg" /></div>
+							<div class="right"><p class="green"><a href="#">王思如</a></p><p class="gray">共获得1个表扬</p></div>
+							<div class="clear"></div>
+						</li>
+					</ul>
+				</div>
+				{:W('ExcellentShare', array('from'=>'class'))}
+				<div class="tab_a"><b>班级成员</b><!--<p><a href="#">查看</a></p>--></div>
+				<div class="piclist_box">
+					<div class="tab_green">
+						<ul id="classRoleMenu">
+							<li class="current" id="teachers_li" onclick="changeRoleMenu(this)">教师</li>
+							<li id="students_li" onclick="changeRoleMenu(this)">学生</li>
+						</ul>
+					</div>
+					<ul class="piclist" id="teachers_list" >
+					<volist name="teachers" id='vo' offset='0' length='6' empty="$empty">
+						<li>
+							<div class="left"><a <if condition="$vo['is_synchronous'] eq 1"> href="{:U('public/Profile/index',array('uid'=>$vo['uid']))}"  event-node="face_card" show="no" uid={$vo['uid']}</if>><img src="{$vo.avatar_small}"></a><!-- <img src="__APP__/image/new_img.jpg" /> --></div>
+							<div class="right"><p class="green"><a <if condition="$vo['is_synchronous'] eq 1"> href="{:U('public/Profile/index',array('uid'=>$vo['uid']))}" event-node="face_card" show="no" uid={$vo['uid']}</if>>{$vo.uname}</a></p>
+							<!-- <p class="btn"><input type="button" value="" class="focus_small_normal"  onmouseover="this.className='focus_small_hover'" onmouseout="this.className='focus_small_normal'" /></p> --></div>
+							<if condition="$vo['is_synchronous'] eq 1">
+							{:W('FollowBtn', array('fid'=>$vo['uid'], 'uname'=>$vo['uname'], 'follow_state'=>$vo['follow_state'], 'refer'=>'following_right'))}
+							</if>
+							<div class="clear"></div>
+						</li>
+					</volist>
+					</ul>
+					<ul class="piclist" id="students_list" style="display:none;">
+						<volist name="students" id='vo' offset='0' length='6' empty="$empty">
+						<li>
+							<div class="left"><a <if condition="$vo['is_synchronous'] eq 1"> href="{:U('public/Profile/index',array('uid'=>$vo['uid']))}" event-node="face_card" show="no" uid={$vo['uid']}</if>><img src="{$vo.avatar_small}"></a></div>
+							<div class="right"><p class="green"><a <if condition="$vo['is_synchronous'] eq 1"> href="{:U('public/Profile/index',array('uid'=>$vo['uid']))}" event-node="face_card" show="no" uid={$vo['uid']}</if>>{$vo.uname}</a></p>
+							<if condition="$vo['is_synchronous'] eq 1">
+							{:W('FollowBtn', array('fid'=>$vo['uid'], 'uname'=>$vo['uname'], 'follow_state'=>$vo['follow_state'], 'refer'=>'following_right'))}
+							</if>
+							<!-- <p class="btn"><input type="button" value="" class="focus_small_normal"  onmouseover="this.className='focus_small_hover'" onmouseout="this.className='focus_small_normal'" /></p> --></div>
+							<div class="clear"></div>
+						</li>
+						</volist>
+					</ul>
+				</div>
+			</div>
+			
+<script>
+	function changeRoleMenu(obj)
+	{
+		jQuery("#classRoleMenu li").each(function(){
+			jQuery(this).removeClass('current') ;	
+		}); 
+		jQuery("#teachers_list").css('display','none') ;
+		jQuery("#students_list").css('display','none') ;
+		jQuery('#'+obj.id).addClass('current');
+		jQuery('#'+obj.id+'st').css('display','block');
+	}
+</script>

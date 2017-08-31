@@ -1,0 +1,94 @@
+<style>
+/*精彩回复 141112*/
+.comment_lists .top_div{
+    padding:0;
+    background:#f3f5f7;
+    width:269px;
+	border: 1px solid #AAC9E9;
+}
+.comment_lists .top_div h3{
+    border:none;
+    border-top: 1px solid #AAC9E9;
+    border-bottom: 1px solid #AAC9E9;
+    line-height: 31px;
+    height: 31px;
+    padding: 0 0 0 10px;
+    background: #f9fafa;  
+}
+.comment_lists .top_div h3 span{
+    font-size: 16px;
+    color: #009DEE;
+}
+.comment_lists .top_div .comment_list{
+    margin: 0 10px;
+}
+.comment_lists .top_div .comment_list dd{
+    margin: 0;
+    color: #555;
+}
+.comment_lists .comment_list dd p.cont{
+    margin: 0;
+}
+.comment_lists .comment_list dd p.cont a{
+    color: #009dee;
+}
+.comment_lists .comment_list dd p.info a{
+    color: #99B2E5;  
+}
+.comment_lists .comment_list dd p.info i.vline{
+    color: #ccc;
+}
+.comment_lists .comment_list dd em span{
+    color: #aaa;
+}
+.comment_lists .top_div .comment_list dt{
+    margin: 5px 10px 0px 0;
+}
+</style>
+<!--评论列表-->
+<neq name='list' value=''>
+<div class="comment_lists" style="margin-top:10px;">
+        <div class="top_div">
+        <h3><span>精彩回复</span></h3>
+        <volist name='list' id='vo' key='k'>
+		<dl id="excellent_comment_{$vo.comment_id}" class="comment_list" model-node="comment_excellent_list">        
+		<dt><a href="{$vo.user_info.space_url}" target="_blank" uid="{$vo['uid']}" event-node="face_card" show="no"><img width="30" height="30" src="{$vo.user_info.avatar_middle}"></a></dt>
+		<dd>
+    <p class="cont">
+		    {$vo.user_info.space_link}
+        <volist name="vo['user_info']['groupData'][$vo['user_info']['uid']]" id="v2">
+            <img style="width:auto;height:auto;display:inline;cursor:pointer" src="{$v2['user_group_icon_url']}" title="{$v2['user_group_name']}" />&nbsp;
+        </volist>
+		    ：<em>{$vo.content}<!-- <span class="time">({$vo.ctime|friendlyDate})</span> --></em></p>
+		<p class="info right"><span>
+
+		<span id='agree{$vo.comment_id}' rel='{$vo.digg_count}'>
+		<php>if(!isset($diggArr[$vo['comment_id']])) { </php>
+		   <a href="javascript:void(0)" onclick="core.digg.addDigg({$vo.comment_id})" >赞<if condition='!empty($vo[digg_count])'>({$vo.digg_count})</if></a>
+		<php> } else { </php>
+		  <span style="color:#999" onclick="core.digg.delDigg({$vo.comment_id})"> <img src="__THEME__/image/zan.gif" style="padding-bottom: 3px">取消赞<if condition='!empty($vo[digg_count])'>({$vo.digg_count})</if></span>
+		<php> } </php>
+	    </span>
+		<i class="vline">|</i>
+
+		<php>
+		$isdel = 0;
+		if(($vo['uid'] == $GLOBALS['ts']['mid'] && CheckPermission('core_normal','comment_del')) || CheckPermission('core_admin','comment_del')){
+		$isdel = 1;
+		</php>
+		<a href="javascript:void(0);" event-node="comment_del" event-args="comment_id={$vo.comment_id}" <php>if($vo['user_info']['uid'] != $GLOBALS['ts']['mid'] && CheckPermission('core_admin','comment_del')){</php>style="color:red;"<php>}</php>>{:L('PUBLIC_STREAM_DELETE')}</a>
+		<php>}</php>
+	    <php>if( $isdel && $cancomment){</php>
+   		<i class="vline">|</i>
+   		<php>}</php>
+	    <eq name='cancomment' value="1">
+			<a href="javascript:void(0)" event-args='row_id={$vo.row_id}&app_uid={$vo.app_uid}&to_comment_id={$vo.comment_id}&to_uid={$vo.uid}&to_comment_uname={$vo.user_info.uname}&app_name={$app_name}&table={$table}'
+				event-node="reply_comment">{:L('PUBLIC_STREAM_REPLY')}</a>
+	    </eq>
+    	</span></p>
+		</dd>
+		</dl>
+	</volist>
+	</div>
+</div>
+</neq>

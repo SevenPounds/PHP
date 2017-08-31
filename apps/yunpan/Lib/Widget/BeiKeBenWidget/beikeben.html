@@ -1,0 +1,237 @@
+  <!--140414-->
+  <script type="text/javascript" src="apps/yunpan/_static/js/common.js"></script>
+  <script type="text/javascript" src="apps/yunpan/_static/js/book.js"></script>
+    <link rel="stylesheet" type="text/css" href="apps/yunpan/_static/css/main.css" />
+<script>
+$(function(){
+	//弹出添加备课本
+	$('.book_add_but').live('click',function(){
+	    //创建备课本完成刷新
+	    book.onCreateSuccess = function(){
+ 		   //刷新我的备课本挂件，从第一页开始读取
+    		var data ={'pagenow':1,limit:2};
+    		$.ajax({
+                url:U('yunpan/Ajax/getBook'),
+                type:'post',
+                data:data,
+                async: false,
+                success:function(res){                   
+                  var resBooks=eval('('+res+')');
+                  var list="";
+                  //判断是否存在下一页
+                  if(resBooks.hasnext==1){
+                	$(".txt_next").show();
+                  }else{
+                	$(".txt_next").hide(); 
+                  }
+                	resBooks.books.forEach(function(book){ 
+                		 var icon =  book.thumbpath74.replace(/__/g,'');
+                		  icon =  icon.replace('APP',$('#app').val()); 
+                		  var book_name=book.name;
+                		  if( book_name.length>9){
+                			  book_name=book_name.substr(0,9)+'...';
+                		  }
+                        list +="<li book="+book.fid+"><span><a href='"+U('yunpan/Index/index')+"#/?fid="+book.fid+"'>";
+                        list += "<img src='"+icon+"'alt='"+book.name+"'  title='"+book.name+"'/></a></span>";
+                        list += "<a style='white-space:nowrap' href='"+U('yunpan/Index/index')+"#/?fid="+book.fid+"' title='"+book.name+"'>"+book_name+"</a></li>";
+                     	});
+                     list +="<li><span class='txt_add'><a href='javascript:;' id='book_add_but' class='book_add_but' ></a></span><a href='javascript:;' class='txt_add book_add_but' >添加本学期备课本</a></li>";
+                     $("#books_show").html(list);
+                },
+                error:function(msg){
+                }
+            });
+	    };
+	    book.onCreateFaild=function(){
+	    	ui.error('创建备课本失败，请检查网络......');
+	    };
+		book.show();
+	});
+
+});
+
+</script>
+
+          <div class="textbook">
+          <input type="hidden" value='__APP__' id='app'>
+            <div class="txt_tit">我的备课本</div>
+            <div class="top">
+                <div class="top_left"></div>
+                <div class="top_center"></div>
+                <div class="top_right"></div>
+                <div class="clear"></div>
+            </div>
+            <div class="center">
+                <div class="txt_bookList">
+                    <a href="javascript:;" class="txt_pre" style="display:none"></a>
+                    <div class="txt_con">
+                       <ul id="books_show">
+                        <volist name="books" id="book">                    
+                           <if condition="$book neq null">
+                            <li book="{$book:fid}">
+                                <span>  <a href="{:U('yunpan/Index/index')}#/?fid={$book:fid}"><img src="{$book:thumbpath74}" alt="{$book:name}" title="{$book:name}" /></a></span>
+                                <a style="white-space:nowrap" href="{:U('yunpan/Index/index')}#/?fid={$book:fid}" title="{$book:name}">
+                                {$book:name|msubstr=0,9,'utf-8',true}</a>
+                            </li>
+                            </if>
+                        </volist> 
+                        <li>
+                             <span class="txt_add"><a href="javascript:;" class="book_add_but"></a></span>
+                              <a href="#" class="txt_add book_add_but">添加本学期备课本</a>
+                         </li>                                                 
+                       </ul>
+                    </div>
+               <if condition="$hasnext eq 1">
+                <a href="javascript:;" class="txt_next"></a>
+                <else/> <a href="javascript:;" class="txt_next" style="display:none;"></a>
+               </if>    
+             </div>
+            </div>
+            <div class="bottom">
+                <div class="bot_left"></div>
+                <div class="bot_center"></div>
+                <div class="bot_right"></div>
+                <div class="clear"></div>
+            </div>
+        </div>   
+        
+       <script>
+        $(function(){
+        	var pagenow=1;
+        	$(".txt_pre").click(function(){        		
+        		pagenow--;
+        		getBooks();
+        	 if(pagenow==1)
+        	    {
+        		  $(".txt_pre").hide();
+        		}	              		
+        	});
+        	$(".txt_next").click(function(){
+        		pagenow++;       		
+        		$(".txt_pre").show();
+        		getBooks();
+        	});
+           	function getBooks(){      	
+        		var data ={'pagenow':pagenow,limit:2};
+        		$.ajax({
+                    url:U('yunpan/Ajax/getBook'),
+                    type:'post',
+                    data:data,
+                    async: false,
+                    success:function(res){                   
+                      var resBooks=eval('('+res+')');
+                      var list="";
+                      //判断是否存在下一页
+                      if(resBooks.hasnext==1){
+                    	$(".txt_next").show();
+                      }else{
+                    	$(".txt_next").hide(); 
+                      }
+                    	resBooks.books.forEach(function(book){ 
+                    		 var icon =  book.thumbpath74.replace(/__/g,'');                    		  
+                    		  icon =  icon.replace('APP','__APP__');		
+                    		  var book_name=book.name;
+                    		  if( book_name.length>9){
+                    			  book_name=book_name.substr(0,9)+'...';
+                    		  }
+                            list +="<li book="+book.fid+"><span><a href='"+U('yunpan/Index/index')+"#/?fid="+book.fid+"'>";
+                            list += "<img src='"+icon+"'alt='"+book.name+"'  title='"+book.name+"'/></a></span>";
+                            list += "<a style='white-space:nowrap' href='"+U('yunpan/Index/index')+"#/?fid="+book.fid+"' title='"+book.name+"'>"+book_name+"</a></li>";
+                        })
+                        list +="<li><span class='txt_add'><a href='javascript:;' id='book_add_but' class='book_add_but' ></a></span><a href='javascript:;' class='txt_add book_add_but' >添加本学期备课本</a></li>";
+                         $("#books_show").html(list);
+                      
+                    },
+                    error:function(msg){
+                    }
+                });
+        	}   
+        });       
+        </script>
+        
+        <!-- IE8下不支持的函数 -->
+        <script>
+        -function(){
+        	
+        	function applyIf(o, c) {
+        	    if(o) {
+        	        for(var p in c) {
+        	            if(o[p]===undefined) {
+        	                o[p] = c[p];
+        	            }
+        	        }
+        	    }
+        	    return o;
+        	}
+        	applyIf(Array.prototype, {
+        	    indexOf : function(obj, idx) {
+        	        var from = idx == null ? 0 : (idx < 0 ? Math.max(0, arr.length + idx) : idx);
+        	        for(var i = from, l = this.length; i < l; i++) {
+        	            if(i in this && this[i] === obj) {
+        	                return i;
+        	            }
+        	        }
+        	        return -1;
+        	    },
+        	    lastIndexOf : function(obj, idx) {
+        	        var len = this.length, from = idx == null ? len - 1 : idx;
+        	        if(from < 0) {
+        	            from = Math.max(0, len + from);
+        	        }
+        	        for(var i = from; i >= 0; i--) {
+        	            if (i in this && this[i] === obj) {
+        	                return i;
+        	            }
+        	        }
+        	        return -1;
+        	    },
+        	    every : function(fn, thisObj) {
+        	        var l = this.length;
+        	        for(var i = 0; i < l; i++) {
+        	            if(i in this && !fn.call(thisObj, this[i], i, this)) {
+        	                return false;
+        	            }
+        	        }
+        	        return true;
+        	    },
+        	    some : function(fn, thisObj) {
+        	        var l = this.length;
+        	        for(var i = 0; i < l; i++) {
+        	            if(i in this && fn.call(thisObj, this[i], i, this)) {
+        	                return true;
+        	            }
+        	        }
+        	        return false;
+        	    },
+        	    filter : function(fn, thisObj) {
+        	        var l = this.length, res = [], resLength = 0;
+        	        for(var i = 0; i < l; i++) {
+        	            if(i in this) {
+        	                var val = this[i];
+        	                if(fn.call(thisObj, val, i, this)) {
+        	                    res[resLength++] = val;
+        	                }
+        	            }
+        	        }
+        	        return res;
+        	    },
+        	    map : function(fn, thisObj) {
+        	        var l = this.length, res = [];
+        	        for(var i = 0; i < l; i++) {
+        	            if(i in this) {
+        	                res[i] = fn.call(thisObj, this[i], i, this);
+        	            }
+        	        }
+        	        return res;
+        	    },
+        	    forEach : function(fn, thisObj) {
+        	        var l = this.length;
+        	        for(var i = 0; i < l; i++) {
+        	            if(i in this) {
+        	                fn.call(thisObj, this[i], i, this);
+        	            }
+        	        }
+        	    }
+        	});	
+        	}();
+        </script>

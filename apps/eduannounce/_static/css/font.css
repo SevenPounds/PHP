@@ -1,0 +1,59 @@
+/* CSS Document */
+/*-----------------padding--margin----------------*/
+.pr5{padding-right:5px;}
+.pr10{padding-right:10px;}
+.pr15{padding-right:15px;}
+.pr20{padding-right:20px;}
+.pr30 {padding-right: 30px;}
+.pt4{padding-top:4px;}
+.pt5{padding-top:5px;}
+.pt10{padding-top:10px;}
+.pt15{padding-top:15px;}
+.pt20{padding-top:20px;}
+.pt2{padding-top:2px;}
+.pt3{padding-top:3px;}
+.pl5{padding-left:5px;}
+.pl10{padding-left:10px;}
+.pt13 {padding-top: 13px;}
+.pl15{padding-left:15px;}
+.pl20{padding-left:20px;}
+.pb5{padding-bottom:5px;}
+.pb10{padding-bottom:10px;}
+.pb15{padding-bottom:15px;}
+.pb20{padding-bottom:20px;}
+
+.mr5{margin-right:5px;}
+.mr10{margin-right:10px;}
+.mr15{margin-right:15px;}
+.mr20{margin-right:20px;}
+.mt5{margin-top:5px;}
+.mt10{margin-top:10px;}
+.mt15{margin-top:15px;}
+.mt20{margin-top:20px;}
+.ml5{margin-left:5px;}
+.ml10{margin-left:10px;}
+.ml15{margin-left:15px;}
+.ml20{margin-left:20px;}
+.mb5{margin-bottom:5px;}
+.mb10{margin-bottom:10px;}
+.mb15{margin-bottom:15px;}
+.mb20{margin-bottom:20px;}
+
+/*------------------color------------------*/
+.blue{color:#229bd7;}
+.blue a{color:#229bd7;}
+.blue a:hover{color:#2daeee;}
+.black1 {color: #aaaaaa;}
+.black2 {color: #535353;}
+.red{color:#ff0000;}
+.red a{color:#ff0000;}
+.red a:hover{color:#ff3d3d;}
+.green2{color:#339900;}
+.green2 a{color:#339900;}
+.green2 a:hover{color:#3fbe00;}
+
+/*------------------font-------------------*/
+.font1{ font-size:12px;}
+.font2{ font-size:14px;}
+.font3{ font-size:15px;}
+.font4{ font-size:16px;}

@@ -1,0 +1,69 @@
+<include file="../Public/header" />
+<script type="text/javascript" src="__APP__/js/ms_config.js"></script>
+<script>
+var msConfig;
+var gid = "{$gid}";
+jQuery(function(){
+	msConfig = msConfig || new MSConfig(gid);
+	msConfig.checkNum("description","to_change",200);
+	jQuery("#description").keyup(function(){
+		msConfig.checkNum("description","to_change",200);
+	});
+	jQuery("#description").keydown(function(){
+		msConfig.checkNum("description","to_change",200);
+	});
+	msConfig.checkNum("ms_name","to_changetitle",20);
+	jQuery("#ms_name").keyup(function(){
+		msConfig.checkNum("ms_name","to_changetitle",20);
+	});
+	jQuery("#ms_name").keydown(function(){
+		msConfig.checkNum("ms_name","to_changetitle",20);
+	});
+});
+</script>
+<div class="posbox">&nbsp;&nbsp;您现在的位置：<a href="{:U('msgroup/Index/index', array('gid' => $gid))}" class="blue">{$msgroup_data.group_name}</a>&gt;<a href="{:U('msgroup/Config/index', array('gid' => $gid))}" class="blue">工作室维护</a>&gt;&nbsp;<a class="blue" href="{:U('msgroup/Config/index', array('gid' => $gid))}">基础信息维护</a></div>     
+<div class="wy_box" style="width:1000px; overflow:hidden;">
+	{:W('LeftMenu', array('gid' => $gid, 'level' => $level))}
+	<div class="right">
+		<div class="teaWS_rgt">
+			<div class="teaWSR_tit"><h3>基础信息维护</h3></div>
+		</div>
+		<div class="teaWSR_con">
+			<div class="teaWSR_table_new">
+				<ul>
+					<li style="position:relative;">
+						<label class="newU_tmid"><font>*</font>工作室名称：</label>
+						<input id="ms_name" type="text" class="newU_txt06" value="{$msgroup_data['group_name']}">
+						<span style="position:absolute;top:8px;"><b id="to_changetitle">5</b>/20</span>
+						<div class="clear"></div>
+					</li>
+
+					<li>
+						<label class="newU_tmid"><font>*</font>学科：</label>
+						<select id="ms_subject" style="width:98px;height:30px;line-height:24px;padding:3px 0;margin:0;">
+						<volist name="subjects" id="subject">
+							<option value="{$subject.code}" title="{$subject.name}"  <php>if($subject['code']== $msgroup_data['subject']){</php> selected="selected" <php>}</php> >{$subject.name}</option>
+                        </volist>
+						</select>
+					</li>
+					
+					<li>
+						<label class="newU_tmid"><font>*</font>工作室头像：</label>
+						{:W('MSAvatar',$avatarData)}
+					</li>
+					<li>
+						<label><font>*</font>工作室简介：</label>
+						<div class="teaWSR_posi"><textarea rows="5" id="description">{$msgroup_data['discription']}</textarea><span><b id="to_change">5</b>/200</span></div>
+						<div class="clear"></div>
+					</li>
+				</ul>
+				<div class="teaWSR_subcan">
+					<a href="javascript:void(0);" class="teaWSR_sub" onclick="msConfig.save();">保存</a>
+					<a href="javascript:void(0);" class="teaWSR_can" onclick="msConfig.cancel();">取消</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="clear"></div>
+</div>
+<include file="__THEME__/public_footer" />

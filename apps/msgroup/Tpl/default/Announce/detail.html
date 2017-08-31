@@ -1,0 +1,48 @@
+<include file="../Public/header" />
+<div class="posbox">&nbsp;&nbsp;您现在的位置：<a href="{:U('msgroup/Index/index', array('gid' => $gid))}" class="blue">{$msgroup_data.group_name}</a>&gt;<a <if condition="$level eq 3">href="{:U('msgroup/Config/index', array('gid' => $gid))}"<else />href="{:U('msgroup/Resource/index', array('gid' => $gid))}"</if> class="blue">工作室维护</a>&gt;&nbsp;<a class="blue" href="{:U('msgroup/Announce/index', array('gid' => $gid))}">通知公告管理</a></div>     
+<div id="page-wrap">
+	<div id="main-wrap">
+		<div class="con_box">
+			<div class="left_box">
+				{:W('LeftMenu', array('gid' => $gid, 'level' => $level))}
+			</div>
+			<div class="right_box">
+				<div class="notice_box">
+					<div class="notice_head">
+						<p class="black2 font3 pt13"><b>{$detail['announce']['title']|mStr=###,40}</b></p>
+						<p class="pt5">
+							<span class="black1 pr30">作者：
+								<span class="blue">
+									<a href="{:U('public/Profile/index',array('uid'=>$detail['announce']['uid']))}" event-node="face_card" show="no" uid="{$detail['announce']['uid']}">
+									{$detail['announce']['uname']}</a>
+								</span>
+							</span>
+							<span class="black1 pr30">发表日期：<php>echo(date('Y年n月d日', $detail['announce']['ctime']));</php></span>
+							<span class="black1">浏览量：{$detail['announce']['viewcount']}</span>
+						</p>
+					</div>
+					<div class="notice_con">
+						<div class="max-img" id="dt_content" style="display:none;">{$detail['announce']['content']}</div>
+		                <iframe id="frame_1" width="100%" height="100%" scrolling="no" frameborder="0">
+			            </iframe>
+						<script>
+						window.onload=function(){
+							jQuery("#dt_content").find("a").attr('target','_blank');
+							document.getElementById('frame_1').contentWindow.document.body.innerHTML =  document.getElementById('dt_content').innerHTML;
+							document.getElementById('frame_1').contentWindow.document.body.scrollHeight;
+							jQuery("#frame_1").height(document.getElementById('frame_1').contentWindow.document.body.scrollHeight+20);
+						}
+						</script>
+						<form>
+							{:W('ResourceAttach',array('paper_id'=>$detail['announce']['id'],'app_name'=>"msgroup",'inputname'=> 'attach', 'to_action'=>'preview', 'attachIds' => $detail['attachments']))}
+						</form>
+					</div>
+				</div>
+				<div class="notice_bot1"></div>
+				<div class="notice_bot2"></div>
+			</div>
+			<div class="clear"></div>
+		</div>
+	</div>
+</div>
+<include file="__THEME__/public_footer" />

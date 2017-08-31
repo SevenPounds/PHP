@@ -1,0 +1,33 @@
+<h3 class="h3_green">{$userData.following_count|default=0}<font>关注</font></h3>
+<php>if(!empty($sidebar_following_list['data'])):</php>
+<div class="cy_mr_fw">
+	<div class="cy_mr_fw_top"></div>
+		<div class="cy_mr_fw_cont">
+			<ul class="clearfix">
+				<volist name="sidebar_following_list['data']" id="vo" offset="0" length='3' empty="$empty"> 
+					<li class="fl">
+						<a href="{:U('public/Workroom/index',array('uid'=>$vo['fid']))}" uid="{$vo['fid']}" event-node="face_card">
+							<img src="{$follow_info[$vo['fid']]['avatar_small']}" /></a>
+						<a href="{:U('public/Workroom/index',array('uid'=>$vo['fid']))}" class="face" uid="{$vo['fid']}" event-node="face_card"><span>{$follow_info[$vo['fid']]['uname']|getShort=3,'...'}</span></a>
+					</li>
+				</volist>
+			</ul>
+			<php>if(count($sidebar_following_list['data']) > 3):</php>
+				<div class="hr_line clearfix">
+					<img src="__APP__/images/circle.png" class="fl">
+                    <img src="__APP__/images/circle.png" class="fr">
+				</div>
+			<php>endif;</php>
+			<ul class="clearfix">
+				<volist name="sidebar_following_list['data']" id="vo" offset="3" length='3' empty="$empty"> 
+					<li class="fl">
+						<a href="{:U('public/Workroom/index',array('uid'=>$vo['fid']))}" uid="{$vo['fid']}" event-node="face_card">
+							<img src="{$follow_info[$vo['fid']]['avatar_small']}" /></a>
+						<a href="{:U('public/Workroom/index',array('uid'=>$vo['fid']))}" class="face" uid="{$vo['fid']}" event-node="face_card"><span>{$follow_info[$vo['fid']]['uname']|getShort=3,'...'}</span></a>
+					</li>
+				</volist>
+			</ul>
+		</div>
+	<div class="cy_mr_fw_bot"></div>
+</div>
+<php>endif;</php>

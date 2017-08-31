@@ -1,0 +1,408 @@
+<include file="../Public/_header"/>
+<link rel="stylesheet" href="__APP__/css/poll.css" type="text/css" media="screen" charset="utf-8" />
+
+<div id="main-wrap" class="wrapper">
+		<!--面包屑导航-->
+		<!-- <div class="crumbs">
+			<ul>
+				<li class="pre_cen"><a href="{:U('public/Index/index')}">个人空间</a></li>
+				<li>&gt;</li>
+				<li>在线投票</li>
+			</ul>
+			<div class="clear"></div>
+		</div> -->
+		<!-- 导航结束 -->
+		<div class="con_box">
+			<div class="left_box">
+			<div id="st-index-grid" class="content clearfix stu-con">
+				<!--左侧用户信息-->
+				<include file="__THEME__/public_left" />
+				</div>
+				</div>
+			</div>
+			<div class="right_box">
+				<div class="online_title bottom_line">
+		            <div class="left">
+		            <!-- <span><img src="__APP__/images/icon_jy.gif" /></span> -->
+		            
+		             <php>$is_Researcher=Model('CyUser')->hasRole(UserRoleTypeModel::RESAERCHER,$GLOBALS['ts']['cyuserdata']['user']['cyuid']);
+        		if(!$is_Researcher){</php>
+						<!-- <span><img src="__APP__/images/icon_jy.gif" /></span>  -->
+						<span><div style="width:32px;height:24px;line-height:24px;" class="app_icon_class_wldy"></div></span>
+				<php>}else{</php>
+						<span><div style="width:32px;height:24px;line-height:24px;" class="app_icon_class_wldy_jyy"></div></span>
+				<php>}</php> 
+				
+		            <span class="pl10 font3"><b><a href="{:U('stuvote/Index/center')}">在线投票</a></b></span> </div>
+				    <div class="right">
+		            <!--1213-->
+		              <p class="blue_btn3" onmouseover="this.className='blue_btn3hov'" onmouseout="this.className='blue_btn3'" onclick="window.location.href=U('stuvote/Index/create')">
+		              	<img src="__APP__/images/add.gif" height="8"/>发起投票</p><!--1213-->
+			        </div>
+		      	</div>
+				  
+				<div class="online_box">
+				<div class="online_left">
+					<div>
+						<php>if($vote['deadline'] <= time() ):</php>
+						<p class="pk_zt pk_end"><strong>已结束</strong></p>
+						<php>else:</php>
+						<p class="pk_zt pk_ing"><strong>投票中</strong></p>
+						<php>endif;</php>
+						
+						<div class="left pl20" style="*width:450px;">
+							<p class="online_name">{$vote.title}</p>
+							<p class="online_con" style="line-height:1.5;"><strong>投票简介：</strong></p>
+							<php>if(!empty($vote['explain'])):</php>
+                            <div id="paper_content" class="notice_con" style="display:none;">
+					            {$vote['explain']}
+				            </div>
+                          
+				           <iframe id="frame_1" width="90%" scrolling="no" frameborder="0" height="0" >
+			                </iframe>
+				            <script type="text/javascript">
+				                window.onload = function () {
+                                    jQuery("#paper_content img").each(function(){
+                                        if ($(this).width() > 450)
+                                                 $(this).width("90%");
+                                    });
+                                    jQuery("#paper_content").find("a").attr('target', '_blank');
+				                    document.getElementById('frame_1').contentWindow.document.body.innerHTML = document.getElementById('paper_content').innerHTML;
+				                    document.getElementById('frame_1').contentWindow.document.body.scrollHeight;
+                                    jQuery("#frame_1").height(document.getElementById('frame_1').contentWindow.document.body.scrollHeight + 20);
+				                };
+				            </script>
+                            <php>endif;</php>
+
+                            <p class="online_pic"><img src="__APP__/images/teavher.jpg"  style="display:none;"/></p>
+							<div class="nr_tj01" >
+								<ul id='optList'>
+									<include file="./optList" />	
+								</ul>
+								<div class="pb10">
+									<p class="left">
+									<php>if( $has_vote ):</php>
+									(您已投过票)
+									<php>else:</php>
+									(最多选<span id="most_vote_num"><php>echo intval($vote['type'])+1;</php></span>项)
+									<php>endif;</php>
+									</p>
+									<php>if( $vote['deadline'] >= time() &&  !$has_vote && $has_access){</php>
+									<p class="right vote_btn mt5"><a href="javascript:;" onclick='post_vote({$vote.type});'>投票</a></p>
+									<php>}</php>	
+									<div class="clear"></div>
+								</div>
+							</div>
+                           <div class="mt8">
+								<p class="left  mt4"><strong>标签：</strong></p>
+								<div class="other01">
+                                <volist name="tags" id="_tag">
+	                               <p class="card01" ><a style="cursor:text;"><span style="cursor:text;"> {$_tag} </span></a>&nbsp;</p>
+                                </volist>
+								</div>
+								<div class="clear"></div>
+							</div>
+
+
+							<p class="online_infor pt15">
+								<span><img src="__APP__/images/on_01.gif" /></span>
+								<span class="pl3">{$vote['cTime']|friendlyDate} 至 </span>
+                                <span id="deadline"><php>echo date('Y年m月d日 H:i:s',$vote['deadline']);</php></span>
+								<span class="pl15"><img src="__APP__/images/on_02.gif" /></span>
+								<span class="pl3">{$vote.vote_num}人投票</span>
+								<span class="pl15"><img src="__APP__/images/on_03.gif" /></span>
+								<span class="pl3"><span class="comment_count">{$vote.commentCount}</span>次回复</span>
+								<div class="clear"></div>
+							</p>
+						</div>
+						<div class="clear"></div>
+					</div>
+					
+					<div class="pt20">
+						<div class="online_tab01box">
+							<div class="online_tab">
+								<ul>
+									<li class="present"><a onclick="getPostByAjax(1);">全部回复</a></li>
+									<li class="normal"><a onclick="getPostByAjax(1, '{$mid}');">我的回复</a></li>
+								</ul>
+							</div>
+							<div class="pk_btn">
+							</div>
+						</div>
+						<dl class="pk_con">
+							
+						</dl>
+					</div>
+					
+					<!-- <div class="circs mLR15" style="padding-bottom:20px;border-top-color: #FFFFFF;">
+		            <php>if( $empty_friend ){</php>
+		                还没有人参与投票
+		            <php>}else{</php>
+		              <h3>大家的投票情况：</h3>
+		              <div class ="vote_opts">
+					    <span class="loading">loading...</span>
+		              </div>
+					<php>}</php>
+		            <div class="c"></div>
+		          </div>  -->
+		          
+					<div class="book_txt3 pb30" id="postcontent">
+						{:W('VotePost',array('rid'=>$vote['id'],'status'=>1,'isVisitor'=>0))}
+					</div>
+					
+				</div>
+				<div class="online_right">
+					<div class="add_left01">
+						<ul>
+							<!--
+							<li class="add01"><a href=javascript:endVote();">结束评课</a></li>
+							<li class="add01_pre"><a href="#">结束投票</a></li>-->
+							<!--<li class="add01_dis">结束评课</li>-->
+							<php>if ( $vote['deadline'] > time() && $mid == $vote['uid'] ):</php>
+							<li class="add02"><a  href="javascript:addOptTab()">增加选项</a></li>
+							<li class="add03"><a href="javascript:editDateTab()">修改结束时间</a></li>
+							<li class="add04"><a href="javascript:deleteVote({$vote.id})">删除投票</a></li>
+							<php>elseif($vote['deadline'] < time() && $mid == $vote['uid']):</php>
+							<li class="add02_dis" style="cursor: not-allowed;">增加选项</li>
+							<li class="add03" style="cursor: not-allowed;"><a href="javascript:editDateTab()">修改结束时间</a></li>
+							<li class="add04"><a href="javascript:deleteVote({$vote.id})">删除投票</a></li>
+							<php>else:</php>
+							<li class="add02_dis" style="cursor: not-allowed;">增加选项</li>
+							<li class="add03_dis" style="cursor: not-allowed;">修改结束时间</li>
+							<li class="add04_dis" style="cursor: not-allowed;">删除投票</li>
+							<php>endif;</php>
+						</ul>
+						<div class="clear"></div>
+					</div>
+					
+					<div class="fqr_member">
+						<div class="fqr_membername">发起人</div>
+						<ul>
+							<li>
+								<p class="member_head">
+								<a href="{$vote.user_info.space_url}" target="_blank" event-node="face_card" show="no" uid="{$vote.user_info.uid}">
+								<img src="{$vote.user_info.avatar_middle}" event-node="face_card" show="no" uid="{$vote.user_info.uid}"/></a></p>
+								<p class="left pl10 pt10">
+									<a href="{$vote.user_info.space_url}" target="_blank" event-node="face_card" show="no" uid="{$vote.user_info.uid}">{$vote.user_info.uname}</a><br/>
+									<font class="black2" title="{$school['name']}">{$school['name']|getShort=8,'...'}</font>
+								</p>
+							</li>
+						</ul>
+						<div class="clear"></div>
+					</div>
+					
+					<div class="pk_member" style="border-top:none;">
+						<div class="pk_membername">投票成员</div>
+						<div class="clear"></div>
+					</div> 
+					
+					<div class="clear"></div>
+					<!-- 精彩回复 -->
+					{:W('CommentExcellent',array('app_name'=>'stuvote','table'=>'stuvote','row_id'=>$vote['id'],'tpl'=>'jiaoyan'))}
+				</div>
+		</div>
+				
+				
+			</div>
+		</div>
+	</div>	
+<script type="text/javascript">
+//删除投票
+function deleteVote(id) {
+ ui.confirmBox('删除投票',"是否确定删除这条投票?",function(){
+ 	$.post(U('stuvote/Index/deleteVote'), {id:id}, function(txt) {
+			if(txt) {
+				if(-1 != txt) {
+         ui.success('删除成功');
+         location.href = U('stuvote/Index/index');
+       } else {
+					ui.error( "删除投票失败" );
+       }
+			}
+	});
+ });
+}
+//添加新的选项
+function addOptTab() {
+ var len = $('#optList').find('li').length;
+   if(len >= 10) {
+       ui.error('最多只能添加10个选项');
+   } else {
+       ui.box.load(U('stuvote/Index/addOptTab')+'&id='+"{$vote['id']}",'增加选项');
+   }
+};
+//修改结束时间
+function editDateTab() {
+	ui.box.load(U('stuvote/Index/editDateTab')+'&id='+"{$vote['id']}",'修改结束时间');
+};
+//发布投票
+function post_vote(type) {
+ // 获取最多能选择的项目
+ var most_vote_num = $("#most_vote_num").text();
+ if(type == 0) {
+     var opts = $('input[name=vote_opt]').filter('[checked]').val();
+     var opts_ids = $('input[name=vote_opt]').filter('[checked]').attr("id");
+ } else {
+     var opts = '';
+     var opts_ids = '';
+     var num = 0;
+     $('#optList').find('input[type="checkbox"]').filter('[checked]').each(function(i) {
+         opts = opts + $(this).val()+",";
+         opts_ids = opts_ids + $(this).attr("id")+",";
+         num = num+1;
+     });
+
+     if(num > most_vote_num){
+         ui.error("这个投票最多可投"+most_vote_num+"项");
+         return false;
+     }
+ }
+
+ if(!opts){
+     ui.error("请选择选项");
+     return false;
+ }
+
+ var vote_id = "{$vote.id}";
+ $.post(U('stuvote/Index/vote'),{vote_id:vote_id,opts:opts,opts_ids:opts_ids},function(txt){
+   if(txt){
+       if( -3 == txt ){
+         ui.error("这个投票已经结束");
+       }else if( -1 == txt ){
+         ui.error( "你已参加过投票" );
+       }else if(-2 == txt){
+         ui.error( "你不在指定的参与人范围内" );
+       }else{
+         location.reload();
+       }
+   }
+ });
+};
+//投票情况(带翻页)
+function voteUsers(p) {
+	var id = "{$vote.id}";
+	var page = "<php>echo C('VAR_PAGE');</php>";
+	$('#vote_user_more').html('加载中...');
+	$.post(U('vote/Index/voteUsers')+'&'+page+'='+p,{id:id},function(html){
+		if( html ){
+			$('.loading').html('');
+			$('.moreFoot').remove();
+			$('.vote_opts').append(html);
+		}
+	});
+};
+
+//获取投票人员 
+function getVoteUsers() {
+	var id = "{$vote.id}";
+	$('.pk_membername').after('<span>加载中...</span>');
+	$.post(U('stuvote/Ajax/getVoteUsers'), { id: id }, function (html) {
+	    $('.pk_membername').html('');
+	    $('.pk_member').html(html);
+	    M($('.pk_member')[0]);//事件加载
+	});
+};
+
+function getPostByAjax(p,uid){
+	var rid = "{$vote.id}";
+	$.ajax({
+		type:"POST",
+		dataType:"text",
+		url:U('widget/VotePost/getPost'),
+		data:{rid:rid,p:p,widget_appname:"stuvote",uid:uid},
+		success:function(html){
+			// 修改回复tab页样式
+			if (uid == null) {
+					$(".online_tab li:first").removeClass('normal');
+					$(".online_tab li:last").removeClass('present');
+					$(".online_tab li:last").addClass('normal');
+					$(".online_tab li:first").addClass('present');
+				}else{
+					$(".online_tab li:last").removeClass('normal');
+					$(".online_tab li:first").removeClass('present');
+					$(".online_tab li:first").addClass('normal');
+					$(".online_tab li:last").addClass('present');
+				}
+
+			$(".pk_con").replaceWith(html);
+			// 必须使用这个函数，才能在动态加载的时候使用TS自带的头像悬浮等js事件
+			M($('.pk_con')[0]);
+		},
+		error:function(){
+			ui.error("请检查网络连接");
+		}
+	})
+}
+/**
+ * 限制输入字数
+ *
+ * @param jQuery_obj
+ *            jquery对象
+ * @param length
+ *            输入框限制的长度
+ */
+function wordLimit(jQuery_obj, length) {
+
+    var str = jQuery.trim(jQuery_obj.val());
+
+    // 字符串中英文等字符的总长度
+    var sum_english = 0;
+
+    // 字符串中汉字等字符的总长度
+    var sum_chinese = 0;
+
+    // 在页面中输入的最后一个字符在字符串中的实际位置
+    var cursor = 0;
+
+    for ( var i = 0; i < str.length; i++) {
+
+        // 英文字母等数字的长度为0.5,汉字等字符的长度为1
+        if ((str.charCodeAt(i) >= 0) && (str.charCodeAt(i) <= 255)) {
+
+            sum_english = sum_english + 0.5;
+        } else {
+
+            sum_chinese = sum_chinese + 1;
+        }
+
+        if ((sum_chinese + sum_english) > length && cursor == 0) {
+
+            cursor = i;
+        }
+    }
+
+    if (cursor == 0) {
+
+        // 在页面上显示的字符串的总长度(向上取整)
+        var sum = sum_chinese + Math.ceil(sum_english);
+
+        // 改变显示的长度
+        jQuery_obj.next().find("b").text(sum);
+    }
+
+    // 改变显示的字符数的字体颜色
+    if ((sum_chinese + sum_english) >= length) {
+        jQuery_obj.next().find("b").css("color", "red");
+    } else {
+        jQuery_obj.next().find("b").css("color", "#333");
+    }
+
+    // 截取字符串
+    if (cursor != 0) {
+
+        jQuery_obj.val(str.substring(0, cursor));
+    }
+}
+
+jQuery(function(){
+	//内容截取
+	$("#post_content").keydown(function(){
+		wordLimit($(this),140);
+	});
+	getPostByAjax(1);
+	//voteUsers(1);//加载投票情况
+    getVoteUsers();
+})
+</script>
+<include file="__THEME__/public_footer" />
+

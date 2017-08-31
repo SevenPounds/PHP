@@ -1,0 +1,174 @@
+        	<div class="head-bd">
+                <!--logo-->
+                <div class="logo">
+                    <a href="{:SITE_URL}"><img src="__THEME__/image/logo.gif"></a>
+                </div>
+                <div class="nav">
+                    <ul>
+                        <li>
+                        	<a href="{:C('RS_SITE_URL').'/index.php?app=resource&mod=Homepage&act=index'}" class="app">首页</a>
+                        </li>
+                        <li style="*z-index:100;">
+                        <a href="###" class="app">资源</a>
+                        <div model-node="drop_menu_list" class="dropmenu" style="width:300px;left:-50px;display:none;z-index:100;">
+                            <ul class="acc-list app-list clearfix">
+                                <li><a href="{:C('RS_SITE_URL').'/index.php?app=resource&mod=Homepage&act=index'}"><img src="__THEME__/image/resicon_01.gif" width="50" height="50" />资源首页</a></li>
+                                <li><a href="{:C('RS_SITE_URL').'/index.php?app=resource&mod=Rescenter&act=index'}"><img src="__THEME__/image/in_icon_xkzy.jpg" width="50" height="50" />学科资源</a></li>
+                                <li><a href="{:C('RS_SITE_URL').'/index.php?app=resource&mod=Specialtopic&act=index'}"><img src="__THEME__/image/in_icon_ztzy.jpg" width="50" height="50" />专题教育</a></li>
+                                <li><a href="{:C('RS_SITE_URL').'/index.php?app=resource&mod=Videocenter&act=index'}"><img src="__THEME__/image/in_icon_msjt.jpg" width="50" height="50" />名师课堂</a></li>
+                                <li><a href="{:C('RS_SITE_URL').'/index.php?app=zxkt&mod=Index&act=index'}" ><img src="__THEME__/image/in_icon_zxkt.jpg" width="50" height="50" />在线课堂</a></li>
+                                <li><a href="{:C('RS_SITE_URL').'/index.php?app=resource&mod=Specialclass&act=index'}"><img src="__THEME__/image/in_icon_ztkt.jpg" width="50" height="50" />专递课堂</a></li>
+                                <li><a href="{:C('RS_SITE_URL').'/index.php?app=resource&mod=Research&act=index'}"><img src="__THEME__/image/in_icon_jyyj.jpg" width="50" height="50" />教育研究</a></li>
+                                <li><a href="{:C('RS_SITE_URL').'/index.php?app=resource&mod=Training&act=index'}"><img src="__THEME__/image/in_icon_jsyx.jpg" width="50" height="50" />教师培训</a></li>
+                                <li><a href="{:C('RS_SITE_URL').'/index.php?app=resource&mod=EduSpace&act=index'}"><img src="__THEME__/image/in_icon_jsgzs.jpg" width="50" height="50" />教师工作室</a></li>
+                                <li><a href="{:C('RS_SITE_URL').'/index.php?app=resource&mod=Community&act=index'}"><img src="__THEME__/image/resicon_10.gif" width="50" height="50" />教育社区</a></li>
+                                <li><a href="{:C('RS_SITE_URL').'/index.php?app=resource&mod=Resmarket&act=market'}"><img src="__THEME__/image/resicon_11.gif" width="50" height="50" />资源市场</a></li>
+                            </ul>
+                        </div>
+                        </li>
+						<!--
+                        <li style="*z-index:100;">
+                        <a href="###" class="app">社区</a>
+                        <div model-node="drop_menu_list" class="dropmenu" style="width:300px;left:-50px;display:none;z-index:100;">
+                            <ul class="acc-list app-list clearfix">
+                                <li><a href="{:U('class/Index/main')}"><img src="__THEME__/image/in_icon_index.jpg" width="50" height="50" />首页</a></li>
+                                <li><a href="{:U('class/Index/class_square')}"><img src="__THEME__/image/in_icon_bjgc.jpg" width="50" height="50" />班级广场</a></li>
+                                <li><a href="{:U('class/Index/school_garden')}"><img src="__THEME__/image/in_icon_qcxy.jpg" width="50" height="50" />青青校园</a></li>
+                                <li><a href="{:U('channel/Index/index')}"><img src="__THEME__/image/in_icon_zst.jpg" width="50" height="50" />知识堂</a></li>
+                            </ul>
+                        </div>
+                        </li>
+						-->
+                        <session name="mid">
+                        <php>if($user['is_init'] == 1):</php>
+                        <li <php> if(APP_NAME.'/'.MODULE_NAME.'/'.ACTION_NAME == 'public/Index/index'){ echo 'class="current"';}</php> >
+                        	<a href="{:U('public/Index/index')}" class="app">个人中心</a>
+                        </li>
+                        <php>endif;</php>
+                        </session>
+                        <session name="mid">
+                        <php>if($user['is_init'] == 1):</php>
+                        <li <php> if(APP_NAME.'/'.MODULE_NAME == 'public/Workroom'||APP_NAME.'/'.MODULE_NAME == 'public/Profile'){ echo 'class="current"';}</php> >
+                        	<a href="{:U('public/Profile/index')}" class="app">个人主页</a>
+                        </li>
+                        <php>endif;</php>
+                        </session>
+                    </ul>
+                </div>
+                <eq name='user.is_init' value='0'>
+                  <div class="person">
+                    <ul>
+                        <li model-node="person" class="dorp-right"><a href="javascript:void(0);" class="app name" style="cursor:default">欢迎，{$user['uname']}</a></li>
+                        <li class="dorp-right"><a id="sso_logout_link" class="app name" style="cursor: pointer;">退出</a></li>
+                    </ul>
+                  </div>
+                <else />
+                <php>if(strtolower(MODULE_NAME) != 'workroom'){</php>
+                <div class="search">
+                    <div id="mod-search" model-node="drop_search">
+                    <form name="search_feed" id="search_feed" method="get" action="{:U('public/Search/index')}">
+                        <input name="app" value="public" type="hidden"/>
+                        <input name="mod" value="Search" type="hidden"/>
+                        <input type="hidden" name="t" value="2"/>
+                        <input type="hidden" name="a" value="public"/>
+						<dl class="search_box">
+							<dt>
+							<input type="text" id="search_input" value="搜微博 / 昵称 / 标签 / 资源" onfocus="this.value=''" onblur="setTimeout(function(){ $('#search-box').remove();} , 200);" iatinput="" event-node="searchKey" name='k'  autocomplete="off">
+							</dt>
+							<dd class="search_btn">
+							<input type="button" onmouseout="this.className='search_normal'" onmouseover="this.className='search_hover'" class="search_normal" value="" onclick="if(getLength($('#search_input').val()) && $('#search_input').val()!=='搜微博 / 昵称 / 标签 / 资源'){ $('#search_feed').submit(); return false;}">
+							</dd>
+						</dl>
+						<!-- 
+                        <dl>
+                            <dt class="clearfix"><input id="search_input" class="s-txt left"  type="text" value="搜微博 / 昵称 / 标签 / 资源" onfocus="this.value=''" onblur="setTimeout(function(){ $('#search-box').remove();} , 200);if(this.value=='') this.value='搜微博 / 昵称 / 标签 / 资源';" event-node="searchKey" name='k'  autocomplete="off"><a href="javascript:void(0)" class="ico-search left" onclick="if(getLength($('#search_input').val()) && $('#search_input').val()!=='搜微博 / 昵称 / 标签 / 资源'){ $('#search_feed').submit(); return false;}"></a>
+                            </dt>
+                        </dl>
+                         -->
+                    </form>
+                    </div>
+                </div>
+                <php>}</php> 
+                <div class="person">
+                    <ul>
+                    	<session name="mid">
+                    	<php>if($user['is_init'] == 1):</php>
+                        <li model-node="person" class="dorp-right">
+                            <a href="{:U('public/Profile/index')}" class="username">{$user['uname']|getShort=6}</a>
+                        </li>                       
+                        <li model-node="notice" class="dorp-right"><a href="javascript:void(0);" class="app">{:L('PUBLIC_MESSAGE')}</a>
+                            <div  class="dropmenu" model-node="drop_menu_list">
+                            	<ul class="message_list_container message_list_new"  style="display:none">
+                                    <li rel="unread_comment" style="display:none"><span></span>，<a href="{:U('public/Comment/index',array('type'=>'receive'))}">
+                                        {:L('PUBLIS_MESSAGE_REMIND')}</a></li>
+                                    <li rel="unread_message" style="display:none"><span></span>，<a href="{:U('public/Message')}" >{:L('PUBLIS_MESSAGE_REMIND')}</a></li>
+                                    <li rel="unread_atme" style="display:none"><span></span>，<a href="{:U('public/Mention')}">{:L('PUBLIS_MESSAGE_REMIND')}</a></li>
+                                    <li rel="unread_notify" style="display:none"><span></span>，<a href="{:U('public/Message/notify')}">{:L('PUBLIS_MESSAGE_REMIND')}</a></li>
+                               		<li rel="unread_praise" style="display:none"><span></span>，<a href="{:U('public/Message/digg')}">{:L('PUBLIS_MESSAGE_REMIND')}</a></li> 
+                                </ul>
+                                <dl class="acc-list W-message" >
+                                     <dd><a  href="{:U('public/Mention/index')}">@提到我的</a></dd>
+                                    <dd><a  href="{:U('public/Message/digg')}">赞</a></dd>
+                                    <dd><a  href="{:U('public/Comment/index', array('type'=>'receive'))}">评论</a></dd>
+                                    <dd><a  href="{:U('public/Message/index')}">我的私信</a></dd>
+                                    <dd><a  href="{:U('public/Message/notify')}">系统消息</a></dd>
+                                    <!-- 消息菜单钩子 -->
+                                    {:Addons::hook('header_message_dropmenu')}
+                                <php>if(CheckPermission('core_normal','send_message')){</php>
+                                <dd class="border"><a event-node="postMsg" href="javascript:void(0)" onclick="ui.sendmessage()">{:L('PUBLIC_SEND_PRIVATE_MESSAGE')}&raquo;</a></dd>
+                                <php>}</php>
+                                </dl>
+                            </div>
+                        </li>
+                        <li model-node="account" class="dorp-right"><a href="javascript:void(0);" class="app">{:L('PUBLIC_ACCOUNT')}</a>
+                            <div model-node="drop_menu_list" class="dropmenu" style="width:100px">
+                                <dl class="acc-list">
+                                <dd><a href="{:U('public/Account/index')}">{:L('PUBLIC_SETTING')}</a></dd>
+                                
+                                <php>if(CheckTaskSwitch()):</php>
+                                <dd><a href="{:U('public/Task/index')}">任务中心</a></dd>
+                                <dd><a href="{:U('public/Medal/index')}">勋章馆</a></dd>
+                                <php>endif;</php>
+                                
+                                <dd><a href="{:U('public/Rank/weibo')}">排行榜</a></dd>
+                                <php>if(isInvite() && CheckPermission('core_normal','invite_user')):</php>
+                                <dd><a href="{:U('public/Invite/invite')}">{:L('PUBLIC_INVITE_COLLEAGUE')}</a></dd>
+                                <php>endif;</php>
+                                <!-- 个人设置菜单钩子 -->
+                                {:Addons::hook('header_account_dropmenu')}
+                                <php>if(CheckPermission('core_admin','admin_login')){</php>
+                                <dd><a href="{:U('admin')}">{:L('PUBLIC_SYSTEM_MANAGEMENT')}</a></dd>
+                                <php>}</php>
+
+                                <dd class="border"><a id="sso_logout" style="cursor: pointer;">{:L('PUBLIC_LOGOUT')}&raquo;</a></dd>
+                                <dd></dd>
+                                </dl>
+                            </div>
+                        </li>
+                        <php>endif;</php>
+                        </session>
+                        <nosession name="mid">
+		                    <!-- <li><a href="{:U('public/Register')}">{:L('PUBLIC_REGISTER')}</a></li> -->
+		                    <li><a href="{:C('RS_SITE_URL').'/index.php'}">{:L('PUBLIC_LOGIN')}</a></li>
+                        </nosession>
+                        <li>
+                        	<a href="{:Ures('/HelpCenter/questions')}" class="username">帮助</a>
+                        </li>
+                    </ul>
+                </div>        
+                <php> if(MODULE_NAME !='Register'):</php>
+                <div id="message_container" class="layer-massage-box" style="display:none">
+                	<ul class="message_list_container" >
+                		<li rel="unread_comment" style="display:none"><span></span>，<a href="{:U('public/Comment/index',array('type'=>'receive'))}">{:L('PUBLIS_MESSAGE_REMIND')}</a></li>
+                        <li rel="unread_message" style="display:none"><span></span>，<a href="{:U('public/Message')}" >{:L('PUBLIS_MESSAGE_REMIND')}</a></li>
+ 	                    <li rel="unread_atme" style="display:none"><span></span>，<a href="{:U('public/Mention')}">{:L('PUBLIS_MESSAGE_REMIND')}</a></li>
+     	                <li rel="unread_notify" style="display:none"><span></span>，<a href="{:U('public/Message/notify')}">{:L('PUBLIS_MESSAGE_REMIND')}</a></li>
+     	                <li rel="unread_group_atme" style="display:none"><span></span>，<a href="{:U('group/SomeOne/index')}">{:L('PUBLIS_MESSAGE_REMIND')}</a></li>
+     	                <li rel="unread_group_comment" style="display:none"><span></span>，<a href="{:U('group/SomeOne/index')}">{:L('PUBLIS_MESSAGE_REMIND')}</a></li> 
+                		<li rel="unread_praise" style="display:none"><span></span>，<a href="{:U('public/Message/digg')}">{:L('PUBLIS_MESSAGE_REMIND')}</a></li> 
+                	</ul>
+                <a href="javascript:void(0)" onclick="core.dropnotify.closeParentObj()" class="ico-close1"></a>
+                </div>
+                <php>endif;</php>
+                </eq>
+        	</div>

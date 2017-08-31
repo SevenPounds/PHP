@@ -1,0 +1,1017 @@
+<!-- <link type="text/css" href="__ROOT__/public/_static/js/fancyBox-v2.1.5/jquery.fancybox.css" rel="stylesheet" /> -->
+<style>
+.uploadify:hover .uploadify-button{
+	filter:alpha(opacity=100);
+    -moz-opacity:1;
+    opacity:1;
+    text-decoration: none;
+	color:#585858;
+}
+.font_limit{
+	display: block; 
+	width:410px;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	word-wrap:normal;
+}
+.feed_list .contents a{
+	color:#189ae5;
+	width: 71px;
+}
+.feed_list .content .feed_blog{
+	margin-top:5px;
+}
+.popup1 {
+        width: 528px;
+        border: 1px solid #ccc;
+        z-index: 1001;
+        background-color: #fff;
+        color: #535353;
+    }
+    .uploadify{
+    	margin-left:10px;
+    	display:inline-block;
+    	float:left;
+    }
+    .uploadify .uploadify-button{
+		margin:0px;
+    }
+    .uploadify-button-text{
+        opacity: 1;
+        color: #fff;
+        text-align: center;
+        padding-left:20px;
+    }
+    .uploadify-queue {
+        margin-bottom: 1em;
+    }
+    .uploadify-queue-item {
+        background-color: #F5F5F5;
+        -webkit-border-radius: 3px;
+        -moz-border-radius: 3px;
+        border-radius: 3px;
+        font: 11px Verdana, Geneva, sans-serif;
+        margin-top: 5px;
+        max-width: 450px;
+    	width:100%;
+        padding: 10px;
+    }
+    .uploadify-error {
+        background-color: #FDE5DD !important;
+    }
+    .uploadify-queue-item .cancel a {
+        float: right;
+        height:	16px;
+        text-indent: -9999px;
+    	background-image:url(__APP__/images/uploadify-cancel.png);
+        width: 16px;
+    }
+    .uploadify-queue-item.completed {
+        background-color: #E5E5E5;
+    }
+    .uploadify-progress {
+        background-color: #E5E5E5;
+        margin-top: 10px;
+        width: 100%;
+    }
+    .uploadify-progress-bar {
+        background-color: #0099FF;
+        height: 3px;
+        width: 1px;
+    }
+</style>
+<div class="cy_mr_cont_l fl ml0">
+     <script>
+     var classId = "{$clazzId}";
+     $(window).load(function(){
+    	 reloadBJDT();
+     });
+     
+    /*  function read(obj){
+    	 if(obj!=undefined){
+    		 jQuery('#cyhalftab li.current').removeClass('current');
+             jQuery(obj).addClass('current');
+    	 }
+     }
+     
+     function jiangtan(obj){
+    	 
+     } */
+     
+     //班级动态
+     function reloadBJDT(){
+    	 var type = 'all';
+    	 switchCheck("active_b");
+         $("#records").hide();
+         $("#classba").hide();
+         $("#classhare").hide();
+         $("#homework").hide();
+    	 $('#studentRead').show(); 
+    	 
+    	//取的条数
+    	 var count = 5;
+    	//从e学校接口 取最新的课堂微客记录
+    	 var host = '{:C("ESCHOOL")}/index.php?m=Clazz&c=Share&a=getLastClazzDataList&classId='+classId+'&count='+count;
+    	 
+ 		 $.ajax({
+ 			type:"POST",
+ 			url: host,
+ 			data:{"type":type},
+ 			dataType:"json",
+ 			success:function(data){
+ 				var i,html='';
+   				if(data == null || data.length == 0){
+   					html += '<div class="reading-box upload">';
+   					html += '<img src="__APP__/images/stuspace/tip_bjdt.png" />';
+   					html += '<em class="reading-f"></em>';
+   					html += '</div>';
+   					$("#studentRead").html("").html(html);
+   					return;
+   				}
+   				//更多 url
+   				var more = '{:C("ESCHOOL")}/index.php?m=Clazz&c=ClassDynamic&a=dynamic&classId='+classId;
+   				html += '<div class="reading-box"><ul class="clearfix">';
+   				for(i=0;i<data.length;i++){
+   				  //预览url
+   				  var home_url = "index.php?app=public&mod=Profile&act=index&uid="+data[i].userId;
+   				  if(data[i].type == 'class_share'||data[i].type == 'class_homework'||data[i].type == 'class_record'){
+   					var previewUrl = "";  
+   					var share_content = "";
+   					var icon = "";
+   					if(data[i].type == 'class_share'){
+   						previewUrl = "{:C('ESCHOOL')}/index.php?m=Clazz&c=Share&a=preview&resid="+data[i].resId+"&uid="
+   								+data[i].uid+"&classId="+data[i].classId+"&share_id="+data[i].app_row_id;
+   						share_content = "点击下面的链接查看分享：";
+   						icon = "分享";
+   					}
+   					
+   					if(data[i].type == 'class_homework'){
+   						previewUrl = "{:C('ESCHOOL')}/index.php?m=Clazz&c=Homework&a=homework&classId="+data[i].classId;
+   						share_content = "点击下面的链接,完成作业：";
+   						icon = "作业";
+   					}
+   					
+   					if(data[i].type == 'class_record'){
+   						previewUrl = "{:C('ESCHOOL')}/index.php?m=Clazz&c=Share&a=preview&resid="
+   								+data[i].resId+"&uid="+data[i].uid+"&classId="+data[i].classId+"&share_id="+data[i].app_row_id;
+   						share_content = "点击下面的链接查看微课：";
+   						icon = "微课";
+   					}
+   					
+  				    html +=  '<li>'
+			                  +'<div class="phone-box fl">'
+			                  +'<span></span>'
+			                  +'<img src="'+data[i].avatar+'">'
+			                  +'</div>'
+			                  +'<div class="reading-info fl">'
+			                  +'<a target="_blank" href="'+home_url+'" class="fl" event-node="face_card" uid="'+data[i].userId+'" show="no"><h3>'+data[i].author+'</h3></a>'
+			                  +'<div class="reader-des"><span class="line-bg">'+icon+'</span>'+share_content+'<a target="_blank" href="'+previewUrl+'" title="'+data[i].feed_title+'">'+(data[i].feed_title.length>10?data[i].feed_title.substr(0,10)+'...':data[i].feed_title)+'</a></div>'
+			                  +'<p class="reader-time">'+(data[i].publishdate.length>10?data[i].publishdate.substr(0,10):data[i].publishdate)+'</p>'
+			                  +'</div>'
+			                  //+'<a target="_blank" style="float:left" href="'+home_url+'" class="edit-name fr" event-node="face_card" uid="'+data[i].userId+'" show="no">'+data[i].author+'</a>'
+			                  //+'<div class="reading-info fl">'
+			                  //+'<a target="_blank" href="'+previewUrl+'" class="fl" title="'+share_content+'"><h3>'+(share_content.length>15?share_content.substr(0,15)+'...':share_content)+'</h3></a>'
+			                  //+'<span class="edit-name fr" >'+data[i].author+'</span>'
+			                  //+'<span  class="reader-des">'+(share_content.length>50?data[i].content.substr(0,50)+'...':data[i].content)+'</span>'
+			                  //+'</div>'
+			                  //+'<span>'+(data[i].publishdate.length>10?data[i].publishdate.substr(0,10):data[i].publishdate)+'</span>'
+			                  +'</li>';
+   				  }
+   				  if(data[i].type == 'class_notice'||data[i].type == 'class_remark'||data[i].type == 'class_member'){
+   					  
+   					var previewUrl = "";  
+   					var share_content = "";
+   					var icon = "";
+   					  
+   					if(data[i].type == 'class_notice'){
+   						previewUrl = "{:C('JXHD')}/index.php?m=Home&c=Notice&a=noticeDetail&noticeId="+data[i].app_row_id;
+   						share_content = "点击下面的链接,查看通知：";
+   						icon = "通知";
+   					}
+   					if(data[i].type == 'class_remark'){
+   						previewUrl = "{:C('JXHD')}/index.php?m=Home&c=Remark&a=index";
+   						share_content = "点击下面的链接,查看评语：";
+   						icon = "评语";
+   					}
+   					if(data[i].type == 'class_member'){
+   						previewUrl = "{:C('ESCHOOL')}/index.php?m=Clazz&c=Member&a=member&classId="+data[i].classId;
+   						share_content = "点击下面的链接,查看班级成员：";
+   						icon = "成员";
+   					}    
+   	   				  
+   	   				  
+   					html +=  '<li>'
+		                  +'<div class="phone-box fl">'
+		                  +'<span></span>'
+		                  +'<img src="'+data[i].avatar+'">'
+		                  +'</div>'
+		                  +'<div class="reading-info fl">'
+		                  +'<a target="_blank" href="'+home_url+'" class="fl" event-node="face_card" uid="'+data[i].userId+'" show="no"><h3>'+data[i].author+'</h3></a>'
+		                  +'<div class="reader-des"><span class="line-bg">'+icon+'</span>'+share_content+'<a target="_blank" href="'+previewUrl+'" title="'+data[i].feed_title+'">'+(data[i].feed_title.length>10?data[i].feed_title.substr(0,10)+'...':data[i].feed_title)+'</a></div>'
+		                  +'<p class="reader-time">'+(data[i].publishdate.length>10?data[i].publishdate.substr(0,10):data[i].publishdate)+'</p>'
+		                  +'</div>'
+		                  //+'<a target="_blank" style="float:left" href="'+home_url+'" class="edit-name fr" event-node="face_card" uid="'+data[i].userId+'" show="no">'+data[i].author+'</a>'
+		                  //+'<div class="reading-info fl">'
+		                  //+'<a target="_blank" href="'+previewUrl+'" class="fl" title="'+share_content+'"><h3>'+(share_content.length>15?share_content.substr(0,15)+'...':share_content)+'</h3></a>'
+		                  //+'<span class="edit-name fr" >'+data[i].author+'</span>'
+		                  //+'<span  class="reader-des">'+(share_content.length>50?data[i].content.substr(0,50)+'...':data[i].content)+'</span>'
+		                  //+'</div>'
+		                  //+'<span>'+(data[i].publishdate.length>10?data[i].publishdate.substr(0,10):data[i].publishdate)+'</span>'
+		                  +'</li>';
+   				  }
+   				  
+   				 
+   				}
+   				html+=  '</ul>'
+			                +'<em class="reading-f"></em>'
+			                +'<a href="'+more+'" class="more-btn" target="_blank">'
+			                +'<img src="__ROOT__/apps/public/_static/images/stuspace/more_btn.png">'
+			                +'</a>'
+			                +'</div>';
+                 $("#studentRead").html("").html(html);
+                 M(document.getElementById('studentRead')); 
+ 			},
+ 			error:function(msg){
+ 				$("#studentRead").html("").html("<p style='padding:20px;'>加载失败，<a href='javascript:topic.init();'>请重试！</a></p>");
+ 			}
+ 		}); 
+ 	}
+     //小小百家讲坛
+     function studentForum(){
+    	 switchCheck("active_b");
+         $("#studentRead").hide();
+         $("#records").hide();
+         $("#classba").hide();
+         $("#classhare").hide();
+         $("#homework").hide();
+    	 $('#studentForum').show(); 
+    	 
+    	 $.ajax({
+   			type:"POST",
+   			url: U('student/Forum/getStudentHomeForum'),
+   			data:{"type":''},
+   			dataType:"json",
+   			success:function(data){
+   				var i,html="";
+   				var previewUrl = 'index.php?app=student&mod=Forum&act=preview&mid';
+   				html += '<div class="reading-tab clearfix">'
+                    +'<a id="dshd" href="javascript:reloadStudentRead(this)"  class="hall fl">读书活动</a>'
+                    +'<strong class="line fl">|</strong>'
+                    +'<a id="xxbjjt" href="javascript:studentForum(this)"  class="read-active tit-co fl">小小百家讲堂</a>'
+                    +'<a href="javascript:studentUploadForum()" class="reaction fr">上传视频</a>'
+                    +'</div>'
+                    +'<div class="reading-box upload">';
+                    if(data == null || data.length == 0){
+                    	html+='<img alt="" src="__ROOT__/apps/public/_static/images/stuspace/tip_hd.png" >';
+                    }else{
+		                html=html+'<ul class="clearfix reading-bd">';
+		   				for(i=0;i<data.length;i++){
+		   					html += (i % 2 == 0)?'<li>':'';
+		   					html += '<div class="'+((i % 2 == 0)?"upload-box  mr15 fl":"upload-box fl")+'" style="line-height:16px;">'
+		                        +'<a target="_blank" href="'+previewUrl+data[i].mid+'&id='+data[i].id+'"><img src="'+data[i].thumbnail_url+'" class="fl"></a>'
+		                        +'<div class="fl">'
+		                        +'<a target="_blank" href="'+previewUrl+data[i].mid+'&id='+data[i].id+'" class="book-tit" title="'+data[i].title+'">'+(data[i].title.length>6?data[i].title.substr(0,5)+'...':data[i].title)+'</a>'
+		                        +'<span>'+data[i].userName+'&nbsp;'+data[i].time+'</span>'
+		                        +'<span>回复数：<em>'+data[i].commentCount+'</em></span>'
+		                        //+'<span>上传者：张三</span>'
+		                       // +'<a href="" class="upload-btn fr">下载</a>'
+		                        +'</div></div>';
+		                    html += (i % 2 != 0)?'</li>':'';
+		   				}
+		                html+= '</ul>';
+                    }
+                    
+                    
+                 html+='<em class="reading-f"></em>'
+                 +'<a href="index.php?app=student&mod=Index&act=index&type=-2" target="_black" class="more-btn">'
+                 +'<img src="__ROOT__/apps/public/_static/images/stuspace/more_btn.png">'
+                 +'</a>'
+                 +'</div>';
+               $("#studentForum").html("").html(html);
+               /* M(document.getElementById('studentRead')); */
+   			},
+   			error:function(msg){
+   				$("#topic_list").html("").html("<p style='padding:20px;'>加载失败，<a href='javascript:topic.init();'>请重试！</a></p>");
+   			}
+   		});
+    	 
+     }
+     //课堂记录
+     function loadRecords(){
+    	 switchCheck("records_b");
+    	 
+         $("#studentForum").hide();
+    	 $('#studentRead').hide(); 
+         $("#classba").hide();
+         $("#classhare").hide();
+         $("#homework").hide();
+         $("#zxdy").hide();
+    	 $('#records').show(); 
+    	 
+    	//取的条数
+    	 var count = 9;
+    	//从e学校接口 取最新的课堂微客记录
+    	 var host = '{:C("ESCHOOL")}/index.php?m=Clazz&c=TeachingRecord&a=getLastRecords&classId='+classId+'&count='+count;
+    	 $.ajax({
+   			type:"POST",
+   			url: host,
+   			dataType:"json",
+   			success:function(data){
+   				var i,html='';
+   				if(data == null || data.length == 0){
+   					html += '<div class="reading-box upload">';
+   					html += '<img src="__APP__/images/stuspace/tip_zl.png" />';
+   					html += '<em class="reading-f"></em>';
+   					html += '</div>';
+   					$("#records").html("").html(html);
+   					return;
+   				}
+   				//更多 url
+   				var more = '{:C("ESCHOOL")}/index.php?m=Clazz&c=TeachingRecord&a=record&classId='+classId;
+                html +='<div class="reading-box upload">'
+                    +'<ul class="clearfix reading-bd">'
+   				for(i=0;i<data.length;i++){
+   				    //预览url
+   					var previewUrl = '{:C("ESCHOOL")}/index.php?m=Clazz&c=TeachingRecord&a=preview&resId='+data[i].resourceinfo.id+'&classId='+classId+'&uid='+data[i].uid+'&ext='+data[i].resourceinfo.extension+'&preUrl='+data[i].resourceinfo.downloadpath+'&filename='+encodeURI(data[i].resourceinfo.resName);
+   					//缩略图展示url
+   					var imgUrl = data[i].resourceinfo.thumbnail;
+   	   				if(imgUrl == null || imgUrl == '' || imgUrl == 'NULL' || imgUrl == 'null')
+   	   					imgUrl = '__PUBLIC__/image/default_img.jpg';
+   	   				
+   					html += (i % 2 == 0)?'<li>':'';
+   					html += '<div class="'+((i % 2 == 0)?"upload-box  mr15 fl":"upload-box fl")+'" style="line-height:16px;">'
+                        +'<a target="_blank" href="'+previewUrl+'"><img src="'+imgUrl+'" class="fl"></a>'
+                        +'<div class="fl">'
+                        +'<a target="_blank" href="'+previewUrl+'" class="book-tit" title="'+data[i].resourceinfo.resName+'">'+(data[i].resourceinfo.resName.length>8?data[i].resourceinfo.resName.substr(0,8)+'...':data[i].resourceinfo.resName)+'</a>'
+                        +'<span>来源：'+data[i].source+'</span>'
+                        +'<span>'+(data[i].sharetime.length>10?data[i].sharetime.substr(0,10):data[i].sharetime)+'</span>'
+                       // +'<a href="" class="upload-btn fr">下载</a>'
+                        +'</div></div>';
+                    html += (i % 2 != 0)?'</li>':'';
+   				}
+                html+= '</ul>'
+                 +'<em class="reading-f"></em>'
+                 +'<a href="'+more+'" target="_black" class="more-btn">'
+                 +'<img src="__ROOT__/apps/public/_static/images/stuspace/more_btn.png">'
+                 +'</a>'
+                 +'</div>';
+   				$("#records").html("").html(html);
+   			},
+   			error:function(msg){
+   				$("#records").html("").html("<p style='padding:20px;'>加载失败，<a href='javascript:topic.init();'>请重试！</a></p>");
+   			}
+   		});
+     }
+     
+     
+     //班级聊吧
+     function classba(){
+    	 switchCheck("classba_b");
+         $("#studentRead").hide();
+         $("#records").hide();
+         $("#classhare").hide();
+         $("#homework").hide();
+    	 $('#studentForum').hide();
+    	 $("#zxdy").hide();
+    	 $('#classba').show(); 
+    	//取的条数
+    	 var count = 5;
+    	//从e学校取最新的话题
+    	 var host = "{:C('ESCHOOL')}/index.php?m=Clazz&c=Topic&a=getLastTopicList&classId="+classId+"&count="+count;
+    	 $.ajax({
+   			type:"POST",
+   			url: host,
+   			dataType:"json",
+   			success:function(data){
+   				var html = "";
+   				if(data == null || data.length == 0){
+   					html += '<div class="reading-box upload">';
+   					html += '<img src="__APP__/images/stuspace/tip_lb.png" />'
+   					html += '<em class="reading-f"></em>';
+   					html += '</div>';;
+   					$("#classba").html("").html(html);
+   					return;
+   				}
+   				//更多url
+   				var more = "{:C('ESCHOOL')}/index.php?m=Clazz&c=Topic&a=topic&classId="+classId;
+   				
+   				html += '<div class="reading-box"><ul class="clearfix">';
+   				for(i=0;i<data.length;i++){
+   				  //预览url
+   				  var previewUrl = "{:C('ESCHOOL')}/index.php?m=Clazz&c=Topic&a=post&tid="+data[i].id+"&classId="+classId;
+   				  var home_url = "index.php?app=public&mod=Profile&act=index&uid="+data[i].userId;
+            /*20160719添加默认图像*/
+            var avatar = data[i].avatar?data[i].avatar:'__APP__/images/stuspace/tip_lb.png';
+   				  html +=  '<li>'
+			                  +'<div class="phone-box fl">'
+			                  +'<span></span>'
+			                  +'<img src="'+avatar+'">'
+			                  +'</div>'
+			                  +'<div class="reading-info fl">'
+			                  +'<a target="_blank" href="'+previewUrl+'" class="fl" title="'+data[i].title+'"><h3>'+(data[i].title.length>15?data[i].title.substr(0,15)+'...':data[i].title)+'</h3></a>'
+			                  +'<a target="_blank" href="'+home_url+'" class="edit-name fr" event-node="face_card" uid="'+data[i].userId+'" show="no">'+data[i].author+'</a>'
+			                  //+'<span class="edit-name fr" >'+data[i].author+'</span>'
+			                  //+'<span  class="reader-des">'+(data[i].content.length>50?data[i].content.substr(0,50)+'...':data[i].content)+'</span>'
+			                  +'</div>'
+			                  +'</li>';
+   				}
+   				html+=  '</ul>'
+			                +'<em class="reading-f"></em>'
+			                +'<a href="'+more+'" class="more-btn" target="_blank">'
+			                +'<img src="__ROOT__/apps/public/_static/images/stuspace/more_btn.png">'
+			                +'</a>'
+			                +'</div>';
+   				$("#classba").html("").html(html);
+   				M(document.getElementById('classba')); 
+   			},
+   			error:function(msg){
+   				$("#topic_list").html("").html("<p style='padding:20px;'>加载失败，<a href='javascript:topic.init();'>请重试！</a></p>");
+   			}
+   		});
+     }
+     
+   //班级共享
+     function classhare(){
+    	 switchCheck("classhare_b");
+         $("#studentRead").hide();
+         $("#records").hide();
+         $("#homework").hide();
+    	 $('#studentForum').hide(); 
+    	 $('#classba').hide(); 
+    	 $("#zxdy").hide();
+    	 $("#classhare").show();
+    	//取的条数
+    	 var count = 9;
+    	//从e学校取最新的共享记录
+    	 var host = '{:C("ESCHOOL")}/index.php?m=Clazz&c=Share&a=getLastShareList&classId='+classId+'&count='+count;
+    	 $.ajax({
+   			type:"POST",
+   			url: host,
+   			dataType:"json",
+   			success:function(data){
+   				var i,html='';
+   				if(data == null || data.length == 0){
+   					html += '<div class="reading-box upload">';
+   					html += '<img src="__APP__/images/stuspace/tip_fx.png" />';
+   					html += '<em class="reading-f"></em>';
+   					html += '</div>';;
+   					$("#classhare").html("").html(html);
+   					return;
+   				}
+   				//更多url
+   				var more = '{:C("ESCHOOL")}/index.php?m=Clazz&c=Share&a=share&classId='+classId;
+   			     html +='<div class="reading-box upload">'
+                      +'<ul class="clearfix reading-bd">'
+   				for(i=0;i<data.length;i++){
+   					//预览url
+   					var previewUrl = '{:C("ESCHOOL")}/index.php?m=Clazz&c=Share&a=preview&resid='+data[i].resourceinfo.id
+   							+'&uid='+data[i].userId+'&classId='+classId+"&share_id="+data[i].app_row_id;
+   					//缩略图url
+   					var imgUrl = data[i].resourceinfo.thumbnail;
+   	   				if(imgUrl == null || imgUrl == '' || imgUrl == 'null' || imgUrl == 'NULL')
+   	   					imgUrl = '__PUBLIC__/image/default_img.jpg';
+   	   				
+   	   				var downUrl = '{:C("ESCHOOL")}/index.php?m=Clazz&c=Share&a=downloadRes&id='
+   	   						+data[i].resourceinfo.id+"&filename="+encodeURI(data[i].resourceinfo.resName)+"&uid="+data[i].userId
+   	   						+"&ext="+data[i].resourceinfo.extension;
+   	   				var time = getLocalTime(data[i].sharetime);
+   	   			    var home_url = "index.php?app=public&mod=Profile&act=index&uid="+data[i].userId_sns;
+   	   				var times = time.split(' ');
+   	   				//console.info(times[0]);
+   	   				html += (i % 2 == 0)?'<li>':'';
+					html += '<div class="'+((i % 2 == 0)?"upload-box  mr15 fl":"upload-box fl")+'" style="line-height:15px;">'
+                    +'<a target="_blank" href="'+previewUrl+'"><img src="'+imgUrl+'" class="fl"></a>'
+                    +'<div class="fl" style="margin-top:-5px;">'
+                    +'<a target="_blank" href="'+previewUrl+'" class="book-tit" title="'+data[i].resourceinfo.resName+'">'+(data[i].resourceinfo.resName.length>9?data[i].resourceinfo.resName.substr(0,9)+'...':data[i].resourceinfo.resName)+'</a>'
+                    //+'<span title="'+data[i].uid+'">上传人：<a target="_blank" href="'+home_url+'" class="" event-node="face_card" uid="'+data[i].userId_sns+'" show="no">'+(data[i].uid.length>2?data[i].uid.substr(0,2)+"..":data[i].uid)+'</a>&nbsp;'+(time.length>10?time.substr(0,10):time)+'</span>'
+                    +'<span title="'+data[i].uid+'">上传人：<a target="_blank" href="'+home_url+'" class="" event-node="face_card" uid="'+data[i].userId_sns+'" show="no">'+(data[i].uid.length>2?data[i].uid.substr(0,2)+"..":data[i].uid)+'</a>&nbsp;'+(time.length>10?times[0]:time)+'</span>'
+                    +'<span>学&nbsp;&nbsp;科：'+data[i].subject+'&nbsp;<a  href="'+downUrl+'" class="upload-btn"><em>下载</em></a></span>'
+                    +'</div></div>';
+                    html += (i % 2 != 0)?'</li>':'';
+				}
+	            html+= '</ul>'
+	             +'<em class="reading-f"></em>'
+	             +'<a href="'+more+'" target="_black" class="more-btn">'
+	             +'<img src="__ROOT__/apps/public/_static/images/stuspace/more_btn.png">'
+	             +'</a>'
+	             +'</div>';
+   				$("#classhare").html("").html(html);
+   				M(document.getElementById('classhare'));
+   			},
+   			error:function(msg){
+   				$("#topic_list").html("").html("<p style='padding:20px;'>加载失败，<a href='javascript:topic.init();'>请重试！</a></p>");
+   			}
+   		});
+     }
+   
+     //作业
+     function homework(){
+    	 switchCheck("homework_b");
+    	 
+         $("#studentRead").hide();
+         $("#records").hide();
+    	 $('#studentForum').hide(); 
+    	 $('#classba').hide(); 
+    	 $("#classhare").hide();
+    	 $("#zxdy").hide();
+    	 $('#homework').show();
+    	 
+    	 var host = '{:C("ESCHOOL")}/index.php?m=Clazz&c=Homework&a=getStudentHomeWorkList&classId='+classId;
+    	 $.ajax({
+    			type:"POST",
+    			url: host,
+    			dataType:"json",
+    			success:function(data){
+    				var i,html='';
+    				if(data == null || data.length == 0){
+       					html += '<div class="reading-box upload">';
+       					html += '<img src="__APP__/images/stuspace/tip_zy.png" />';
+       					html += '<em class="reading-f"></em>';
+       					html += '</div>';;
+       					$("#homework").html("").html(html);
+       					return;
+       				}
+    				//更多url
+    				var more = '{:C("ESCHOOL")}/index.php?m=Clazz&c=Homework&a=homework&classId='+classId;
+    				html += '<div class="reading-box"><ul class="clearfix">';
+    				for(i=0;i<data.length;i++){
+   	   				  //预览url
+   	   				  var previewUrl = "{:C('HW_SITE_URL')}/index.php?m=Homework&c=Index&a=Homeworkpreview&exercise_id="+data[i].exercise_id+"&uid="+data[i].uid;
+   	   				  var home_url = "index.php?app=public&mod=Profile&act=index&uid="+data[i].sns_uid;
+   		   			  html +=  '<li>'
+   				                  +'<div class="phone-box fl">'
+   				                  +'<span></span>'
+   				                  +'<img src="'+data[i].avatar+'">'
+   				                  +'</div>'
+   				                  +'<div class="reading-info fl">'
+   				                  +'<a target="_blank" href="'+previewUrl+'" class="fl" title="'+data[i].title+'"><h3>'+(data[i].title.length>15?data[i].title.substr(0,14)+'...':data[i].title)+'</h3></a>'
+   				                  +'<a target="_blank" href="'+home_url+'" class="edit-name fr" event-node="face_card" uid="'+data[i].sns_uid+'" show="no">'+data[i].uname+'</a>'
+   				                  //+'<span class="edit-name fr">'+data[i].uname+'</span>'
+   				                  +'<span  class="reader-des">'+data[i].day+'</span>'
+   				                  +'</div>'
+   				                  +'</li>';
+   				     if(i>=4){
+   				    	 break;
+   				     }
+   	   				}
+   	   				html+=  '</ul>'
+   				                +'<em class="reading-f"></em>'
+   				                +'<a href="'+more+'" class="more-btn" target="_blank">'
+   				                +'<img src="__ROOT__/apps/public/_static/images/stuspace/more_btn.png">'
+   				                +'</a>'
+   				                +'</div>';
+       				$("#homework").html("").html(html);
+       				M(document.getElementById('homework')); 
+    			},
+    			error:function(msg){
+    				$("#topic_list").html("").html("<p style='padding:20px;'>加载失败，<a href='javascript:topic.init();'>请重试！</a></p>");
+    			}
+    		});
+    	 
+     }
+     
+     //在线答疑
+     function reloadZXDY(){
+    	 switchCheck("zaixiandayi_b");
+         $("#records").hide();
+         $("#studentRead").hide();
+         $("#classhare").hide();
+         $("#homework").hide();
+    	 $('#zxdy').show(); 
+    	 
+    	 //取的条数
+    	 var count = 5;
+    	 //取在线答疑
+    	 var host = 'index.php?app=onlineanswer&mod=Ajax&act=getLastQuestionList';
+    	 
+ 		 $.ajax({
+ 			type:"POST",
+ 			url: host,
+ 			dataType:"json",
+ 			success:function(data){
+ 				var i,html='';
+   				if(data == null || data.length == 0){
+   					html += '<div class="reading-box upload">';
+   					html += '<img src="__APP__/images/stuspace/tip_zxdy.png" />';
+   					html += '<em class="reading-f"></em>';
+   					html += '</div>';
+   					$("#zxdy").html("").html(html);
+   					return;
+   				}
+   				//更多 url
+   				var more = 'index.php?app=onlineanswer&mod=Index&act=center';
+   				html += '<div class="reading-box"><ul class="clearfix">';
+   				for(i=0;i<data.length;i++){
+   				  //预览url
+   				  var home_url = "index.php?app=public&mod=Profile&act=index&uid="+data[i].userId;
+   					var previewUrl = "index.php?app=onlineanswer&mod=Index&act=detail&qid="+data[i].qid;  
+   					var share_content = "点击下面的链接,查看答疑：";
+   					var icon = "答疑";
+   						
+  				    html +=  '<li>'
+			                  +'<div class="phone-box fl">'
+			                  +'<span></span>'
+			                  +'<img src="'+data[i].avatar+'">'
+			                  +'</div>'
+			                  +'<div class="reading-info fl">'
+			                  +'<a target="_blank" href="'+home_url+'" class="fl" event-node="face_card" uid="'+data[i].userId+'" show="no"><h3>'+data[i].author+'</h3></a>'
+			                  +'<div class="reader-des"><span class="line-bg">'+icon+'</span>'+share_content+'<a target="_blank" href="'+previewUrl+'" class="reader-des" title="'+data[i].title+'">'+(data[i].title.length>15?data[i].title.substr(0,15)+'...':data[i].title)+'</a></div>'
+			                  +'<p class="reader-time">'+(data[i].publishdate.length>10?data[i].publishdate.substr(0,10):data[i].publishdate)+'</p>'
+			                  +'</div>'
+			                  //+'<a target="_blank" style="float:left" href="'+home_url+'" class="edit-name fr" event-node="face_card" uid="'+data[i].userId+'" show="no">'+data[i].author+'</a>'
+			                  //+'<div class="reading-info fl">'
+			                  //+'<a target="_blank" href="'+previewUrl+'" class="fl" title="'+share_content+'"><h3>'+(share_content.length>15?share_content.substr(0,15)+'...':share_content)+'</h3></a>'
+			                  //+'<span class="edit-name fr" >'+data[i].author+'</span>'
+			                  //+'<span  class="reader-des">'+(share_content.length>50?data[i].content.substr(0,50)+'...':data[i].content)+'</span>'
+			                  //+'</div>'
+			                  //+'<span>'+(data[i].publishdate.length>10?data[i].publishdate.substr(0,10):data[i].publishdate)+'</span>'
+			                  +'</li>';
+   				}
+   				html+=  '</ul>'
+			                +'<em class="reading-f"></em>'
+			                +'<a href="'+more+'" class="more-btn" target="_blank">'
+			                +'<img src="__ROOT__/apps/public/_static/images/stuspace/more_btn.png">'
+			                +'</a>'
+			                +'</div>';
+                 $("#zxdy").html("").html(html);
+                 M(document.getElementById('zxdy')); 
+ 			},
+ 			error:function(msg){
+ 				$("#zxdy").html("").html("<p style='padding:20px;'>加载失败，<a href='javascript:topic.init();'>请重试！</a></p>");
+ 			}
+ 		}); 
+ 	}
+     
+     
+     
+     
+   //家校互动
+     function reloadJXHD(){
+    	 switchCheck("zxdy");
+         $("#records").hide();
+         $("#jxhd").hide();
+         $("#classhare").hide();
+         $("#homework").hide();
+    	 $('#zxdy').show(); 
+    	 
+    	 //取的条数
+    	 var count = 5;
+    	 //获取家校互动
+    	 var host = '{:C("JXHD")}/index.php?m=Home&c=Ajax&a=getJXHDList';
+    	 
+    	 $.ajax({
+  			type:"POST",
+  			url: host,
+  			data:{"type":type},
+  			dataType:"json",
+  			success:function(data){
+  				var i,html='';
+    				if(data == null || data.length == 0){
+    					html += '<div class="reading-box upload">';
+    					html += '<img src="__APP__/images/stuspace/tip_zl.png" />';
+    					html += '<em class="reading-f"></em>';
+    					html += '</div>';
+    					$("#studentRead").html("").html(html);
+    					return;
+    				}
+    				//更多 url
+    				var more = '{:C("ESCHOOL")}/index.php?m=Clazz&c=TeachingRecord&a=record&classId='+classId;
+    				html += '<div class="reading-box"><ul class="clearfix">';
+    				for(i=0;i<data.length;i++){
+    				  //预览url
+    				  var home_url = "index.php?app=public&mod=Profile&act=index&uid="+data[i].userId;
+    				  if(data[i].type == 'class_share'||data[i].type == 'class_homework'){
+    					var previewUrl = "";  
+    					var share_content = "";
+    					var icon = "";
+    					if(data[i].type == 'class_share'){
+    						previewUrl = "{:C('ESCHOOL')}/index.php?m=Clazz&c=Share&a=preview&resid="+data[i].resId
+    								+"&uid="+data[i].uid+"&classId="+data[i].classId+"&share_id="+data[i].app_row_id;
+    						share_content = "点击下面的链接查看分享：";
+    						icon = "分享";
+    					}
+    					
+    					if(data[i].type == 'class_homework'){
+    						previewUrl = "{:C('ESCHOOL')}/index.php?m=Clazz&c=Homework&a=homework&classId="+data[i].classId;
+    						share_content = "点击下面的链接,完成作业：";
+    						icon = "作业";
+    					}
+    					
+   				    html +=  '<li>'
+ 			                  +'<div class="phone-box fl">'
+ 			                  +'<span></span>'
+ 			                  +'<img src="'+data[i].avatar+'">'
+ 			                  +'</div>'
+ 			                  +'<div class="reading-info fl">'
+ 			                  +'<a target="_blank" href="'+home_url+'" class="fl" event-node="face_card" uid="'+data[i].userId+'" show="no"><h3>'+data[i].author+'</h3></a>'
+ 			                  +'<div class="reader-des"><span class="line-bg">'+icon+'</span>'+share_content+'<a target="_blank" href="'+previewUrl+'" class="reader-des" title="'+data[i].feed_title+'">'+(data[i].feed_title.length>15?data[i].feed_title.substr(0,15)+'...':data[i].feed_title)+'</a></div>'
+ 			                  +'<p class="reader-time">'+(data[i].publishdate.length>10?data[i].publishdate.substr(0,10):data[i].publishdate)+'</p>'
+ 			                  +'</div>'
+ 			                  //+'<a target="_blank" style="float:left" href="'+home_url+'" class="edit-name fr" event-node="face_card" uid="'+data[i].userId+'" show="no">'+data[i].author+'</a>'
+ 			                  //+'<div class="reading-info fl">'
+ 			                  //+'<a target="_blank" href="'+previewUrl+'" class="fl" title="'+share_content+'"><h3>'+(share_content.length>15?share_content.substr(0,15)+'...':share_content)+'</h3></a>'
+ 			                  //+'<span class="edit-name fr" >'+data[i].author+'</span>'
+ 			                  //+'<span  class="reader-des">'+(share_content.length>50?data[i].content.substr(0,50)+'...':data[i].content)+'</span>'
+ 			                  //+'</div>'
+ 			                  //+'<span>'+(data[i].publishdate.length>10?data[i].publishdate.substr(0,10):data[i].publishdate)+'</span>'
+ 			                  +'</li>';
+    				  }
+    				  if(data[i].type == 'class_notice'){
+    					var previewUrl = "{:C('ESCHOOL')}/index.php?m=Clazz&c=Homework&a=homework&classId="+data[i].classId;
+    					html +=  '<li>'
+ 		                  +'<div class="phone-box fl">'
+ 		                  +'<span></span>'
+ 		                  +'<img src="'+data[i].avatar+'">'
+ 		                  +'</div>'
+ 		                  +'<a target="_blank" style="float:left" href="'+home_url+'" class="edit-name fr" event-node="face_card" uid="'+data[i].userId+'" show="no">'+data[i].author+'</a>'
+ 		                  +'点击下面的链接完成作业'
+ 		                  +'<div class="reading-info fl">'
+ 		                  +'<a target="_blank" href="'+previewUrl+'" class="fl" title="'+data[i].feed_title+'"><h3>'+(data[i].feed_title.length>15?data[i].feed_title.substr(0,15)+'...':data[i].feed_title)+'</h3></a>'
+ 		                  //+'<span class="edit-name fr" >'+data[i].author+'</span>'
+ 		                  +'</div>'
+ 		                  +'<span>'+(data[i].publishdate.length>10?data[i].publishdate.substr(0,10):data[i].publishdate)+'</span>'
+ 		                  +'</li>';
+    				  }
+    				  
+    				 
+    				}
+    				html+=  '</ul>'
+ 			                +'<em class="reading-f"></em>'
+ 			                +'<a href="'+more+'" class="more-btn" target="_blank">'
+ 			                +'<img src="__ROOT__/apps/public/_static/images/stuspace/more_btn.png">'
+ 			                +'</a>'
+ 			                +'</div>';
+                  $("#studentRead").html("").html(html);
+                  M(document.getElementById('studentRead')); 
+  			},
+  			error:function(msg){
+  				$("#studentRead").html("").html("<p style='padding:20px;'>加载失败，<a href='javascript:topic.init();'>请重试！</a></p>");
+  			}
+  		}); 
+ 	}
+     
+     
+     
+     function changeReadmoserover(obj) {
+         //消除上一个选中
+         var currentid = $('#studentRead .current').attr('id');
+         $('#studentRead .current #' + currentid + '_content1').css('display', '');
+         $('#studentRead .current #' + currentid + '_content2').css('display', 'none');
+         var repeat1 = $('#' + currentid + ' .cy_model_repeat');
+         if (repeat1.length > 0) {
+             repeat1.css('display', 'none');
+         }
+         $('#studentRead .current').removeClass('current');
+
+         //选中现在浮动的
+         $(obj).addClass('current');
+         var name = obj.id
+         $('#' + name + '_content1').css('display', 'none');
+         $('#' + name + '_content2').css('display', '');
+         var repeat = $('#' + name + ' .cy_model_repeat');
+         if (repeat.length > 0) {
+             repeat.css('display', '');
+         }
+     }
+     function studentUploadForum(){
+  		$.fancybox({
+ 			'modal'				  :	 true,
+ 			'openSpeed'			  :  "fast",
+ 			'centerOnScroll'      :  true,
+ 			'hideOnOverlayClick'  :  false,
+ 			'width'               :	 400,
+ 			'padding'             :   0, 
+ 			'autoScale'           :  false  , 
+ 			'transitionIn'        :  'none'  , 
+ 			'transitionOut'       :  'none'  , 
+ 			'scrollOutside'       :  true,
+ 			'href'                :  'index.php?app=student&mod=Forum&act=add', 
+ 			'type'                :  'iframe',  
+  			helpers:{
+  	            overlay:{
+  	                closeClick : false,
+  	                css:{
+  	                    'background':'rgba(58, 42, 45, 0)'
+  	                }
+  	            }
+  	        }
+          });
+
+     }
+
+     function getLocalTime(nS) { 
+   	   return new Date(parseInt(nS) * 1000).toLocaleString().replace(/年|月/g, "-").replace(/日/g, " "); 
+   	 } 
+     
+     //切换选中
+     function switchCheck(id){
+    	 $("#active_b").removeClass(); 
+    	 $("#records_b").removeClass();
+    	 $("#classba_b").removeClass();
+    	 $("#classhare_b").removeClass();
+    	 $("#homework_b").removeClass();
+    	 $("#zaixiandayi_b").removeClass();
+    	 $("#"+id).addClass("active");
+     }
+     
+
+     </script>
+
+<div id="col9" class="st-index-main">
+	<!-- <div class="cy_mr_profileOption">
+     	<ul class="clearfix">
+         <li class="cy_pro_hot current"><a href="javascript:void(0);">热门推荐</a><font>&nbsp;</font></li>
+     	 <li class="cy_pro_resource"><a href="javascript:void(0);" onclick="<?php if($roleEnName == 'student' || $roleEnName == 'parent'){echo "ui.success('敬请期待');";}else{echo "uploadBox.show('0');";}?>">传资源</a><font>&nbsp;</font></li>
+         <li class="cy_pro_share"><a href="javascript:;" onclick="<?php if($roleEnName == 'student' || $roleEnName == 'parent'){echo "ui.success('敬请期待');";}else{echo "showOrHideShareArea('share_res_area');";}?>">分享成果</a><font>&nbsp;</font></li>
+         <li class="cy_pro_daily"><a href="{:U('blog/Index/addBlog')}">写日志</a><font>&nbsp;</font></li>
+         <li class="cy_pro_photo"><a href="{:U('photo/Upload/flash')}">发照片</a></li>
+     	</ul>
+	</div> -->
+	<div class="extend-foot">
+           
+         <!-- 发布框 -->
+               <div id="weibo_edit_area">
+               	{:W('SendWeibo',array('title'=>$title, 'topicHtml'=>$initHtml))}
+               </div>
+			<div class="feed-nav">
+                <div class="mod-feed-tab clearfix" id="mod-feed-tab" style="margin-bottom:5px;"> <!--<php>if(!isset($_GET['feed_type']) && empty($_GET['feed_key'])){</php> style="display:none"<php>}</php>-->
+              <ul class="inner-feed-nav">
+                  <li <eq name='feed_type' value=''>class="current"</eq>>
+                      <a href="{:U('public/Index/index',array('type'=>$type,'feed_type'=>''))}">全部</a></li>
+                  <if condition="$type eq 'school'"></>
+                  <else />
+                   <eq name='type' value='class'>
+                   	<li <eq name='feed_type' value='blog_post'>class="current"</eq>>
+                 <a href="{:U('public/Index/index',array('type'=>$type,'feed_type'=>'blog_post'))}">日志</a></li>
+                 <li <eq name='feed_type' value='postimage'>class="current"</eq>>
+                 <a href="{:U('public/Index/index',array('type'=>$type,'feed_type'=>'postimage'))}">图片</a></li>
+                 <li <eq name="feed_type" value="share">class="current"</eq>>
+                 <a href="{:U('public/Index/index',array('type'=>$type,'feed_type'=>'share'))}">分享</a></li>
+                   <else/>
+                 <li <eq name='feed_type' value='blog_post'>class="current"</eq>>
+                 <a href="{:U('public/Index/index',array('type'=>$type,'feed_type'=>'blog_post'))}">日志</a></li>
+                 <li <eq name='feed_type' value='postimage'>class="current"</eq>>
+                 <a href="{:U('public/Index/index',array('type'=>$type,'feed_type'=>'postimage'))}">图片</a></li>
+                 <li <eq name='feed_type' value='postfile'>class="current"</eq>>
+                 <a href="{:U('public/Index/index',array('type'=>$type,'feed_type'=>'postfile'))}">附件</a></li>
+                 <li <eq name="feed_type" value="postvideo">class="current"</eq>>
+                 <a href="{:U('public/Index/index',array('type'=>$type,'feed_type'=>'postvideo'))}">视频</a></li>
+                </eq>
+                </if>
+              </ul>
+          </div>
+         </div>
+         {:Addons::hook('home_index_left_feedtop')}
+         <!--feed list-->
+		{:W('FeedList',array('type'=>$type,'feed_type'=>$feed_type,'feed_key'=>$feed_key,'fgid'=>t($_GET['fgid']),'tpl'=>'FeedList_blue.html'))}
+        </div>
+</div>
+</div>
+
+<script type="text/javascript">
+	$(window).load(function(){
+		$(".hot_apps").click(function(){
+			if($('.hot_apps.current').length>0){
+				if($('#hot_nav').length>0){
+					if($('#hot_nav').css('display')!='none'){
+						var repeat =$('#hot_content .current .cy_model_repeat');
+						if(repeat.length>0){
+							repeat.css('display','none');
+						}
+					}else{
+						var repeat =$('#hot_content .current .cy_model_repeat');
+						if(repeat.length>0){
+							repeat.css('display','');
+						}
+					}
+				}
+				$('#hot_nav').slideToggle(500);
+				return ;
+			}
+			
+			//检测热门应用div是否已打开
+			var display_status = $(".hot_apps_div").css("display");
+			if(display_status == "none"){
+				toggleDiv("hot_apps");
+			}
+		
+		});
+		
+		$(".share_res").click(function(){
+			if($('.share_res.current').length>0){
+				$('.share_res_div ').slideToggle(500);
+				return ;
+			}
+			
+			$(".pop_upCon").empty();
+			//检测分享资源div是否已打开
+			var display_status = $(".share_res_div").css("display");
+			if(display_status == "none"){
+				toggleDiv("share_res");
+			}
+		});
+		$(".shuo_shuo").click(function(){
+			if($('.shuo_shuo.current').length>0){
+				$('.shuo_shuo_div ').slideToggle(500);
+				return ;
+			}
+			//检测说说div是否已打开
+			var display_status = $(".shuo_shuo_div").css("display");
+			if(display_status == "none"){
+				toggleDiv("shuo_shuo");
+			}
+		});
+		$("#hot_nav li").click(function(){
+			var data_value =$(this).attr('data-value');
+			if(typeof(data_value)=='undefined'){
+				return ;
+			}
+			reloadHotInfo(data_value);
+			$("#hot_nav li").each(function () {
+		        $(this).removeClass('current');
+		    });
+			$(this).addClass('current');
+		});
+		$('.num_for_student2').hide();
+		$('.input_tips_for_student').focus(function(){
+			$('.num_for_student2').show();
+		}).blur(function(){
+			$('.num_for_student2').hide();
+		})
+		//加载最热日志数据
+		reloadHotInfo('blog');
+		
+	});
+	
+	//展开收起div
+	function toggleDiv(className){
+		$(".tab_btn").each(function(){
+			$(this).removeClass("current");
+		});
+		$("."+className).addClass("current");
+		$(".box_div").each(function(){
+			$(this).css("display","none");
+		});
+		$("."+className+"_div").slideToggle(500);
+	}
+	
+	function reloadHotInfo(app_name){
+		$.ajax({
+			type:"POST",
+			url: U('public/Index/getHotAppInfoList'),
+			data:{"app_name":app_name},
+			dataType:"json",
+			success:function(data){
+                $("#hot_content").html("").html(data.data);
+                if(app_name=='people'){
+                    M(document.getElementById('hot_peopleList'));
+                }else{
+                	M(document.getElementById('hot_content'));
+                }
+			},
+			error:function(msg){
+				$("#topic_list").html("").html("<p style='padding:20px;'>加载失败，<a href='javascript:topic.init();'>请重试！</a></p>");
+			}
+		});
+	}
+    function changeHotmoserover(obj) {
+        //消除上一个选中
+        var currentid = $('#hot_content .current').attr('id');
+        $('#hot_content .current #' + currentid + '_content1').css('display', '');
+        $('#hot_content .current #' + currentid + '_content2').css('display', 'none');
+        var repeat1 = $('#' + currentid + ' .cy_model_repeat');
+        if (repeat1.length > 0) {
+            repeat1.css('display', 'none');
+        }
+        $('#hot_content .current').removeClass('current');
+
+        //选中现在浮动的
+        $(obj).addClass('current');
+        var name = obj.id
+        $('#' + name + '_content1').css('display', 'none');
+        $('#' + name + '_content2').css('display', '');
+        var repeat = $('#' + name + ' .cy_model_repeat');
+        if (repeat.length > 0) {
+            repeat.css('display', '');
+        }
+    }
+    /*function hotmoserout(){
+        $('#hot_content .current').removeClass('current');
+        for(var i=1;i<=5;i++){
+            $('#hot_content .current #hot_' + i + '_content1').css('display', '');
+            $('#hot_content .current #hot_' + i + '_content2').css('display', 'none');
+            var repeat1 = $('#hot_' + i + ' .cy_model_repeat');
+            if (repeat1.length > 0) {
+                repeat1.css('display', 'none');
+            }
+        }
+        $('#hot_1').addClass('current');
+        $('#hot_1_content1').css('display', 'none');
+        $('#hot_1_content2').css('display', '');
+        var repeat = $('#hot_1'+' .cy_model_repeat');
+        if (repeat.length > 0) {
+            repeat.css('display', '');
+        }
+    }*/
+</script>

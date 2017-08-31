@@ -1,0 +1,101 @@
+<div class="<php>if($ischeck){</php>sign-in<php>}else{</php>sign-in<php>}</php>" id="checkdiv" style="width:205px;margin-top:15px;">
+	<span class="datetime"><em class="date">{$day}</em>
+	<em class="week">{$week}</em></span>
+	<em class="day">DAYS</em>
+	<em class="num" id="con_num_day">{$con_num}</em>
+<php>if($ischeck){</php>
+<!-- <img src="" id="checkin" class="btn-sign" /> -->
+<em id="checkin" class="btn-sign">已签到</em>
+<php>}else{</php>
+<!-- <img src="" id="checkin" onclick="checkin()" class="btn-sign" /> -->
+<em href="javascript:void(0)" id="checkin" onclick="checkin()" class="btn-sign">签到</em>
+<php>}</php>
+   <div class="sign-wrap" style="display:none" id="checkdetail">
+      <i class="arrow-y"></i>
+      <div class="sign-box">
+	    <h3 id="checkinfo"><php>if($ischeck){</php>签到成功<php>}else{</php>未签到<php>}</php></h3>
+	    <div class="sign-info"><p>已连续签到<font id="con_num">{$con_num}</font>天，累计签到<font id="total_num">{$total_num}</font>天</p></div>
+      </div>
+   </div>
+</div>
+<div style="display: none;" class="clearfix mb20 pb20 border-b">
+	<a href="{:U('public/Task/index')}" class="btn-task left" style="width:90px;" target="_blank"><span>做任务</span></a>
+	<a href="{:U('public/Rank/index')}" class="btn-account right" style="width:90px;" target="_blank"><span>比排名</span></a>
+</div>
+
+<script>
+var isshow = 1;
+$(function (){
+	<php>if($ischeck){</php>
+	$('#checkdetail').hover(function (){
+		isshow = 2;
+	},function (){
+		setTimeout(function (){
+			if(isshow==1){
+				$('#checkdetail').hide();
+			}
+			isshow = 1;
+		},100);
+	});
+	$('#checkin').hover(function (){
+		$('#checkdetail').show();
+	},function (){
+		setTimeout(function (){
+			if(isshow==1){
+				$('#checkdetail').hide();
+			}
+			isshow = 1;
+		},100);
+	});
+	<php>}</php>
+});
+function checkin(){
+	$('#checkin').text('已签到');
+	$('#checkin').attr('onclick' , '');
+	$('#checkin').attr('class' , 'btn-sign');
+	$('#checkdiv').attr('class' , 'sign-in' )
+	$('#checkinfo').text('签到成功');
+	var totalnum = {$total_num} + 1;
+	$.post(U('widget/CheckIn/check_in') , {} , function (res){
+		if ( res ){
+            res = $.parseJSON(res);
+
+            if(typeof(res.creditResult) != 'undefined'){
+                var alias = res.creditResult.alias;
+                var score = res.creditResult.score;
+                jQuery.jBox.tip("<span style='font-size:14px; color:#535353;'>"+alias+"成功,积分</span><span style='color:#ff6600;'>+"+score+"</span>", 'success');
+            }
+            var connum = res.con_num;
+			$('#con_num').text(connum);
+			$('#con_num_day').text(connum);
+			$('#total_num').text(totalnum);
+
+            /**修改左边的积分 begin by xypan 2014/5/30***/
+            var credit = jQuery("#my_sns_credit").text();
+            credit = parseInt(credit) + 1;
+            jQuery("#my_sns_credit").text(credit);
+            /**修改左边的积分 end by xypan 2014/5/30***/
+			$('#checkdetail').hover(function (){
+				isshow = 2;
+			},function (){
+				setTimeout(function (){
+					if(isshow==1){
+						$('#checkdetail').hide();
+					}
+					isshow = 1;
+				},100);
+			});
+			$('#checkin').hover(function (){
+				$('#checkdetail').show();
+			},function (){
+				setTimeout(function (){
+					if(isshow==1){
+						$('#checkdetail').hide();
+					}
+					isshow = 1;
+				},100);
+			});
+		}
+	});
+}
+</script>

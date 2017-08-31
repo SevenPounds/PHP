@@ -1,0 +1,142 @@
+<div class="ep_line">
+	<ul class="left">
+		<php> if($mid == $uid): </php>
+		<li class="pr15"><a href="{:U('paper/Index/edit',array('id'=>$id,'uid'=>$uid,'type'=>$paper['category']))}">编辑</a></li>
+		<li class="pr15"><a href="javascript:;" class="delete-paper">删除</a></li>
+		<li><a href="javascript:;" onclick="popup_recombox();">推荐</a></li>
+		<php> endif; </php>
+		<php> if($mid == $uid): </php>
+		<script type="text/javascript">
+			var _paper_id = '<php>echo $paper["id"];</php>';
+			var _paper_type = '<php>echo $type;</php>';
+			var _paper_view_url = U("public/Workroom/instructionDetail") + "&paper_id="+_paper_id+"&uid="+UID+"&type="+_paper_type;
+			if(_paper_type == 1 || _paper_type == 2 || _paper_type == 3){
+				_paper_view_url = U("public/Workroom/summary_preview") + "&pid="+_paper_id+"&uid="+UID+"&type="+_paper_type;
+			}
+			popup_recombox = function(){
+		  		ui.box.load(U('resview/Index/recommendtofriends'),'推荐给好友');
+				$(".hd").css({'background':'#73BFEE','color':'white'});
+		  	}
+			
+			//展开好友列表 by zhaoliang
+			var expandlist = function(obj,gid){
+				$li =$(obj).parent().children(".friendlist");
+				$hidden = $(obj).parent().children(".hasclicked");
+				var hasclicked = $hidden.val();
+				if(hasclicked == "1"){
+					if($li.css("display")=="none"){
+						$li.css("display","block");
+						$(obj).css("background","url(apps/resview/_static/image/ep_down.gif) no-repeat");
+					}
+					else{
+						$li.css("display","none");
+						$(obj).css("background","url(apps/resview/_static/image/ep_up.gif) no-repeat");
+					}
+				}
+				else{
+					$.get("index.php?app=resview&mod=Ajax&act=getFriendlist&gid=" + gid,function(data){
+						$li.html(data);
+						//判断是否已选择
+						var hiddenid = $("#hiddenselfriendsid").val();
+						var selfriends = hiddenid.split(" ");
+						for(i=0;i<selfriends.length;i++){
+							$("#choose_"+selfriends[i]).css("display","inline");
+						}
+					})
+					$hidden.val("1");
+					$(obj).css("background","url(apps/resview/_static/image/ep_down.gif) no-repeat");
+				}
+			}
+			
+			//推荐资源给好友---添加推荐好友 by zhaoliang
+			var insertUser = function(uid,username,avastar){
+				//判断username是否已被添加
+				var hidden = $("#hiddenselfriends").val();
+				var hiddenid = $("#hiddenselfriendsid").val();
+				var selfriends = hidden.split(" ");
+				for(i=0;i<selfriends.length;i++){
+					if(selfriends[i] == username){
+						return;
+					}
+				}
+				hidden = hidden + " " + username;
+				hiddenid = hiddenid + " " + uid;
+				
+				$("#hiddenselfriends").val(hidden);
+				$("#hiddenselfriendsid").val(hiddenid);
+				var userhtml = '<li style="margin-left:5px;line-height:20px;"><a style="float:right;margin-right:20px;" href="javascript:void(0);" onclick=\'deluser(this,"' + uid + '","' + username +'")\'><img src="__APP__/image/ep_delete.gif" width="15"></a><a class="friendli" href="javascript:void(0);"><img style="margin-right:5px;" width="15" alt="' + username + '" src="' + avastar + '">' + username + '</a></li>';
+				$("#selectedfriendlist").append(userhtml);
+				$("#choose_"+uid).css("display","inline");
+			}
+			
+			//推荐资源给好友---删除已添加的好友 by zhaoliang
+			var deluser = function(obj,uid,username){
+				var hidden = $("#hiddenselfriends").val();
+				var hiddenid = $("#hiddenselfriendsid").val();
+				var selfriends = hidden.split(" ");
+				var selfriendsid = hiddenid.split(" ");
+				hidden = "";
+				hiddenid = "";
+				for(i=0;i<selfriends.length;i++){
+					if(selfriendsid[i] != uid){
+						hidden = hidden + selfriends[i] + " ";
+						hiddenid = hiddenid + selfriendsid[i] + " ";
+					}
+				}
+				$("#hiddenselfriends").val(hidden);
+				$("#hiddenselfriendsid").val(hiddenid);
+				//删除节点
+				$(obj).parent().remove();
+				$("#choose_"+uid).css("display","none");
+			}
+			
+			//关闭推荐资源窗口 by zhaoliang
+			var closerec = function(){
+				ui.box.close();
+			}
+			
+			//确认推荐资源事件 by zhaoliang
+			confirmrec = function(){
+				var hidden = $.trim($("#hiddenselfriendsid").val());
+				var selfriends = hidden.split(" ");
+				if(hidden == ""){
+					//alert("请先选择好友！");
+					ui.error("请先选择好友！");
+					return;
+				}
+				for(i=0;i<selfriends.length;i++){
+					if(selfriends[i]!=""){
+						$.post("index.php?app=public&mod=Message&act=doPost",{"to":selfriends[i],"content":"给你分享一篇文章：" + _paper_view_url},function(data){
+							$("#recprogress").val(i+"/"+selfriends.length);
+						})
+					}
+				}
+				ui.box.close();
+				//alert("资源推荐成功！");
+				ui.success("资源推荐成功！");
+			}
+		</script>
+		<php> endif; </php>
+		<!-- 分享 -->
+		<li class="box"><a href="javascript:;" class="share-paper">&nbsp;</a></li>
+		
+		<php> if($mid == $uid): </php>
+		<li><a href="javascript:;" class="privacy-set">隐私设置</a></li>
+		<php> endif; </php>
+	</ul>
+	
+	<div class="right">
+		<php> if($prevPaper): </php>
+			<span class="blue"><a href="{:U('paper/Index/preview',array('uid'=>$prevPaper['uid'],'id'=>$prevPaper['id'],'uid'=>$prevPaper['uid']))}" title="{$prevPaper['title']|html_entity_decode=###|htmlentities}">上一篇：<span>{$prevPaper['title']|html_entity_decode=###|getShort=###,6,'...'|htmlentities}</span></a></span>
+		<php> else: </php>
+			<span class="black2">已经是第一篇了</span>
+		<php> endif; </php>
+		<span class="pl2 pr2">|</span>
+		<php> if($nextPaper): </php>
+			<span class="blue"><a href="{:U('paper/Index/preview',array('uid'=>$nextPaper['id'],'id'=>$nextPaper['id'],'uid'=>$nextPaper['uid']))}" title="{$nextPaper['title']|html_entity_decode=###|htmlentities}">下一篇：<span>{$nextPaper['title']|html_entity_decode=###|getShort=###,6,'...'|htmlentities}</span></a></span>
+		<php> else: </php>
+			<span class="black2">已经是最后一篇了</span>
+		<php> endif; </php>
+	</div>
+	<div class="clear"></div>
+</div>

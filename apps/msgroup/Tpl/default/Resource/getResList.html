@@ -1,0 +1,55 @@
+<table cellpadding="0" cellspacing="0" border="0" class="online_table3" id="restable">
+					<tr class="online_tabletop">
+					    <th width="5%" class="pl5"><input type="checkbox" id="sel_all_up"/></th>
+						<th width="1%"><img src="__APP__/images/th_line.jpg" /></th>
+						<th width="15%">资源名称</th>
+						<th width="1%"><img src="__APP__/images/th_line.jpg" /></th>
+						<th width="5%">类型</th>
+						<th width="1%"><img src="__APP__/images/th_line.jpg" /></th>
+						<th width="8%">
+							上传时间
+						</th>
+						<th width="1%"><img src="__APP__/images/th_line.jpg" /></th>
+						<th width="8%">
+							下载次数
+						</th>
+						<th width="1%"><img src="__APP__/images/th_line.jpg" /></th>
+						<th width="8%">
+							评分
+						</th>
+						<th width="1%"><img src="__APP__/images/th_line.jpg" /></th>
+						<th width="7%">操作</th> 
+					</tr>
+					<volist name="results" id="vo">
+						 <tr <if condition="$i%2 neq 0">style="background:#fff"<else />style="background:#f6f6f6"</if>>
+							<td align="center" class="pl5"><input type="checkbox" value="{$vo.rid}" name="res_list"/></td>
+							<td></td> 
+							<td align="left" style="padding-left:10px;" class="blue"><a href="{:Ures('//',array('id'=>$vo['rid']))}" target="_blank" title="{$vo.title}">{$vo.title|mStr=10}</a></td>
+							<td></td>
+							<td align="center">{$vo.restype|getResTypeNameByCode}</td>
+							<td></td>
+							<td align="center"><php>echo(date('Y-m-d',$vo['uploaddateline']));</php></td>
+							<td></td>
+							<td align="center" >{$vo.downloadtimes}</td>
+							<td></td>
+							<td align="center">{$vo.score}</td>
+							<td></td>
+							<td align="center">
+								<a href="javascript:void(0)" onclick="Resource.ShowUpdateResWin('{$vo.rid}','{$vo.gid}')"><span class="blue">编辑</span></a>
+								<a href="javascript:Resource.del('{$vo.rid}','{$vo.creator}')"><span class="blue">删除</span></a>
+							</td>
+						</tr>
+					</volist>
+</table>
+<div class="online_tablebot">
+<div class="online_tablebot_span" id="delete_res">
+					<input type="checkbox" style="margin-left:3px;" id="sel_all_down"/>
+					<span>
+			          <input type="button" class="whdel_nor" onclick="javascript:Resource.MulTiDel();" value="删除" title="删除"/>
+		            </span>
+</div>
+<div class="page">
+	{$page}
+</div>
+</div>
+<input type="hidden" val="{$pageindex}" id="cur_page"/>

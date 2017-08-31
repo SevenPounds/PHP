@@ -1,0 +1,114 @@
+			 <dd>
+			 	<div class="form-tt">所属班级信息：</div>
+			 	<div class="form-row">
+			 		<ul >
+			 			<li class="left">
+				 			<select class="form_row_select" id="studentPhase" name ="phase" disabled="disabled">
+			              		<option value="00">请选择学段</option>
+                                   <option value="03" <?php if($class_info->phase == '03'){echo 'selected="selected"';}?>>小学</option>
+                                   <option value="04" <?php if($class_info->phase == '04'){echo 'selected="selected"';}?>>初中</option>
+                                   <option value="05" <?php if($class_info->phase == '05'){echo 'selected="selected"';}?>>高中</option>
+		              		</select>
+			 			</li>
+			 			
+			 			<li class="left">
+				 			<select class="form_row_select" id="studentYears" name="class_years" disabled="disabled">
+		              			<option value='00'>请选择入学年份 </option>
+		              			  <?php
+		        					$year = date('Y') + 1;
+									for($i = 0;$i <= 16; $i++){
+									$y = $year - $i;
+										if($y == $class_info->year){
+										echo '<option value="'.$y.'" selected="selected">'.$y.'</option>';
+										}else{
+											echo '<option value="'.$y.'">'.$y.'</option>';
+										}
+									}
+        							?>
+			              		</select>
+			 			</li>
+			 			
+			 			<li class="left">
+				 			<select class="form_row_select" id="studentClass" name="class" disabled="disabled">
+		              			<option value='0'>请选择班级 </option>
+		              		</select>
+		              		<input type="hidden" id ="oldclass" name="oldclass" value="{$class.id}"></input>
+			 			</li>
+			 		</ul>
+			 		<div class="clear"></div>
+			 	</div>
+			 </dd>
+			 
+			 <script type="text/javascript">
+			 	$(function(){
+			 		var schoolId = '{$user_info["school_id"]}';
+			 		var phase = $("#studentPhase").val();
+					var year = $('#studentYears').val();
+					var classId =$("#oldclass").val();
+			 		$.ajax({
+				 		url:U('public/Ajax/getClasses'),
+				 		type:'POST',
+				 		data:{'schoolId':schoolId,'phase':phase,'year':year},
+				 		dataType:'JSON',
+				 		success:function(res){
+				 		   if(res!=null){
+			 			    	var option1 = "<option value='0'>请选择班级</option>";
+			 				    var selected ="";
+			 			    	$.each(res, function(i, n) {
+			 				     selected =( n.id == classId) ? "selected":""; 	
+			 					option1 += '<option value="' + n.id + '"'+selected+'>' + n.classOrder + '班</option>'
+			 				    });
+			 				   
+			 				    $('#studentClass').html(option1);
+			 			     }
+				 		},
+				 		error:function(res){
+				 			
+				 		}
+				 	});
+			 		//学段改变后触发班级列表修改
+			 		$('#studentPhase').change(function(){
+			 			$("#studentYears").val('00');
+			 			classChange(schoolId,classId);
+			 		});
+			 		
+			 		//入学年份改变后触发班级列表修改
+			 		$('#studentYears').change(function(){
+			 			classChange(schoolId,classId);
+			 		});
+			 		
+			 	});
+			 	
+			 	function classChange(schoolId,classId){
+			 			phase = $('#studentPhase').val();
+						year = $('#studentYears').val();
+						//两个属性缺一个则不请求班级信息
+						if(phase=='00'||year=='00'){
+		 					 return  false;
+		 				}
+						//请求班级信息
+				 		$.ajax({
+					 		url:U('public/Ajax/getClasses'),
+					 		type:'POST',
+					 		data:{'schoolId':schoolId,'phase':phase,'year':year},
+					 		dataType:'JSON',
+					 		success:function(res){
+					 			
+					 			    if(res!=null){
+					 			    	var option1 = "<option value='0'>请选择班级</option>";
+					 				    $.each(res, function(i, n) {
+					 					option1 += '<option value="' + n.id + '">' + n.classOrder + '班</option>'
+					 				    });
+					 				   
+					 				    $('#studentClass').html(option1);
+					 			     }
+					 		},
+					 		error:function(res){
+					 			
+					 		}
+				 	});
+			 	}
+			 	
+			 </script>
+		
+			 

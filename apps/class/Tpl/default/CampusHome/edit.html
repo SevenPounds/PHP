@@ -1,0 +1,28 @@
+<script type="text/javascript" src="__APP__/js/edit.js"></script>
+<div class="pn">
+	<span>标题:</span>
+	<span class="pl10">
+		<input name="title" id="title" type="text" value="{$detail['title']}" />
+		<input id="noticeId" type="hidden" value="{$detail['id']}" />
+		<input id="noticeCid" type="hidden" value="{$detail['cid']}" />
+	</span>
+	<div class="clear"></div>
+</div>
+<div class="pn2">
+	<p class="left">内容:</p>
+	<div class="left pl10">
+		<textarea  name="content" rows="20" id="content" style="width:536px; margin-bottom:10px;">{$detail['content']}</textarea>
+	</div>
+	<div class="clear"></div>
+</div>
+<div class="kh_bot2">
+	<p class="left pr10 pt2">附件:</p>
+	<form style="display:inline;padding:0;margin:0;border:0">
+		{:W('Upload',array('uploadType'=>'file','inputname'=> 'attach', 'attachIds' => $ids))}
+	</form>
+</div>
+<div class="pn_btn">
+	<input type="button" value="编辑" class="green_btn8" id="publish"  onmouseover="this.className='green_btn8hov'" onmouseout="this.className='green_btn8'" />
+	<input type="button" value="取消" class="green_btn9"  onclick="closeBtn();" onmouseover="this.className='green_btn9hov'" onmouseout="this.className='green_btn9'" />
+</div>
+	  		

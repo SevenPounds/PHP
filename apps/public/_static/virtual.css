@@ -1,0 +1,77 @@
+.virtual{
+    padding: 0 10px;
+}
+img{
+    border: 0;
+}
+.vir_tit{
+    color: #333333;
+    border-bottom: 1px solid #dedede;
+    padding: 10px 5px;
+    font-size: 14px;
+}
+.vir_tit *{
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 5px;
+}
+.vir_list li{
+    margin: 20px auto;
+    position: relative;
+    padding: 0 25px 0 110px;
+    min-height: 76px;
+    vertical-align: top;
+}
+.vir_list img{
+    position: absolute;
+    top: 0;
+    left: 20px;
+}
+.vir_list .vir_list_tit{
+    font-weight: normal;
+    margin: 0;
+    padding: 0;
+}
+.vir_list .vir_list_tit strong{
+    font-size: 16px;
+    color: #0092de;
+    font-weight: normal;
+}
+.vir_list .vir_list_tit span{
+    margin-left: 20px;
+}
+.vir_list .vir_list_tit span font{
+    color: #ffa943;
+    font-size: 12px;
+}
+.vir_list_con{
+    position: relative;
+}
+.vir_list p{
+    color: #999;
+    line-height: 20px;
+    padding-top: 5px;
+}
+.vir_list a{
+    color: #666;
+}
+.vir_list a font{
+    display: inline-block;
+    width: 0;
+    height: 0;
+    margin-left: 3px;
+    border-width: 4px 0 4px 3px;
+    border-style: dashed solid;
+    border-color: transparent #999;
+    overflow: hidden;
+}
+.vir_list a:hover{
+    color: #009dee;
+    text-decoration: none;
+}
+.vir_list a:hover font{
+    border-color: transparent #009dee;
+}
+.app_show li {
+    height:; 
+}

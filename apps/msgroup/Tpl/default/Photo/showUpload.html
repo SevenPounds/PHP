@@ -1,0 +1,83 @@
+<script>
+jQuery(function(){
+	
+	 var option = {};
+	 option.gid = '<php>echo $gid;</php>';
+	 photo.init(option);
+		
+	 jQuery("#file_upload").uploadify({
+		auto:  false,
+		multi: false,
+		queueSizeLimit:1,
+		method:'post',
+		width         : 60,
+		height        : 28,
+		swf           : '__THEME__/js/uploadify/uploadify.swf',
+		uploader      : U('msgroup/Photo/uploadReputationPhoto'),
+		buttonImage     : "__THEME__/image/green_btn_addfile.gif",
+		buttonText      : '添加文件',
+		fileTypeDesc: '所有图片',
+		fileTypeExts : '*.jpeg;*.gif;*.png;*.jpg',
+		queueID         : "uploadQueue",
+		progressData   :'all',
+		fileSizeLimit     :'2MB',
+		successTimeout  : 3600,//将时间变60分钟，不然上传大文件时出现错误，The number of seconds to wait for Flash to detect the server's response 
+		debug	: false,
+		onSelect:function(file){
+			photo.formData.phototitle =  "";
+			photo.formData.description = "";
+			jQuery("#title").val(file['name']);
+			jQuery("#phototitle").val(file['name'].substring(0,file['name'].indexOf(file['type'])));
+		},
+		onUploadStart: function(file){
+			if(file['name'] =="" || "undefined" == typeof file['name']){
+				alert("请选择上传文件！");
+				return ;
+			}
+		},
+		onUploadSuccess:function(file, data, response){
+			var data= eval('('+data+')');
+			if(data.status == 1){
+			 	var page = jQuery("#photoPage").val();
+				photo.reload(option.gid,page);
+			}
+		},
+		onUploadComplete:function(file){
+			photo.closeDialog();
+		}
+	}); 
+	$('#tsbox').find('.ico-close').unbind("click"); 
+	$('#tsbox').find('.ico-close').bind("click",function(){
+			var swf_id = "SWFUpload_" + (SWFUpload.movieCount - 1);
+			swfobject.removeSWF(swf_id);
+			ui.box.close();
+	}); 
+})
+</script>
+<div class="pop_box1">
+	<input type='hidden' id='gid' name='gid' value="{$gid}" />
+	<div class="pop_con">
+		<div class="pop_line1">
+			<p class="pop_title">选择图片:</p>
+			<p class="style1"><input type="text" value=""  id="title" readonly="readonly"/></p>
+			<p class="add_file"><input type="file" id="file_upload" value="添加文件" class="add_filenor" onMouseover="this.className='add_filehov'" onMouseOut="this.className='add_filenor'"></p>
+			<div class="clear"></div>
+		</div>
+		<div id="uploadQueue">
+		</div>
+		<div class="pop_line6">
+			<p class="pop_title">标题:</p>
+			<p class="style1"><input name="phototitle" type="text"  style="color:#999999" id="phototitle" type="text" /></p>
+			<div class="clear"></div>
+		</div>
+		<div class="pop_line5">
+			<p class="pop_title">描述:</p>
+				<textarea id="description"  style="color:#999999" name="描述" ></textarea>
+			<div class="clear"></div>
+		</div>
+		<div class="pop_btn">
+			<input type="button" value="上传" class="add_filenor" onMouseover="this.className='add_filehov'" onMouseOut="this.className='add_filenor'" onclick="photo.startUpload();">
+			<input type="button" value="关闭" class="blue4_btn" onMouseover="this.className='blue4_btnhov'" onMouseOut="this.className='blue4_btn'" onclick="photo.closeDialog();" >
+		</div>
+	</div>
+</div>

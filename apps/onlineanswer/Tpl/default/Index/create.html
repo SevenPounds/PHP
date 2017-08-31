@@ -1,0 +1,93 @@
+<include file="_onlineanswer_header1"/>
+<script type="text/javascript" src="__APP__/js/create.js"></script>
+<div id="page-wrap">
+	   <div id="main-wrap">
+	   		<!--面包屑导航-->
+			<div class="crumbs">
+					<ul>
+						<li class="pre_cen"><a href="{:U('public/Index/index')}">个人空间</a></li>
+						<li>&gt;</li>
+						<li><a href="{:U('onlineanswer/Index/index')}">在线答疑</a></li>
+						<li>&gt;</li>
+						<li>创建答疑</li>
+					</ul>
+					<div class="clear"></div>
+				</div>
+			<!-- 导航结束 -->
+	   		<div class="con_box">
+	   			<div class="left_box">
+	   				<!--左侧用户信息-->
+	   				<include file="__THEME__/public_left" />
+	   			</div>
+	   			<div class="right_box">
+	   			<!--右侧创建答疑-->
+				    <input type="hidden" name="uid" id="hidden_uid" value="{$user['uid']}"/>
+	   				
+	   				<div class="online_title">
+				        <div class="left"> <span><img src="__THEME__/app_icon/app_zxdy.png" /></span> <span class="pl10 font3"><b>创建答疑</b></span> </div>
+						<div class="right" style="display:none;">
+							<p class="blue_btn3" onmouseover="this.className='blue_btn3hov'" onmouseout="this.className='blue_btn3'"><img src="__APP__/images/add.gif" height="8"/>创建答疑</p>
+						</div>
+			        </div>
+			
+					<div class="an_line pl15">
+						<p class="font2">一句话提问:</p>
+						<p class="style6 pt5">
+						  <input type="text" value="" id="title"/>
+						  <span class="title_count">
+						   <b>0</b>/49
+					      </span>
+						</p>
+					</div>
+					<div class="an_line pt15 pl15">
+						<p class="font2">问题详述(选填)：</p>
+						<p class="style7 pt5">{:W('Editor',array('contentName'=>'content','width'=>'748px'))}</p>
+					</div>
+	   				
+					{:W('Tag', array('width'=>'400px', 'row_id'=>'', 'tpl'=>'tag_app', 'tag_num'=>5,'type'=>'onlineanswer','appname'=>'onlineanswer','apptable'=>'onlineanswer'))}
+					<div class="cr_classify" style="display:none;">
+						分类标签：
+						<select name="grade" class="classify_grade" id="classify_grade">
+							<volist name="grades" id="grade">
+							<option value="{$grade['code']}">{$grade['name']}</option>
+							</volist>
+						</select>
+						<select name="subject" class="classify_subject ml10" id="classify_subject">
+							<volist name="subjects" id="subject">
+								<option value="{$subject['code']}">{$subject['name']}</option>
+							</volist>
+						</select>
+					</div>
+
+                    <php>if(!in_array($roleEnName,array(UserRoleTypeModel::STUDENT,UserRoleTypeModel::PARENTS))){</php>
+					<div class="publish" style="display: none;">
+						<span class="font2">发布到：</span>
+					    <p class="left pr20 pl5"><span><input type="checkbox"  name="to_space" checked="checked"/></span><span>我的工作室</span></p>
+						<if condition="!empty($MSGroups)">
+						    <volist name="MSGroups" id="val">
+                               <p class="left pr20 pl5"><span><input type="checkbox" name="gids" value="{$val['gid']}"/></span><span title="{$val['group_name']}">{$val['group_name']|mStr=###,10}</span></p>
+                            </volist>
+						</if>
+						<div class="clear"></div>
+					</div>
+                    <php>}</php>
+						<!-- <div class="cr_classify">
+							是否同步：
+							<select name="gid" id="gid">
+								<option>不同步</option>
+								<volist name="MSGroups" id="val">
+									<option value="{$val['gid']}">同步到{$val['group_name']}</option>
+								</volist>
+							</select>
+						</div> -->
+					<div class="cr_btn">
+						<input type="button" value="发布问题" id="create_btn" class="create_btnnor" onMouseover="this.className='create_btnhov'" onMouseOut="this.className='create_btnnor'">
+						<input type="button" value="取消" class="canclebtn_nor" onclick="window.location.href=U('onlineanswer/Index/index')" onMouseover="this.className='canclebtn_hov'" onMouseOut="this.className='canclebtn_nor'">
+					</div>
+		   		</div>
+                <div class="clear"></div>
+	   		</div>
+		</div>
+	</div>	
+	
+<include file="__THEME__/public_footer" />

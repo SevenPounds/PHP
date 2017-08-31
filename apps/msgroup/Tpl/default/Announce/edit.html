@@ -1,0 +1,56 @@
+<include file="../Public/header" />
+<link rel="stylesheet" type="text/css" href="__THEME__/js/uploadify/uploadify.css" />
+<link rel="stylesheet" type="text/css" href="__THEME__/css/pop_upload.css" />
+<script type="text/javascript" src="__THEME__/js/uploadify/jquery.uploadify.min.js"></script>
+<script type="text/javascript" src="__APP__/js/ms_announce.js"></script>
+<script type="text/javascript">
+	var msAnnounce;
+	var gid = "{$gid}";
+	jQuery(function(){
+		msAnnounce = msAnnounce || new MSAnnounce(gid,1,"announce_list");
+	});
+</script>
+<div class="posbox">&nbsp;&nbsp;您现在的位置：<a href="{:U('msgroup/Index/index', array('gid' => $gid))}" class="blue">{$msgroup_data.group_name}</a>&gt;<a <if condition="$level eq 3">href="{:U('msgroup/Config/index', array('gid' => $gid))}"<else />href="{:U('msgroup/Resource/index', array('gid' => $gid))}"</if> class="blue">工作室维护</a>&gt;&nbsp;<a class="blue" href="{:U('msgroup/Announce/index', array('gid' => $gid))}">通知公告管理</a></div>
+<div id="page-wrap">
+	<div id="main-wrap">
+		<div class="con_box">
+			<div class="left_box">
+				{:W('LeftMenu', array('gid' => $gid, 'level' => $level))}
+			</div>
+			<div class="right_box">
+					<div class="an_line pt15">
+						<p class="an_title">标题:</p>
+						<p class="style2">
+							<input name="title" id="announce_title" type="text" value="{$detail['announce']['title']}" />
+							<input id="noticeId" type="hidden" value="{$detail['announce']['id']}" />
+						</p>
+						<div class="clear"></div>
+					</div>
+					<div class="an_line pt10">
+						<p class="an_title">正文:</p>
+						<div class="an_text">
+							{:W('Editor', array('width' => '650px', 'height' => '200', 'contentName' => 'announce_content', 'value' => $detail['announce']['content']))}
+						</div>
+						<div class="clear"></div>
+					</div>
+					<div class="an_line pt10">
+						<p class="an_title">附件:</p>
+						<div class="notice_attach">
+							<form style='display:inline;padding:0;margin:0;border:0'>									   
+			                  {:W('Upload',array('uploadType'=>'file','inputname'=>'attach','urlquery'=>'attach_type=research_file','attachIds'=>$attachmentIds))}
+			                </form>
+						</div>
+						<div class="clear"></div>
+					</div>
+					<div class="cr_btn">
+						<input type="hidden" id="announce_id" value="{$detail['announce']['id']}"/>
+						<input type="button" value="保存" class="create_btnnor" onclick="javascript:msAnnounce.doEdit();" onMouseover="this.className='create_btnhov'" onMouseOut="this.className='create_btnnor'">
+						<input type="button" onclick="msAnnounce.cancel();" value="取消" class="canclebtn_nor" onMouseover="this.className='canclebtn_hov'" onMouseOut="this.className='canclebtn_nor'">
+					</div>
+	  		</div>
+	  		<div class="clear"></div>
+		</div>
+	</div>
+</div>
+<script></script>
+<include file="__THEME__/public_footer" />

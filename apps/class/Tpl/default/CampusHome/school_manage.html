@@ -1,0 +1,94 @@
+<include file="__THEME__/public_header" />
+<link href="__APP__/css/fonts.css" rel="stylesheet" type="text/css" />
+<link href="__APP__/css/main.css" rel="stylesheet" type="text/css" />
+<div class="cloud">
+	<include file="__THEME__/public_class_menu" />
+	<include file="../Public/_class_top" />
+	<div class="ccrumbs">
+		<ul>
+			<li class="pre_cen"><a
+				href="{:U('class/CampusHome/schoolIndex',array('cid'=>$_GET['cid']))}">学校主页</a></li>
+			<li><a>></a></li>
+			<li><a>学校主页管理</a></li>
+			<li><a>></a></li>
+			<li>基本资料</li>
+		</ul>
+		<div class="clear"></div>
+	</div>
+	<div class="class_bg">
+		<include file='../Public/_tabs' />
+		<div class="class_right">
+			<div class="title5">
+				<b>基本资料</b>
+			</div>
+			<div class="line1"></div>
+			<br>
+			<div class="class_line1 mt20">
+				<p class="an_title">学校名称:</p>
+				<p class="style2">
+					<input type="text" id="orgname" disabled="disabled" value="{$org['name']}" />
+					<!-- <a	style="padding-left: 10px; padding-top: 5px; color: red;" id="orgname_notice"></a> -->
+				</p>
+				<input type="hidden" id="orgid" value="{$org['id']}" />
+				<div class="clear"></div>
+			</div>
+			<div class="class_line2">
+				<p class="an_title">所在区域:</p>
+				<p class="left">
+					<select style="width: 95px;"><option></option></select>
+				</p>
+				<div class="clear"></div>
+			</div>
+			<div class="class_line1 mt10">
+				<p class="an_title">联系地址:</p>
+				<p class="style2">
+					<input type="text" id="contact" value="{$org['contact']}" />
+				</p>
+				<div class="clear"></div>
+			</div>
+			<div class="class_line1 mt10">
+				<p class="an_title">联系方式:</p>
+				<p class="style2">
+					<input type="text" id="phone" value="{$org['phone']}" />
+				</p>
+				<div class="clear"></div>
+			</div>
+			<div class="class_line2">
+				<p class="an_title">学校简介:</p>
+				<textarea id="intro">{$org['intro']}</textarea>
+				<p align="right" class="black5">
+					您还可以输入<b id="num">0</b>个字
+				</p>
+				<div class="clear"></div>
+			</div>
+			<div class="class_btn">
+				<input type="submit" value="保存" class="save_btnnor"
+					 onmouseover="this.className='save_btnhov'"
+					onmouseout="this.className='save_btnnor'" onclick="SaveProfile()"/>
+			</div>
+		</div>
+		<script>
+			function SaveProfile() {
+				var orginfo = {};
+				//	orginfo.areaid = $('#orgname').val();
+				orginfo.orgid = $('#orgid').val();
+				orginfo.contact = $('#contact').val();
+				orginfo.phone = $('#phone').val();
+				orginfo.intro = $('#intro').val();
+				orginfo.t = Math.random();
+				$.post(U('class/Ajax/doSaveCampusProfile'), {orginfo : orginfo}, function(content) {
+						if(content.status==1){
+							ui.success(content.info);
+							setTimeout(function(){
+								location.reload();
+							},500);
+						}else{
+							ui.error(content.info);
+						}
+				},'json');
+			}
+		</script>
+		<script type="text/javascript" src="__APP__/js/count.js"></script>
+		<div class="clear"></div>
+	</div>
+	<include file="__THEME__/public_footer" />

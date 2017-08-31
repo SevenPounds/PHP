@@ -1,0 +1,20 @@
+<style>
+    #blog_share_list a:hover{
+        cursor: pointer;
+        text-decoration: underline;
+    }
+    #blog_share_list a.ep_link:hover{
+        color: #009dee;
+    }
+</style>
+<input id="hiddenBlogId" type="hidden" value="{$blogId}">
+<div id="blog_share_list"></div>
+<script type="text/javascript">
+    $(function(){
+    	var blogId =$('#hiddenBlogId').val();
+        $.post(U('widget/ExcellentShare/loadExcellentShareForRight'), {blogId:blogId}, function(data){
+            $("#blog_share_list").html(data);
+            M(document.getElementById('blog_share_list'));
+        }, "json");
+    });
+</script>

@@ -1,0 +1,18 @@
+<div class="tab-menu">
+<ul>
+ <li <php>if(ACTION_NAME=='my_class'){</php>class="current"<php>}</php>>
+   <a href="{:U('blog/Index/my_class',array('cid'=>$classId))}"  >
+       <span>班级{$ts['app']['app_alias']}</span>
+   </a>
+ </li>
+ <li <php>if(ACTION_NAME=='index_class'){</php>class="current"<php>}</php>>
+   <a href="{:U('blog/Index/index_class',array('cid'=>$classId))}"  >
+       <span>热门{$ts['app']['app_alias']}</span>
+   </a>
+ </li>
+ <li <php>if(ACTION_NAME=='news_class'){</php>class="current"<php>}</php> >
+   <a href="{:U('blog/Index/news_class',array('cid'=>$classId))}" >
+       <span>最新{$ts['app']['app_alias']}</span></a>
+   </li>
+</ul>
+</div>

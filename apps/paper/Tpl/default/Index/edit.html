@@ -1,0 +1,87 @@
+<include file="paper_header" />
+<link rel="stylesheet" type="text/css" href="__THEME__/js/uploadify/uploadify.css" />
+<link rel="stylesheet" type="text/css" href="__THEME__/css/pop_upload.css" />
+<script type="text/javascript" src="__THEME__/js/uploadify/jquery.uploadify.min.js"></script>
+<script type="text/javascript">
+var id = {$id};
+var uid = {$uid};
+var type = {$type};
+</script>
+<!-- <script type="text/javascript" src="./apps/paper/_static/js/publish.js"></script> -->
+<script type="text/javascript" src="./apps/paper/_static/js/attachment.js"></script>
+<script type="text/javascript" src="./apps/paper/_static/js/edit.js"></script>
+<div class="wrap">
+	<div class="crumbs">
+		<ul>
+			<li class="pre_cen"><a href="{:U('public/Index/index')}">个人中心</a></li>
+			<li>&gt;</li>
+			<li><a href="{:U('paper/Index/index',array('type'=>$type))}">{$nav}</a></li>
+			<li>&gt;</li>
+			<li>编辑{$category}</li>
+		</ul>
+		<div class="clear"></div>
+	</div>
+	<div class="con_box">
+		<div class="left_box" style="background-color:#EFF9FB;">
+			<include file="__THEME__/public_left"/>
+		</div>
+		<div class="right_box" style="background-color:#FFFFFF;">
+			<div class="an_line pt15">
+				<p class="an_title">标题:</p>
+				<p class="style2"><input name="title" id="paper_title" type="text" value="{$paper['title']|html_entity_decode=###|htmlentities}"></p>
+				<input id="hid_id" type="hidden" value="{$id}">
+				<div class="clear"></div>
+			</div>
+			<div class="an_line pt15">
+				<p class="an_title">正文:</p>
+				<div class="an_text">
+					{:W('Editor',array('contentName'=>'content','value'=>$paper["content"],'height'=>'350px'))}
+				</div>
+				<div class="clear"></div>
+			</div>
+			<div style="display:none;" class="an_line pt20">
+				<p class="an_title2">上传附件：</p>
+				<p class="style4">
+					<!-- <span id="attachments" style="line-height:26px;color:#3366cc;text-decoration:underline;"> -->
+					</span>
+					<a href="javascript:void(0);" onclick="Paper.popup_uploadattach()" style="line-height:26px;color:#3366cc;text-decoration:underline;">请选择文件</a>
+				</p>
+				<div class="clear"></div>
+			</div>
+			<!-- 附件列表 -->
+			<php>$attachment = $paper['attachment'];</php>
+			<php>$hiddenval = json_encode($attachment);</php>
+			<input type="hidden" id="hiddenattachs" value='{$hiddenval}'/>
+			<div class="an_line" id="attachlist">
+				<p class="an_title2"></p>
+				<ul class="weibo-file-list">
+					<volist name='attachment' id='attach'>
+						<li id="{$attach['attachid']}">
+							<a href="javascript:void(0)" onclick="Paper.deleteattach('{$attach['id']}','{$attach['attachtype']}','{$attach['attachid']}','')" class="ico-close right"></a>
+							<i class="ico-{$attach.extension}-small"></i><a href = "{$attach['downloadurl']}">{$attach['title']}</a>
+						</li>
+					</volist>
+				</ul>
+				<div class="clear"></div>
+			</div>
+			<div class="an_line pt20">
+				<p class="an_title2">设置隐私：</p>
+				<input id="feed_id" type="hidden" value="{$paper['feed_id']}">
+				<p class="style5">
+					<select name="private" id="paper_privacy">
+						<option value="1" <php> if($paper['private'] == 1){ echo "selected='true'"; }</php>>公开</option>
+						<!-- <option value="2" <php> if($paper['private'] == 2){ echo "selected='true'"; }</php>>仅好友可见</option> -->
+						<option value="3" <php> if($paper['private'] == 3){ echo "selected='true'"; }</php>>仅自己可见</option>
+					</select>
+				</p>
+				<div class="clear"></div>
+			</div>
+			<div class="cr_btn">
+				<input id="paper_submit" type="button" value="保存" class="create_btnnor" onMouseover="this.className='create_btnhov'" onMouseOut="this.className='create_btnnor'">
+				<input id="paper_cancel" type="button" value="取消" class="canclebtn_nor" onMouseover="this.className='canclebtn_hov'" onMouseOut="this.className='canclebtn_nor'">
+			</div>
+		</div>
+		<div class="clear"></div>
+	</div>
+</div>
+<include file="__THEME__/public_footer" />

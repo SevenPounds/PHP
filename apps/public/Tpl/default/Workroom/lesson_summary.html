@@ -1,0 +1,40 @@
+<include file="_work_room_header" />
+		<div class="tp_box">
+			<div class="tl_con">
+				<div class="tea_tItit3">
+					<p class="left blue">教学日志</p>
+					<div class="more right">
+						<a href="{:U('public/Workroom/more_summary',array('uid'=>$uid,'type'=>1))}">更多</a>
+						<span><img src="__APP__/images/icon_right.gif"></span>
+					</div> 
+                </div>
+				<table width="100%" cellpadding="0" cellspacing="0" border="0">
+					<volist name="teach_diaries" id="vo">
+					<tr>
+						<td width="80%" class="black2"><div class="title"><a href="{:U('public/Workroom/summary_preview',array('pid'=>$vo['id'],'type'=>1,'uid'=>$uid))}" title="{$research['title']}">{$vo['title']|getShort=70,'...'}</a></div></td>
+						<td align="right" class="black1" width="20%">{$vo['cTime']|date='y-m-d',###}</td>
+					</tr>
+					</volist>
+				</table>
+			</div>
+			<div class="tl_con">
+				<div class="tea_tItit3">
+					<p class="left blue">课后反思</p>
+					<div class="more right">
+						<a href="{:U('public/Workroom/more_summary',array('uid'=>$uid,'type'=>2))}">更多</a>
+						<span><img src="__APP__/images/icon_right.gif"></span>
+					</div> 
+                </div>
+				<table width="100%" cellpadding="0" cellspacing="0" border="0">
+					<volist name="teach_reflec" id="vo">
+					<tr>
+						<td width="80%" class="black2"><div class="title"><a href="{:U('public/Workroom/summary_preview',array('pid'=>$vo['id'],'type'=>2,'uid'=>$uid))}" title="{$question['title']}">{$vo['title']|getShort=70,'...'}</a></div></td>
+						<td align="right" class="black1" width="20%">{$vo['cTime']|date='y-m-d',###}</td>
+					</tr>
+					</volist>
+				</table>
+			</div>
+		</div>
+</div>
+</div>
+<include file="__THEME__/public_footer" />

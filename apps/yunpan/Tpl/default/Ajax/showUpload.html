@@ -1,0 +1,255 @@
+<style type="text/css">
+    .popup1 {
+        width: 528px;
+        border: 1px solid #ccc;
+        z-index: 1001;
+        background-color: #fff;
+        color: #535353;
+    }
+    .uploadify{
+    	margin-left:10px;
+    	display:inline-block;
+    	float:left;
+    }
+    .uploadify .uploadify-button{
+		margin:0px;
+    }
+    /*.uploadify-button-text{*/
+        /*opacity: 1;*/
+        /*color: #fff;*/
+        /*text-align: center;*/
+        /*padding-left:20px;*/
+    /*}*/
+    .uploadify-queue {
+        margin-bottom: 1em;
+    }
+    .uploadify-queue-item {
+        background-color: #F5F5F5;
+        -webkit-border-radius: 3px;
+        -moz-border-radius: 3px;
+        border-radius: 3px;
+        font: 11px Verdana, Geneva, sans-serif;
+        margin-top: 5px;
+        max-width: 450px;
+    	width:100%;
+        padding: 10px;
+    }
+    .uploadify-error {
+        background-color: #FDE5DD !important;
+    }
+    .uploadify-queue-item .cancel a {
+        float: right;
+        height:	16px;
+        text-indent: -9999px;
+    	/*background-image:url(__APP__/images/uploadify-cancel.png);*/
+        width: 16px;
+    }
+    .uploadify-queue-item.completed {
+        background-color: #E5E5E5;
+    }
+    .uploadify-progress {
+        background-color: #E5E5E5;
+        margin-top: 10px;
+        width: 100%;
+    }
+    .uploadify-progress-bar {
+        background-color: #0099FF;
+        height: 3px;
+        width: 1px;
+    }
+
+</style>
+
+<script type="text/javascript">
+$(function(){
+	$('.hd').hide();
+	$('.closeUploadBox').live('click',function(){
+		uploadBox.close();
+	});
+});
+</script>
+<!--资源上传-->
+<div class="popup1 popup_upload" id="popup_upload">
+    <div class="popup_tit">
+        <a onclick="cancelAll();" href="javascript:;" class="closeBtn hiddenText closeUploadBox" title="关闭">关闭</a>
+        上传资源
+    </div>
+    <!-- 云盘容量隐藏域 -->
+	<input id="used_capacity" value="{$usedCapacity}" type="hidden"/>
+	<input id="total_capacity" value="{$totalCapacity}" type="hidden"/>
+    <div class="upload_after" id="upload_after">
+        <div id="fileQueue" class="upload_after_list" style="width:500px;margin:0 auto;"></div>
+        <div class="clear"></div>
+        <div class="upload_after_btns clearfix">
+        	<div style="width:200px;float:left;">
+        		<a href="javascript:;" title="添加文件" class="pop_btn_g opacityed" id="uploadify_{$unid}">添加文件</a>
+        		<div class="clear"></div>
+        	</div>
+        	<div style="width:200px;float:right;">
+	        	<button id="finish_upload" onclick="uploadBox.onUploadSuccess();" class="upload_after_btn_done opacityed" style="border:0;cursor:pointer;">完成</button>
+	            <a href="javascript:;" onclick="cancelAll();" class="upload_after_btn_cancel opacityed" title="取消全部上传">取消全部上传</a>
+	            <div class="clear"></div>
+        	</div>
+        	<div class="clear"></div>
+        </div>
+    </div>
+</div>
+<!--<div id="insertFlash" style="display: none;"><img src="" id="flashsrc" /></div>-->
+<!--资源上传结束-->
+<script type="text/javascript">
+	var files = [];
+	// 取消全部正在上传的资源
+	function cancelAll(){
+		var unid = "{$unid}";
+		var fids = [];
+		for(var i = 0; i < files.length; i++){
+			if(files[i]['id']){
+				fids.push(files[i]['fid']);
+			}
+            files[i]['isadd'] = false;
+		}
+		if(fids.length > 0){
+			deletByFids(fids);
+		}
+		jQuery("#uploadify_"+unid).uploadify('cancel','*');
+	};
+	
+	// 删除已上传的资源
+	function deleteRes(instanceID,fileID){
+		for(var i = 0; i < files.length; i++){
+			if(files[i]['id'] == fileID){
+				var fids = [];
+				fids.push(files[i]['fid']);
+				deletByFids(fids);
+				files[i]['isadd'] = false;
+			}
+		}
+		$('#' + instanceID).uploadify('cancel', fileID);
+	};
+	
+	// 根据fid删除上传到云盘的资源
+	function deletByFids(files){
+		$.ajax({
+			url : 'index.php?app=yunpan&mod=Ajax&act=deleteByFids',
+			type : 'post',
+			data : {fids : files},
+			success : function(result){
+
+			},
+			error : function(msg){
+				
+			}
+		})
+	};
+
+    /**
+     * Created by cheng on 14-4-14.
+     * Jquery多图上传Uploadify插件
+     * @return void
+     */
+    function containAddsOn(){
+        core.loadFile(THEME_URL+'/js/uploadify/jquery.uploadify.min.js', function () {
+            var unid = "{$unid}",
+                    total = "{$total}",
+                    fileSizeLimit = "{$fileSizeLimit}",
+                    folder = "{$folder}";
+//            if(navigator.userAgent.indexOf("MSIE 7.0")>0){
+//                $.getScript(THEME_URL+'/js/uploadify/jquery.uploadify.min.js');
+//                var flashUrl = THEME_URL+'/js/uploadify/uploadify.swf?preventswfcaching='+(new Date().getTime());
+//                $("#flashsrc").attr("src",flashUrl);
+//            }
+            $('#uploadify_'+unid).uploadify({
+                formData: {
+                    folder:folder,
+                    PHPSESSID: "<?php echo session_id(); ?>"
+                },
+                fileSizeLimit: fileSizeLimit,
+                successTimeout : 3600,
+                removeCompleted: false,
+                itemTemplate : '\
+            	<div id="${fileID}" class="uploadify-queue-item">\
+            		<div class="cancel">\
+            			<a onclick="deleteRes(\'${instanceID}\',\'${fileID}\');" style="float:right;background-image:url(__APP__/images/uploadify-cancel.png);" href="javascript:void(0);">X</a>\
+            		</div>\
+            		<span class="fileName">${fileName} (${fileSize})</span>\
+            		<span class="data"></span>\
+            		<div class="uploadify-progress"><div class="uploadify-progress-bar" style="width: 100%;"></div></div></div>',
+                /////LM修改/////////////
+                fileTypeDesc: '文件类型',
+                fileTypeExts: "<?php echo $fileTypeExts; ?>",//这里$fileTypeExts值为空字符串 因此出错
+                ////////////////////////////
+                swf: THEME_URL + '/js/uploadify/uploadify.swf',
+                uploader: "<?php echo $uploader; ?>",
+                width: 89,
+                height: 32,
+                buttonClass: 'pop_btn_g',
+                buttonText:'添加文件',
+                queueSizeLimit: total,
+                queueID: 'fileQueue',
+                removeTimeout: 1, //移除时间
+                overrideEvents: ['onSelectError', 'onDialogClose'],
+                onDialogOpen:function(){
+                    document.title = browser_title;
+                },
+                onSelect:function(file){
+                    jQuery("#finish_upload").attr('disabled',true);
+                    var used = parseInt($("#used_capacity").val());
+                    var total = parseInt($("#total_capacity").val());
+                    var newUsed = used + file.size;
+                    $("#used_capacity").val(newUsed);
+                    if(newUsed > total){
+                        jQuery("#uploadify_"+unid).uploadify('cancel','*');
+                        ui.error('云盘空间不足！');
+                        uploadBox.close();
+                    }
+                },
+                onUploadSuccess : function(file, data, response) {
+                    data = eval('(' + data + ')');
+                    var res = {};
+                    res.id = file.id;
+                    // 获取新上传的资源fid
+                    res.fid = data.data;
+                    res.isadd = true;
+                    files.push(res);
+                },
+                onSelectError: function (file, errorCode, errorMsg) {
+                    switch (errorCode) {
+                        case -100:
+                            ui.error('一次最多可以上传' + total + '个文件');
+                            break;
+                        case -110:
+                            ui.error("文件 [" + file.name + "] 大小超出系统限制的" + $('#uploadify_'+unid).uploadify('settings', 'fileSizeLimit') + "大小", 4);
+                            break;
+                        case -120:
+                            ui.error("文件 [" + file.name + "] 大小为0kb，请重新选择！");
+                            break;
+                        case -130:
+                            ui.error("文件 [" + file.name + "] 类型不正确");
+                            break;
+                    }
+                },
+                onFallback: function () {
+                    ui.error('您未安装FLASH控件，无法上传！请安装FLASH控件后再试');
+                },
+                onUploadStart: function (file) {
+                    if(''==folder){
+                        ui.error("请选择上传文件夹");
+                        return ;
+                    }
+                    if(file['name'] =="" || "undefined" == typeof file['name']){
+                        ui.error("请选择上传文件！");
+                        return ;
+                    }
+                },
+                onQueueComplete:function(){
+                    jQuery("#finish_upload").attr('disabled',false);
+                }
+            });
+        });
+    }
+
+    containAddsOn();
+
+
+
+</script>

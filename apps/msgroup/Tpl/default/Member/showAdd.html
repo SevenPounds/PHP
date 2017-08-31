@@ -1,0 +1,13 @@
+<style type="text/css">
+    .page{
+        padding: 15px 0;
+        text-align: center;
+    }
+</style>
+<div style="height: 560px;width:800px;overflow-y:auto;overflow-x:hidden;position:relative;">
+	{:W("UserList",array('userids'=>$userIds))}
+	<div class="cr_btn">
+		<input type="button" value="保存" class="create_btnhov" onclick="javascript:msMember.addMember();" onmouseover="this.className='create_btnhov'" onmouseout="this.className='create_btnnor'">
+		<input type="button" value="取消"  class="canclebtn_nor" onclick="javascript:ui.box.close();" onmouseover="this.className='canclebtn_hov'" onmouseout="this.className='canclebtn_nor'">
+	</div>
+</div>

@@ -1,0 +1,347 @@
+<include file="_onlineanswer_header"/>
+<script type="text/javascript" src="__APP__/js/detail.js"></script>
+<script type="text/javascript" src="__APP__/js/unsolved.js"></script>
+<div id="page-wrap">
+	<div id="main-wrap">
+		<div class="crumbs">
+			<ul>
+				<li class="pre_cen"><a href="{:U('public/Index/index')}">个人空间</a></li>
+				<li>&gt;</li>
+				<li><a href="{:U('onlineanswer/Index/index')}">在线答疑</a></li>
+				<li>></li>
+				<li>{$question['title']}</li>
+			</ul>
+			<div class="clear"></div>
+		</div>
+		<div class="con_box">
+			<div class="left_box">
+				<!--左侧用户信息-->
+				<include file="__THEME__/public_left" />
+			</div>
+			<div class="right_box">
+				<div class="online_title bottom_line">
+					<div class="left pt3"> <span><img src="__THEME__/app_icon/app_zxdy.png" /></span> <span class="pl10 font3"><b>在线答疑</b></span> </div>
+					<div class="right">
+						<p class="blue_btn3" onmouseover="this.className='blue_btn3hov'" onmouseout="this.className='blue_btn3'" onclick="window.location.href=U('onlineanswer/Index/create')"><img src="__APP__/images/add.gif" height="8"/>创建答疑</p>
+					</div>
+					<div class="clear"></div>
+				</div>
+				<div class="online_box">
+					<div class="online_left">
+						<div>
+							<if condition="$status eq 0"><p id="t_state" class="pk_zt pk_ing"><strong>未解决</strong></p>
+							<else /><p id="t_state" class="pk_zt pk_end"><strong>已解决</strong></p></if>
+							<div class="left pl20" style="*width:450px;">
+								<p class="online_name">{$question['title']}</p>
+								<p class="online_con" style="line-height:1.5;"><strong>问题详述：</strong></p>
+                                <div id="online_content" style="display:none;">{$question['content']}</div>
+                               
+                                <iframe id="frame_1" width="90%" scrolling="no" frameborder="0" height="0">
+		                        </iframe>
+	                            <script type="text/javascript">
+	                                window.onload = function () {
+	                                    jQuery("#online_content img").each(function () {
+	                                        if ($(this).width() > 450)
+	                                            $(this).width("90%");
+	                                    });
+	                                    jQuery("#online_content").find("a").attr('target', '_blank');
+	                                    document.getElementById('frame_1').contentWindow.document.body.innerHTML = document.getElementById('online_content').innerHTML;
+	                                    document.getElementById('frame_1').contentWindow.document.body.scrollHeight;
+	                                    jQuery("#frame_1").height(document.getElementById('frame_1').contentWindow.document.body.scrollHeight + 20);
+	                                };
+	                            </script>
+
+								<div class="mt8">
+									<p class="left"><strong>标签：</strong></p>
+									<div class="other01">
+										<volist name="question.tags" id="ta">
+										<p class="card01"><a style="cursor:auto;"><span style="cursor:auto;">{$ta}</span></a></p>
+										</volist>
+									</div>
+									<div class="clear"></div>
+								</div>
+								<p class="online_infor pt15">
+								<!-- <span><img src="__APP__/images/on_01.gif" /></span>-->
+								<span class="pl3"><php>echo date("m月d日 H:i",$question['ctime'])</php></span>
+								<!-- <span class="pl15"><img src="__APP__/images/on_02.gif" /></span>
+								<span class="pl3">11个成员</span> -->
+								<span class="pl15"><img src="__APP__/images/on_03.gif" /></span>
+								<span class="pl3">{$question['answer_count']}次回答</span>
+								<div class="clear"></div>
+								</p>
+							</div>
+							<div class="clear"></div>
+						</div>
+
+						<if condition="$status eq 1">
+						<include file="_detail_bestanswer" />
+						</if>
+
+						<div class="pt20">
+							<div class="online_tab01box">
+								<div class="online_tab">
+									<ul id="tab_id">
+										<li class="present" onclick="changeTabStyle(this,1)"><a>全部回答</a></li>
+										<if condition="!$isself">
+										<li class="normal" onclick="changeTabStyle(this,2)"><a>我的回答</a></li>
+										</if>
+									</ul>
+								</div>
+								<div class="pk_btn" id="postanimate" style="display:none;"><a style="cursor:pointer" onclick="animatedScroll('#postcontent');">发表回答</a></div>
+							</div>
+							<dl class="pk_con" id="answer_holder">
+							</dl>
+						</div>
+
+						<div class="book_txt3 pb30" id="postcontent" style="display:none;">
+							<div model-node="mini_editor" class="relative_area">
+								<textarea id="answer_content"></textarea>
+								<span><b>0</b>/140</span>
+							</div>
+
+							<input type="hidden" id="hidden_qid" value="{$question['qid']}" />
+
+
+							<div class="book_btn3">
+								<a class="face-block pt3" href="javascript:;" event-node="comment_insert_face">
+									<img src="__THEME__/image/smile_btn.jpg" />
+								</a>
+
+								<a class="pl15 pt3" id="talk" tag=""></a>
+
+								<p class="right">
+								<input type="button" id="publish_ans" value="发表" class="green_btn3" onMouseover="this.className='green_btn3hov'" onMouseOut="this.className='green_btn3'" />
+								</p>
+							</div>
+
+							<div class="clear"></div>
+							<div model-node="faceDiv"></div>
+						</div>
+					</div>
+					<div class="online_right">
+						<div class="add_left01">
+							<ul>
+								<!--<li class="add01"><a href="#">结束评课</a></li>-->
+								<!-- <li class="add01_pre"><a href="#">结束评课</a></li> -->
+								<!--<li class="add01_dis">结束评课</li>-->
+
+								<!--<li class="add02"><a href="#">下载记录</a></li>-->
+								<!--<li class="add02_pre"><a href="#">下载记录</a></li>-->
+								<!-- <li class="add02_dis">下载记录</li> -->
+								<if condition="$question['answer_count'] eq 0 && $isself eq 1">
+								<li class="add02" style="cursor:pointer"><a href="{:U('onlineanswer/Index/addMore',array('qid'=>$qid))}">编辑问题</a></li>
+								<else />
+								<li class="add02_dis" style="cursor:not-allowed">编辑问题</li>
+								</if>
+								<!--<li class="add03_pre"><a href="#">编辑评课</a></li>-->
+								<!--<li class="add03_dis">编辑评课</li>-->
+								<if condition="$isself eq 1">
+								<li class="add04" style="cursor:pointer"><a id="del{$qid}" href="javascript:del({$qid})">删除问题</a></li>
+								<else />
+								<li class="add04_dis" style="cursor:not-allowed">删除问题</li>
+								</if>
+								<!--<li class="add04_pre"><a href="#">删除评课</a></li>-->
+								<!--<li class="add04_dis">删除评课</li>-->
+
+							</ul>
+							<div class="clear"></div>
+						</div>
+
+						<div class="fqr_member">
+							<div class="fqr_membername">提问人</div>
+							<ul>
+								<li>
+								<p class="member_head">
+								<a href="{$cyInfo['space_url']}" event-node="face_card" show="no" uid={$cyInfo['uid']}>
+									<img src="{$cyInfo['avatar_small']}" />
+								</a>
+								</p>
+								<p class="left pl10 pt10">
+								{$cyInfo['uname']}<br/>
+								<font class="black2" title="{$cyInfo['orgName']}">{$cyInfo['orgName']|getShort=8,'...'}</font>
+								</p>
+								</li>
+							</ul>
+							<div class="clear"></div>
+						</div>
+
+						<div class="pk_member">
+							<div class="pk_membername">参与成员</div>
+							<ul id="member_holder">
+
+							</ul>
+							<div class="clear"></div>
+						</div>
+						
+						<div class="clear"></div>
+						<!-- 精彩回复 -->
+						{:W('CommentExcellent',array('app_name'=>'onlineanswer','table'=>'onlineanswer_answer','row_id'=>$question['qid'],'tpl'=>'jiaoyan'))}
+
+					</div>
+				</div>
+
+
+			</div>
+			<div class="clear"></div>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+var qid = "<php>echo $qid;</php>";
+
+//jQuery动态锚点跳转
+function animatedScroll(anchor) {
+	$('html,body').animate({scrollTop:$(anchor).offset().top - 150}, 200);
+}
+
+/**
+ * 删除问题
+ * @param qid 问题id
+ */
+function del(qid) {
+	var delCallback = function() {
+		jQuery.ajax({
+			type : "POST",
+			url : U('onlineanswer/Index/delete'),
+			data : {
+				qid : qid
+			},
+			dataType : "text",
+			error : function() {
+				ui.error("请检查网络连接....");
+			},
+			success : function(data) {
+				data = eval("("+data+")");
+
+				if (data.status == "200") {
+					ui.success("删除成功!");
+					setTimeout(function() {
+						window.location.href = U('onlineanswer/Index/index');
+					}, 1500);
+				} else {
+					ui.error("请检查网络连接....");
+				}
+			}
+		});
+	};
+
+	ui.confirmBox("提示", "确认删除这个问题?", delCallback)
+}
+
+//删除答案
+function delAnswerbyid(aid) {
+    if($.browser.msie){ //兼容ie浏览器
+        if(confirm("确认删除？")){
+            deleteAnswer(aid);
+        }
+    }else{
+        ui.confirmBox("提示", "确认删除?", function() {
+            deleteAnswer(aid);
+        });
+    }
+}
+
+//删除答疑回复
+function deleteAnswer(aid){
+    jQuery.ajax({
+        type : "POST",
+        url : U('onlineanswer/Ajax/deleteAnswerByAid'),
+        data : {aid:aid},
+        dataType : "text",
+        error : function() {
+            ui.error("请检查网络连接....");
+        },
+        success : function(data){
+            data = eval("("+data+")");
+            if (data.status == "200") {
+                ui.success("删除成功!");
+                getAnswersByQid(1,1);
+                removeCommentPost(aid);
+            } else {
+                ui.error("请检查网络连接....");
+            }
+        }
+    });
+}
+
+//编辑答案
+showUpdateResWin = function(answerid, qid) {
+	var url = U("onlineanswer/Index/showUpdate") + '&aid=' + answerid + '&qid=' + qid;
+	url = encodeURI(url);
+	ui.box.load(url, "答案");
+}
+
+//切换按钮
+function changeTabStyle(obj, type) {
+	jQuery("#tab_id li").each(function() {
+		jQuery(this).removeClass().addClass("normal");
+	});
+	jQuery(obj).removeClass().addClass("present");
+	getAnswersByQid(1,type);
+}
+
+//ajax获得问题的答案
+function getAnswersByQid(page, type) {
+	jQuery.ajax({
+		type : "POST",
+		dataType : "text",
+		url : U('onlineanswer/Ajax/getAnswerbyQid'),
+		data : {
+			qid : qid,
+			p : page,
+			type : type
+		},
+		success : function(html) {
+			$("#answer_holder").html(html);
+			// 必须使用这个函数，才能在动态加载的时候使用TS自带的头像悬浮等js事件
+			M($('#answer_holder')[0]);
+		},
+		error : function() {
+			ui.error("请检查网络连接");
+		}
+	});
+}
+
+//ajax获取参与成员
+function getJoinMember(page){
+	jQuery.ajax({
+		type : "POST",
+		dataType : "text",
+		url : U('onlineanswer/Ajax/getJoinMember'),
+		data : {
+			qid : qid,
+			p : page
+		},
+		success : function(html) {
+			$("#member_holder").html(html);
+
+			// 必须使用这个函数，才能在动态加载的时候使用TS自带的头像悬浮等js事件
+			M($('#member_holder')[0]);
+		},
+		error : function() {
+			ui.error("请检查网络连接");
+		}
+	});
+}
+
+jQuery(document).ready(function(){
+	loadSTT(2500, "talk");
+	STTRecordPlay.SetRecordEndEvent(setRecordData,clearInput,recordCompleteFun);
+	AudioPlayer.init();
+});
+
+function clearInput(talkId) {
+	jQuery("#answer_content").val("");
+}
+
+function setRecordData(data) {
+	//jQuery("#talk").attr("tag",data.audioUrlId);
+	jQuery("#answer_content").val(jQuery("#answer_content").val() + data.content);
+}
+
+function recordCompleteFun(key){
+	jQuery("#talk").attr("tag",key);
+}
+</script>
+
+<include file="__THEME__/public_footer" />	

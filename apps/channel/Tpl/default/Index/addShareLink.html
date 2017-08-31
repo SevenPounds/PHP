@@ -1,0 +1,62 @@
+<style>
+<!--
+btn_green01 {
+    background: url("images/btn_green.gif") no-repeat scroll center top transparent;
+    color: #333333;
+    font-size: 14px;
+    height: 34px;
+    width: 90px;
+}
+-->
+</style>
+<div class="kh_bg1">
+	<div class="kh_box">
+		<div class="kh_head">
+			<span class="left">分享链接</span>
+			<span class="kh_close"><input type="button" value=""  class="kh_closenor"  onmouseover="this.className='kh_closehov'" onmouseout="this.className='kh_closenor'" onclick="ui.box.close()"/></span>
+			<div class="clear"></div>
+		</div>
+		<div class="share_box">
+			<div class="share_boxleft"></div>
+			<div class="share_boxcen"><input type="text"  value="" id="add_share_link"/></div>
+			<div class="share_boxbtn"><input type="button" value="添加链接" class="share_boxbtnnor"  onmouseover="this.className='share_boxbtnhov'" onmouseout="this.className='share_boxbtnnor'" onclick="javascript:addShare();"/></div>
+			<div class="clear"></div>
+		</div>
+		<p class="orange2 pl20 mb16">请在输入框内输入您要分享的站外链接地址，点击“添加链接”就能快速的分享站外内容了哦！</p>
+	</div>
+</div>
+<script type="text/javascript">
+<!--
+function is_url(str_url){
+	var strRegex = "^((https|http)?://)"
+	+ "(([0-9]{1,3}\.){3}[0-9]{1,3}" // IP形式的URL- 199.194.52.184
+	+ "|" // 允许IP和DOMAIN（域名）
+	+ "([0-9a-z_!~*'()-]+\.)*" // 域名- www.
+	+ "([0-9a-z][0-9a-z-]{0,61})?[0-9a-z]\." // 二级域名
+	+ "[a-z]{2,6})" // first level domain- .com or .museum
+	+ "(:[0-9]{1,4})?" // 端口- :80
+	+ "((/?)|" // a slash isn't required if there is no file name
+	+ "(/[0-9a-z_!~*'().;?:@&=+$,%#-]+)+/?)$";
+	var re=new RegExp(strRegex);
+	//re.test()
+	if (re.test(str_url)){
+		return (true);
+	}else{
+		return (false);
+	}
+}
+function addShare(){
+	var link = $("#add_share_link").val();
+	if($.trim(link) == ""){
+		ui.error("输入为空，请重新输入！");
+		return;
+	}
+	if(!is_url(link)){
+		ui.error("链接格式有误，请重新输入！");
+		return;
+	}
+	ui.box.close();
+	ui.box.load(U('channel/Index/addShare')+'&share_link='+link, '创建分享');
+}
+//-->
+</script>

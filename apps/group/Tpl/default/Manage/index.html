@@ -1,0 +1,139 @@
+<include file="__THEME__/header" />
+<script type="text/javascript" src="__APP__/Js/common.js"></script>
+<script type="text/javascript" src="__APP__/Js/json2select.js" ></script>
+<script type="text/javascript" src="__APP__/Js/group.info.form.js" ></script>
+<link  href="__APP__/group.css" rel="stylesheet" type="text/css"/>
+<script>
+/**
+ *  判断圈子名称是否重复
+ */
+function limtName(obj){
+	var _data=$('[name="name"]').val();
+	var isAllow=false;
+	$.ajax({
+		type: 'POST',
+		url: 'index.php?app=group&mod=Manage&act=isRepeat&gid={$gid}',
+		data: {'name' :_data},
+	    async:false,
+		success:function(json){
+			var msg = jQuery.parseJSON(json);
+			if('1'==msg.status){
+				  ui.error('该圈子名称已被使用');
+				  $('[name="name"]').addClass('text2');
+				  $('[name="name"]').addClass('text');
+			}else{
+				isAllow=limtAttach(obj);	
+			}
+		}
+	});
+	return isAllow;
+}
+
+/**
+ * 附件类型判断
+ add by xmsheng 2014/8/5
+ */
+ //允许上传的文件类型
+extArray = new Array("gif", "jpg", "png");
+function limtAttach(form){
+  var isAllow=false;
+  var file=form.logo.value;
+   if(file==""){
+	   //没有更换头像，允许上传
+	   isAllow=true;
+   }else{
+	   var lastIndex=file.lastIndexOf(".");
+	   var ext=file.substring(lastIndex+1);
+	   for(var index=0;index<extArray.length;index++){
+		   if(extArray[index]==ext.toLowerCase()){
+			   isAllow=true;
+			   break
+		   }   
+	   }	  
+   }
+   if(!isAllow){
+	   jQuery("#waring").text("*请选择gif,jpg,png格式的图片");	 
+   }
+   return isAllow;
+}
+
+$(document).ready(function(){	
+	group_info.init();
+	group_info.$input_tags.change(function(){
+		group_info.tag_num();
+	});
+});
+</script>
+<div class="content_holder">
+<div class="content no_bg boxShadow"><!-- 内容 begin  -->
+<include file="../Public/_mainNav" />
+  <div class="main no_l"> 
+    <!-- 右侧内容 begin  -->
+    <div class="mainbox">
+      <div class="mainbox_C mainC_pad" style="margin-right:0"> <include file="../Public/manage_group_top" />
+        <div class="groupBox">
+          <div class="boxL" style="width:100%;">
+            <form name="editform"   onSubmit="return limtName(this);" action="{:U('group/Manage/index', array('gid'=>$gid))}" method="post" onsubmit="javascript:return group_info.check_form(this);" enctype="multipart/form-data">
+              <ul class="add_group">
+                <li>
+                  <div class="c1"><font color="red">*</font>圈子名称：</div>
+                  <div class="c2">
+                    <input name="name" value="{$groupinfo['name']}" class="text" style="width: 50%;" onBlur="this.className='text';group_info.text_length(this,30);" onFocus="this.className='text2'" type="text" />
+                    <span id="group_name_tips" class="cRed pr5"></span>
+                  </div>
+                </li>
+                <li>
+                  <div class="c1"><font color="red">*</font>圈子分类：</div>
+            	  <div class="c2" id="pid"></div>
+                </li>
+                <li>
+                  <div class="c1">圈子头像：</div>
+                  <div class="c2" style=" height:45px"><span class="left mr10"><img src="{$groupinfo['logourl']}" width="50" height="50" /></span>
+                  <span class="left lh25">
+                  	换用其它图标：<br />
+                    <input class="text" type="file" name="logo" value="nofile"/><span style="color:red;" id="waring"></span>
+                  </span>
+                  </div>
+                </li>
+                <li>
+                  <div class="c1">圈子介绍：</div>
+                  <div class="c2">
+                    <textarea name="intro" rows="6"  style="width:400px;height:100px;overflow:auto" class="text"  onBlur="this.className='text';group_info.text_length(this,200);" onFocus="this.className='text2'">{$groupinfo['intro']}</textarea><br /><span id="group_intro_tips" class="cRed pr5"></span>
+                  </div>
+                </li>
+                <li>
+                  <div class="c1">圈子人数：</div>
+                  <div class="c2">{$groupinfo['membercount']}人 </div>
+                </li>
+                <li>
+                  <div class="c1">&nbsp;</div>
+                  <div class="c2">
+                    <input type="hidden" name="gid" value="{$gid}">
+                    <input type="hidden" name="editsubmit" value="1" >
+                    <input type="hidden" name="verify" value="1" />
+                    <input name="button" type="submit" class="btn_b mt5"  id="button" value="保存" />
+                  </div>
+                </li>
+              </ul>
+            </form>
+          </div>
+          <!-- end  --> 
+        </div>
+        <div class="c"></div>
+      </div>
+      <div class="c"></div>
+    </div>
+  </div>
+  <!-- 右侧内容 end  --> 
+</div>
+</div>
+<!-- 内容 end --> 
+<script type="text/javascript">
+ $(document).ready(function(){
+	 var category_json = {:getCategorySelect(0)};
+	 $("#pid").json2select(category_json,[{$groupinfo['cid0']},{$groupinfo['cid1']}],'cid');
+ });
+</script> 
+<include file="__THEME__/public_footer" />
+</body>
+</html>

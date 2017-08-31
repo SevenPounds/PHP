@@ -1,0 +1,86 @@
+<include file="__THEME__/public_header" />
+<link href="__APP__/css/teacherapp.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="./apps/public/_static/zone.css" type="text/css"/>
+<link type="text/css" href="__APP__/css/font.css" rel="stylesheet"></link>
+<link type="text/css" href="__APP__/css/gobal.css" rel="stylesheet"></link>
+<link type="text/css" href="__APP__/css/main.css" rel="stylesheet"></link>
+<link type="text/css" href="__APP__/css/per_zone.css" rel="stylesheet"></link>
+<link type="text/css" href="__APP__/css/reset.min.css" rel="stylesheet"></link>
+<link rel="stylesheet" type="text/css" href="__THEME__/js/uploadify/uploadify.css" />
+<link rel="stylesheet" type="text/css" href="__THEME__/css/pop_upload.css" />
+<script type="text/javascript" src="__THEME__/js/uploadify/jquery.uploadify.min.js"></script>
+<script type="text/javascript">
+uploadres = function(restype){
+	ui.box.load(U('reslib/Index/showUpload') +"&refresh=true&restype=" + restype,'上传资源');
+}
+</script>
+<style>
+body {
+    background: url("__APP__/images/cloud.jpg") repeat-x scroll 0 0 #E4F3F8;
+}
+#body-bg{
+	padding-top:26px;
+}
+#body_page{
+	background-image:none;
+}
+</style>
+        <div id="feedback" class="feedback-fixed"><a href="{:U('public/Index/feedback')}" target="_blank">{:L('PUBLIC_FEEDBACK')}</a></div>
+        <div class="wrap">
+        	<div class="crumbs">
+					<ul>
+						<li class="pre_cen"><a href="{:U('public/Index/index')}">个人中心</a></li>
+						<li>&gt;</li>
+						<li>{$appname}</li>
+					</ul>
+					<div class="clear"></div>
+				</div>
+            <div class="con_box">
+            	<php> if($uid == $mid):</php>
+                <div class="left_box" style="background-color:#EFF9FB;">
+					<include file="__THEME__/public_left"/>
+				</div>
+                <php> endif; </php>
+                <div class="right_box" style="background-color:#FFFFFF;height:1600px;<php>if($mid!=$uid){ echo "padding:0 55px 0 55px;height:auto;width:890px;"; }</php>">
+              		<div class="online_title">
+						<div class="left"><span>
+						<php> 	if($appname == "教学设计"){
+							echo "<img src='__APP__/images/icon_jxsj.gif' style='width:24px;height:24px;'/>";}
+							else if($appname == "教学课件"){
+							echo "<img src='__APP__/images/icon_jxkj.png' style='width:24px;height:24px;' />";}
+							else if($appname == "教学视频"){
+							echo "<img src='__APP__/images/icon_ktsl.png' style='width:24px;height:24px;' />";}
+							else if($appname == "媒体素材"){
+							echo "<img src='__APP__/images/icon_mtsc.png' style='width:24px;height:24px;' />";}					
+						</php>
+						</span><span class="pl10 font3"><b>{$appname}</b></span></div>
+						<div class="right">
+							<p class="blue_btn6" onMouseover="this.className='blue_btn6hov'" onclick="uploadres('{$restype}');" onMouseOut="this.className='blue_btn6'" style="width:100%;"><img src="__APP__/images/down_load.gif" />上传{$appname}</p>
+						</div>
+					</div>
+					<ul class="td_box">
+                		<volist name="data" id="res">
+						<li>
+							<div class="td_pic">
+								<div class="td_img">
+									<a href='index.php?app=resview&mod=Index&act=index&appcode={$restype}&id={$res["rid"]}&uid={$uid}'>
+										<img src="<php>echo getResThumbnail($res['thumbnail_url'])</php>"/>
+									</a>
+								</div>
+							</div>
+							<p align="center" class="blue font2 pt5"><b>
+								<a href="index.php?app=resview&mod=Index&act=index&appcode={$restype}&id={$res['rid']}&uid={$uid}" title="{$res['title']}">{:getShort($res['title'],8,'...')}</a></b></p>
+							<p align="center" class="black1">上传于<span class="pl2">{$res["uploaddateline"]}</span><span class="pl5">浏览<span class="pl2">{$res["viewcount"]}</span></span></p>
+						</li>
+						</volist>
+					</ul>
+					<div class="clear"></div>
+                	<php>if($page):</php>
+                	<div class="online_tablebot">
+						<div class="page">{$page}</div>
+					</div>
+					<php>endif;</php>
+                </div>
+            </div>
+        </div>
+<include file="__THEME__/public_footer" />

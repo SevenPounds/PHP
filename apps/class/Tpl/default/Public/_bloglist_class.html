@@ -1,0 +1,73 @@
+<div class="BlogBox">
+  <div class="LogList"><!-- 班级日志 begin  -->
+    <ul>
+      <volist name="data" id="vo">
+        <li class="lineD_btm">
+            <h3>
+              <a href="{:U('class/ClassBlog/show_class', array('id'=>$vo['id'],'cid'=>$classId, 'mid'=>$vo['uid']))}">{$vo['title']}</a>
+            </h3>
+              <php>
+              // 过滤HTML代码
+              // $vo['content'] = strip_tags($vo['content']);
+              </php>
+              <p class="f14px roundbgF6 content mb15">
+                <php>if($vo['cover']){</php>
+				<span class="thumbs_block">
+                    <img src="{$vo['cover']}"/>
+				  </span>
+                <php>}</php>
+                {:getShort(t($vo['content']),$titleshort,$suffix)}</p>
+            <p class="cGray2">
+              <span class="right">分类：<php>
+                  $url = U('class/ClassBlog/my_class', array('cid'=>$classId,'cateId'=>$vo['category']));
+              </php>
+              <a href="{$url}" class="mr10">{$vo['category_title']}</a>
+              阅读：<a href="{:U('class/ClassBlog/show_class', array('id'=>$vo['id'],'cid'=>$classId,'mid'=>$vo['uid']))}" class="mr10">{$vo['readCount']}</a>
+              评论：<a href="{:U('class/ClassBlog/show_class', array('id'=>$vo['id'], 'cid'=>$classId,'mid'=>$vo['uid']))}#comment">{$vo['commentCount']}</a></span>
+              <span class="name1 mr10"><php>if(ACTION_NAME == 'my' && $vo['uid']==$ts['user']['uid']) {</php>
+              <a href="{:U('class/ClassBlog/edit', array('id'=>$vo['id'], 'mid'=>$vo['uid']))}">编辑</a> | <a href="javascript:deleteBlog('{:U('class/ClassBlog/doDeleteBlog', array('id'=>$vo['id']))}')">删除</a>&nbsp;&nbsp;
+            <php>}else {</php>
+              {$user_info[$vo['uid']]['space_link']}
+              <!-- 用户分组图标 -->
+            <php>}</php></span>
+              <span class="cGray2">发表于 {$vo['cTime']|friendlyDate}</span>
+            </p>
+        </li>
+      </volist>
+    </ul>
+    <div class="page">{$html}</div>
+  </div>
+  <!-- 好友日志 end  --> 
+  <div class="c"></div>
+</div>
+<script type="text/javascript">
+//v2.0(判断图片载入后显示缩略图)
+function set_thumbs(obj, W, H) {
+  jQuery(obj + ' img').hide().each(function() {
+    var w, h, cw, ch;
+    function doResize(o) {
+      cw = o.width();
+      ch = o.height();//console.log(o);console.log(cw);console.log(ch);
+      w = W;
+      h = ch*W/cw;
+			if(cw<=W && ch<=H){
+			  h=ch;
+			  w=cw;
+      }else if(cw>=W && ch>=H){
+			  w = W;
+        h = ch*W/cw;
+			}else if (cw>=W && ch<=H) {
+        w = W;
+        h = ch*W/cw;
+      } else {
+        h = H;
+        w = cw*H/ch;
+      }
+        o.attr('style', 'width: ' + w + 'px; height: ' + h + 'px; ').hide().fadeIn('slow');
+    }
+    if (jQuery(this).get(0).complete) doResize(jQuery(this));
+    else jQuery(this).bind("load", function() { doResize(jQuery(this)); });
+  });
+}
+set_thumbs('.thumbs_block', 200, 140);
+</script>

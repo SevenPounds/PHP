@@ -1,0 +1,123 @@
+<include file="__THEME__/public_header" />
+<link href="http://libs.baidu.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet" ></link>
+<link rel="stylesheet" type="text/css" href="__APP__/js/Utils/duallist/css/prettify.css" ></link>
+<link rel="stylesheet" type="text/css" href="__APP__/js/Utils/duallist/css/bootstrap-duallistbox.css" ></link>   
+<script src="__APP__/js/Utils/duallist/js/jquery.bootstrap-duallistbox.js"></script>
+<link href="__APP__/fonts.css" rel="stylesheet" type="text/css" />
+<link href="__APP__/per_zone.css" rel="stylesheet" type="text/css" />
+<link href="__APP__/css/library.css" rel="stylesheet" type="text/css" />
+<link href="__APP__/css/style_library.css" rel="stylesheet" type="text/css" />
+<link href="__APP__/css/lesson.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="__APP__/css/c_pop.css">
+<link rel="stylesheet" href="__APP__/css/person_center.css">
+<!-- 加载弹出插件 -->
+<link href="__APP__/js/Utils/artDialog/css/ui-dialog.css" rel="stylesheet" type="text/css" />
+<!-- 加载弹出层样式 -->
+<script type="text/javascript" src="__APP__/js/Utils/artDialog/js/dialog-plus.js"></script>
+<script type="text/javascript" src="__APP__/js/Utils/artDialog/js/pop.js"></script>
+<script type="text/javascript" src="__APP__/js/tea_lesson.js"></script>
+<script type="text/javascript" src="__APP__/js/recordList.js"></script>
+<div id="page-wrap">
+	<div id="feedback" class="feedback-fixed">
+		<a href="{:U('public/Index/feedback')}" target="_blank">{:L('PUBLIC_FEEDBACK')}</a>
+	</div>
+	<input type="hidden" value="{$lessonUrl}" id="lessonUrl">
+	<div id="main-wrap">
+		<div id="st-index-grid" class="st-grid content-bg">
+			<!--左边 -->
+			<include file="__THEME__/public_left" />
+			<div class="st-section"
+				style="border-left: 1px solid #e1e1e1; height: 1600px; line-height: 26px;">			
+					<div class="wrapper">
+						<div class="lesson_thid">
+							<!--141009 最小宽度-->
+							<div class="public_class_box">
+								<div class="public_tab_box clearfix">
+									<div class="public_tab fl">
+										<a href="javascript:void(0);" class="active" id="tea_created" onclick="tea_created()"><span>我的开课</span><b></b></a> <a
+											href="javascript:void(0);" id="tea_signed" onclick="tea_signed()"><span>我的听课</span><b></b></a>
+									</div>
+									<a href="javascript:void(0);" class="fr btn_class" onclick="newLive();">我要开课</a>
+								</div>
+								<div class="public_tab_content">
+									<ul class="public_tab_ul" id="lives">
+									</ul>
+								</div>
+							</div>
+							</div>
+							<div class="lesson_tit">
+								<span id="lessonTitle">开课记录</span>
+							</div>
+							<div class="w1000 les_screen clearfix mt15">
+								<ul class="fl clearfix ml25" id="type">
+									<a href="javascript:;" class="fl current" code="0">全部</a>
+									<volist name="types" id="type_lesson">
+										<a href="javascript:;" class="fl" code="{$type_lesson:code}">{$type_lesson:name}</a>
+									</volist>
+								</ul>
+							</div>
+							<div id="recordList">
+								<div class="les_video_con clearfix">
+								<if condition="$record eq null">
+								<img src="__APP__/images/mr_kkjl.png" />
+								</if>
+									<volist name="record" id="val">
+										<dl class="fl">
+											<dt onclick="preview({$val['record_id']},{$val['has_record']})">
+												<img src="{$val['cover_url']}" /><span>&nbsp;</span><label>{$val['end_time']}</label>
+												<font></font> <a href="javascript:void(0)">&nbsp;</a>
+											</dt>
+											<dd>
+												<h3>
+													<a href="javascript:void(0)" onclick="preview({$val['record_id']},{$val['has_record']})" title="{$val['name']}">
+													{$val['name']|getShort=12,'...'}
+													</a>
+												</h3>
+												<div class="les_star">
+													<php>$score=$val['score']/20; if(strlen($score)>3){
+					$score=substr($score,0,3); } </php>
+					{$val['score']|getStars}<font>{$score}</font>
+												</div>
+												<div class="les_comment clearfix">
+													<span class="fl"><font>{$val['attend_count']}</font>人参加</span> <span class="fl"><font>{$val['c_count']}</font>人评论</span>
+												</div>
+											</dd>
+										</dl>
+									</volist>
+								</div>
+								<div class="page mt15">
+									{$paging}
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<input type="hidden" value="{$pre_url}" id="pre_url">
+<include file="__THEME__/public_footer" />
+<script type="text/javascript">
+//开课
+function newLive(){
+	newRecordPop();
+	$(".lesson_thid .fr.btn_class").css({"color":"#fff", "text-decoration":"none"}); // 将点击的按钮的聚焦的样式搞正常
+}
+/**
+ * 跳转资源预览页面
+ */
+ function preview(id,state){
+		if(state==0){
+			pop.alert('录播视频生成中');
+		}else if(state==1){
+			if(id!=0&&id!='0'){
+				var pre_url=$('#pre_url').val();
+				window.open(pre_url+"/index.php?m=Home&c=Record&a=preview&id="+id);	
+			}else{
+				pop.alert('该直播课没有录播视频');
+			}
+		}else{
+			pop.alert('该直播课没有录播视频');
+		}
+	}
+</script>

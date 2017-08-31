@@ -1,0 +1,63 @@
+<div class="pt20">
+<div class="cn">
+	<p class="pb5"><img src="__APP__/images/award.gif" />提问者采纳</p>
+	<div class="cn_line">&nbsp;</div>
+</div>
+<dl class="pk_con">
+	<dt>
+		<p class="pk_tx">
+             <if condition="$uid == $bestanswer['uid']">
+				<a href="{:U('public/Profile/index', array('uid'=>$bestanswer['uid']))}" >
+					<img src="{$bestanswer['avatar_small']}" />
+				</a>
+			<else />
+				<a href="{:U('public/Profile/index', array('uid'=>$bestanswer['uid']))}" event-node="face_card" show="no" uid="{$bestanswer["uid"]}">
+					<img src="{$bestanswer['avatar_small']}" />
+				</a>
+		    </if>
+        </p>
+		<div class="left pl20" model-node = "answer">
+			<p class="online_name01">
+			  <if condition="$uid == $bestanswer['uid']">
+				<a href="{:U('public/Profile/index', array('uid'=>$bestanswer['uid']))}" >
+					<span>{$bestanswer['uname']}</span>
+				</a>
+				<else />
+					<a href="{:U('public/Profile/index', array('uid'=>$bestanswer['uid']))}" event-node="face_card" show="no" uid="{$bestanswer["uid"]}">
+						<span>{$bestanswer['uname']}</span>
+					</a>
+			    </if>
+			</p>
+			<p class="pk_nr">{$bestanswer['content']|parse_html}</p>
+			<if condition="!empty($bestanswer['record_id'])">
+				<div class="single_sound">
+					<div class="single_sound_btn" onclick="AudioPlayer.audioplay('{$bestanswer.record_id}', 'progress-bar-bordertalk-{$bestanswer.ansid}', 'progress-bartalk-{$bestanswer.ansid}')">
+						<img onmouseover="this.src='SpeechToText/images/sound12.jpg'" onmouseout="this.src='SpeechToText/images/sound11.jpg'" src="SpeechToText/images/sound11.jpg" />
+					</div>
+					<div id="progress-bar-bordertalk-{$bestanswer.ansid}" class="progress-bar-border">
+						<img id="initial_progress-bartalk-{$bestanswer.ansid}" class="initial-progress-bar1" src="SpeechToText/images/sound_bg1.jpg" />
+						<span id="time_progress-bartalk-{$bestanswer.ansid}" style="color:#888;">00:00</span>
+						<img id="progress-bartalk-{$bestanswer.ansid}" class="record_progress-bar" src="SpeechToText/images/sound_bg2.jpg" />
+					</div>
+				</div>
+		    </if>
+			<div class="online_infor pt5">
+				<p class="left">{$bestanswer['ctime']|friendlyDate}</p>
+				<p class="right black2">
+				   <php>if(!isset($agreeArray[$bestanswer['ansid']])) { </php>
+				   <span id='agree{$bestanswer["ansid"]}' rel='{$bestanswer["agree_count"]|default="0"}'>
+				   <a href="javascript:void(0)" onclick="addAgree({$bestanswer['ansid']})" >赞({$bestanswer['agree_count']|default="0"})</a>
+				   </span>
+				   <php>}else{</php>
+				       <span><img src='./apps/onlineanswer/_static/images/zan.gif' />已赞({$bestanswer['agree_count']|default=0})</span>
+				   <php> } </php>&nbsp;&nbsp;|&nbsp;&nbsp;<a event-node ="comment" href= "javascript:void(0)" event-args ='row_id={$bestanswer.ansid}&app_uid={$bestanswer.uid}&to_comment_id=0&to_uid=0&app_name=public&table=onlineanswer_answer&canrepost=0&cancomment=1&cancomment_old=1&ajax_page=1' >{:L('PUBLIC_STREAM_COMMENT')}(<span id="span_{$bestanswer.ansid}" style="display:inline;float:none;">{$bestanswer.comment_count}</span>)</a>&nbsp;&nbsp;<!-- |&nbsp;&nbsp;<a href="#">删除(1)</a> --> 
+				</p>
+				<div class="clear"></div>
+			</div>
+			<!-- <div model-node ="comment_detail" class= "repeat clearfix" style ="display:none;"></div> -->
+			<div model-node ="comment_detail" class="repeat_box" style ="display:none;"></div>
+		</div>
+		<div class="clear"></div>
+	</dt>
+</dl>
+</div>

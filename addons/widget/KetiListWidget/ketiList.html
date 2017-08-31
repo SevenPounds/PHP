@@ -1,0 +1,25 @@
+<div class="join common">
+	<div class="title">
+		<p class="left">我参与的</p>
+        <p class="right more"><a href="index.php?app=research&mod=Index&act=index">更多<img src="__APP__/image/icon_right.png"></a></p>
+        <div class="clear"></div>
+	</div>
+	<div class="pnav">
+	    <ul>
+	      <li><a class="current" href="javascript:void(0)">主题</a></li>
+	      <!-- <li><a href="javascript:void(0)">评课</a></li>
+	      <li><a href="javascript:void(0)">调研</a></li>
+	      <li><a href="javascript:void(0)">评选</a></li> -->
+	    </ul>
+	</div>
+	<div class="pnav-list">
+		<ul>
+			<volist name="list" id="vo">
+      			<li>
+      				<p><a href="index.php?app=research&mod=Index&act=show&id={$vo['id']}" title="{$vo['title']}">{$vo['title']|msubstr=0,12}</a></p>
+      			</li>
+      		</volist>
+      	</ul>
+	</div>
+</div>
+		

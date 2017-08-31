@@ -1,0 +1,16 @@
+<!-- <div id="container" class="mb10 channel-list clearfix"></div> -->
+<div id="container"></div> 
+<script type="text/javascript" src="__APP__/jquery.masonry.min.js"></script>
+<script type="text/javascript" src="__APP__/channel.js"></script>
+<script type="text/javascript">
+var option = {
+	container: 'container',
+	loadcount: '{$loadCount}',
+	loadmax: '{$loadMax}',
+	loadId: '{$loadId}',
+	loadlimit: '{$loadLimit}',
+	cid: '{$areaid}',
+	categoryJson: '{$categoryJson}'
+};
+channel.init(option);
+</script>

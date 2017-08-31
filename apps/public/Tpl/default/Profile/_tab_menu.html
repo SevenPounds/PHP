@@ -1,0 +1,53 @@
+<div class="tab-menu clearfix">
+  <ul>
+  	<php>if(!$is_Researcher){</php>
+  	<li <php>if(in_array($feed_type, array('education','paper','reflection','teaching_design','teaching_ware','teaching_class','teaching_material'))){echo 'class="current"';}</php>><span><a href="{:U('public/Profile/index',array('feed_type'=>'education','uid'=>$uid))}">教学成果</a></span></li>
+  	<php>}</php>
+  	<li <php>if(in_array($feed_type, array('eduresearch','research','onlineanswer','online'))){echo 'class="current"';}</php>><span><a href="{:U('public/Profile/index',array('feed_type'=>'eduresearch','uid'=>$uid))}">教研成果</a></span></li>
+  	<li <php>if($feed_type == 'reslib'){echo 'class="current"';}</php>><span><a href="{:U('public/Profile/index',array('feed_type'=>'reslib','uid'=>$uid))}">TA的资源库</a></span></li>
+  	<li <php>if(in_array($feed_type, array('','post','repost','blog_post','postimage','postfile','postvideo','share'))){echo 'class="current"';}</php>><span><a href="{:U('public/Profile/index',array('feed_type'=>'','uid'=>$uid))}">社区动态</a></span></li>
+  </ul>
+</div>
+<div class="mod-feed-tab">
+    <ul class="inner-feed-nav">
+    	<php>if(in_array($feed_type, array('','post','repost','blog_post','postimage','postfile','postvideo','share'))){</php>
+	        <li <eq name='feed_type' value=''>class="current"</eq>><a href="{:U('public/Profile/index',array('type'=>$type,'feed_type'=>'','feed_key'=>$feed_key,'uid'=>$uid))}">全部</a></li>
+	        <li <eq name='feed_type' value='post'>class="current"</eq>><a href="{:U('public/Profile/index',array('type'=>$type,'feed_type'=>'post','feed_key'=>$feed_key,'uid'=>$uid))}">原创</a></li>
+	        <li <eq name='feed_type' value='repost'>class="current"</eq>><a href="{:U('public/Profile/index',array('type'=>$type,'feed_type'=>'repost','feed_key'=>$feed_key,'uid'=>$uid))}">转发</a></li>
+	        <li <eq name='feed_type' value='blog_post'>class="current"</eq>><a href="{:U('public/Profile/index',array('type'=>$type,'feed_type'=>'blog_post','feed_key'=>$feed_key,'uid'=>$uid))}">日志</a></li>
+	        <li <eq name='feed_type' value='postimage'>class="current"</eq>><a href="{:U('public/Profile/index',array('type'=>$type,'feed_type'=>'postimage','feed_key'=>$feed_key,'uid'=>$uid))}">图片</a></li>
+	        <li <eq name='feed_type' value='postfile'>class="current"</eq>><a href="{:U('public/Profile/index',array('type'=>$type,'feed_type'=>'postfile','feed_key'=>$feed_key,'uid'=>$uid))}">附件</a></li>
+	        <li <eq name='feed_type' value='postvideo'>class="current"</eq>><a href="{:U('public/Profile/index',array('type'=>$type,'feed_type'=>'postvideo','feed_key'=>$feed_key,'uid'=>$uid))}">视频</a></li>
+	        <li <eq name='feed_type' value='share'>class="current"</eq>><a href="{:U('public/Profile/index',array('type'=>$type,'feed_type'=>'share','feed_key'=>$feed_key,'uid'=>$uid))}">分享</a></li>
+        <php>}else if($feed_type == 'reslib'){</php>
+        	<li class="current"><a href="{:U('public/Profile/index',array('feed_type'=>'reslib','feed_key'=>$feed_key,'uid'=>$uid))}">全部</a></li>
+        <php>}else if(in_array($feed_type, array('education','paper','reflection','teaching_design','teaching_ware','teaching_class','teaching_material'))){</php>
+        	<li <eq name='feed_type' value='education'>class="current"</eq>><a href="{:U('public/Profile/index',array('type'=>$type,'feed_type'=>'education','feed_key'=>$feed_key,'uid'=>$uid))}">全部</a></li>
+	        <li <eq name='feed_type' value='paper'>class="current"</eq>><a href="{:U('public/Profile/index',array('type'=>$type,'feed_type'=>'paper','feed_key'=>$feed_key,'uid'=>$uid))}">教学论文</a></li>
+	        <li <eq name='feed_type' value='reflection'>class="current"</eq>><a href="{:U('public/Profile/index',array('type'=>$type,'feed_type'=>'reflection','feed_key'=>$feed_key,'uid'=>$uid))}">教学反思</a></li>
+	        <li <eq name='feed_type' value='teaching_design'>class="current"</eq>><a href="{:U('public/Profile/index',array('type'=>$type,'feed_type'=>'teaching_design','feed_key'=>$feed_key,'uid'=>$uid))}">教学设计</a></li>
+	        <li <eq name='feed_type' value='teaching_ware'>class="current"</eq>><a href="{:U('public/Profile/index',array('type'=>$type,'feed_type'=>'teaching_ware','feed_key'=>$feed_key,'uid'=>$uid))}">教学课件</a></li>
+	        <li <eq name='feed_type' value='teaching_class'>class="current"</eq>><a href="{:U('public/Profile/index',array('type'=>$type,'feed_type'=>'teaching_class','feed_key'=>$feed_key,'uid'=>$uid))}">教学视频</a></li>
+	        <li <eq name='feed_type' value='teaching_material'>class="current"</eq>><a href="{:U('public/Profile/index',array('type'=>$type,'feed_type'=>'teaching_material','feed_key'=>$feed_key,'uid'=>$uid))}">媒体素材</a></li>
+	        <!--  <li><a href="javascript:void(0)">我的收获</a></li>-->
+        <php>}else if(in_array($feed_type, array('eduresearch','research','onlineanswer','online','eduannounce'))){</php>
+       		<li <eq name='feed_type' value='eduresearch'>class="current"</eq>><a href="{:U('public/Profile/index',array('type'=>$type,'feed_type'=>'eduresearch','feed_key'=>$feed_key,'uid'=>$uid))}">全部</a></li>
+	        <php>if($is_Researcher){</php>
+	        	<li style="display: none;" <eq name='feed_type' value='eduannounce'>class="current"</eq>><a href="{:U('public/Profile/index',array('type'=>$type,'feed_type'=>'eduannounce','feed_key'=>$feed_key,'uid'=>$uid))}">教研公告</a></li>
+	        <php>}</php>
+	        <li <eq name='feed_type' value='research'>class="current"</eq>><a href="{:U('public/Profile/index',array('type'=>$type,'feed_type'=>'research','feed_key'=>$feed_key,'uid'=>$uid))}">课题研究</a></li>
+	        <li <eq name='feed_type' value='onlineanswer'>class="current"</eq>><a href="{:U('public/Profile/index',array('type'=>$type,'feed_type'=>'onlineanswer','feed_key'=>$feed_key,'uid'=>$uid))}">在线答疑</a></li>
+	        <li <eq name='feed_type' value='online'>class="current"</eq>><a href="javascript:void(0)">网上评课</a></li>
+        <php>}</php>
+    </ul>
+    <span class="right">
+        <form action="{:U('public/Profile/index',array('uid'=>$uid))}" method="post" id="searchfeed">
+        <div class="feed-search">
+        <input type="hidden" name="type" value="{$type}">
+        <input type="hidden" name="feed_type" value="{$feed_type}">
+        <!-- <input type="hidden" name="uid" value="{$uid}"> -->
+        <input class="s-txt left"  type="text" name='feed_key' value="{$feed_key}" id='feed_key'><a href="javascript:void(0)" class="ico-search left" onclick="if(getLength($('#feed_key').val())){ $('#searchfeed').submit(); return false;}"></a>
+        </div>
+        </form>
+    </span>
+</div>

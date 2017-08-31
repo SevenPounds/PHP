@@ -1,0 +1,38 @@
+<script>
+var status = '{$pk_status}';
+if (status == '-1') { //显示全部修改数量
+    var pinke_count = '{$pingkeCount}';
+    jQuery('#count_all').text('(' + pinke_count + ')');
+}
+</script>
+<dl>
+ <volist name="pingkeList" id="item">
+	<dd>
+		<eq name="item.status" value="1">
+			<p class="pk_zt pk_ing mt12"><strong>评课中</strong></p>
+		   <else/>
+		   	<p class="pk_zt pk_end mt12"><strong>已结束</strong></p>
+		   </eq>
+		</strong>
+		<div class="left pl20">
+			<p class="topic_name"><span class="pt10"><strong><a href="{:U('/Index/show',array('id'=>$item['id']))}">{$item.title}</a></strong></span>
+			 <eq name="item.is_new" value="1">
+		 		<span class="red pl5">new</span> 
+			 </eq>
+			<div class="clear"></div></p>
+			<p class="topic_nr pt2">课例简介：	{:getShort($item['description'],50,'...')}</p>
+			<p class="online_infor pt4">
+				<span><img src="__APP__/images/on_01.gif" /></span>
+				<span class="pl3">{$item['createtime']|friendlyDate}</span>
+				<span class="pl15"><img src="__APP__/images/on_02.gif" /></span>
+				<span class="pl3">{$item['member_count']+1}个成员</span>
+				<span class="pl15"><img src="__APP__/images/on_03.gif" /></span>
+				<span class="pl3"> {$item.discuss_count}次讨论</span>
+				<div class="clear"></div>
+			</p>
+		</div>
+		<div class="clear"></div>
+	</dd>
+</volist>
+</dl>		
+{$page}

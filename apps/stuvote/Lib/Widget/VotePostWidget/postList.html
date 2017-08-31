@@ -1,0 +1,84 @@
+<dl class="pk_con">
+	  <volist name="postList" id="item">  
+	  	<dd class="comment_{$item['comment_id']}">
+	  	<p class="pk_tx">
+	  	<a href="{$item['user_info']['space_url']}" event-node="face_card" show="no" uid="{$item['user_info']['uid']}">
+								<img src="{$item.user_info.avatar_small}" />
+								</a>
+	  	</p>
+								<div class="left pl20" model-node="answer">
+									<p class="online_name">
+									<a href="{$item['user_info']['space_url']}" event-node="face_card" show="no" uid="{$item['user_info']['uid']}">
+									{$item.user_info.uname}
+									</a></p>
+									<p class="pk_nr" style="line-height:1.5;">
+									{$item.content|parse_html}
+									</p>
+                                    <!-- 2014-11-10  by nandeng -->
+                                    <div class="online_infor pt5">
+                                        <p class="left">{$item.ctime|friendlyDate}</p>
+                                        <p class="right black2">
+                                            <php>if(!isset($agreeArray[$item['comment_id']])) { </php>
+                                               <span id='agree{$item["comment_id"]}' rel='{$item["digg_count"]|default="0"}'>
+                                               <a href="javascript:void(0)" onclick="addAgree({$item['comment_id']})" >赞<php>if(!empty($item['digg_count'])):</php>({$item['digg_count']})<php>endif;</php></a>
+                                               </span>
+                                            <php>}else{</php>
+                                            <span><img src='./apps/onlineanswer/_static/images/zan.gif' />已赞({$item['digg_count']})</span>
+                                            <php> } </php>&nbsp;&nbsp;|&nbsp;&nbsp;<a event-node ="comment" href= "javascript:void(0)" event-args ='row_id={$item.comment_id}&app_uid={$voteUid}&to_comment_id={$item.comment_id}&to_uid={$item.uid}&app_name=stuvote&table=comment&canrepost=0&cancomment=1&cancomment_old=1&ajax_page=1' >评论<php>if(!empty($item['comment_count'])):</php>(<span id="span_{$item.id}" style="display:inline;float:none;">{$item.comment_count}</span>)<php>endif;</php></a>&nbsp;&nbsp;<php>if($item['user_info']['uid'] == $mid):</php>
+                                            |&nbsp;&nbsp;<a style="cursor:pointer" onclick='delComment({$item.comment_id});'>删除</a>
+                                        <php>endif;</php>
+                                        </p>
+                                        <div class="clear"></div>
+                                    </div>
+                                    <div model-node ="comment_detail" class="repeat_box" style ="display:none;"></div>
+									<!--<div class="online_infor pt5">
+										<p class="left">{$item.ctime|friendlyDate}</p>
+										<php>if($item['user_info']['uid'] == $mid):</php>
+										<p class="right blue"><a href="javascript:void(0);" onclick='delComment({$item.comment_id});'>删除</a></p>
+										<php>endif;</php>
+									&lt;!&ndash; 	<if condition="!empty($item['attach'])">
+										<volist name="item['attach']" id="attach">
+										<p class="mt5">附件{$i}：<span class="blue"> <a href="{:U('widget/Upload/down',array('attach_id'=>$attach['attach_id']))}">{$attachInfo[$attach['attach_id']]['name']}下载</a></span></p>
+										</volist>
+									</if> &ndash;&gt;
+										<div class="clear"></div>
+									</div>-->
+								</div>
+								<div class="clear"></div>
+	  	
+		</dd>
+	  </volist>
+	  	<div class="page">
+		{$page}
+		</div>
+	</dl>
+<!-- 2014-11-10 by nandeng -->
+<script>
+    //赞锁(防止重复点赞)
+    var agreelock = 0;
+    var voteId = '{$voteId}';
+    /**
+     * 点赞方法
+     * @param id
+     * @author xypan
+     */
+    function addAgree(id){
+        if (agreelock==1){
+            return;
+        }
+        agreelock = 1;
+        $.post(U('stuvote/Index/addAgree'), {'id':id,'voteId':voteId}, function(res){
+            res= eval("("+res+")");
+            if(res.status == "200"){
+                var num = $('#agree'+id).attr('rel');
+                num++;
+                $('#agree'+id).html("<img src='./apps/onlineanswer/_static/images/zan.gif' />已赞("+num+")");
+            }else {
+                ui.error('操作失败，如没有登录请先登录再操作');
+            }
+            agreelock = 0;
+        });
+    }
+
+
+</script>

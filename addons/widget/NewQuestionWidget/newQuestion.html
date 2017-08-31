@@ -1,0 +1,37 @@
+<div class="new-question common">
+	<div class="title">
+		<p class="left">最新问题</p>
+        <p class="right more"><a href="{:U('onlineanswer/Index/index')}">更多<img src="__APP__/image/icon_right.png"></a></p>
+        <div class="clear"></div>
+	</div>
+	<div class="new-list">
+		<ul id="newQuestion">
+			<!-- <volist name="list" id="question">
+      			<li>
+      				<p><a href="{:U('onlineanswer/Index/detail',array('qid'=>$question['qid']))}" title="{$question['title']}">{$question['title']|getShort=12,"..."}</a></p>
+      			</li>
+      		</volist> -->
+      	</ul>
+	</div>
+</div>
+<script type="text/javascript">
+    function loadNewQuestion(){
+    	$.post(U('widget/NewQuestion/getNewQuestion'), {time: new Date().getTime()}, function(res) {
+ 		   if(res['status']){
+ 			   var tmp='';
+ 			   var data=res['data'];
+ 			   var length=data.length;
+ 			   for(var i=0;i<length;i++){
+ 				   var shorttitle=data[i].title.substr(0,12);
+ 				   tmp+='<li><p><a href="'+data[i].url+'" title="'+data[i].title+'">'+shorttitle+'</a></p></li>';
+ 			   }
+ 			   jQuery("#newQuestion").html("").html(tmp);
+ 		   }else{
+ 			   //ui.error("没有相关数据");
+ 		   }
+ 	   },'json');
+    }
+	jQuery(document).ready(function(){
+		   loadNewQuestion();
+	});
+</script>		

@@ -1,0 +1,68 @@
+<dl class="pop_create_album">
+  <dt>
+    <label>图片标题：</label>
+    <input type="text" name="name" id="name" class="s-txt" value="{$photo.name}">
+  </dt>
+  <dd>
+    <label>所属相册：</label>
+		{:W('AlbumSelect',array('uid'=>$mid,'selected'=>intval($_GET['aid']),'form_id'=>'albumId','cid'=>$cId))}
+  </dd>
+
+  <input type="hidden" name="photoId" id="photoId" value="{$photo.id}" />
+  <input type="hidden" name="nextId" id="nextId" value="{$nextId}" />
+  <input type="hidden" name="cId" id="cId" value="{$cId}" />
+  <input type="hidden" name="uid" id="uid" value="{$uid}" />
+  <dd>
+     <label>&nbsp;</label>
+     <a onclick="do_update_photo()" class="btn-green-small">确定</a>
+  </dd>
+</dl>
+	
+<script>
+var albumIdold = $('#albumId').val();
+/**
+ * 编辑图片操作
+ * @return void
+ */
+var do_update_photo = function () {
+  var id = $('#photoId').val();
+  var cId = $('#cId').val();
+  var nextId = $('#nextId').val();
+  var name = $('#name').val();
+  var uid=$('#uid').val();
+  var albumId = $('#albumId option:selected').val();
+  if (!name || getLength(name.replace(/\s+/g,"")) == 0) {
+    ui.error('图片名字不能为空！');
+        return false;
+  }
+  $.post(U('photo/Manage/do_update_photo'), {id:id,name:name,albumId:albumId}, function(data) {
+      if (data.result == 1) {
+	      if (albumId != albumIdold) {
+	    	  if(cId == "" || cId == "0"){
+	    		  if (nextId == id || nextId == '') {
+	    	          location.href = U('photo/Index/album') + '&id=' + albumIdold + '&uid=' + uid;
+	    	        } else {
+	    	          location.href = U('photo/Index/photo') + '&id=' + nextId + '&aid=' + albumIdold + '&uid=' + uid;
+	    	        }
+	    	  } else {
+	    		  if (nextId == id || nextId == '') {
+	    	          location.href = U('class/ClassAlbum/classalbum') + '&id=' + albumIdold + '&uid=' + uid+ '&cid=' + cId;
+	    	      } else {
+	    	          location.href = U('class/ClassAlbum/classphoto') + '&id=' + nextId + '&aid=' + albumIdold + '&uid=' + uid + '&cid=' + cId;
+	    	      }
+	    	  }
+	        
+	        return false;
+	      } else {
+	        $('.photoName').html(data.message);
+      }
+      ui.box.close();
+      ui.success('修改成功！');
+      location.reload();
+    } else {
+      ui.box.close();
+      ui.error('图片信息无变化！');
+    }
+  }, 'json');
+};
+</script>

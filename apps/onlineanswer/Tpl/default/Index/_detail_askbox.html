@@ -1,0 +1,40 @@
+
+	<div class="online_title2">
+	    <span><img src="__APP__/images/icon_ask.gif" /><b class="pl10 font3" style="padding-bottom:10px">{$question['title']}</b></span>
+	</div>
+	 <p class="pl50">
+		教师：
+		<if condition="$uid == $question['uid']"><a href="{:U('public/Profile/index',array('uid'=>$question['uid']))}">
+		<else /><a href="{:U('public/Profile/index',array('uid'=>$question['uid']))}" event-node="face_card" show="no" uid="{$question['uid']}">
+		</if>{$question['uname']}</a>
+		</span>
+		<span class="pl10"> {$question['locations'][1]} {$question['locations'][2]} {$question['locations'][3]}</span>
+		<span class="pl10">
+			<volist name='question.school' id='vo' offset='0' length='2'>
+				{$vo['name']}
+			</volist>
+		</span>
+		<span class="pl15">分类：{$question['grade']}、{$question['subject']}</span>
+		<span class="pl15">浏览{$question['viewcount']}次</span>
+		<span class="pl15">提问日期:<php>echo date("Y-n-j",$question['ctime'])</php></span>
+		<span class="pl15">状态：<php>echo($question['status'] == 0?"未解决":"已解决")</php></span>	
+		<span></span>
+	 </p>
+	 <style>
+	.lndash_10{
+		border-top:1px dashed #ccc;
+		margin:5px 10px 0;
+	}
+	.textarea_10{
+		border:1px solid #ececec;
+		margin:10px 10px 10px 40px;
+		padding:2px 5px;
+		width:640px;
+		height:60px;
+		resize:none;
+		line-height:20px;
+		overflow:hidden;
+		overflow-x:auto;
+		overflow-y:scroll;
+	}
+	 </style>

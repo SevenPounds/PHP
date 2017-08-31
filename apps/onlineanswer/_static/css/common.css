@@ -1,0 +1,80 @@
+@CHARSET "UTF-8";
+
+.create_question{
+	float:right;
+	padding-top:5px;
+}
+
+/**
+ * search样式
+ */
+.online_search{
+	padding:20px;
+	margin-left:110px;
+}
+.online_key_search{
+	padding-top:10px;
+}
+.search_list{
+	padding-right:10px;
+	float:left;
+}
+.online_info1 {
+	padding-top:5px;
+	padding-bottom:5px;
+}
+.online_info2{
+}
+
+/**
+ * table样式
+ */
+.tb_online{
+	text-align:center;
+}
+.tb_online tr td{
+	padding:10px 20px;
+}
+
+table tr td.question_title{
+	width:250px;
+	font-size:12px;
+	text-align:left;
+}
+
+.nosolve{
+	color:red;
+}
+.solved{
+	color:green;
+}
+.list_odd {
+	background:#fff;
+}
+.list_even {
+	background:#f6f6f6;
+}
+
+/**
+ * center样式
+ */
+.now{
+	background:none repeat scroll 0 0 #CCC;
+}
+.currentpage{
+	background:none repeat scroll 0 0 #E6E6E6;
+	line-height: 15px;
+	margin:15px 10px 10px 5px;
+    padding: 5px 10px;
+    text-decoration: none;
+	border: 1px solid #DDDDDD;
+}
+
+/**********在线答疑中的链接样式 by xypan 0907***************/
+a{
+	color: #229bd7
+}
+
+a:hover{
+	color: #2daeee;
+}

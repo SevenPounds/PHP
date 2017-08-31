@@ -1,0 +1,501 @@
+<script type="text/javascript">
+<!--
+
+/**
+ * 用于加载教师列表
+ * @author yxxing
+ */
+function TeacherList(){
+	
+	var _this = this;
+	this._city = "";
+	this._district = "";
+	this._school = "";
+	this._subject = "";
+	this._page = "";
+	this._toChange = "";
+	this._type = "";
+	this._loading = false;
+	
+	this.change = function(change_data, toChange){
+		_this._page = 1;
+		switch(toChange){
+			case "subject":
+				_this._subject = change_data;
+				_this._toChange = "";
+				_this._type = "";
+				break;
+			case "city":
+				_this._city = change_data;
+				_this._type = "city";
+				_this._district = "";
+				_this._school = "";
+				_this._toChange = "district";
+				break;
+			case "district":
+				_this._district = change_data;
+				_this._type = "district";
+				_this._school = "";
+				_this._toChange = "school";
+				break;
+			case "school":
+				_this._type = "";
+				_this._toChange = "";
+				_this._school = change_data;
+				break;
+		}
+		_this._reloadData();
+	}
+	this.page = function(page){
+		_this._page = page;
+		_this._reloadData();
+	}
+	this._callBack = function(msg){
+		var _html = "<option value='0'>请选择</option>";
+		if(msg.status == 1){
+			if(_this._toChange != ""){
+				var _areaList = msg.eduOrgList;
+				if(_this._toChange == "district"){
+					jQuery("#school").html(_html);
+				}
+				for(var area in _areaList){
+					_html +=  "<option title='" + _areaList[area].name + "' value='" + _areaList[area].id + "'>" + _areaList[area].name + "</option>";
+				}
+				jQuery("#" + _this._toChange).html(_html);
+			}
+			//更新教研员列表
+			jQuery("#jslist").html(msg.teacherList);
+		}else{
+			jQuery("#" + _this._toChange).html(_html);
+		}
+	};
+	this._reloadData = function(){
+		if(_this._loading == true){
+			return;
+		}
+		var _data = _this._getData();
+		$.ajax({
+			type:"POST",
+			url:U('widget/UserList/getTeacherList'),
+			data:_data,
+			dataType:"json",
+			beforeSend:function(){
+				_this._loading = true;
+			},
+			success:function(msg){
+				_this._callBack(msg);
+			},
+			error:function(msg){
+				ui.error("加载失败！");
+			},
+			complete:function(){
+				_this._loading = false;
+			}
+
+		});
+	};
+	this._getData = function(){
+		var _data = {};
+		_data.city = typeof(_this._city) == "undefined" ? "" : _this._city;
+		_data.district = typeof(_this._district) == "undefined" ? "" : _this._district;
+		_data.school = typeof(_this._school) == "undefined" ? "" : _this._school;
+		_data.subject = typeof(_this._subject) == "undefined" ? "" : _this._subject;
+		_data.keywords = typeof(_this._keywords) == "undefined" ? "" : _this._keywords;
+		_data.type = typeof(_this._type) == "undefined" ? "" : _this._type;
+		_data.p = _this._page;
+//		_data.widget_appname = "pingke";
+		if(_data.city == false){
+			_data.district = "";
+			_data.school = "";
+		}
+		if(_data.district == false){
+			_data.school = "";
+		}
+		return _data;
+	}
+}
+/**
+ * 用于加载教研员
+ * @author yxxing
+ */
+function ResearcherList(){
+	
+	var _this = this;
+	this._eduorg_province = "0";
+	this._eduorg_city = "";
+	this._eduorg_district = "";
+	this._subject = "";
+	this._toChange = "";
+	this._areaId = "";	
+	this._page = "";
+	this._loading = false;
+    this._type = 'province';
+	
+	this.change = function(change_data, type){
+		_this._page = 1;
+		switch(type){
+            case "subject":
+                _this._subject = change_data;
+                _this._toChange = "";
+                _this._type = "subject";
+                break;
+            case "eduorg_province":
+                _this._eduorg_province = change_data;
+                _this._type = 'province';
+                _this._toChange = "eduorg_city";
+                _this._eduorg_city = "";
+                _this._eduorg_district = "";
+                break;
+            case "eduorg_city":
+                _this._eduorg_city = change_data;
+                _this._type = 'city';
+                _this._toChange = "eduorg_district";
+                break;
+            case "eduorg_district":
+                _this._eduorg_district = change_data;
+                _this._type = 'district';
+                _this._toChange = "";
+                break;
+		}
+		_this._reloadData();
+	}
+	this.page = function(page){
+		_this._page = page;
+		_this._reloadData();
+	}
+	this._callBack = function(msg){
+		var _html = "<option value='0'>请选择</option>";
+		if(msg.status == 1){
+			if(_this._toChange != ""){
+				var _areaList = msg.eduOrgList;
+				if(_this._toChange == "eduorg_city"){
+					jQuery("#eduorg_district").html(_html);
+				}
+				for(var area in _areaList){
+					_html +=  "<option title='" + _areaList[area].name + "' value='" + _areaList[area].id + "'>" + _areaList[area].name + "</option>";
+				}
+				jQuery("#" + _this._toChange).html(_html);
+			}
+			//更新教研员列表
+			jQuery("#jyylist").html(msg.researcherList);
+		}else{
+			jQuery("#" + _this._toChange).html(_html);
+		}
+	};
+	this._reloadData = function(){
+		if(_this._loading == true){
+			return;
+		}
+		var _data = _this._getData();
+		$.ajax({
+			type:"POST",
+			url:U('widget/UserList/getResearcherList'),
+			data:_data,
+			dataType:"json",
+			beforeSend:function(){
+				_this._loading = true;
+			},
+			success:function(msg){
+				_this._callBack(msg);
+			},
+			error:function(msg){
+				ui.error("加载失败！");
+			},
+			complete:function(){
+				_this._loading = false;
+			}
+		});
+	};
+	this._getData = function(){
+		var _data = {};
+		_data.eduorg_province = typeof(_this._eduorg_province) == "undefined" ? "" : _this._eduorg_province;
+		_data.eduorg_city = typeof(_this._eduorg_city) == "undefined" ? "" : _this._eduorg_city;
+		_data.eduorg_district = typeof(_this._eduorg_district) == "undefined" ? "" : _this._eduorg_district;
+		_data.subject = typeof(_this._subject) == "undefined" ? "" : _this._subject;
+		_data.keywords = typeof(_this._keywords) == "undefined" ? "" : _this._keywords;
+		_data.p = _this._page;
+        _data.type = _this._type;
+		if(_data.eduorg_province == false){
+			_data.eduorg_city = "";
+			_data.eduorg_district = "";
+		}
+		if(_data.eduorg_city == false){
+			_data.eduorg_district = "";
+		}
+		return _data;
+	}
+	this._getEduOrgList = function(areaId, toChange, area_type){
+		var data = {};
+//		data.widget_appname = 'pingke';
+		data.areaId = areaId;
+		$.ajax({
+			type:"POST",
+			url:U('widget/UserList/getEduOrg'),
+			data:data,
+			dataType:"text",
+			success:function(msg){
+				if(msg.status == 1){
+					var _areaList = msg.data;
+					for(var area in _areaList){
+						_html +=  "<option title='" + _areaList[area].name + "' value='" + _areaList[area].id + "'>" + _areaList[area].name + "</option>";
+					}
+					if(area_type == "city"){
+						jQuery("#eduorg_district").html(_html);
+					}
+					jQuery("#" + toChange).html(_html);
+				}else{
+					jQuery("#" + toChange).html(_html);
+				}
+			},
+			error:function(msg){
+			}
+		});
+	}
+}
+/**
+ * 用于教研员和教师的查询
+ * @author yxxing
+ */
+function UserSearch(){
+	var _this = this;
+	this._loading = false;
+	this._keywords = "";
+	this._p = 1;
+	this.page = function(page){
+		_this._p = page;
+		this._reloadData();
+	};
+    this.search = function () {
+        this._p = 1;
+		_this._reloadData();
+	};
+	this._reloadData = function(){
+		_this._keywords = jQuery.trim(jQuery("#keywords").val());
+		if(!keywords){
+			ui.error("请输入查询关键字!");
+			return false;
+		}
+		if(_this._loading == true){
+			return;
+		}
+		var data = _this._getData();
+		$.ajax({
+			type:"POST",
+			url:U('widget/UserList/search'),
+			data:data,
+			dataType:"text",
+			beforeSend:function(XMLHttpRequest){
+				_this._loading = true;
+			},
+			success:function(html){
+				$(".sslist").remove();
+				$(".cr_tab li").removeClass("current");
+				$(".cr_roll").children().css("display","none");
+				$(".cr_chose").css("display","none");
+				$(".cr_roll").append(html);
+				$("#sslist_tab").addClass("current");
+			},
+			error:function(msg){
+				ui.error("查询失败！");
+			},
+			complete:function(XHR, TS){
+				_this._loading = false;
+			}
+		});
+	};
+	this._getData = function(){
+		var _data = {};
+		_data.p = _this._p;
+		_data.keywords = _this._keywords;
+		_data.widget_appname = 'pingke';
+		
+		return _data;
+	};
+}
+var researcherList = new ResearcherList();
+var teacherList = new TeacherList();
+var userSearch = new UserSearch();
+//-->
+</script>
+<style>
+<!--
+.subject{
+	width:92px;
+}
+.school{
+	width:172px;
+}
+.eduorg{
+	width:160px;
+}
+select {border: 1px solid #ccc;margin-right: 5px;padding:5px;}
+.pl10 {
+	padding-left: 10px;
+}
+.pt5 {
+	padding-top: 5px;
+}
+-->
+</style>
+<div class="cr_pop">
+	<div class="cr_head">
+		<div class="cr_tab">
+			<ul>
+				<li class="current" onclick="userList.selectTab(this,'jyy')"><a href="javascript:void(0)">教研员</a></li>
+				<li onclick="userList.selectTab(this,'js')"><a href="javascript:void(0)">教师</a></li>
+				<li id="sslist_tab" onclick="userList.selectTab(this,'ss')"><a href="javascript:void(0)">搜索</a></li>
+			</ul>
+		</div>
+		<div class="right">
+			<div class="cr_input">
+				<div class="input_left"></div>
+				<div class="input_cen"><input id="keywords" type="text" value=""/></div>
+				<div class="input_right"></div>
+			</div>
+			<div class="dy_btn2">
+				<input type="button" value="搜索" id="search_btn" class="dy_btnnor" onMouseover="this.className='dy_btnhov'" onMouseOut="this.className='dy_btnnor'" onclick="javascript:userSearch.search();">
+			</div>
+			<div class="clear"></div>
+		</div>
+	</div>
+	<div class="cr_chose" id="jyy_opt">
+		<span class="pl15">学科：</span>
+		<select name="" class="subject" onchange="researcherList.change(this.value,'subject')">
+			<volist name="subjectList" id="subject">
+				<option value="{$subject.code}" title="{$subject.name}">{$subject.name}</option>
+			</volist>
+		</select>
+		<span class="pl15">单位：</span>
+		<select name="" class="eduorg" id="eduorg_province" onchange="researcherList.change(this.value,'eduorg_province')">
+			<option value="0">请选择</option>
+			<volist name="provinceOrgList" id="pOrg">
+				<option value="{$pOrg.id}" title="{$pOrg.name}">{$pOrg.name}</option>
+			</volist>
+		</select>
+		<select name="" class="eduorg" id="eduorg_city" onchange="researcherList.change(this.value,'eduorg_city')">
+			<option value="0">请选择</option>
+		</select>
+		<select name="" class="eduorg" id="eduorg_district" onchange="researcherList.change(this.value,'eduorg_district')">
+			<option value="0">请选择</option>
+		</select>
+	</div>
+	<div class="cr_chose" id="js_opt" style="display:none">
+		<span class="pl20">市：</span>
+		<select name="" class="subject" id="city" onchange="teacherList.change(this.value,'city')">
+			<option value="0">请选择</option>
+			<volist name="cityList" id="city">
+				<option value="{$city.id}" title="{$city.name}">{$city.name}</option>
+			</volist>
+		</select>
+		<span class="pl20">区/县：</span>
+		<select name="" class="subject" id="district" onchange="teacherList.change(this.value,'district')">
+			<option value="0">请选择</option>
+		</select>
+		
+		<span class="pl20">学校：</span>
+		<select name="" class="school" id="school" onchange="teacherList.change(this.value,'school')">
+			<option value="0">请选择</option>
+		</select>
+		<span class="pl20">学科：</span>
+		<select name="" class="subject" id="subject" onchange="teacherList.change(this.value,'subject')">
+			<volist name="subjectList" id="subject">
+				<option value="{$subject.code}" title="{$subject.name}">{$subject.name}</option>
+			</volist>
+		</select>
+	</div>
+	<div class="cr_box">
+	  <div class="cr_roll">
+	  	<div id="jyylist" class="jyylist">
+		</div>
+		<div class="clear jyylist"></div>
+		<div id="jslist" class="jslist"  style="display:none">
+		</div>
+		<div class="clear jslist" style="display:none"></div>
+		<p class="sslist pl10 pt5 blue2" style="display:none">尚未查询</p>
+		<ul id="sslist" class="sslist" style="display:none">
+		</ul>
+	    <div class="clear sslist" style="display:none"></div>
+      </div>
+		<div class="cr_title">已添加成员</div>
+		<div class="add_news">
+			<ul id="selectedlist">			  
+				<li >
+					<p class="cr_pickpic"><img style="width:48px;height: 48px;" src="{$currentUser.avatar_small}" /></p>
+					<p>{$currentUser.uname}</p>
+				</li>
+				<volist name="userList" id="user">
+                    <if condition="$user['uid'] neq $currentUser['uid']">
+                         <li id="user_{$user.uid}" onMouseover="userList.mouseenter(this)" onMouseOut="userList.mouseleave(this)">
+                            <p class="cr_pickpic"><img style="width:48px;height: 48px;" src="{$user.avatar_small}" /></p>
+                            <p>{$user.uname}</p>
+                            <div class="delete_member"><img src="__APP__/images/delete_icon.jpg" onclick="userList.deleteUser('{$user.uid}')"/></div>
+                         </li>
+                    </if>
+				</volist>
+			</ul>
+			<div class="clear"></div>
+		</div>
+	</div>
+</div>
+
+<input type="hidden" value="|{$userids}|" id="user_ids"/>
+<script type="text/javascript">
+<!--
+researcherList.page(1);
+teacherList.page(1);
+var userids="{$userids}";
+var userList = userList || {};
+
+var arr_tmp = userids!=""?userids.split('|'):new Array();
+userList.selectTab = function(obj,name){
+	$(obj).parent().children().removeClass("current");
+	$(obj).addClass("current");
+	$("#"+name+"list").parent().children().css("display","none");
+	$("."+name+"list").css("display","block");
+	$("#js_opt").css("display","none");
+	$("#jyy_opt").css("display","none");
+	$("#"+name+"_opt").css("display","block");
+};
+
+userList.selectUser=function(userid,username,userpic){
+	if(userid == MID){
+		ui.error("不能添加自己");
+	}else if(jQuery.inArray((userid+""),arr_tmp)<0){
+		arr_tmp.push(userid+"");
+		userList.addUser(userid,username,userpic);
+	}else{
+		ui.error("该用户已经添加");
+	}
+};
+
+userList.addUser = function(userid,username,userpic){
+	temp = '<li id="user_'+userid+'"  onMouseover="userList.mouseenter(this)" onMouseOut="userList.mouseleave(this)">'+
+		     '<p class="cr_pickpic"><img style="width:48px;height: 48px;" src="'+userpic+'" /></p>'+
+		     '<p>'+username+'</p>'+
+		     '<div class="delete_member"><img src="apps/research/_static/images/delete_icon.jpg" onclick="userList.deleteUser('+userid+')"/></div>'+
+	      '</li>';
+	
+	$("#selectedlist").append(temp);
+	$("#user_ids").val($("#user_ids").val()+userid+'|');
+};
+
+userList.mouseenter=function(obj){
+	$(obj).addClass("current");
+	$(obj).children(".delete_member").css("display","block");
+};
+
+userList.mouseleave=function(obj){
+	$(obj).removeClass("current");
+	$(obj).children(".delete_member").css("display","none");
+};
+
+userList.deleteUser = function(userid){	
+	var index= jQuery.inArray((userid+""),arr_tmp);
+	var ids = $("#user_ids").val();
+	arr_tmp.splice(index,1);
+	$("#user_"+userid).remove();	
+	$("#user_ids").val(ids.replace('|'+userid+'|','|'));
+};
+
+//-->
+</script>

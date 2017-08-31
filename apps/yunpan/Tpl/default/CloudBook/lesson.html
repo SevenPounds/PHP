@@ -1,0 +1,31 @@
+<include file="__THEME__/public_header" />
+<script type="text/javascript" src="__APP__/js/appbase.js"></script>
+<script type="text/javascript" src="__APP__/js/jquery.address-1.5.min.js"></script>
+<script type="text/javascript" src="__APP__/js/common.js"></script>
+<script type="text/javascript" src="__APP__/js/book.js"></script>
+<script type="text/javascript" src="__APP__/js/clouddisk.js"></script>
+<!--<link type="text/css" href="__APP__/css/font.css" rel="stylesheet" />-->
+<!--<link type="text/css" href="__APP__/css/gobal.css" rel="stylesheet" />-->
+<link type="text/css" href="__APP__/css/main.css" rel="stylesheet" />
+
+<div id="feedback" class="feedback-fixed"><a href="{:U('public/Index/feedback')}" target="_blank">{:L('PUBLIC_FEEDBACK')}</a></div>
+<div class="wrap" style="width: 1000px;margin:0 auto;">
+    <div class="crumbs">
+        <ul>
+            <li class="pre_cen"><a href="{:U('public/Index/index')}">个人中心</a></li>
+            <li>&gt;</li>
+            <li>{$ts['app']['app_alias']}</li>
+        </ul>
+        <div class="clear"></div>
+    </div>
+
+    <div class="yunfile clearfix">
+        {:W('CloudDiskMenu',array('style'=>'current','type'=>'book'))}
+        <include file="_lesson_right" />
+    </div>
+    <!--遮罩层-->
+    <div id="mask" class="mask"></div>
+    <!--遮罩层结束-->
+    <include file="../Index/popboxes" />
+
+    <include file="__THEME__/public_footer" />

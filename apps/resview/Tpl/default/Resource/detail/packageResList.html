@@ -1,0 +1,22 @@
+   <input type="hidden" id="resid" value={$resid}></input>
+ 	<div class="zyb_view">
+                        <h3>包含资源</h3>
+                        <table>
+                        <volist id="package_res" name="packageRes">
+                  		 <tr>
+                                <td><img src="__APP__/images/{$package_res:extension|getShortImg}"/>
+                                    <a href="{:U('resview/Resource/Index')}&id={$package_res:fid}" target="_blank">{$package_res:name|getShort=19,'...'}</a>
+                                </td>
+                                <td width="100">大小：{$package_res:length|getResSize}</td>
+                                <td width="100">格式：{$package_res:extension}</td>
+                                <td width="130">上传时间：{$package_res:createtime|strtotime|date='Y-m-d',###}</td>
+                          </tr>
+                        </volist>    
+                    </table>
+                    </div>                    
+                <if condition="!empty($packageResPage)">
+                      <div class="page" id="packagePage">
+							{$packageResPage}
+						</div>
+                </if>
+		

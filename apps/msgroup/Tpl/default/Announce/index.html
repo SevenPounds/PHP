@@ -1,0 +1,37 @@
+<include file="../Public/header" />
+<script type="text/javascript" src="__APP__/js/ms_announce.js"></script>
+<script>
+var msAnnounce;
+var gid = "{$gid}";
+jQuery(function(){
+	msAnnounce = msAnnounce || new MSAnnounce(gid,1,"announce_list");
+	msAnnounce.init();
+	$('#sel_all_up').live('click',function(){
+		$('input[name=res_list]').attr('checked', this.checked);
+		$("#sel_all_down").attr('checked',this.checked);
+	});
+	$('#sel_all_down').live('click',function(){
+		$('input[name=res_list]').attr('checked', this.checked); 
+		$("#sel_all_up").attr('checked',this.checked);
+	});
+});
+</script>
+<div class="posbox">&nbsp;&nbsp;您现在的位置：<a href="{:U('msgroup/Index/index', array('gid' => $gid))}" class="blue">{$msgroup_data.group_name}</a>&gt;<a <if condition="$level eq 3">href="{:U('msgroup/Config/index', array('gid' => $gid))}"<else />href="{:U('msgroup/Resource/index', array('gid' => $gid))}"</if> class="blue">工作室维护</a>&gt;&nbsp;<a class="blue" href="{:U('msgroup/Announce/index', array('gid' => $gid))}">通知公告管理</a></div>     
+<div class="wy_box" style="width:1000px; overflow:hidden;">
+	{:W('LeftMenu', array('gid' => $gid, 'level' => $level))}
+	<div class="right">
+		<div class="teaWS_rgt">
+			<div class="teaWSR_tit" style="height:39px;">
+				<input type="button" value="发布公告" class="announce_create" onclick="window.location='{:U("msgroup/Announce/add", array("gid" => $gid))}';">
+				<h3>通知公告管理</h3>
+			</div>
+		</div>
+		<div class="teaWSR_con">
+		<div class="online_title">
+			<div id="announce_list">
+			</div>
+		</div>
+	</div>
+	<div class="clear"></div>
+</div>
+<include file="__THEME__/public_footer" />

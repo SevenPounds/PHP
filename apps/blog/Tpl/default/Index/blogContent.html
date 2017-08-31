@@ -1,0 +1,161 @@
+<include file="__THEME__/header" />
+<style>
+.comment_list dd .info{
+	*margin: 0;
+}
+</style>
+<script type="text/javascript" src="__APP__/Js/Common.js" ></script>
+
+{:W('Weibo',array('tpl_name'=>$mid==$uid?'blog_create_weibo':'blog_share_weibo','button_title'=>'分享'))}
+<php>
+$tpl_data = array('author'=>getUserName($uid),'title'=>text($title),'body'=>getShort(text($content),80),'url'=>U('blog/Index/show',array('id'=>$id,'mid'=>$uid)));
+$tpl_data = urlencode(serialize($tpl_data));
+$param_data = urlencode(serialize(array('has_status'=>1,'is_success_status'=>1,'status_title'=>'发布成功')));
+</php>
+<div class="content_holder">
+<div class="content no_bg"><!-- 内容 begin  -->
+  <include file="../Public/_blog_header" />
+  <div class="main no_l"><!-- 画布 begin  -->
+    <div class="mainbox">
+
+    <include file="../Public/_right" />
+    <input type="hidden" id="blogid" value="{$blogId}" />
+    <input type="hidden" id="uid" value="{$mid}" />
+    <div class="mainbox_appC">
+      <p class="pb15 font-f-s">
+      <eq name="isOwner" value="1">
+          <a href="{:U('blog/Index/index')}">日志</a> > </eq> <eq name="isOwner" value="1">
+            <a href="{:U('blog/Index/my')}" >我的全部{$ts['app']['app_alias']}</a>
+            <else/>
+           <a href="{:U('blog/Index/personal', array('uid'=>$uid))}" >{$uid|getUserName}的全部{$ts['app']['app_alias']}</a>
+           </eq>  > <eq name="isOwner" value="1"><a href="{:U('blog/Index/my', array('cateId'=>$category['id']))}">{$category['name']}</a><else/><a href="{:U('blog/Index/personal', array('uid'=>$uid,'cateId'=>$category['id']))}">{$category['name']}</a></eq>
+      </p>
+      <div class="tit_log">
+            <h3>{$title}</h3>
+            <div class="art_info">
+	            <p class="f9">
+	            <!-- JiaThis Button END -->
+	            <php>$HTMLtitle =str_ireplace("'","",$title); $HTMLtitle =str_ireplace('"',"",$HTMLtitle);</php>
+				<div onmouseover="setShare('{$blog['id']}','{$blog['user_info']['uid']}','{$HTMLtitle}')" class="jiathis_style_24x24" style=" width: 140px; height: 24px; padding-top: 0px;">
+					<a class="jiathis_button_qzone"></a>
+					<a class="jiathis_button_tsina"></a>
+					<a class="jiathis_button_tqq"></a>
+					<a class="jiathis_button_weixin"></a>
+					<a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+				</div>
+				<span class="right">转发到：</span>
+				<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1374638094763137" charset="utf-8"></script>
+				<!-- JiaThis Button END -->
+		            <span class="right">
+		              <php>if($isAdmin){</php>
+		                <a href="{:U('blog/Index/edit', array('id'=>$id, 'mid'=>$uid))}">编辑</a>&nbsp;&nbsp;
+		                <span class="cGray2">|</span>&nbsp;&nbsp;
+		                <a href="javascript:deleteBlog('{:U('blog/Index/doDeleteBlog', array('id'=>$id))}')">删除</a>&nbsp;&nbsp;<span class="cGray2">|</span>&nbsp;&nbsp;
+		              <php>}else{</php>
+		                <eq name="isOwner" value="1">
+		                  <a href="{:U('blog/Index/edit', array('id'=>$id, 'mid'=>$uid))}">编辑</a>&nbsp;&nbsp;
+		                  <span class="cGray2">|</span>&nbsp;&nbsp;
+		                  <a href="javascript:deleteBlog('{:U('blog/Index/doDeleteBlog', array('id'=>$id))}')">删除</a>&nbsp;&nbsp;<span class="cGray2">|</span>&nbsp;&nbsp;
+		                </eq>
+		              <php>}</php>
+		              {:W('ShareToFeed',array('title'=>'分享','initHTML'=>urlencode('我分享了一篇日志“'.$title.'”，内容为：'.$sub_content),'url'=>U('blog/Index/show',array('id'=>$id,'mid'=>$uid)),'attachId'=>'','from'=>'blog','blogId'=>$id,'feedTitle'=>$title,'color'=>'black'))}
+           			  </span>
+		            <span class="mr10">{$user_info['space_link']}</span><em>发表于：{$cTime|friendlyDate}</em>      
+	            </p>
+            </div>
+          </div>    
+    <div class="BlogBox">
+      <div class="">
+        <div class="btmline f9">
+            <div class="right">
+                <a href="{:U('blog/Index/show', array('id'=>$id, 'action'=>'lt', 'mid'=>$uid))}">上一篇</a> / <a href="{:U('blog/Index/show', array('id'=>$id, 'action'=>'gt', 'mid'=>$uid))}">下一篇</a>
+            </div>
+            第 {$num}/{$count} 篇{$ts['app']['app_alias']}
+ 
+ 
+        </div>
+        <div style="margin:20px 0; " class="mLR15">
+          
+          <php>if( $isOwner == 0 && $private == 4 ){</php>
+          <div class="bg_msg">
+            <div class="bg_msg_btm">
+              <table width="100%" border="0" cellpadding="0" cellspacing="0">
+                <tr>
+                  <td width="40" align="center"><img src="__APP__/images/ico_suo.png" width="20" height="20" /></td>
+                  <td>只有主人可以查看此日志</td>
+                </tr>
+              </table>
+            </div>
+          </div>
+          <php>}elseif( $isOwner == 0 && $private == 2 && $relationship=='unfollow'){</php>
+          <div class="bg_msg">
+            <div class="bg_msg_btm">
+              <table width="100%" border="0" cellpadding="0" cellspacing="0">
+                <tr>
+                  <td width="40" align="center"><img src="__APP__/images/ico_suo.png" width="20" height="20" /></td>
+                  <td>只有主人关注的人可以查看此日志</td>
+                </tr>
+              </table>
+            </div>
+          </div>
+          <php>}else{</php>
+            <div class="f14px blog_con lh180 mb20" style="display:none;"><div class="ke-post img_resize" style="display:none;" id="dt_content">{$content}</div></div>
+           <iframe id="frame_1" width="100%" height="100%" scrolling="no" frameborder="0">
+			</iframe> 
+			<script>
+                function update(){
+                    var blogid = jQuery('#blogid').val();
+                    var mid = jQuery('#uid').val();
+                    jQuery.ajax({
+                        url:  U('blog/Index/updateStatus'),//"{:C('WEB')}" + "index.php?app=blog&mod=Index&act=updateStatus",
+                        type: "post",
+                        async:false,
+                        data:{mid: mid,blogId: blogid},
+                        success:function (statusResult) {
+                        },
+                    })
+                }
+			window.onload=function(){
+				jQuery("#dt_content").find("a").attr('target','_blank');
+				document.getElementById('frame_1').contentWindow.document.body.innerHTML =  document.getElementById('dt_content').innerHTML;
+				document.getElementById('frame_1').contentWindow.document.body.scrollHeight;
+				jQuery("#frame_1").height(document.getElementById('frame_1').contentWindow.document.body.scrollHeight+20);
+			    var divWidth = jQuery(".mLR15").width();
+			    jQuery("#frame_1").contents().find("body").attr("style","word-break: break-all;"); 	
+			    jQuery("#frame_1").contents().find("img").each(function() {
+			    	var img = new Image();
+				    img.src = jQuery(this).attr("src");
+				    var img_w = jQuery(this)[0].width;
+                    if(img_w < divWidth-20)
+                    {
+                        jQuery(this).attr("style","width: auto");
+                    }
+                    else
+                    {
+                        jQuery(this).attr("style","width: "+(divWidth-30));
+                    }
+			    });
+
+                update();
+			} 
+			</script>
+            <neq name="mTime" value="0"><div class="cGray2 lh30">最后修改时间: {$mTime|friendlyDate}</div></neq>
+          <php>} </php>
+          
+        </div>
+        <div class="feed_list">
+           <div class="repeat">
+             {:W('Comment',array('tpl'=>'detail','app_name'=>'blog', 'table'=>'blog', 'row_id'=>$id, 'canrepost'=>'0', 'cancomment'=>1, 'cancomment_old'=>0, 'showlist'=>1, 'limit'=>'20', 'order'=>'DESC'))}
+           </div>
+        </div>
+      </div>
+    </div>
+    <div class="c"></div>
+    </div>
+    </div>
+  </div>
+  <div class="c"></div>
+</div>
+</div>
+<script src="__THEME__/js/module.weibo.js"></script>
+<include file="__THEME__/public_footer" />

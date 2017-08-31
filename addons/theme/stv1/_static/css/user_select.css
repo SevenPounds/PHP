@@ -1,0 +1,337 @@
+@CHARSET "UTF-8";
+.add_member{
+    border:1px solid #ccc;
+    border-bottom:none;
+    width:745px;
+    margin:15px 0 0 15px;
+    background:#fff;
+}
+.add_head{
+    height:36px;
+    line-height:36px;
+    background:url(../image/member_head.gif) repeat-x;
+    border-bottom:1px solid #d7d7d7;
+    color:#535353;
+}
+.add_con{
+    border-bottom:1px solid #ccc;
+    height:300px;
+    width:745px;
+}
+.add_left{
+    float:left;
+    width:196px;
+    height:300px;
+    background:#f9f9f9;
+}
+.add_left li{
+    height:27px;
+    width:184px;
+    line-height:27px;
+    margin:8px 5px;
+    font-size:14px;
+    color:#3683bc;
+}
+.add_left li a{
+    display:block;
+    height:27px;
+    width:184px;
+    line-height:27px;
+    color:#3683bc;
+}
+.add_left img{
+    display:inline-block;
+    vertical-align:middle;
+    padding:0 3px 0 15px;
+}
+.add_left .current{
+    background:url(../image/member_bg.gif) no-repeat;
+    line-height:27px;
+    height:27px;
+}
+.add_left .current a{
+    color:#fff;
+    line-height:27px;
+    height:27px;
+}
+/*--------20140114----edit--------*/
+.add_left02{
+    float:left;
+    width:179px;
+    height:300px;
+    background:#f9f9f9;
+}
+.member_choose01 li{
+    height:27px;
+    width:164px;
+    line-height:27px;
+    margin:8px 5px;
+    font-size:14px;
+    color:#3683bc;
+}
+.member_choose01 li a{
+    display:block;
+    height:27px;
+    width:164px;
+    line-height:27px;
+    color:#3683bc;
+}
+.member_choose01 img{
+    display:inline-block;
+    vertical-align:middle;
+    padding:0 3px 0 15px;
+}
+.member_choose01 .current{
+    background:url(../image/member_bg01.gif) no-repeat;
+    line-height:27px;
+    height:27px;
+}
+.member_choose01 .current a{
+    color:#fff;
+    line-height:27px;
+    height:27px;
+}
+.member_choose02{
+    padding-left:40px;
+}
+.member_choose02 li{
+    width:104px;
+    height:20px;
+    line-height:20px;
+    margin:8px 5px;
+    font-size:12px;
+}
+.member_choose02 li a{
+    display:block;
+    height:20px;
+    line-height:20px;
+    width:104px;
+    color:#787878;
+}
+.member_choose02 img{
+    display:inline-block;
+    vertical-align:middle;
+    padding:0 3px 0 15px;
+}
+.member_choose02 .current{
+    font-weight:bold;
+    height:20px;
+    line-height:20px;
+}/*--------20140116-----edit--------*/
+.member_choose02 .current a{
+    color:#787878;
+    height:20px;
+    line-height:20px;
+}/*--------20140116-----add--------*/
+.member_choose02 li a:hover{
+    color:#229bd7;
+}/*--------20140116-----add--------*/
+.member_choose02 .current a:hover{
+    color:#787878;
+    height:20px;
+    line-height:20px;
+}/*--------20140116-----add--------*/
+.member_page{
+    height:28px;
+    line-height:27px;
+    text-align:center;
+    width:90px;
+    margin:0 auto;
+    padding-bottom:20px;
+    _padding-bottom:0px;
+}
+.next a{
+    margin:0 7px;
+    float:left;
+    height:28px;
+    width:27px;
+    display:block;
+    background:url(../image/next.gif) top no-repeat;
+    color:#787878;
+}
+.next a:hover{
+    height:28px;
+    width:27px;
+    display:block;
+    background:url(../image/next.gif) bottom no-repeat;
+    color:#787878;
+}
+.previous a{
+    margin:0 7px;
+    float:left;
+    height:28px;
+    width:27px;
+    display:block;
+    background:url(../image/previous.gif) top no-repeat;
+    color:#787878;
+}
+.previous a:hover{
+    height:28px;
+    width:27px;
+    display:block;
+    background:url(../image/previous.gif) bottom no-repeat;
+    color:#787878;
+}
+/*--------20140114----end--------*/
+.add_right{
+    float:left;
+    width:566px;
+    height:300px;
+    overflow:scroll;
+    overflow-x:hidden;
+    overflow-y:auto;
+}
+.add_right ul{
+    margin-top:10px;
+}
+.add_right li{
+    width:200px;
+    height:50px;
+    float:left;
+    padding:10px 0 20px 34px ;
+}
+.add_right .member_head{
+    float:left;
+    height:50px;
+    width:50px;
+    border:1px solid #ccc;
+}
+.add_right .member_head img{
+    border:1px solid #fff;
+    height:48px;
+    width:48px;
+}
+.add_done{
+    border-top:1px solid #fff;
+    border-bottom:1px solid #ccc;
+    width:745px;
+    zoom:1;
+    background:#f5f5f5;
+}
+.add_done ul{
+    margin-top:10px;
+    *margin-top:0px;
+}
+.add_done li{
+    position:relative;/*-------20140116----edit-----*/
+    float:left;
+    height:56px;
+    width:104px;
+    padding:0 6px;
+    margin:0 3px 10px 22px;
+    background:#dee8ef;
+    border:1px solid #a5c1d1;
+    display:inline;
+}
+.add_doneclose{
+    position:absolute;
+    height:14px;
+    width:14px;
+    right:2px;
+    top:2px;
+    display:none;
+}/*-------20140116----add-----*/
+.publish{
+    height:14px;
+    padding:20px 15px 0;
+    color:#787878;
+}
+.publish input{
+    height:14px;
+    width:14px;
+    margin-right:3px;
+}
+.publish span{
+    display:block;
+    float:left;
+    height:14px;
+    line-height:14px;
+}
+.topic_search{
+    height:30px;
+    float:right;
+}
+.topic_search .left{
+    float:left;
+    height:30px;
+    width:4px;
+    background:url(../image/input_left.jpg) no-repeat;
+}
+.topic_search .right{
+    float:left;
+    height:30px;
+    width:4px;
+    background:url(../image/input_right.jpg) no-repeat;
+}
+.topic_search .cen{
+    float:left;
+    height:28px;
+    background:#fff;
+    border-top:1px solid #c9c9c9;
+    border-bottom:1px solid #c9c9c9;
+    width:168px;
+}
+.topic_search .cen input{
+    float:left;
+    height:28px;
+    line-height:28px;
+    border:none;
+    background:none;
+    width:135px;
+    padding:0 0 0 5px;
+    outline:none;
+}
+.topic_searchbtn{
+    float:right;
+    height:28px;
+    width:28px;
+}
+.topic_searchbtn a{
+    display:block;
+    float:right;
+    height:28px;
+    width:28px;
+    background:url(../image/topic_serach.gif) top no-repeat;
+}
+.topic_searchbtn a:hover{
+    float:right;
+    height:28px;
+    width:28px;
+    background:url(../image/topic_serach.gif) bottom no-repeat;
+}
+.find_member{
+    height:40px;
+    padding-left:10px;
+    overflow:hidden;
+    overflow:hidden;
+    width:560px;
+}
+/*------20140114---edit--------*/
+.find_member span{
+    display:block;
+    float:left;
+    overflow:hidden;
+}
+.find_member select{
+    height:20px;
+    margin-top:14px;
+    padding:0px; /* 解决下拉菜单样式冲突 xrding 2014/01/14 */
+}
+.add_right ul{
+    margin-top:10px;
+}
+.add_right li{
+    width:173px;
+    height:50px;
+    float:left;
+    padding:10px 0 20px 10px;
+}/*-------20140114-----edit-------*/
+.add_cursor{
+    cursor: pointer;
+}
+.pt12{
+    padding-top: 12px;
+}
+.pt16{
+    padding-top: 16px;
+}

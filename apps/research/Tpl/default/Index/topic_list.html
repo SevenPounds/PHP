@@ -1,0 +1,35 @@
+<table cellpadding="0" cellspacing="0" border="0" class="online_table3">
+	<tr class="online_tabletop">
+		<th width="8%" style="text-align:center;">状态</th>
+		<th width="1%"><img src="__APP__/images/th_line.jpg" /></th>
+		<th width="44%" style="text-align:center;">主题名称</th>
+		<th width="1%"><img src="__APP__/images/th_line.jpg" /></th>
+		<th width="10%" style="text-align:center;">发起人</th>
+		<th width="1%"><img src="__APP__/images/th_line.jpg" /></th>
+		<th width="10%" style="text-align:center;">参与人数</th>
+		<th width="1%"><img src="__APP__/images/th_line.jpg" /></th>
+		<th width="10%" style="text-align:center;">讨论次数</th>
+		<th width="1%"><img src="__APP__/images/th_line.jpg" /></th>
+		<th width="13%" style="text-align:center;">发起时间</th> 
+	</tr>
+	<volist name="topiclist" id="item">
+		<tr style="background:#fff">
+		     <eq name="item.status" value="1">
+				<td align="center" class="blue">进行中</td>
+			 <else/>
+				<td align="center" class="black1">已结束</td>
+			 </eq>
+			<td></td>
+			<td class="blue"><a href="{:U('/Index/show',array('id'=>$item['id']))}">{$item.title}</a></td>
+			<td></td>
+			<td align="center">{$item.uname}</td>
+			<td></td>
+			<td align="center">{$item.member_count}</td>
+			<td></td>
+			<td align="center">{$item.discuss_count}</td>
+			<td></td>
+			<td align="center">{$item['createtime']|friendlyDate}</td>
+		</tr>
+	</volist>
+</table>
+{$page}

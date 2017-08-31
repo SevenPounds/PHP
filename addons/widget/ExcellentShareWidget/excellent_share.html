@@ -1,0 +1,64 @@
+<style>
+.u-rshare-tabs {
+    float: right;
+	width:50px;
+}
+
+.u-rshare-tabs .u-rshare-sele {
+    color: #93C896;
+}
+
+.u-rshare-tabs a {
+    color: #DDDDDD;
+    font-family: Simsun;
+    padding-left: 5px;
+}
+.disnone {
+	display: none;
+}
+a:hover{
+	cursor:pointer;
+}
+</style>
+<script type="text/javascript">
+<!--
+$(function(){
+	$("#fblog").hover(function(){
+	    $(this).addClass("u-rshare-sele");
+	    $("#sblog").removeClass("u-rshare-sele");
+	    $("#es_2").addClass("disnone");
+	    $("#es_1").removeClass("disnone");
+	});
+	$("#sblog").hover(function(){
+	    $(this).addClass("u-rshare-sele");
+	    $("#fblog").removeClass("u-rshare-sele");
+	    $("#es_1").addClass("disnone");
+	    $("#es_2").removeClass("disnone");
+	});
+});
+//-->
+</script>
+<php>if($from != 'class'){</php><div class="right-box mb20 clearfix border-b"><php>} </php>
+			<div style="width: 200px;" <php>if($from == 'class'){</php>class="tab_a"<php>} </php>>
+	            <div style="width:150px;float:left;">
+	            	<php>if($from == 'class'){</php><b><php>} else{</php><div class="title"><php>}</php>
+		            	精彩分享
+		            <php>if($from == 'class'){</php></b><php>} else{</php></div><php>}</php>
+	            </div>
+	            <div>
+	            	<span id="rightShareTabs" class="u-rshare-tabs">
+						<a id="fblog" data-index="0" href="javascript:;" class="u-rshare-sele" >●</a>
+						<a id="sblog" data-index="1" href="javascript:;" class="">●</a>
+					</span>
+	            </div>
+            </div>
+            <div id="excellent_share_list" <php>if($from == 'class'){</php>class="piclist_box"<php>} </php>>
+            </div>
+<php>if($from != 'class'){</php></div><php>} </php>
+<script type="text/javascript">
+$(function(){
+	$.post(U('widget/ExcellentShare/loadExcellentShare'), {}, function(data){
+		$("#excellent_share_list").html(data);
+	}, "json");
+});
+</script>

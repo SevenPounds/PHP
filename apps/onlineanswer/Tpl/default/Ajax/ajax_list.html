@@ -1,0 +1,27 @@
+<dl>
+	    <volist name="list" id="item">
+			<dd>
+			    <eq name="item.status" value="1">
+			           <p class="pk_zt pk_end mt12"><strong>已结束</strong></p>
+				<else/>
+				       <p class="pk_zt pk_ing mt12"><strong>进行中</strong></p>
+				</eq>
+				<div class="left pl20">
+					<p class="topic_name"><span class="pt10"><strong><a href="{:U('onlineanswer/Index/detail',array('qid'=>$item['qid']))}" title="{$item['title']}"><php>echo htmlspecialchars(getShort(htmlspecialchars_decode($item['title']),20,'...'))</php></a></strong></span><eq name="item.is_new" value="1"><span class="red pl5">new</span></eq><div class="clear"></div></p>
+					<p class="topic_nr pt2" style="line-height:1.5;">问题详述:<php> $content =t($item['content']); echo  getShort($content,50,'...')</php></p>
+					<p class="online_infor pt4">
+						<span><img src="__APP__/images/on_01.gif" /></span>
+						<span class="pl3 pt1">{$item['ctime']|friendlyDate}</span>
+						<!-- <span class="pl15"><img src="__APP__/images/on_02.gif" /></span>
+						<span class="pl3">{$item.answer_count}次参与</span> -->
+						<span class="pl15"><img src="__APP__/images/on_03.gif" /></span>
+						<span class="pl3">{$item.answer_count}次回答</span>
+						<div class="clear"></div>
+					</p>
+				</div>
+				<div class="clear"></div>
+		    </dd>
+		</volist>
+</dl>
+{$page}
+<input type="hidden" value="{$totalcount}" id="totalcount" autocomplete="off"/>

@@ -1,0 +1,117 @@
+<style type="text/css">
+	.it_btn {
+		width:60px;
+		height:49px;
+		float: left;
+		display:inline-block;
+		*zoom: 1; /* 兼容ie7的inline-block */
+		*display:inline;
+	}
+	.it_btn_cur {
+		color: rgb(37,188, 239);
+	}
+	.it_btn:hover {
+		color: rgb(37,188, 239);
+		cursor: pointer;
+	}
+	.yunfile_search {
+		display:inline-block;
+		*zoom: 1; /* 兼容ie7的inline-block */
+		*display:inline;
+	}
+</style>
+<script type="text/javascript">
+jQuery(document).ready(function(){
+	jQuery(".it_btn").mouseenter(function(){
+		jQuery(this).children('a').addClass('current');
+	});
+	jQuery(".it_btn").mouseleave(function(){
+		var url = window.location.href;
+		var start = url.indexOf('type');
+		var type = 'all';
+		if(start!=-1){
+			type = url.substr(start+5);
+		}
+		var cur = jQuery(this).children('a');
+		if(cur.hasClass('sort_btn_1') && type=='all'){
+			return;
+		}
+		if(cur.hasClass('sort_btn_3') && type=='audio'){
+			return;
+		}
+		if(cur.hasClass('sort_btn_4') && type=='image'){
+			return;
+		}
+		if(cur.hasClass('sort_btn_5') && type=='video'){
+			return;
+		}
+		if(cur.hasClass('sort_btn_6') && type=='document'){
+			return;
+		}
+		cur.removeClass('current');
+		
+	});
+});
+</script>
+<div class="yunfile_r fr">
+	<div class="yunfile_r_logo">
+		<div class="yunfile_crumb" id="yunpan_nav">
+			<a href="{:U(APP_NAME.'/Index/index')}#" title="首页"
+				class="yunfile_crumb_home">首页</a>
+		</div>
+		<a href="javascript:;" title="上传资源"
+			class="yunfile_upload_btn opacityed" id="yunpan_upload_btn"
+			data-action="upload" onclick="uploadBox.show('0')">上传资源</a>
+	</div>
+
+	<div class="yunfile_r_cont">
+		<div id="nav_default" class="yunfile_r_cont_tit">
+			<p class="yunfile_r_cont_tit_des">分类显示：</p>
+			<div class="it_btn" onclick="clickTypeSearch('all');">
+				<a
+				class="sort_btn sort_btn_1" title="全部"></a>
+				全部
+			</div>
+			<div class="it_btn" onclick="clickTypeSearch('audio');">
+				<a 
+				class="sort_btn sort_btn_3" title="音频"></a> 
+				音频
+			</div>
+			<div class="it_btn" onclick="clickTypeSearch('image');">
+				<a
+				class="sort_btn sort_btn_4" title="图片"></a>
+				图片
+			</div>
+			<div class="it_btn" onclick="clickTypeSearch('video');"> 
+				<a 
+				class="sort_btn sort_btn_5" title="视频"></a> 
+				视频
+			</div>
+			<div class="it_btn" onclick="clickTypeSearch('document');">
+				<a 
+				class="sort_btn sort_btn_6" title="文档"></a>
+				文档
+			</div>
+			<div class="yunfile_search">
+				<input type="text" name="yunfile_search" id="yunfile_search_input"
+					class="yunfile_search_input" maxlength="50" value="" /> <span
+					class="yunfile_search_btn" onclick="appBase.gridBar.search();"></span>
+			</div>	
+		</div>
+
+		<div class="yunfile_r_cont_tit" id='nav_public' style="display:none">
+                <p class="yunfile_r_cont_tit_des">
+               	     公开位置筛选：
+                </p>
+                <!-- <a href="javascript:;" class="record_btn opacityed current" id="wdzy_1" title="我的主页">我的主页</a> -->
+                <a href="javascript:;" class="record_btn opacityed current" id="xkzy_1" title="学科资源">学科资源</a>
+   			</div>
+	<div class="yunfile_tab">
+		   <table class="yunfile_r_cont_list">
+		   </table>
+	 </div>
+		<div class="yunfile_r_fun" style="display: none;"></div>
+
+		<div class="yunfile_res_bag"></div>
+	</div>
+</div>

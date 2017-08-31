@@ -1,0 +1,60 @@
+<div class="enc-top mt20 clearfix">
+			<div class="fl enc-head">
+				<a href="{:U('public/Profile/index',array('uid'=>$data['tsUser']['uid']))}"  target="_blank" class="head-box">
+					<img src="{$data['tsUser']['userAvatarBig']}" />
+					<span></span>
+				</a>
+				<span href="#" class="user-name"><a href="{:U('public/Profile/index',array('uid'=>$data['tsUser']['uid']))}"  target="_blank">{$data['tsUser']['uname']}</a><a href="#" class="enc-set"></a></span>
+				<ul class="clearfix enc-fans">
+					<li class="fl">
+						<a href="{:U('public/Profile/following')}">{$data['tsUser']['following']|default=0}</a>
+						<span>关注</span>
+
+					</li>
+                    <li class="fl">
+                        <a href="{:U('public/Profile/follower')}">{$data['tsUser']['follower']|default=0}
+                         <span id="new_follower_total"></span>
+                        </a>
+                        <span>粉丝</span>
+                    </li>
+					<!--<li class="fl">-->
+						<!--<a href="{:U('public/Credit/index')}">{$data['tsUser']['creditCount']|default=0}</a>-->
+						<!--<span>积分</span>-->
+					<!--</li>-->
+				</ul>
+			</div>
+			<div class="fl enc-myitem clearfix">
+				<dl class="clearfix">
+					<dt>
+						<ul>
+							<li class="clearfix"><span class="fl">学校：<em>{$data['tSchool']['schoolName']|getShort=12,'...'}</em></span>
+                                <a href="{:C('ESCHOOL')}index.php?m=School&schoolId={$data['tSchool']['id']}"  class="fr gray-borbtn">我的学校</a>
+                            </li>
+							<li class="clearfix"><span class="fl">班级：<volist name="data.tClass" id='vo' offset="0" length='2'><em>{$vo.className|getShort=5,'...'},</em>
+                                </volist>
+                                </span><a href="{:C('ESCHOOL')}index.php?m=Clazz&classId={$data['tClass'][0]['id']}" class="fr gray-borbtn">我的班级</a>
+                            </li>
+							<li class="clearfix"><span class="fl">主教学科：<em>{$data['subject']|getShort=8,'...'}
+                                <if condition="$data['phase'] !=null ">({$data['phase']})</if></em>
+                            </span><a href="<?php echo U('public/Account/index');?>" class="fr gray-borbtn">设置个人信息</a></li>
+						</ul>
+					</dt>
+					<dd class="tc">
+						<a href="{:U('public/Index/index')}" class="org-space-btn"><em>进入我的空间</em></a>
+					</dd>
+				</dl>
+			</div>
+			<div class="fl enc-pan">
+				<h2 class="slant-tit"><span>网盘使用情况</span></h2>
+				<div class="pan-use">
+					<span style="width:{$scale}%;" class="clearfix"><em class="fl"></em></span>
+				</div>
+				<dl>
+					<dt class="text-center">
+						<span>已用容量<strong>{$data['panUsedSize']}MB</strong></span>
+						<span>总容量<strong>{$data['panTotalSize']}GB</strong></span>
+					</dt>
+					<dd><a href="{:C('PAN_SITE_URL')}index.php?m=Disk&c=Index&a=index"  class="borblue-btn">进入网盘&gt;&gt;</a></dd>
+				</dl>
+			</div>
+		</div>

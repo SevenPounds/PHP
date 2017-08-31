@@ -1,0 +1,155 @@
+<include file="__THEME__/header" />
+<include file="header" />
+<div id="page-wrap">
+	<div id="main-wrap">
+		<div class="crumbs">
+			<ul>
+				<li class="pre_cen"><a href="{:U('public/Index/index')}">个人空间</a></li>
+				<li>></li>
+				<li><a href="{:U('/Index/index')}">主题讨论</a></li>
+				<li>></li>
+				<li>主题中心</li>
+			</ul>
+			<div class="clear"></div>
+		</div>
+		<div class="con_box">
+			<div class="left_box">
+				<include file="__THEME__/public_left" />
+			</div>
+			<div class="right_box">
+				<div class="online_title">
+					<div class="left">
+						<span><img src="__THEME__/app_icon/app_zttl.png" /></span> <span
+							class="pl10 font3"><b>主题讨论</b></span>
+					</div>
+					<div class="right">
+					  <a id="t_newresearch" href="{:U('/Index/add')}">
+						<p class="blue_btn3" onmouseover="this.className='blue_btn3hov'"
+							onmouseout="this.className='blue_btn3'">
+							<img src="__APP__/images/add.gif" height="8" />发起主题
+						</p>
+					  </a>
+					</div>
+				</div>
+				<div class="re_tab">
+					<ul>
+						<li><a href="{:U('/Index/index')}">我发起的主题</a></li>
+						<li>
+						  <a href="{:U('/Index/follows')}">我参加的主题</a>
+						  {$newcountdiv}
+						</li>
+					</ul>
+					<p class="pkzx_pre"><a href="{:U('/Index/center')}">主题中心</a></p>
+				</div>
+				<div class="mlr15">
+                        <div class="auto_tab">
+                            <ul id="nav_list">
+                                <li class="current" onclick="topic.changeNav(this,0);"><a href="javascript:void(0);">最新主题</a></li>
+                                <li onclick="topic.changeNav(this,1);"><a href="javascript:void(0);" >热门主题</a></li>
+                                <li onclick="topic.changeNav(this,2);"><a href="javascript:void(0);">精华主题</a></li>
+                                <li onclick="topic.changeNav(this,3);"><a href="javascript:void(0);">我关注的人的主题</a></li>
+                            </ul>
+                        </div>
+                 </div>
+				<div class="topic_choose">
+				<!-- 根据用户地区获取列表，现注释 by tkwang 2015/3/16 -->
+					<!-- <div class="find_people">
+						<span class="pl10">
+							<b>按发起者信息查找：</b>
+						</span>
+						<span class="pl10">学科：</span>
+						<span>
+							<select style="padding: 0;" id="subject_list" onchange="topic.change('subject',this.value)">
+								<volist name="subjectList" id="s">
+									<option value="{$s.code}">{$s.name}</option>
+								</volist>
+							</select>
+						</span>
+						<span class="pl10">地区：</span>
+						<span>
+							<select name="select" style="padding: 0;" id="province_list" onchange="topic.change('province',this.value)">
+								<option value="0">请选择</option>
+								<volist name="provineList" id="p">
+									<option value="{$p.code}">{$p.name}</option>
+								</volist>
+							</select>
+						</span>
+						<span class="pl5">
+							<select style="padding: 0;" id="city_list" onchange="topic.change('city',this.value)">
+								<option value="0">请选择</option>
+								<volist name="cityList" id="c">
+									<option value="{$c.code}">{$c.name}</option>
+								</volist>
+							</select>
+						</span>
+						<span class="pl5">
+							<select style="padding: 0;" id="district_list" onchange="topic.change('district',this.value)">
+								<option value="0">请选择</option>
+								<volist name="districtList" id="d">
+									<option value="{$d.code}">{$d.name}</option>
+								</volist>
+							</select>
+						</span>
+					</div> -->
+					{:W('HotTag',array('type'=>'research'))}
+					<div class="status_box">
+						<div class="status">
+							<p class="pl10 left">
+								<b>按主题状态查询：</b>
+							</p>
+							<ul id="ul_status">
+								<li class="current" id="status_all">
+									<a href="javascript:topic.changeStatus(-1);">全部</a>
+								</li>
+								<li class="blue" id="status_ing">
+									<a href="javascript:topic.changeStatus(1);">进行中</a>
+								</li>
+								<li class="black1" id="status_end">
+								    <a class="black1" href="javascript:topic.changeStatus(0);">已结束</a>
+								</li>
+							</ul>
+						</div>
+						<div class="topic_search mt10 pr15">
+							<div class="left"></div>
+							<div class="cen">
+								<input type="text" id="keyword_txt" onkeydown="topic.enter(event)"/>
+								<p class="topic_searchbtn">
+									<a href="javascript:topic.search();"></a>
+								</p>
+							</div>
+							<div class="right"></div>
+						</div>
+					</div>
+				</div>
+                <div id="topic_list">
+	                <table cellpadding="0" cellspacing="0" border="0" class="online_table3">
+						<tr class="online_tabletop">
+							<th width="8%" style="text-align:center;">状态</th>
+							<th width="1%"><img src="__APP__/images/th_line.jpg" /></th>
+							<th width="44%" style="text-align:center;">主题名称</th>
+							<th width="1%"><img src="__APP__/images/th_line.jpg" /></th>
+							<th width="10%" style="text-align:center;">发起人</th>
+							<th width="1%"><img src="__APP__/images/th_line.jpg" /></th>
+							<th width="10%" style="text-align:center;">参与人数</th>
+							<th width="1%"><img src="__APP__/images/th_line.jpg" /></th>
+							<th width="10%" style="text-align:center;">讨论次数</th>
+							<th width="1%"><img src="__APP__/images/th_line.jpg" /></th>
+							<th width="13%" style="text-align:center;">调研时间</th> 
+						</tr>
+			        </table>
+				</div>
+			</div>
+			<div class="clear"></div>
+		</div>
+	</div>
+</div>
+<input type="hidden" value="-1" id="status_val" autocomplete="off"/>
+<script type="text/javascript" src="__APP__/js/topic.js"></script>
+<script type="text/javascript">
+var topic;
+jQuery(document).ready(function(){
+	topic = topic || new _topic();
+	topic.init();
+});
+</script>
+<include file="__THEME__/public_footer" />

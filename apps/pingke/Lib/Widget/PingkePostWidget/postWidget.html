@@ -1,0 +1,32 @@
+<if condition="$status !=0 && !$isVisitor">	
+
+<div class="book_txt3 pb30">
+	<div model-node="mini_editor" class="relative_area">
+		<textarea id="post_content"></textarea>
+	    <span><b>0</b>/140</span>
+	</div>
+	<input type="hidden" id="hidden_id" value="{$rid}"/>
+
+	<div class="book_btn3 acts">
+			<a class="face-block1" href="javascript:;" event-node="comment_insert_face">
+				<img src="__THEME__/image/smile_btn.jpg" />
+			</a>
+
+			<a class="file-block1 pl15" href="javascript:;"  style="cursor:default;">
+				<img src="__THEME__/image/attachment.gif" />
+				<form style='display:inline;padding:0;margin:0;border:0;outline:none;' >
+					<input type="file" name="attach" inputname="attach" onchange="core.plugInit('uploadFile',this,'','file');" urlquery="" limit="0" event-node="uploadinput" style="top:6px;height:25px;right:10px;*overflow:hidden;">
+				</form>
+			</a>
+
+		<a class="pl15" id="talk" tag=""></a>
+
+		<p class="right">
+		<input type="button" id="post_btn" value="发表" class="green_btn3" onMouseover="this.className='green_btn3hov'" onMouseOut="this.className='green_btn3'" />
+		</p>
+	</div>
+
+	<div class="clear"></div>
+	<div model-node="faceDiv"></div> 
+</div>
+</if>

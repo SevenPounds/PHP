@@ -1,0 +1,255 @@
+<include file="__THEME__/public_header" />
+<link href="__APP__/fonts.css" rel="stylesheet" type="text/css" />
+<link href="__APP__/per_zone.css" rel="stylesheet" type="text/css" />
+<link href="__APP__/css/public_homepage.css" rel="stylesheet" type="text/css" />
+<link href="__THEME__/css/feedlistwidget.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="__THEME__/css/base.css">
+<link rel="stylesheet" href="__THEME__/css/common.css">
+<link rel="stylesheet" href="__ROOT__/apps/public/_static/css/person_center.css">
+
+<link rel="stylesheet" href="__APP__/css/style_faceCard.css" type="text/css">
+<link href="__PUBLIC__/js/tbox/box.css?20110820" rel="stylesheet" type="text/css" />
+
+<script src="./apps/yunpan/_static/js/uploadbox.js" type="text/javascript"></script>
+<!-- 针对空间首页语音组件修改-->
+<script src="SpeechToText/Script/newtalk.js" type="text/javascript"></script>
+<link href="SpeechToText/css/send_weibo.css" rel="stylesheet" />
+<script src="SpeechToText/Script/newtalkAchieve.js" type="text/javascript"></script>
+<script type="text/javascript">
+    var browser_title = document.title;
+    var YUNPANUPLOAD = '{$YUNPANUPLOAD}';
+    var _userid = '{$_userid}';
+    var fileTypes = '{$fileTypes}';
+    var wendangFid = '{$wendangFid}';
+</script>
+
+<style type="text/css">
+    .popup1 {
+        width: 528px;
+        border: 1px solid #ccc;
+        z-index: 1001;
+        background-color: #fff;
+        color: #535353;
+    }
+    .uploadify{
+        margin-left:10px;
+        display:inline-block;
+        float:left;
+    }
+    .uploadify .uploadify-button{
+        margin:0px;
+    }
+    .uploadify-button-text{
+    opacity: 1;
+    color: #fff;
+    text-align: center;
+    padding-left:20px;
+        margin-left:3px;
+    }
+    .uploadify-queue {
+        margin-bottom: 1em;
+    }
+    .uploadify-queue-item {
+        background-color: #F5F5F5;
+        -webkit-border-radius: 3px;
+        -moz-border-radius: 3px;
+        border-radius: 3px;
+        font: 11px Verdana, Geneva, sans-serif;
+        margin-top: 5px;
+        max-width: 450px;
+        width:100%;
+        padding: 10px;
+    }
+    .uploadify-error {
+        background-color: #FDE5DD !important;
+    }
+    .uploadify-queue-item .cancel a {
+        float: right;
+        height:	16px;
+        text-indent: -9999px;
+        /*background-image:url(__APP__/images/uploadify-cancel.png);*/
+        width: 16px;
+    }
+    .uploadify-queue-item.completed {
+        background-color: #E5E5E5;
+    }
+    .uploadify-progress {
+        background-color: #E5E5E5;
+        margin-top: 10px;
+        width: 100%;
+    }
+    .uploadify-progress-bar {
+        background-color: #0099FF;
+        height: 3px;
+        width: 1px;
+    }
+
+</style>
+<div id="page-wrap">
+    <div id="feedback" class="feedback-fixed"><a href="{:U('public/Index/feedback')}" target="_blank">{:L('PUBLIC_FEEDBACK')}</a></div>
+    <div id="main-wrap">
+        <div id="st-index-grid" class="st-grid content-bg" style="margin-top: 20px;">
+            <!--左边 -->
+            <include file="__THEME__/public_left" />
+            <div class="st-section">
+                <!--右边-->
+                <include file="__THEME__/public_right" />
+                <div id="col9" class="st-index-main">
+                    <div class="cy_mr_profileOption">
+                        <ul class="clearfix">
+                            <if condition="$eduManager eq 1">
+                                <li class="cy_pro_hot current"><a href="javascript:void(0);">监管统计</a><font>&nbsp;</font></li>
+                                <else />
+                                <li class="cy_pro_hot current"><a href="javascript:void(0);">热门推荐</a><font>&nbsp;</font></li>
+                            </if>
+                            <li class="cy_pro_resource"><a href="javascript:void(0);" onclick="<?php if($roleEnName == 'student' || $roleEnName == 'parent'){echo "ui.success('敬请期待');";}else{echo "uploadBox.show('0');";}?>">传资源</a><font>&nbsp;</font></li>
+                            <li class="cy_pro_share"><a href="javascript:;" onclick="<?php if($roleEnName == 'student' || $roleEnName == 'parent'){echo "ui.success('敬请期待');";}else{echo "showOrHideShareArea('share_res_area');";}?>">分享成果</a><font>&nbsp;</font></li>
+                            <li class="cy_pro_daily"><a href="{:U('blog/Index/addBlog')}">写日志</a><font>&nbsp;</font></li>
+                            <li class="cy_pro_photo"><a href="{:U('photo/Upload/flash')}">发照片</a></li>
+                        </ul>
+                    </div>
+                    <div class="extend-foot">
+                        <if condition="$eduManager eq 1">
+                            <!-- 系统推荐部分 -->
+                            <div id="system_recommend" class="cy_model">
+                                <include file="./sys_recom/sys_recom" />
+                            </div>
+                            <else />
+                            <div class="cy_model">
+                                <include file="hotRecommend" />
+                            </div>
+                        </if>
+                        <!-- 分享成果资源选择框 -->
+                        <div id="share_res_area" style="display:none;">
+                            <include file="../ShareResult/share_choose_res" />
+                        </div>
+                        <!-- 分享成果位置选择框 -->
+                        <include file="../ShareResult/share_choose_position" />
+                        <div class="clear"></div>
+                        <!-- 发布框 -->
+                        <div id="weibo_edit_area">
+                            {:W('SendWeibo',array('title'=>$title, 'topicHtml'=>$initHtml))}
+                        </div>
+                        <div class="feed-nav">
+                            <div class="mod-feed-tab" id="mod-feed-tab" style="margin-bottom:5px;"> <!--<php>if(!isset($_GET['feed_type']) && empty($_GET['feed_key'])){</php> style="display:none"<php>}</php>-->
+                                <ul class="inner-feed-nav">
+                                    <li <eq name='feed_type' value=''>class="current"</eq>>
+                                    <a href="{:U('public/Index/index',array('type'=>$type,'feed_type'=>''))}">{:L('PUBLIC_ALL_STREAM')}</a></li>
+                                    <if condition="$type eq 'school'"></>
+                                    <else />
+                                    <eq name='type' value='class'>
+                                        <li <eq name='feed_type' value='blog_post'>class="current"</eq>>
+                                        <a href="{:U('public/Index/index',array('type'=>$type,'feed_type'=>'blog_post'))}">日志</a></li>
+                                        <li <eq name='feed_type' value='postimage'>class="current"</eq>>
+                                        <a href="{:U('public/Index/index',array('type'=>$type,'feed_type'=>'postimage'))}">{:L('PUBLIC_IMAGE_STREAM')}</a></li>
+                                        <li <eq name="feed_type" value="share">class="current"</eq>>
+                                        <a href="{:U('public/Index/index',array('type'=>$type,'feed_type'=>'share'))}">分享</a></li>
+                                        <else/>
+                                        <li <eq name='feed_type' value='blog_post'>class="current"</eq>>
+                                        <a href="{:U('public/Index/index',array('type'=>$type,'feed_type'=>'blog_post'))}">日志</a></li>
+                                        <li <eq name='feed_type' value='postimage'>class="current"</eq>>
+                                        <a href="{:U('public/Index/index',array('type'=>$type,'feed_type'=>'postimage'))}">{:L('PUBLIC_IMAGE_STREAM')}</a></li>
+                                        <li <eq name='feed_type' value='postfile'>class="current"</eq>>
+                                        <a href="{:U('public/Index/index',array('type'=>$type,'feed_type'=>'postfile'))}">{:L('PUBLIC_FILE_STREAM')}</a></li>
+                                        <li style="display:none" <eq name="feed_type" value="postvideo">class="current"</eq>>
+                                        <a href="{:U('public/Index/index',array('type'=>$type,'feed_type'=>'postvideo'))}">视频</a></li>
+                                    </eq>
+                                    </if>
+                                </ul>
+                            </div>
+                        </div>
+                        {:Addons::hook('home_index_left_feedtop')}
+                        <!--feed list-->
+                        {:W('FeedList',array('type'=>$type,'feed_type'=>$feed_type,'feed_key'=>$feed_key,'fgid'=>t($_GET['fgid'])))}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="layer-group-list" style="display:none" model-node='layer_group_list'>
+    <div class="inner">
+        <ul>
+            <li><a href="{:U('public/Index/index')}">{:L('PUBLIC_ACTIVITY_STREAM')}</a></li>
+            <volist name='followGroup' id ='f'>
+                <li><a href="{:U('public/Index/index',array('fgid'=>$f['follow_group_id']))}" class='group_title' gid='{$f['follow_group_id']}'>{$f.title}</a></li>
+            </volist>
+            <li class="line"></li>
+            <php> if(count($followGroup) < 10): </php>
+            <li><a href="javascript:void(0)" event-node='addFollowgroup'>{:L('PUBLIC_CREATE_GROUP')}</a></li>
+            <php>endif;</php>
+            <!-- <li><a href="javascript:void(0)" event-node="editFollowgroup">{:L('PUBLIC_MANAGE_GROUP')}</a></li> -->
+        </ul>
+    </div>
+</div>
+
+<div class="layer-channel-group-list" style="display:none" model-node="layer_channel_group_list">
+    <div class="inner">
+        <ul>
+            <li><a href="{:U('public/Index/index',array('type'=>'channel'))}">订阅</a></li>
+            <volist name='channelGroup' id ='f'>
+                <li><a href="{:U('public/Index/index',array('type'=>'channel','fgid'=>$f['channel_category_id']))}" class="group_title" gid="{$f['channel_category_id']}">{$f.title}</a></li>
+            </volist>
+        </ul>
+    </div>
+</div>
+<include file="__THEME__/public_footer" />
+<script>
+    //弹出分享框
+    function shareResult(){
+        $("#show_space_chooce").trigger("click");
+        //清空分享脏数据
+        window.SHAREFILES={};
+        //清空选中资源列表
+        $("#share_res_list").html('');
+        //清空位置选中复选框
+        $(".check_position").attr("checked",false);
+        //清空内容评论
+        $("#desc").val('描述一下您的资源吧');
+        //重置提交分享按钮
+        $("#space_sure").attr("is_sub","true");
+    }
+
+    // 展示或隐藏说说发布框
+    function showOrHide(id){
+        var area = $("#" + id);
+        var display = area.css("display");
+        if(display == 'none'){
+            area.show();
+        }else{
+            area.hide();
+        }
+    };
+
+    $('ul.feed_file_list').each(function() {
+
+        $(this).find('li').each(function(i) {
+            if(i % 2 == 0) {
+                $(this).css("background","#fafafa");
+            }
+        });
+    });
+
+    var firstLoginTag = '<php> echo $firstLoginTag;</php>';
+    jQuery(function(){
+
+        jQuery(".cy_pro_share").click(function(){
+            jQuery(".cy_model").hide();
+            jQuery(".cy_mr_profileOption").find("li").removeClass('current');
+            jQuery(this).addClass('current');
+        })
+
+        jQuery(".cy_pro_hot").click(function(){
+            jQuery(".cy_model").show();
+            jQuery("#share_res_area").hide();
+            jQuery(".cy_mr_profileOption").find("li").removeClass('current');
+            jQuery(this).addClass('current');
+        })
+
+        if(typeof(firstLoginTag)!= 'undefined' && firstLoginTag){
+            jQuery.jBox.tip("<span style='font-size:14px; color:#535353;'>首次登录个人中心,积分</span><span style='color:#ff6600;'>+10</span>", 'success');
+        }
+    });
+</script>
+<script type="text/javascript" src="__THEME__/js/home/module.home.js"></script>
+<script type="text/javascript" src="__THEME__/js/module.weibo.js"></script>

@@ -1,0 +1,198 @@
+@CHARSET "UTF-8";
+/*140604--------infoEdit-----------begin-----*/
+.info_Edit .right{
+    float: right;
+}
+.info_Edit .left{
+    float: left;
+}
+.info_Edit li{
+    padding-bottom: 10px;
+}
+.info_Edit li font{
+    line-height: 28px;
+    margin-left: 5px;
+    display: inline;
+    color: #666;
+    float: left;
+}
+.info_Edit span{
+    float: left;
+    display: inline;
+    width: 120px;
+    padding: 3px 5px 3px 0;
+    text-align: right;
+    color: #f00;
+    line-height: 22px;
+}
+.info_Edit .info_tips{
+    font-style:normal;
+    line-height: 28px;
+    position: relative;
+    color: #666;
+}
+.info_Edit span label{
+    color:#333;
+    padding-left: 3px;
+}
+.info_Edit input.info_text,.info_Edit textarea,.info_Edit .info_sex{
+    float: left;
+}
+.info_Edit .info_text{
+    width: 300px;
+    height: 14px;
+    padding: 6px 5px;
+    border: #ccc solid 1px;
+    color: #333;
+}
+.info_Edit .info_text2{
+    width: 150px;
+    height: 14px;
+    padding: 6px 5px;
+    border: #ccc solid 1px;
+    color: #333;
+}
+.info_Edit .info_text3{
+    width: 173px;
+    height: 14px;
+    padding: 6px 5px;
+    border: #ccc solid 1px;
+    color: #333;
+}
+.info_Edit .info_sex input{
+    vertical-align: -2px;
+    margin-right:5px;
+}
+.info_Edit .info_sex label{
+    line-height: 26px;
+    margin-right: 30px;
+}
+.info_Edit textarea{
+    width: 300px;
+    height: 50px;
+    overflow-y: auto;
+    float: left;
+    margin: 0 5px 0 0;
+    padding:5px;
+    border: #ccc solid 1px;
+    resize: none;
+}
+.info_Edit li p.left{
+    line-height: 22px;
+    margin-top: 3px;
+    color: #333;
+    width: 200px;
+}
+.info_btn{
+    height:27px;
+    display: inline;
+    float: left;
+    background:#61bcf5;
+    line-height: 27px;
+    text-align: center;
+    color: #fff;
+    padding:0 15px;
+    border-radius: 2px;
+}
+.info_btn:hover{
+    color: #fff;
+    background:#68c4ff;
+    padding-left: 15px;
+}
+.info_btn_yz{
+    height:28px;
+    display: inline-block;
+    background: #61bcf5;
+    line-height: 28px;
+    text-align: center;
+    color: #fff;
+    padding:0 15px;
+    border-radius: 2px;
+}
+.info_btn_yz:hover{
+    color: #fff;
+    background: #68c4ff;
+}
+.info_Edit .info_editPM{
+    float: left;
+    min-width: 300px;
+}
+.info_Edit .info_editMail{
+    margin:0 0 0 28px;
+}
+.info_Edit .info_editMail label{
+    color: #333;
+    float: left;
+    line-height:28px;
+}
+.info_Edit .info_editMail input,.info_Edit .info_editPM input{
+    margin-right: 15px;
+}
+.info_editPhone{
+    border:1px solid #ccc;
+    width: 450px;
+    height: 160px;
+}
+.info_Edit li font.info_right{
+    background: url("../images/warn.png") no-repeat 0 0;
+    white-space: nowrap;
+    padding-left: 20px;
+}
+.info_Edit li font.info_error{
+    background: url("../images/warn.png") no-repeat 0 -28px;
+    white-space: nowrap;
+    padding-left: 20px;
+}
+.info_Edit li font.info_remine{
+    background: url("../images/warn.png") no-repeat 0 -56px;
+    white-space: nowrap;
+    padding-left: 20px;
+}
+.info_Edit p.info_wz{
+    margin:20px 0 0 84px;
+    color: #333;
+}
+.info_Edit p.red{
+    color: #f60;
+}
+.pop_infoEdit{
+    font-weight: normal;
+}
+.pop_infoEdit select{
+    height: 20px;
+    border: #ccc solid 1px;
+    margin: 4px 0 5px 0;
+    width: 120px;
+}
+.pop_infoEdit p em{
+    background: url("../images/warn.png") no-repeat 0 -86px;
+    width: 14px;
+    height: 14px;
+    display:inline-block;
+    vertical-align: middle;
+    cursor: pointer;
+}
+.pop_infoEdit .info_addSubject strong{
+    background: url("../images/warn.png") no-repeat 0 -102px;
+    width: 14px;
+    height: 15px;
+    font-size: 26px;
+    margin-right: 5px;
+    color: #6cf;
+}
+.pop_infoEdit .info_addSubject *{
+    float: left;
+    display: inline;
+    margin-top:5px;
+}
+.pop_infoEdit .info_addSubject a{
+    color: #6cf;
+}
+.pop_infoEdit .info_addSubject a:hover{
+    color: #0097fe;
+}
+.pop_btnInfo{
+    text-align: center;
+    margin: 10px 0 0;
+}
+/*140604--------infoEdit-----------end-----*/

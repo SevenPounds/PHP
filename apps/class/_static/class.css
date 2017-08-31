@@ -1,0 +1,125 @@
+@CHARSET "UTF-8";
+.nav2{float:left;height:40px;}
+.nav2 ul li{float:left;position:relative;}
+.nav2 a{display:block;padding:11px 10px 13px;padding:12px 10px 12px \0;/*for Ie8*/height:16px;line-height:16px;font-size:14px;}
+
+.search2{
+	float:right;
+    width:515px;
+    padding-top:10px;
+    padding-right: 10px;
+	}
+.search_bd{
+	height:40px;
+	border:1px #e5e5e5 solid;
+	}
+.search_txt{
+	float:right;
+	padding-top:4px;
+	padding-right:4px;
+	}
+.search_txt input{  
+	width:426px;
+	height:30px;
+	font-size:14px;
+	line-height:30px;
+	border:none;
+	background:none;
+	}/* by frsun 20130718*/
+.search_btn{
+	float:right;
+	border-left:1px #ccc solid;
+	font-size:14px;
+	font-weight:bold;
+	line-height:40px;
+	}
+.search_btn a{
+	display:block;
+	width:80px;
+	height:40px;
+	color:#fff;
+	background-color:#3ca9ee;
+	text-align:center;
+	}
+.search_btn a:hover{
+	display:block;
+	width:80px;
+	height:40px;
+	background-color:#61c2ff;
+	text-decoration:none;
+	}
+	
+	
+/*校园班级列表*/	
+.class-list{margin:0 -40px 0 0;_margin:0;}
+.class-list li{float:left;width:300px;height:105px;padding:15px 0;margin:0 40px 0 0;*width:275px;_margin:0 30px 0 0;overflow:hidden;*zoom:1;}
+.class-list .class-pic{float:left;width:100px;height:100px;}
+.class-list .class-info{margin:0px;}
+.class-list .class-info h3{font-size:14px;margin:0 5px 5px 0;display:inline-block;}
+.class-list .class-info p{line-height:21px;color:#999;word-break:break-all;}
+.class_tail {height:60px;}
+.class_count_num {float:left;width:31px;height:32px;padding-left:10px;}
+.class_left_container{float:right;width:240px;min-height: 1600px;}
+.class_follow {}
+.class_follower_div {float:left;width:200px;}
+.class_follower_left_count{float:left;padding:5px;}
+.class_follower_left_btn{float:left;padding-left:5px;padding-top:2px;}
+.class_info_follower_btn{width:100%;height:60px;}
+.class_info_follower_btn_name{width:100%;text-align:center;height:20px;}
+.class_info_follower_btn_btn{width:100%;text-align:center;height:30px;}
+	
+	
+/*班级主页*/
+.c-head-box{
+width:940px;
+height:180px;
+padding:20px 20px 0px 20px;
+}
+.c-avatar-box{
+border:2px solid;
+float:left;
+padding:2px;
+}
+.c-info-box{
+width:540px;
+margin-left:15px;
+float:left;
+}
+.c-fn-box{
+width:220px;
+height:160px;
+}
+
+.c-nav-box{
+height:30px;
+border-bottom:1px solid;
+position:relative;
+}
+.c-nav-bar{
+left:40px;
+bottom:-1px;
+position:absolute;
+}
+.c-nav-item , .c-nav-item-sele{
+height:27px;
+line-height:27px;
+padding-left:20px;
+margin-left:-16px;;
+position:relative;
+}
+
+/* .c-nav-item , .c-nav-item-sele , .c-nav-item  em, .c-nav-item-sele em{
+background-image:url("http://static.jsyxw.cn/img/skin/class/11/tab.png");
+}
+.c-nav-item-sele em{
+	background-position-x:right;
+	background-position-y:-30px;
+} */
+
+/*class home CSS*/
+.my-photo-list-b li .pic{background:url(../images/photo-box.png) no-repeat 0 -304px;width:168px;height:168px;display:block;_background:url(../images/photo-box.gif) no-repeat 0 -304px;margin:0 0 5px 0;position:relative;}
+.my-photo-list-b li .pic a{width:152px;display:block;margin:6px;position:relative;}
+.my-photo-list-b li .pic a img{display:block;}
+.my-photo-list-b li .pic-date{height:35px;overflow:hidden;}
+.my-photo-list-b li p{margin:0 0 5px 0;color:#999;}
+.my-photo-list-b .bg{width:60px;height:20px;line-height:20px;text-align:center;background:#000;position:absolute;bottom:0;right:0;color:#fff;opacity:0.6;filter:alpha(opacity=60);-moz-opacity:0.6;}

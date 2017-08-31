@@ -1,0 +1,41 @@
+<div class="addBook_box">
+    <div class="addBook_input">
+        <label>
+            学段：
+        </label>
+        <select id="book_phase">
+            <option  value="0">请选择</option>
+            <volist name="phase" id="vo">
+                <option value="{$vo.code}" title="{$vo.name}">{$vo.name}</option>
+            </volist>
+        </select>
+    </div>
+    <div class="addBook_input">
+        <label>
+                学科：
+        </label>
+        <select id="book_subject">
+            <option value="0">请先选择学段</option>
+        </select>
+    </div>
+    
+    <div class="addBook_input">
+        <label>
+            年级：
+        </label>
+        <select id="book_stage">
+            <option value="0">请先选择学科</option>
+        </select>
+    </div>
+    <div class="addBook_input">
+        <label>
+            版本：
+        </label>
+        <select id="book_edition">
+            <option value="0">请先选择年级</option>
+        </select>
+    </div>
+    <div  id="addBook_loading_div" style="display:none;text-align:center;">
+        <a><img src="__THEME__/image/loading1.gif" />正在创建备课本，请稍等....</a>
+    </div>
+</div>

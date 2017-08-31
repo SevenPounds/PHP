@@ -1,0 +1,34 @@
+<include file="__THEME__/public_header" />
+    <div id="page-wrap">
+        <div id="main-wrap">
+            <div class="profile-title  boxShadow">
+                <include file="_top"/>
+				<div class="talk" id="talk" tag="" style="display:none;"></div>
+				<script>
+				  jQuery(document).ready(function(){
+						loadSTT(2500, "talk");
+					    AudioPlayer.init();
+					  });
+				</script>
+            </div>
+            <div class="st-grid boxShadow minh content-bg">
+                <php>if($userPrivacy['space'] != 1){</php>
+                <include file="_sidebar"/>
+                    <div id="col5" class="st-index-main">
+                        <div class="extend-foot">
+                            <include file="_tab_menu"/>
+                            <!--feed list-->
+                            <!-- 查看他人微博  用于伪静态 FeedList中靠$_REQUEST中的uid取得用户信息 没有$_REQUEST取自己 -->
+                            <php>$_REQUEST['uid'] = $uid;</php>
+                            {:W('FeedList',array('type'=>'space','feedApp'=>t($_GET['feedApp']),'feed_type'=>$feed_type,'feed_key'=>$feed_key,'loadnew'=>0))}
+                        </div>
+                    </div>
+                <php>}else{</php>
+                    <p class="extend">-_-。sorry！根据对方隐私设置，您无权查看TA的主页</p>
+                <php>}</php>
+            </div>
+            
+        </div>
+    </div>
+<include file="__THEME__/public_footer" />
+<script src="__THEME__/js/module.weibo.js"></script>

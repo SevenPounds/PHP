@@ -1,0 +1,28 @@
+<style>
+.school_box img{
+	height:96px;
+	width:96px;
+}
+</style>
+<volist name="data" id="vo">
+<!-- <if condition="($i%4) eq 1  "> <div class="pl12 left box">
+<elseif condition="($i%4) eq 2"/> <div class="pl60 left box">
+<elseif condition="($i%4) eq 3"/> <div class="pl12 mt10 mb16 left box">
+<elseif condition="($i%4) eq 0"/>  <div class="pl60 mt10 mb16 left box">
+</if> -->
+	<div class="pl12 left box">
+		<div class="school_box"><a href="{:getHomeUrl($vo)}"  event-node="face_card" show="no" orgType="{$vo['type']}" cid="{$vo['id']}"><img src="{$vo['id']|getCampuseAvatar=###,$vo['type'],'avatar_middle'}" /></a></div>
+		<div class="school_infor">
+			<p><span  title="{$cityname}">{$cityname|getShort=3}</span>&nbsp;&nbsp;<span title="{$townname}">{$townname|getShort=3}</span> <span class="green"><a href="{:getHomeUrl($vo)}" title="{$vo.name}" event-node="face_card" show="no" orgType="{$vo['type']}" cid="{$vo['id']}">{$vo.name|getShort=6}</a></span></p>
+			{:getInfoBoxHtml($vo)}
+			<div class="add_btn">
+			{:W('FollowBtn', array('fid'=>$vo['id'], 'uname'=>$vo['name'], 'follow_state'=>$follow_state[$vo['id']], 'type'=>'campus','ftype'=>$vo['type']))} 
+			<!-- <input type="button" value="" class="add_btnnor" onMouseover="this.className='add_btnhov'" onMouseOut="this.className='add_btnnor'"> -->
+			</div>
+		</div>
+		<div class="clear"></div>
+	</div>
+ </volist> 
+
+                             
+

@@ -1,0 +1,17 @@
+<div class="notice common">
+          <h2>
+            <p class="left">教研公告</p>
+            <p class="right more"><a href="#">更多<img src="__APP__/image/icon_right.png"></a></p>
+            <div class="clear"></div>
+          </h2>
+          <ul>
+            <volist name="list" id="vo">
+	            <li>
+	              <p class="icon"><img class="left" src="__APP__/image/small_plus.png" alt="" /></p>
+	              <p class="cont left"><a href="javascript:void(0)">{$vo['title']}</a></p>
+	              <p class="time right">{$vo['date']}</p>
+	              <div class="clear"></div>
+	            </li>
+            </volist>
+          </ul>
+</div>

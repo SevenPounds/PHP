@@ -1,0 +1,37 @@
+<div class="k_box">
+		<div class="box_left">
+			<p class="txt"><a href="index.php?app=channel&mod=Index&act=index">全部</a></p>
+			<!--<p class="current"><a href="#">全部</a></p>-->
+		</div>
+		<div class="box_right">
+			<ul>
+				<li class="top">小&nbsp;&nbsp;&nbsp;学</li>
+				<volist name="channelCategory['cat10']" id="xiaovo">
+				    <li <eq name="xiaovo.channel_category_id" value="$cid" >class="current"</eq> ><a href="{:U('channel/Index/index', array('cid'=>$xiaovo['channel_category_id']))}" >{$xiaovo.title}<eq name="xiaovo.hotflag" value="true" ><div class="hot"></div></eq></a></li>
+                </volist>
+			</ul>
+			<ul>
+				<li class="top">中&nbsp;&nbsp;&nbsp;学</li>
+				<volist name="channelCategory['cat11']" id="zhongvo">
+				    <li <eq name="zhongvo['channel_category_id']" value="$cid" >class="current"</eq> ><a href="{:U('channel/Index/index', array('cid'=>$zhongvo['channel_category_id']))}" >{$zhongvo.title}<eq name="zhongvo.hotflag" value="true" ><div class="hot"></div></eq></a></li>
+                </volist>
+			</ul>
+			<ul>
+				<li class="top">专题库</li>
+				<volist name="channelCategory['cat12']" id="vo">
+				    <li <eq name="vo['channel_category_id']" value="$cid" >class="current"</eq> ><a href="{:U('channel/Index/index', array('cid'=>$vo['channel_category_id']))}" >{$vo.title}<eq name="vo.hotflag" value="true" ><div class="hot"></div></eq></a></li>
+                </volist>
+			</ul>
+		</div>
+		<div class="clear"></div>
+		<div class="box_bottom">
+			<div class="tag">已订阅的内容</div>
+			<div class="left" id="alreadyfollow" >
+			    <volist name="followContent" id="vo">
+			       <span class="pl10"><a href="{:U('channel/Index/index', array('cid'=>$vo['channel_category_id']))}">{$vo.title}</a></span>
+			    </volist>
+			</div>
+			<gt name="{mid}" value="0"><div class="right pr10"><input type="button" value="我要订阅" class="green3_btnnor"  onmouseover="this.className='green3_btnhov'" onmouseout="this.className='green3_btnnor'" onclick="channel.showFollowBox('{$GLOBALS['ts']['mid']}')" /></div></gt>
+			<div class="clear"></div>
+		</div>
+</div>

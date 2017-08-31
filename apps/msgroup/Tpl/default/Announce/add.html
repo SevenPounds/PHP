@@ -1,0 +1,54 @@
+<include file="../Public/header" />
+<link rel="stylesheet" type="text/css" href="__THEME__/js/uploadify/uploadify.css" />
+<link rel="stylesheet" type="text/css" href="__THEME__/css/pop_upload.css" />
+<script type="text/javascript" src="__THEME__/js/uploadify/jquery.uploadify.min.js"></script>
+<script type="text/javascript" src="__APP__/js/ms_announce.js"></script>
+<script>
+var msAnnounce;
+var gid = "{$gid}";
+jQuery(function(){
+	msAnnounce = msAnnounce || new MSAnnounce(gid,1,"announce_list");
+});
+</script>
+<div class="posbox">&nbsp;&nbsp;您现在的位置：<a href="{:U('msgroup/Index/index', array('gid' => $gid))}" class="blue">{$msgroup_data.group_name}</a>&gt;<a <if condition="$level eq 3">href="{:U('msgroup/Config/index', array('gid' => $gid))}"<else />href="{:U('msgroup/Resource/index', array('gid' => $gid))}"</if> class="blue">工作室维护</a>&gt;&nbsp;<a class="blue" href="{:U('msgroup/Announce/index', array('gid' => $gid))}">通知公告管理</a></div>     
+<div class="wy_box" style="width:1000px; overflow:hidden;">
+	{:W('LeftMenu', array('gid' => $gid, 'level' => $level))}
+	<div class="right">
+		<div class="teaWS_rgt">
+			<div class="teaWSR_tit" style="height:39px;">
+				<!-- <input type="button" value="发布公告" class="announce_create" onclick="window.location='{:U("msgroup/Announce/add", array("gid" => $gid))}';"> -->
+				<h3 style="width:500px;float:left;">通知公告管理</h3>
+			</div>
+			<div class="clear"></div>
+		</div>
+		<div class="clear"></div>
+		<div class="an_line pt15">
+			<p class="an_title">标题:</p>
+			<p class="style2">
+				<input name="title" id="announce_title" type="text" value="" />
+			</p>
+			<div class="clear"></div>
+		</div>
+		<div class="an_line pt10">
+			<p class="an_title">正文:</p>
+			<div class="an_text">
+				{:W('Editor', array('width' => '450px', 'height' => '200', 'contentName' => 'announce_content', 'value' => $detail['content']))}
+			</div>
+			<div class="clear"></div>
+		</div>
+		<div class="an_line pt10">
+			<p class="an_title">附件:</p>
+			<div class="notice_attach">
+				<form style='display:inline;padding:0;margin:0;border:0'>									   
+	            	{:W('Upload',array('uploadType'=>'file','inputname'=>'attach','urlquery'=>'attach_type=msgroup_attach','attachIds'=>''))}
+	            </form>
+			</div>
+			<div class="clear"></div>
+		</div>
+		<div class="cr_btn">
+			<input type="button" value="保存" class="create_btnnor" onclick="msAnnounce.doAdd();" onMouseover="this.className='create_btnhov'" onMouseOut="this.className='create_btnnor'">
+			<input type="button" onclick="msAnnounce.cancel();" value="取消" class="canclebtn_nor" onMouseover="this.className='canclebtn_hov'" onMouseOut="this.className='canclebtn_nor'">
+		</div>
+	<div class="clear"></div>
+</div>
+<include file="__THEME__/public_footer" />

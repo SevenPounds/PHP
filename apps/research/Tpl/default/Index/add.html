@@ -1,0 +1,174 @@
+<include file="__THEME__/header" />
+<include file="header" />
+<div id="page-wrap">
+	<div id="main-wrap">
+		<div class="crumbs">
+			<ul>
+				<li class="pre_cen"><a href="{:U('public/Index/index')}">个人空间</a></li>
+				<li>></li>
+				<li><a href="{:U('research/Index/index')}">主题讨论</a></li>
+				<li>></li>
+				<li>创建主题</li>
+			</ul>
+			<div class="clear"></div>
+		</div>
+		<div class="con_box">
+			<div class="left_box">
+				<include file="__THEME__/public_left" />
+			</div>
+			<div class="right_box">
+                <div class="online_title">
+                    <div class="left">
+                        <span><img src="__THEME__/app_icon/app_zttl.png" /></span><span class="pl10 font3"><b>创建主题</b></span>
+                    </div>
+                </div>
+                <div class="ct_line">
+                    <p class="left">主题名称:</p>
+                    <p class="style3"><input id="res_name" type="text" value="" /></p>
+                </div>
+                <div class="ct_line pt15">
+                    <p class="left">主题介绍:</p>
+                    <p class="style3"><textarea id="res_des"></textarea></p>
+                </div>
+                {:W('Tag', array('width'=>'400px', 'row_id'=>'', 'tpl'=>'tag_app', 'tag_num'=>5,'type'=>'research','appname'=>'research','apptable'=>'research'))}
+                {:W('UploadAttachFile',array('uploadType'=>'file','message'=>'选择主题材料','total'=>5,'fileSizeLimit'=>'100MB'))}
+                <div class="cyqx">参与权限：<select id='authoritytype'>
+            	<option value='0'>所有人</option>
+            	<option value='1'>仅指定对象</option>
+            	</select></div>
+                {:W('UserSelect',array('appName'=>'research'))}
+                <div class="publish" style="display: none;"><!--暂时先将这个隐藏-->
+                    <span>发布到：</span>
+                    <p class="left pr20 pl5"><span><input type="checkbox" name="to_space" checked="checked"/></span><span>我的工作室</span></p>
+                    <if condition="!empty($MSGroups)">
+                        <volist name="MSGroups" id="val">
+                            <p class="left pr20 pl5"><span><input type="checkbox" name="gids" value="{$val['gid']}"/></span><span title="{$val['group_name']}">{$val['group_name']|mStr=###,10}</span></p>
+                        </volist>
+                    </if>
+                    <div class="clear"></div>
+                </div>
+                <div class="cr_btn">
+                    <input id="btn" isclick="0" type="button" value="保存" class="create_btnnor" onMouseover="this.className='create_btnhov'" onMouseOut="this.className='create_btnnor'">
+                    <input type="button" value="取消" id="cancel_add" class="canclebtn_nor" onMouseover="this.className='canclebtn_hov'" onMouseOut="this.className='canclebtn_nor'">
+                </div>
+			</div>
+			<div class="clear"></div>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+jQuery(function(){
+	jQuery('.contents').css('margin','5px 0 10px 16px'); //富文本位置
+    jQuery('.add_member').css('display','none');
+    var type = jQuery('#authoritytype').val();
+    //指定对象权限
+    if(parseInt(type)==1){
+            jQuery('.add_member').css('display','block');
+    }else{
+            jQuery('#user_ids').val('|');
+            jQuery('.add_member').css('display','none');
+    }
+    jQuery('#authoritytype').change(function(){
+        if(parseInt(jQuery(this).val())==1){
+             jQuery('.add_member').css('display','block');
+        }else{
+             userSelect.clear()
+             jQuery('#user_ids').val('|');
+             jQuery('.add_member').css('display','none');
+        }
+    });
+});
+function validate(){
+	if($.trim($("#res_name").val())==""){
+		ui.error("主题名称不能为空");
+		return false;
+	}
+	if(!judgeLength(jQuery("#res_name"),20)){
+		ui.error("主题名称字数不能超过20个!");
+		return false;
+	}
+	if(!judgeLength(jQuery("#res_des"),100)){
+		ui.error("主题简介字数不能超过100个!");
+		return false;
+	}
+	//参与权限
+    if(parseInt(jQuery('#authoritytype').val())==1){
+        if(!($("#user_ids").val().replace(/\|/g,''))){
+            ui.error("还未选择研讨人员!");
+            return false;
+        }
+    }
+	return true;
+}
+
+function savedata(){
+	//判断是否重复提交
+	if(	$("#btn").attr('isclick')==0){
+		$("#btn").attr('isclick','1');
+	}else{
+		return ;
+	}
+	if(!validate()){
+		$("#btn").attr('isclick','0');
+		return ;
+	}
+	
+	var data = {};	
+	data['accessType'] = jQuery('#authoritytype').val();//投票权限类型
+	data['res_name'] = $.trim($("#res_name").val());
+	data['res_des'] = $.trim($("#res_des").val());
+	data['attachids'] = $("#attach_ids").val();
+	data['userids'] = $("#user_ids").val();
+	data['tag_ids'] = $("#ts_tag_search_value").val();//标签ids sjzhao
+    $('input[name="to_space"]:checked').each(function(i){
+        var _obj = $(this);
+        data['to_space'] = 1;
+    });
+    var _gids = [];
+    $('input[name="gids"]:checked').each(function(i){
+        _gids[i] = $(this).val();
+    });
+    data['gids'] = _gids;
+	$.ajax({
+		type:"POST",
+		dataType:'json',
+		url:"index.php?app=research&mod=Index&act=saveInfo",
+		data:data,
+		success:function(msg){
+			if(msg.status==1){
+				ui.success("创建成功");
+				setTimeout(function(){
+					location.href="index.php?app=research&mod=Index&act=index";
+				},1500);
+			}else{
+				ui.error("创建失败");
+				$("#btn").attr('isclick','0');
+			}
+		}
+	
+	})
+}
+
+// 判断标题和简介字数是否超过限制
+function judgeLength($obj,limit){
+	var str = $.trim($obj.val());
+	
+	if(str.length>limit){
+		return false;
+	}
+	
+	return true;
+}
+
+$(function(){
+	$("#btn").click(savedata);
+	
+	$("#cancel_add").click(function(){
+		window.location.href=U('research/Index/index');
+	});
+})
+
+
+</script>
+
+<include file="__THEME__/public_footer" />

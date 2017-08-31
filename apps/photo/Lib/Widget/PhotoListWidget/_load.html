@@ -1,0 +1,15 @@
+<volist name="data" id="vo">
+<div class="box" id="{$vo['id']}">
+	<php>if($classId){</php>
+		<a href="{:U('photo/Index/classphoto',array('id'=>$vo['id'],'aid'=>$vo['albumId'],'uid'=>$vo['userId'], 'cid'=>$classId))}"><img src="{$vo['savepath']|get_photo_url=###,200,'auto',false}" width="{$vo.width}" height="{$vo.height}" /></a>
+	<php>}else{</php>
+		<a href="{:U('photo/Index/photo',array('id'=>$vo['id'],'aid'=>$vo['albumId'],'uid'=>$vo['userId']))}"><img src="{$vo['savepath']|get_photo_url=###,200,'auto',false}" width="{$vo.width}" height="{$vo.height}" /></a>
+	<php>}</php>
+	<p class="f9">来自
+	<php>if($classId){</php>
+	<a href="{:U('photo/Index/albums',array('uid'=>$vo['userId']))}">{$vo.userId|getUserName}</a>：<a href="{:U('photo/Index/classalbum',array('id'=>$vo['albumId'], 'cid'=>$classId))}">{$vo.albumName}</a>{$vo.info}</p>
+	<php>}else{</php>
+	<a href="{:U('photo/Index/albums',array('uid'=>$vo['userId']))}">{$vo.userId|getUserName}</a>：<a href="{:U('photo/Index/album',array('uid'=>$vo['userId'],'id'=>$vo['albumId']))}">{$vo.albumName}</a>{$vo.info}</p>
+	<php>}</php>
+</div>
+</volist>

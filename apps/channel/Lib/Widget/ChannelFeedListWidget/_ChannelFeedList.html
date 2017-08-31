@@ -1,0 +1,119 @@
+<script type="text/javascript">
+var digglock = 0;
+function addDigg(feed_id){
+	if (digglock==1){
+		return;
+	}
+	digglock = 1;
+   $.post("{:U('public/Feed/addDigg')}", {feed_id:feed_id}, function(res){
+       if(res==1){
+	       var num = $('#digg'+feed_id).attr('rel');
+    	   num++;
+    	   $('#digg'+feed_id).html('已赞('+num+')');
+	   }else {
+	       ui.error('操作失败，如没有登录请先登录再操作');
+       }
+       digglock = 0;
+   });
+}
+</script>
+<php> 
+$cancomment = intval(CheckPermission('core_normal','feed_comment')); 
+$canfeedshare = CheckPermission('core_normal','feed_share');
+$canfeeddel = CheckPermission('core_normal','feed_del');
+$adminfeeddel = CheckPermission('core_admin','feed_del');
+$canfeedreport = CheckPermission('core_normal','feed_report');
+$adminchannelrecom = CheckPermission('channel_admin','channel_recommend');
+$admintaskrecom = CheckPermission('vtask_admin','vtask_recommend');
+</php>
+<volist name='data' id ='sd'>
+	<php>
+		$cancomment_old = empty($vl['app_row_id'])  ? 0 : 1;
+	</php>
+	<div class="k_leftcon" model-node="feed_list" id ='feed{$sd.feed_id}'>
+					<span class="left green1 mb4"><a href="index.php?app=public&mod=Profile&act=feed&feed_id={$sd['feed_id']}&uid={$sd['uid']}">{$sd['feed_data']['feed_title']|msubstr=0,30}</a></span>
+					<span class="right black3 font1">{$sd['publish_time']}</span>
+					<div class="clear"></div>
+					<p><span class="font2 black1"><a href="index.php?app=public&mod=Profile&act=feed&feed_id={$sd['feed_id']}&uid={$sd['uid']}">{$sd['body']|format=true}</a></span><span class="green1"><a href="index.php?app=public&mod=Profile&act=feed&feed_id={$sd['feed_id']}&uid={$sd['uid']}">(阅读全文)</a></span>
+					</p>
+					<div class="rz_tip font1 mb8">
+						<p class="from"><span>来自:</span><span class="green1"><a href="index.php?app=public&mod=Profile&act=index&uid={$sd['uid']}">{$sd['user_info']['uname']}</a></span></p>
+						<p class="right">
+						<span class="green"><img src="__APP__/image/icon_fx.gif" />{:W('ShareToFeed',array('title'=>'分享'))}</span><span>|</span>
+						<span class="green"><img src="__APP__/image/icon_xh.gif" />{:W('Collection',array('sid'=>$sd['feed_id'],'stable'=>'feed','sapp'=>$sd['app'],'tpl'=>'simple'))}</span><span>|</span>
+						<span class="green"><img src="__APP__/image/icon_pl.gif" />
+						    <eq name='sd.actions.comment' value='true'>
+							<a event-node="comment" href="javascript:void(0)" event-args='row_id={$sd.feed_id}&app_uid={$sd.feed_data.uid}&app_row_id={$sd.feed_data.app_row_id}&app_row_table={$sd.feed_data.app_row_table}&to_comment_id=0&to_uid=0&app_name={$sd.app}&table=feed&cancomment={$cancomment}&cancomment_old={$cancomment_old}'>{:L('PUBLIC_STREAM_COMMENT')}<neq name='sd.comment_count' value='0'>({$sd.comment_count})</neq></a>
+							</eq>
+							<div model-node="comment_detail" class="repeat clearfix" style="display:none;"></div>
+						</span>
+					    </p>
+					</div>
+	</div>
+</volist>
+
+<script>
+function doHighlight(a,b){
+    highlightStartTag="<span style='color:red'>";
+    highlightEndTag="</span>";
+    var c="";
+    var i=-1;
+    var d=b.toLowerCase();
+    var e=a.toLowerCase();
+    while(a.length>0){
+        i=e.indexOf(d,i+1);
+        if(i<0){
+            c+=a;
+            a="";
+        }else{
+            if(a.lastIndexOf(">",i)>=a.lastIndexOf("<",i)){
+                if(e.lastIndexOf("/script>",i)>=e.lastIndexOf("<script",i)){
+                    c+=a.substring(0,i)+highlightStartTag+a.substr(i,b.length)+highlightEndTag;
+                    a=a.substr(i+b.length);e=a.toLowerCase();
+                    i=-1;
+                }
+            }
+        }
+    }
+    return c;
+};
+
+$.fn.highlight=function(z){
+    $(this).each(
+        function(){
+            $(this).html(doHighlight($(this).html(),z))
+        });
+    return this;
+}
+
+$(document).ready(function(){
+if(!'{$topic_id}' && '{$feed_key}'){
+	var key3 = '{$feed_key}';
+    //for(one in key3){
+        $('.contents').highlight(key3);
+        //$('.ask_title').highlight(key3[one]);
+    //}
+}
+});
+/**
+ * 时间更新效果
+ * return void
+ */
+$(document).ready(function() {
+	var wTime = parseInt("{:time()}");
+	var updateTime = function()
+	{
+		$('.date').each(function(i, n) {
+			var date = $(this).attr('date');
+			if(typeof date !== 'undefined') {
+				$(this).html(core.weibo.friendlyDate(date, wTime));
+			}
+		});	
+	};
+	//updateTime();
+	setInterval(function() {
+		wTime += 10;
+		updateTime();
+	}, 10000);
+});
+</script>

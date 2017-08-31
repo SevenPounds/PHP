@@ -1,0 +1,93 @@
+input.iatinput 
+{  
+    background:url(images/mic_normal.png) no-repeat right center;
+    cursor:pointer; 
+}
+input.iatinput_rec {
+    background-image:url(images/mic_rec.png);
+    background-repeat: no-repeat; background-position: right center;
+    cursor:pointer;
+	padding-right:10px;
+ }
+input.iatinput_hover{ 
+    background-image:url(images/mic_hover.png);
+    background-repeat: no-repeat; background-position: right center;
+    cursor:pointer; 
+}
+.iatinput_pop {
+    padding: 15px 10px 10px 10px;
+}
+.iatinput_pop .line {
+     text-align:center; line-height: 24px; font-size: 14px;margin:0px;
+     width:90px;height:24px;
+}
+.iatinput_pop a {
+     text-decoration:underline; color:#069;
+}
+.iatinput_rec_panel 
+{
+   
+     width: 103px; height: 73px; background:url(images/iat_background.png) bottom right no-repeat;text-align: center;
+}
+
+.iatinput_rec_panel a {
+    font-size:12px;
+}
+
+.iatinput_dis_panel 
+{
+   
+     width: 103px; height: 73px; background:url(images/iat_background.png) bottom right no-repeat;text-align: center;
+}
+
+.iatinput_dis_panel a {
+    font-size:12px;
+}
+
+.iatinput_retry_panel {
+    width: 185px; height: 83px; background:url(images/iat_background.png) top right no-repeat;text-align: center;
+} 
+.iatinput_btn {
+    width:55px;
+    height:24px;
+    border:none;
+    font-size:12px;
+    color:#000;
+    line-height:24px;
+    margin: 5px 5px 0px 5px;
+    background:url(images/iat_background.png) -115px -130px no-repeat;
+    display: inline;
+}
+.iatinput_rec_panel .disabled
+{
+    color: Gray;
+}
+
+ .iatinput_energy 
+{
+     clear: both;
+     width: 97px; height: 5px; margin: 5px 0 5px 5px; background:url(images/iat_background.png) 0 0px no-repeat;
+}
+
+.iatinput_logo { 
+    padding-left:20px;background: url(images/iat_background.png) bottom left no-repeat;
+}
+
+.iatinput_recognise_logo 
+{ 
+    float:left;
+    width: 32px; height: 32px; background: url(images/recognizing.gif)   no-repeat;
+}
+
+
+.iatinput_recTiplogo {
+    float:left;
+    padding-left:20px;background: url(images/iat_background.png) bottom left no-repeat;
+}
+
+.iatinput_cancel
+{
+    float:left;
+    padding-left:20px;
+    font-size:12px;
+}

@@ -1,0 +1,14 @@
+<ul>
+   <volist name="userList" id="u">
+		<li  onclick="userList.selectUser({$u.uid},'{$u.uname}','{$u.avatar_small}')">
+			<a href="javascript:void(0)">
+				<p class="cr_pickpic"><img src="{$u.avatar_small}" /></p>
+				<p>{$u.uname}</p>
+			</a>
+ 			</li>
+ 	   </volist>  
+</ul>
+<div class="clear"></div>
+<div class="page">
+	{$page}
+</div>

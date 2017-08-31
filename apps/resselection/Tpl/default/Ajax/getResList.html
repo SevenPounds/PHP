@@ -1,0 +1,42 @@
+<table cellpadding="0" cellspacing="0" border="0" class="online_table3" id="content_tab">
+ 	<tr class="online_tabletop">
+		<th width="4%" class="pl5" ></th>
+		<th width="1%"><img src="__APP__/images/th_line.jpg" /></th>
+		<th width="40%">资源名称</th>
+		<th width="1%"><img src="__APP__/images/th_line.jpg" /></th>
+		<th width="8%">资源类型</th>
+		<th width="1%"><img src="__APP__/images/th_line.jpg" /></th>
+		<th width="6%" style="text-align:center">作者</th> 
+		<th width="1%"><img src="__APP__/images/th_line.jpg" /></th>
+		<th width="20%" style="text-align:center">上传时间</th> 
+		<th width="1%"><img src="__APP__/images/th_line.jpg" /></th>
+		<th width="12%" style="text-align:center">审核操作</th> 
+	</tr>
+	<volist name="data" id="vo" key="k">
+	<tr <if condition="($k % 2 == 0)">style="background:#f6f6f6"<else />style="background:#fff"</if>>
+		<td align="center" class="pl5"><input name="" type="checkbox" value="{$vo.rid}" /></td>
+		<td></td>
+		<td align="left" class="blue"><a href="{:U('resselection/Index/detail',array('id'=>$vo['rid']))}" title="{$vo.title}" target="_blank">{$vo.title|msubstr=0,24}</a></td>
+		<td></td>
+		<td align="center">{$vo.restype|changeResName}</td>
+		<td></td>
+		<td align="center">{$vo.creator|getUserURL}</td>
+		<td></td>
+		<td align="center"><php>echo date("Y-m-d H:i:s",$vo['uploaddateline'])</php></td>
+		<td></td>
+		<td align="center"><span class="blue"><a onclick="ResourceSelector.Pass('{$vo.rid}',1,0)" style="cursor:pointer">通过</a></span><span class="blue pl10"><a onclick="ResourceSelector.NotPass('{$vo.rid}',1)" style="cursor:pointer">不通过</a></span></td>
+	</tr>
+	</volist>
+</table>
+<div class="online_tablebot">
+    <neq name="resnum" value="0">
+		<span class="blue pl15"><a onclick="ResourceSelector.selectAll()" style="cursor:pointer">全选</a></span>
+		<div class="rs_btn">
+		<input type="button" value="评审通过" class="blue_btn8" onMouseover="this.className='blue_btn8hov'" onMouseOut="this.className='blue_btn8'" onclick="ResourceSelector.Pass(ResourceSelector.ids,2,0)">
+		<input type="button" value="评审不通过"" class="blue_btn9" onMouseover="this.className='blue_btn9hov'" onMouseOut="this.className='blue_btn9'" onclick="ResourceSelector.NotPass(ResourceSelector.ids,2)">
+		</div>
+	</neq>
+</div>
+<div class="page" style="width:748px;margin-left:auto;margin-right:auto;">{$page}</div>
+<input type="hidden" value="{$pageNum}" id="currentpage"/>
+<input type="hidden" value="{$resnum}" id="resnum"/>

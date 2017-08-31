@@ -1,0 +1,515 @@
+﻿@charset "utf-8";
+
+/* CSS Document 
+ * Design By jhxia 20150924 add
+ * 发布微博信息框
+ */
+.border-radius-2px {
+	-moz-border-radius: 2px;
+	-webkit-border-radius: 2px;
+	border-radius: 2px;
+}
+.inline-block {
+	display:inline-block;
+	*display:inline;
+	zoom:1;
+	vertical-align:middle;
+}
+.send_weibo-bd {
+	position:relative;
+	/*height:68px;*/
+	border:1px solid #D9D9D9;
+}
+
+/*--wirte-say-switch--*/
+.wirte-say-switch {
+	position:absolute;
+	left:0;
+	top:0;
+	width:64px;
+	height:100%;
+	background:#F0F0F0;
+	cursor:pointer;
+}
+.icon-say {
+	position:absolute;
+	width:30px;
+	height:30px;
+	left:8px;
+	top:9px;
+	background:url(../images/new/send-weibo.png) no-repeat 0 0;
+	z-index:1;
+}
+.currentsay .icon-say {
+	background-position:-30px 0;
+	z-index:5;
+}
+.icon-write {
+	position:absolute;
+	width:30px;
+	height:30px;
+	left:26px;
+	top:29px;
+	background:url(../images/new/send-weibo.png) no-repeat 0 -30px;
+	z-index:2;
+}
+.currentwrite .icon-write {
+	background-position:-30px -30px;
+	z-index:6;
+}
+/*.wirte-say-switch .icon-switch {
+	position:absolute;
+	width:15px;
+	height:15px;
+	right:9px;
+	top:13px;
+	background:url(../images/send-weibo.png) no-repeat -105px -120px;
+	z-index:1;
+}*/
+.wirte-say-switch .icon-switch {
+	position:absolute;
+	width:15px;
+	height:15px;
+	left:9px;
+	top:44px;
+	background:url(../images/new/send-weibo.png) no-repeat -90px -135px;
+	z-index:1;
+}
+/*--send-side--*/
+.send-side {
+	position:absolute;
+	width:98px;
+	height:68px;
+	right:0;
+	top:-69px;
+}
+.send-side .item {
+	position:relative;
+	float:right;
+	width:48px;
+	height:68px;
+	border-left:1px solid #E6E6E6;
+	background:#F8F8F8;
+	text-align:center;
+}
+.send-side .item a {
+	display:block;
+	height:68px;
+}
+.send-side .item i {
+	width:30px;
+	height:30px;
+	margin-top:20px;
+}
+.send-side .item .icon-pic {
+	background:url(../images/new/send-weibo.png) no-repeat 0 -60px;
+}
+.send-side .item a:hover .icon-pic {
+	background:url(../images/new/send-weibo.png) no-repeat -30px -60px;
+}
+.send-side .item .icon-emot {
+	background:url(../images/new/send-weibo.png) no-repeat 0 -90px;
+}
+.send-side .item a:hover .icon-emot {
+	background:url(../images/new/send-weibo.png) no-repeat -30px -90px;
+}
+.send-side .item .icon-recording {
+	background:url(../images/new/send-weibo.png) no-repeat 0 -120px;
+}
+.send-side .item a:hover .icon-recording {
+	background:url(../images/new/send-weibo.png) no-repeat -30px -120px;
+}
+.send-side .item .icon-recording-over {
+	background:url(../images/new/send-weibo.png) no-repeat 0 -150px;
+}
+.send-side .item a:hover .icon-recording-over {
+	background:url(../images/new/send-weibo.png) no-repeat -30px -150px;
+}
+.send-side .item .icon-play {
+	background:url(../images/new/send-weibo.png) no-repeat -60px -150px;
+}
+.send-side .item a:hover .icon-play {
+	background:url(../images/new/send-weibo.png) no-repeat -90px -150px;
+}
+.send-side .item .icon-play.disable,
+.send-side .item a:hover .icon-play.disable {
+	background:url(../images/new/send-weibo.png) no-repeat -60px -120px;
+}
+.send-side .item .icon-pause {
+	background:url(../images/new/send-weibo.png) no-repeat -127px -150px;
+}
+.send-side .item a:hover .icon-pause {
+	background:url(../images/new/send-weibo.png) no-repeat -157px -150px;
+}
+.send-side .item .icon-pause.disable,
+.send-side .item a:hover .icon-pause.disable {
+	background:url(../images/new/send-weibo.png) no-repeat -127px -120px;
+}
+.uploadpicbox {
+	visibility: hidden;	
+	position:absolute;
+	background:#F1FAFF;
+	width:160px;
+	height:40px;
+	line-height:40px;
+	top:68px;
+	left:-56px;
+	border:1px solid #D9D9D9;
+	z-index:9999;
+	font-size:14px;
+}
+.uploadpicbox i.arrow-t {
+	display: block;
+	position: absolute;
+	width: 16px;
+	height: 11px;
+	margin-top:0;
+	overflow: hidden;
+	left: 72px;
+	top: -11px;
+	background: url(../images/new/layer_arrow.png) no-repeat;
+	background-position: 0 -1px;
+}
+.uploadpicbox b {
+	display:block;
+	position:absolute;
+	height:21px;
+	width:0;
+	left:50%;
+	top:10px;
+	overflow:hidden;
+	border-left:1px solid #D3E4F0;
+}
+.uploadpicbox a em {
+	width:23px;
+	height:20px;
+	margin-right:3px;
+	background:url(../images/new/send-weibo.png) no-repeat;
+}
+.send-side .item .uploadpicbox a {
+	display:inline-block;
+	*display:inline;
+	zoom:1;
+	height:42px;
+	margin:0 10px 0 11px;
+	vertical-align:middle;
+}
+.uploadpicbox a:hover {
+	color:#FC9F1C;
+	text-decoration:none;
+}
+.uploadpicbox a em.icon-local {
+	background-position:-120px 0;
+}
+.uploadpicbox a:hover em.icon-local {
+	background-position:-150px 0;
+}
+.uploadpicbox a em.icon-album {
+	background-position:-120px -30px;
+}
+.uploadpicbox a:hover em.icon-album {
+	background-position:-150px -30px;
+}
+
+
+/*--send-inputer--*/
+.send-inputer {
+	position:relative;
+	margin:0 98px 0 70px;
+	height:68px;
+}
+.send-inputer .wptextarea {
+	border:0;
+	width:100%;
+	height:64px;
+	padding:2px 0;
+	color:#666;
+	line-height:16px;
+	*margin-left: -70px;
+}
+.sayvolume {
+	position:absolute;
+	width:100%;
+	height:100%;
+	background:#fff;
+	left:0;
+	top:0;
+}
+.sayvolume .volumelist {
+	padding-top:19px;
+	line-height:30px;
+	text-align:center;
+}
+.sayvolume .volumelist em {
+	width:5px;
+	height:5px;
+	background:#51C1FF;
+	background: -moz-linear-gradient(top, #6ECCFF, #46BEFF);
+	background: -webkit-gradient(linear, 0 0, 0 100%, from(#6ECCFF), to(#46BEFF));
+	filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#6ECCFF', endColorstr='#46BEFF'); /* IE6,IE7 */
+	-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr='#6ECCFF', endColorstr='#46BEFF')"; /* IE8 */
+}
+/*--send_weibo-ft--*/
+.send_weibo-ft {
+	position: relative;
+	min-height:38px;
+	border-top: 1px solid #D9D9D9;
+	background:#f3f3f3;
+	z-index: 1;
+}
+.send_weibo-ft .op {
+	position:absolute;
+	right:4px;
+	top:4px;
+	z-index: 2;/*--------*/
+}
+.send_weibo-ft .op a {
+	width:75px;
+	height:28px;
+	border:1px solid #D9850E;
+	background:#FF9E14;
+	text-align:center;
+	line-height:28px;
+	color:#fff;
+	font-size:14px;
+}
+.send_weibo-ft .op a:hover {
+	text-decoration:none;
+}
+.write-addons {
+	position:relative;
+	padding:4px 0 4px 4px;
+}
+.write-addons a i {
+	width:25px;
+	height:30px;
+	background:url(../images/new/send-weibo.png) no-repeat;
+}
+.write-addons a i.icon-at {
+	background-position:-62px 0;
+}
+.write-addons a:hover i.icon-at {
+	background-position:-92px 0;
+}
+.write-addons a i.icon-video {
+	background-position:-62px -30px;
+}
+.write-addons a:hover i.icon-video {
+	background-position:-92px -30px;
+}
+.write-addons a i.icon-file {
+	background-position:-62px -60px;
+}
+.write-addons a:hover i.icon-file {
+	background-position:-92px -60px;
+}
+.write-addons a i.icon-topic {
+	background-position:-62px -90px;
+}
+.write-addons a:hover i.icon-topic {
+	background-position:-92px -90px;
+}
+.say-addons {
+	padding:4px 0 4px 4px;
+}
+.say-addons .btn-shoucontent {
+	width:80px;
+	height:28px;
+	border:1px solid #CDCDCD;
+	background:#F4F4F4;
+	text-align:center;
+	line-height:28px;
+	font-size:14px;
+	color:#666;
+}
+.say-addons .btn-shoucontent:hover {
+	background:#F0F0F0;
+	text-decoration:none;
+}
+.saycontent {
+	margin:4px 4px 0 0;
+	padding:4px 8px;
+	border:1px solid #DEDEDE;
+	background:#fff;
+	color:#666;
+	font-size:14px;
+	line-height:24px;
+	height: 26px;
+	width: 473px;
+	overflow-y: auto;
+}/*wy add*/
+/*--list-saycontent--*/
+.list-saycontent {
+	position:relative;
+}
+.list-saycontent .showsound {
+	display:block;
+	width:155px;
+	height:32px;
+	padding-left:15px;
+	background:url(../images/new/send-weibo.png) no-repeat 0 -180px;
+	font-size:14px;
+	color:#fff;
+	line-height:32px;
+}
+/*add*/
+.list-saycontent .showsound em {
+	float:left;
+	margin-top:5px;
+	margin-right:6px;
+	width: 16px;
+	height: 22px;
+	vertical-align:middle;
+}
+.list-saycontent .showsound em.jing{
+	background: url(../images/new/wave.png);
+}
+.list-saycontent .showsound em.dong{
+	background: url(../images/new/wave.gif);
+}
+/*add*/
+.list-saycontent .showsound:hover {
+	background:url(../images/new/send-weibo.png) no-repeat 0 -212px;
+	text-decoration:none;
+}
+.list-saycontent .showwenzi {
+	display:block;
+	width:32px;
+	height:32px;
+	margin-left:8px;
+	background:url(../images/new/send-weibo.png) no-repeat -170px -180px;
+}
+.list-saycontent .showwenzi:hover {
+	background:url(../images/new/send-weibo.png) no-repeat -170px -212px;
+}
+.list-saycontent .wenzicontent {
+	display:none;
+	position:absolute;
+	width:445px;
+	top:42px;
+	left:0;
+	border: 1px solid #dedede;
+	background:#fff;
+	color: #666;
+	font-size: 14px;
+	line-height: 24px;
+	padding: 4px 8px;
+	z-index:9999;
+}
+.list-saycontent .wenzicontent .arrow-t {
+	display: block;
+	position: absolute;
+	width: 16px;
+	height: 11px;
+	overflow: hidden;
+	left: 184px;
+	top: -11px;
+	background: url(../images/new/layer_arrow.png) no-repeat;
+	background-position: 0 -1px;
+}
+
+/*--pop_imagelistbox--*/
+.pop_imagelistbox {
+	background: #f5f5f5;
+	border-bottom: 1px solid #cbcbcb;
+	height: 340px;
+}
+.pop_imagelistbox .imagelist {
+	width:407px;
+	height:340px;
+	border-right:1px solid #cbcbcb;
+}
+
+.pop_imagelistbox .imagelist li a.on span {
+	position:absolute;
+	display:block;
+	width:100%;
+	height:100%;
+	top:0;
+	left:0;
+	background:#000;
+	zoom:1; /*触发IE下块级元素*/
+	filter:alpha(opacity=70); 
+	-moz-opacity:0.7; 
+	opacity:0.7;
+}
+.pop_imagelistbox .imagelist li a.on em {
+	position:absolute;
+	display:block;
+	width:38px;
+	height:38px;
+	top:23.5px;
+	left:23.5px;
+	background:url(../images/new/send-weibo.png) no-repeat -150px -60px;
+}
+.pop_imagelistbox .selectimage {
+	width:125px;
+}
+.pop_imagelistbox .selectimage .delimage {
+	display:block;
+	position:absolute;
+	width:15px;
+	height:15px;
+	top:0;
+	right:0;
+	background:url(../images/new/send-weibo.png) no-repeat -120px -60px;
+}
+.pop_imagelistbox .bd {
+	height:300px;
+	overflow-y:scroll;
+}
+.pop_imagelistbox .bd ul {
+	padding:10px 0 0 10px;
+}
+.pop_imagelistbox li {
+	position:relative;
+	float:left;
+	width:85px;
+	height:85px;
+	margin-right:10px;
+	margin-bottom:10px;
+	background:#F1F1F1;
+}
+.pop_imagelistbox .imagetit {
+	height:40px;
+	padding-left:10px;
+	background:#f1f1f1;
+	line-height:40px;
+	font-size:14px;
+}
+.pop_imagelistbox .imagetit select {
+	width:170px;
+	height:25px;
+	font-size:14px;
+}
+
+/*add*/
+.send-inputer.single-box{
+	margin:0 49px 0 70px;
+}
+.single-box .uploadpicbox{
+	left: auto;
+	right: -1px;
+}
+.single-box .uploadpicbox i.arrow-t{
+	left: 127px;
+}
+.send-side.single-box{
+	width: 49px;
+}
+.write-addons a.space-file{
+	position: relative;
+  	outline: none;
+  	overflow: hidden;
+}
+.write-addons a.space-file form input{
+	position: absolute;
+  	right: 2px;
+  	top: 1px;
+  	outline: none;
+  	font-size: 16px;
+  	cursor: pointer;
+  	filter: alpha(opacity=0);
+  	-moz-opacity: 0;
+  	opacity: 0;
+}

@@ -1,0 +1,48 @@
+ <!--140414-->
+            <div class="zyk_body">
+                <div class="zyk_tit">
+                    <span class="left">我的云盘</span>
+                    <font class="right" id="capacity"></font>
+                    <div class="clear"></div>
+                </div>
+                <div class="zyk_pro">
+                    <div class="zyk_process" style="width: 10%;"></div>
+                </div>
+                <p>您的资源量排在<font id="rank_per"></font>人之前</p>
+                <a href="{:U('yunpan/Index/index')}" class="btn_blue">进入我的云盘</a>
+            </div>
+        <!--140414-->
+<script type="text/javascript">	
+	// 资源库容量
+	jQuery.ajax({
+		type:'post',
+		url:U('yunpan/Ajax/getCapacity'),
+		datatype:"json",
+		success:function(data){
+			var capacity=eval('('+data+')');
+			var cap=capacity.usedCapacity+"/"+capacity.totalCapacity+"GB";
+			var use_cap=capacity.usedCapacity.substring(0,(capacity.usedCapacity.length-2));
+			var rate=capacity.usedCapacity.substring(capacity.usedCapacity.length-2,capacity.usedCapacity.length);
+			var per=0;
+			if(rate=="KB"){
+				per=(use_cap/(capacity.totalCapacity*1024*1024))*100+"%";
+			}else if(rate=="MB"){
+				per=(use_cap/(1024*capacity.totalCapacity))*100+"%";			
+			}else{
+				per=(use_cap/capacity.totalCapacity)*100+"%";	
+			}
+			//如果比值偏小，则默认为1%；
+			if(parseFloat(per)/100<0.01&&parseFloat(per)!=0){
+			   per="1%";
+			}
+			
+			$(".zyk_process").css({width:per});
+			$("#capacity").html(cap);
+			$("#rank_per").html(capacity.per);
+		},
+		error:function(msg){
+			//ui.error("请检查网络连接...");
+		}
+	});
+	
+</script>

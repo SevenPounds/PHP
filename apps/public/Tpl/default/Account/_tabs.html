@@ -1,0 +1,19 @@
+<div id="aside" class="pad">
+	<ul class="slide_ul" id="slide_ul">
+		<volist name="tab_list" id="tab">
+			<li <if condition=" $tab['field_key'] eq ACTION_NAME "><php>$tabName = $tab['field_name'];</php> class="active"</if>><a href="<if condition="$tab['url']">{$tab.url}<else />{:U('public/Account/'.$tab['field_key'])}</if>">
+				<span>{$tab.field_name}</span></a><b><span>{$tab.field_name}</span></b>
+			</li>
+		</volist>
+		<volist name="tab_list_preference" id="tab">
+			<li <if condition=" $tab['field_key'] eq ACTION_NAME "><php>$tabName = $tab['field_name'];</php> class="active"</if>><a href="<if condition="$tab['url']">{$tab.url}<else />{:U('public/Account/'.$tab['field_key'])}</if>">
+				<span>{$tab.field_name}</span></a><b><span>{$tab.field_name}</span></b>
+			</li>
+		</volist>
+		<volist name="tab_list_security" id="tab">
+			<li <if condition=" $tab['field_key'] eq ACTION_NAME "><php>$tabName = $tab['field_name'];</php> class="active"</if>><a href="<if condition="$tab['url']">{$tab.url}<else />{:U('public/Account/'.$tab['field_key'])}</if>">
+				<span>{$tab.field_name}</span></a><b><span>{$tab.field_name}</span></b>
+			</li>
+		</volist>
+	</ul>
+</div> 

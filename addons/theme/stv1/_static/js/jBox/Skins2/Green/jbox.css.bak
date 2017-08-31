@@ -1,0 +1,25 @@
+@charset "utf-8";
+
+*:focus {outline: none;}
+/* fade */
+.jbox-fade{background-color:#000000;}
+/* drag */
+.jbox-drag{border:1px dashed #86ae00;}
+/* jbox */
+div.jbox {padding:0px;border:none;font-size:14px;}
+/* border */
+div.jbox .jbox-border{background: none repeat scroll 0 0 #000000;filter:alpha(opacity=20);-moz-opacity:0.2;opacity:0.2;}
+/* container */
+div.jbox .jbox-container{background-color:#ffffff;border:1px solid #ffdcab;}
+div.jbox .jbox-tip-color{
+background: #86ae00;
+background: -webkit-gradient(linear, left top, left bottom,
+from( #fef8e0), to( #fef8e0));
+background: -moz-linear-gradient(top,   #fef8e0,   #fef8e0);
+background-color:
+border-color:#ffdcab;
+border-radius:3px 3px 3px 3px;
+color:#535353;}
+/* icons */
+div.jbox span.jbox-icon{background:url(images/jbox-icons.png) no-repeat scroll 0 0 transparent;_background:url(images/jbox-icons-ie6.gif) no-repeat scroll 0 0 transparent;}
+div.jbox span.jbox-icon-success {background-position:-72px 0;}

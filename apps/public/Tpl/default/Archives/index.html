@@ -1,0 +1,38 @@
+<include file="__THEME__/public_header" />
+<style type="text/css" media="screen">
+    .stu-header {
+        height: 99px;
+        background: #0084EB none repeat scroll 0% 0%;
+        position: relative;
+        z-index: 22;
+    }
+    body{
+        background:url("__APP__/image/stu_wrap.jpg") no-repeat center 0px;
+        overflow-y: hidden;
+    }
+    #body_page{background: url("") no-repeat center 0;}
+    #body-bg {  padding: 45px 0 0 0; }
+</style>
+<iframe src="{$url}" width="100%"  id="archivesPage" name="archivesPage" frameborder="no" border="0" marginwidth="0" marginheight="0" scrolling="0">
+</iframe>
+<script type="text/javascript">
+    jQuery(function(){
+        var screen_height = jQuery(window).height();
+        var tmp_height = screen_height-jQuery("#fix_header").height()-jQuery(".footer:last").outerHeight(true);
+        jQuery("#archivesPage").height(tmp_height-39).show();
+        $(window).resize(function(){
+            jQuery("#archivesPage").height($(".footer").offset().top).show();
+        });
+    });
+</script>
+<div class="footer" style="background: #fff;height: 40px;line-height: 40px;position: fixed;bottom: -5px;width: 100%;left: 0px;">
+    <script type="text/javascript">
+        jQuery(window).ready(function(){
+            var host = document.location.host;
+            if(host=='huaqiang.changyan.cn'){
+                jQuery("#footer_content").html('皖ICP备05001217号-48');
+            }
+        });
+    </script>
+    <span id="footer_content" class="mr20">版权所有：深圳市教育局 &nbsp;&nbsp;&nbsp;&nbsp;技术维护：深圳市教育信息技术中心</span>
+</div>

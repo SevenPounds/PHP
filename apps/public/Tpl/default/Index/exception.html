@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="utf-8">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <title>404</title>
+   <link href="__APP__/css/base.css" rel="stylesheet" type="text/css" />
+    <link href="__APP__/css/error.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<!--wrapper-->
+    <div class="error_bg">
+        <div class="container">
+            <div class="des">
+                <img src="__APP__/images/error_n.png">
+                <p class="color"><?php echo strip_tags($msg);?></p>
+                <p>您可能输错了网址，或该网页已被删除</p>
+                <a href="<?php echo(C('RS_SITE_URL')); ?>" class="return">返回首页</a>
+            </div>
+
+        </div>
+    </div>
+
+<!--/wrapper-->
+</body>
+</html>

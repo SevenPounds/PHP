@@ -1,0 +1,102 @@
+<style>
+.tea-nav a{
+	text-decoration: none;
+}
+.beside{
+	width: 219px;
+	background: none;
+	min-height: 200px;
+}
+#msgroup_list a{
+	background:none;
+	color:rgb(9, 88, 150);
+	font-size:12px;
+}
+</style>
+<div class="beside fl">
+<dl class="tea-nav" id="tea">
+	<dt style='color:#333333;border:none;background:url(__THEME__/image/zxdt.png) no-repeat left center;margin:10px 40px 0 40px;padding-left:30px;height:35px;line-height:35px;'><a href="{:U('public/Index/index')}" style='padding-left:0;height:none;line-height:none;background:none;border:none;'>最新动态</a></dt>
+	<dt style='color:#333333;border:none;background:url(__THEME__/image/xxtx.png) no-repeat left center;margin:0 40px 10px 40px;padding-left:30px;height:35px;line-height:35px;'><a href="{:U('public/Mention/index')}" style='padding-left:0;height:none;line-height:none;background:none;border:none;'>消息提醒</a></dt>	
+	<dt><a href="javascript:void(0);" class="dir-right" event-node='up_down' event-args='id=appkj&from=parent'>空间应用</a></dt>
+	<dd id="appkj">
+	<ul>
+		<volist name="app_space" id="li">
+			<li title="{$li['title']}" class="{$li['class_t']}">
+					<a href="{$li['url']}" <?php if($li['target']){echo 'target="_blank"';}?>>
+						{$li['appname']}
+					</a>
+			</li>
+		</volist>
+		<!-- <li class="app-more">
+			<a style="margin-left:36px;font-size:12px;" href="{:U('appcenter/Index/index')}" target="_blank">+添加更多应用</a>
+		</li> -->
+	</ul>
+	</dd>
+</dl>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){
+	$("#app_ms_group").toggle(function(){
+		$("#msgroup_list").slideDown();
+	},function(){
+		$("#msgroup_list").slideUp();
+	});
+});
+function showDelete(obj){
+	$(obj).children('.app-delete-btn').show();
+};
+
+function hideDelete(obj){
+	$(obj).children('.app-delete-btn').hide();
+};
+// 点击应用时，增加应用用户量和访问量
+function addAppCount(obj){
+	var url = $(obj).attr("data-url");
+	var appid = $(obj).attr("data-appid");
+	var isfirst = $(obj).attr("data-first");
+	if(typeof(isfirst) == 'undefined' || isfirst == 'true'){
+		$(obj).attr("data-first","false");
+		$.ajax({
+			url : 'index.php?app=appcenter&mod=Index&act=addAppCount',
+			type : 'post',
+			data : {appid : appid},
+			dataType : 'json',
+			success : function(result){
+				$(obj).attr("data-first","true");
+				if(result.statuscode == '200'){
+					if(typeof(url) != 'undefined'){
+						location.href = url;
+					}
+				}
+				if(result.statuscode == '400'){
+					ui.error(result.message);
+				}
+			}
+		});
+	}
+};
+
+// 删除应用
+function deleteApp(obj){
+	var appid = $(obj).attr("data-appid");
+	ui.confirmBox("提示", "确认删除?",function(){
+		$.ajax({
+			url : 'index.php?app=appcenter&mod=Index&act=appOperate',
+			type : 'post',
+			data : {appid : appid, type : 'delete'},
+			dataType : 'json',
+			success : function(result){
+				if(result.statuscode){
+					$(obj).parent("li").remove();
+					ui.success(result.message);
+				}else{
+					ui.error(result.message);
+				}
+			},
+			error : function(msg){
+				ui.error(msg);
+			}
+		});
+	});
+};
+</script>

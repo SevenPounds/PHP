@@ -1,0 +1,34 @@
+	<div class="sperson-feedlist" >
+					<php>if($orglist){</php>
+						<volist name="orglist" id="vo">
+							<dl class="feed_list" model-node="following_list_item">
+								<dt class="face">
+								   <a href="{$vo.spaceurl}"><img title="{$vo.name}" src="{$vo.avatar_small}" width="50" height="50"/></a></dt>
+								<dd class="person-info">
+								  <div class="info-right right">
+										<span class="right">{:W('ClassFollowBtn', array('fid'=>$vo['id'], 'uname'=>$vo['name'], 'follow_state'=>$vo['followstate'], 'type'=>'normal','ftype'=>$vo['type'],'widget_appname'=>'class'))}</span>
+								  </div>
+								  <div class="info-left">
+									<p class="hd">
+										<span style="font-size:14px">{$vo.space_link}</span>
+									</p>
+									<p class="area"><span>{$vo.location}</span></p>
+									<p class="action">									
+										{:L('PUBLIC_FOLLOWERS')}：<a href="{$vo.spaceurl}" id="follower_{$vo['id']}">{$vo.follower|default = 0}</a>
+										<i class="vline">|</i>
+										{:L('PUBLIC_WEIBO')}：<a href="{$vo.spaceurl}">{$vo.feed_count|default=0}</a>
+									</p>
+									<php>if($vo['intro']){</php>
+										<p class="info">
+											{:L('PUBLIC_PROFILESET_INTRO')}：{$vo.intro}
+										</p>
+									<php>}</php>
+								  </div>	
+								</dd>
+							</dl>	
+						</volist>
+						<div id="page" class="page">{$html}</div>
+					<php>}else{</php>
+                        <div class="loading">你还没有关注任何校园或班级</div>
+                    <php>}</php>
+					</div>

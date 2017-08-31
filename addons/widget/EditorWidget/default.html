@@ -1,0 +1,19 @@
+<script type="text/javascript" src="__THEME__/js/editor/kindeditor-4.1.4/kindeditor.js?v=2012"></script>
+<!--发布样式 begi-->
+<div class="contents">
+<textarea  name="{$contentName}"  cols="" rows="20" id="{$contentName}" style="width:{$width}; margin-bottom:10px;">{$value|htmlentities}</textarea>
+</div>
+<script>
+	
+	//E	=	KISSY.Editor( "content" );
+	//设置默认字体与样式  chengcheng3 edit 2014/2/27
+
+    KISSY.cssData = 'undefined' != typeof (E_CSSDATA) ? E_CSSDATA : '';
+    KISSY.cssSpan = 'undefined' != typeof (E_CSSSPAN) ? E_CSSSPAN : '';
+
+
+	E = KISSY.Editor( "{$contentName}" ,'{$mode}' , false);
+	E._focusToEnd();
+	KindEditor.options.resizeType = 1;//编辑器只能调整高度
+
+</script>

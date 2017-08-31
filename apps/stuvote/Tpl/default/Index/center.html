@@ -1,0 +1,122 @@
+<include file="../Public/_header"/>
+<style type="text/css">
+.tab_choose{
+	height:88px;
+}
+.tab_choose1{
+	height:44px;
+}
+</style>
+<div id="main-wrap" class="wrapper">
+		<!--面包屑导航-->
+		<!-- <div class="crumbs">
+			<ul>
+				<li class="pre_cen"><a href="{:U('public/Index/index')}">个人空间</a></li>
+				<li>></li>
+				<li><a href="{:U('/Index/index')}">网络投票</a></li>
+				<li>></li>
+				<li>投票中心</li>
+			</ul>
+			<div class="clear"></div>
+		</div> -->
+		<!-- 导航结束 -->
+		<div class="con_box" style="margin: 0px auto;">
+			<div class="left_box">
+			<div id="st-index-grid" class="content clearfix stu-con">
+				<!--左侧用户信息-->
+				<include file="__THEME__/public_left" />
+				</div>
+				</div>
+			</div>
+			<div class="right_box">
+				<div class="online_title">
+		            <div class="left">
+		            <!-- <span><img src="__APP__/images/icon_jy.gif" /></span> -->
+						<span><div style="width:32px;height:24px;line-height:24px;" class="app_icon_class_wldy"></div></span>
+		            <span class="pl10 font3"><b>在线投票</b></span> </div>
+				    <div class="right">
+		            <!--1213-->
+		              <p class="blue_btn3" onmouseover="this.className='blue_btn3hov'" onmouseout="this.className='blue_btn3'" onclick="window.location.href=U('stuvote/Index/create')">
+		              	<img src="__APP__/images/add.gif" height="8"/>发起投票</p><!--1213-->
+			        </div>
+		      	</div>
+				  <div class="re_tab">
+					<ul>
+						<li ><a href="{:U('/Index/index')}">我发起的投票</a></li><!--1213-->
+						<li ><a  href="{:U('/Index/follows')}">我参与的投票</a>
+                            {$newdiv}
+                        </li><!--1213-->
+					</ul>
+					<p class="pkzx_pre"><a href="{:U('vote/Index/center')}">投票中心</a></p><!--1213-->
+				  </div>
+				
+               <div class="topic_choose">
+            	
+				
+				<div class="status_box">
+					<div class="status">
+						<p class="pl10 left"><b>按投票状态查询：</b></p>
+							<ul id="ul_status">
+								<li class="blue current"  onclick="javascript:Vote.changeCondition(this,3);" code=''>
+									<a href="javascript:void(0);">全部</a>
+								</li>
+								<li class="blue" onclick="javascript:Vote.changeCondition(this,3);" code='1'>
+									<a href="javascript:void(0);">进行中</a>
+								</li>
+                                <li class="black1" onclick="javascript:Vote.changeCondition(this,3);" code='-1' style="cursor:pointer;padding:0 6px;" >已结束</li>
+								
+							</ul>
+					</div>
+					<div class="topic_search mt10 pr15">
+						<div class="left"></div>
+						<div class="cen">
+							<input type="text" id="searchkeyword" />
+							<p class="topic_searchbtn"><a href="javascript:void(0);" onclick="Vote.search();"></a></p>
+						</div>
+						<div class="right"></div>
+					</div>
+				</div>
+			   </div>
+               <div id="container">
+               <table cellpadding="0" cellspacing="0" border="0" class="online_table3">
+			        <tr class="online_tabletop">
+				        <th width="8%" style="text-align:center;">状态</th>
+				        <th width="1%"><img src="__APP__/images/th_line.jpg" /></th>
+				        <th width="44%" style="text-align:center;">投票名称</th>
+				        <th width="1%"><img src="__APP__/images/th_line.jpg" /></th>
+				        <th width="10%" style="text-align:center;">发起人</th>
+				        <th width="1%"><img src="__APP__/images/th_line.jpg" /></th>
+				        <th width="10%" style="text-align:center;">参与人数</th>
+				        <th width="1%"><img src="__APP__/images/th_line.jpg" /></th>
+				        <th width="10%" style="text-align:center;">讨论次数</th>
+				        <th width="1%"><img src="__APP__/images/th_line.jpg" /></th>
+				        <th width="13%" style="text-align:center;">投票时间</th> 
+			        </tr>
+                </table>
+                </div>
+			</div>
+		</div>
+	</div>
+<script type="text/javascript" src="__APP__/js/ajax_vote.js"></script>
+<script type="text/javascript">
+	var nav = "{$nav}";
+    Vote.type= 'center';
+	if ({$nav}==1) {
+		Vote.nav =1;
+	}
+    jQuery(window).load(function(){
+      jQuery('#hottag_list p').click (function(){
+            Vote.changTags();
+      });
+
+      jQuery("#searchkeyword").keypress(function (e) {
+	            var ev = e || window.event;
+	            if (ev.keyCode == 13) {
+	                    Vote.search();
+	            }
+	  });
+    });
+  
+</script>
+<include file="__THEME__/public_footer" />
+

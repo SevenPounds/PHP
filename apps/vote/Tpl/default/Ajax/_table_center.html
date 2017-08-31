@@ -1,0 +1,37 @@
+<table class="online_table" border="0" cellpadding="0" cellspacing="0">
+	<tbody><tr class="online_tabletop">
+		<th width="8%" style="text-align:center;">状态</th>
+		<th width="1%"><img src="__APP__/images/th_line.jpg" /></th>
+		<th width="44%" style="text-align:center;">调研名称</th>
+		<th width="1%"><img src="__APP__/images/th_line.jpg" /></th>
+		<th width="10%" style="text-align:center;">发起人</th>
+		<th width="1%"><img src="__APP__/images/th_line.jpg" /></th>
+		<th width="10%" style="text-align:center;">参与人数</th>
+		<th width="1%"><img src="__APP__/images/th_line.jpg" /></th>
+		<th width="10%" style="text-align:center;">回复次数</th>
+		<th width="1%"><img src="__APP__/images/th_line.jpg" /></th>
+		<th width="13%" style="text-align:center;">调研时间</th> 
+	</tr>
+	<volist name="list" id="list" k="i">
+    <tr style="background:#fff">
+        <php>if ($list['deadline'] < time()):</php>
+		<td align="center" class="black1">已结束</td>
+        <php>else:</php>
+        <td align="center" class="blue">进行中</td>
+        <php>endif;</php>
+		<td></td>
+		<td class="blue"><a href="{:U('vote/Index/detail',array('id'=>$list['id']))}" title="{$list['title']}" ><php>echo htmlspecialchars(getShort(htmlspecialchars_decode($list['title']),20))</php></a></td>
+		<td></td>
+		<td align="center">{$list.creator_user_name}</td>
+		<td></td>
+		<td align="center">{$list.vote_num}</td>
+		<td></td>
+		<td align="center">{$list.commentCount}</td>
+		<td></td>
+		<td align="center"><php>echo(date('Y-n-d',$list['cTime']));</php></td>
+	</tr>
+    </volist>
+</tbody></table>
+<div class="clear"></div>
+{$page}
+

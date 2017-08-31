@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- 
+打包命令: phing -Dprofile=[profileName]
+profile包含三个类型值：test、production.
+ -->
+<project name="App.EduSNS" default="dist" basedir="." description="资源平台SNS">
+    <property name="project.version"  value="1.3.0" />
+    <property name="project.env" value="test" />
+    
+    <tstamp>
+ 		<format property="NOW" pattern="%Y-%m-%d %H:%M" locale="cn"/>
+	</tstamp>
+	
+	<!-- 更新环境差异配置 -->
+    <target name="env">
+    	<delete file="config/env.inc.php"></delete>
+        <smarty templatePath="config/" 
+        		controlTemplate="env.tpl"
+  				outputDirectory="config/"
+  				outputFile="env.inc.php" 
+  				contextProperties="../env.properties"
+  				/>
+		<delete dir="templates_c"></delete>
+    </target>
+
+    <!--
+        Target: build 
+        Description: 复制需要打包的文件到build目录。
+    -->
+    <target name="build" depends="composer">
+        <echo msg="Copying files to build directory..." />
+
+		<delete dir="build" />
+        <mkdir dir="build" />
+        
+        <copy file=".htaccess" tofile="build/.htaccess" />
+        <copy file="CHANGES.txt" tofile="build/CHANGES.txt" />
+        <copy file="cleancache.php" tofile="build/cleancache.php" />
+        <copy file="crossdomain.xml" tofile="build/crossdomain.xml" />
+        <copy file="DB_CHANGES.txt" tofile="build/DB_CHANGES.txt" />
+        <copy file="index.php" tofile="build/index.php" />
+        <copy file="online_check.php" tofile="build/online_check.php" />
+        <copy file="README.txt" tofile="build/README.txt" />
+        <copy file="shorturl.php" tofile="build/shorturl.php" />
+        <copy file="VERSION.txt" tofile="build/VERSION.txt" />
+        
+        <copy todir="build/addons">
+            <fileset dir="addons"></fileset>
+        </copy>
+        <copy todir="build/api">
+            <fileset dir="api"></fileset>
+        </copy>
+        <copy todir="build/apps">
+            <fileset dir="apps"/>
+        </copy>
+        <copy todir="build/config">
+            <fileset dir="config">
+            	<exclude name="*.tpl"></exclude>
+            </fileset>
+        </copy>
+        <copy todir="build/core">
+            <fileset dir="core"/>
+        </copy>
+        <copy todir="build/public">
+            <fileset  dir="public"/>
+        </copy>
+        <copy todir="build/SpeechToText">
+            <fileset  dir="SpeechToText"/>
+        </copy>
+        <copy todir="build/URLRewrite">
+            <fileset  dir="URLRewrite"/>
+        </copy>
+        <copy todir="build/vendor">
+            <fileset dir="vendor"/>
+        </copy>
+        <copy todir="build/videoretrieval">
+            <fileset dir="videoretrieval"/>
+        </copy>
+        <!-- 创建文件存放目录 -->
+        <mkdir dir="build/UPLOAD_PATH"></mkdir>
+    </target>
+    
+    <!-- 配置config.inc.php和version.html -->
+    <target name="config">
+   		<svninfo element="url" propertyname="svn.url"/>
+		<svninfo element="revision" propertyname="svn.revision"/>
+		<svninfo element="date" propertyname="svn.date"/>
+		
+		<!-- 创建版本信息页面 -->
+        <copy file="version.html" tofile="build/version.html">
+        	<filterchain>
+   				<replacetokens begintoken="@" endtoken="@">
+    				<token key="SVN_URL" value="${svn.url}" />
+				    <token key="BUILD_TIME" value="${NOW}" />
+				    <token key="SVN_NO" value="${svn.revision}" />
+				    <token key="SVN_DATE" value="${svn.date}" />
+				    <token key="PROJECT_NAME" value="${phing.project.name}" />
+				    <token key="PROJECT_VERSION" value="${project.version}" />
+				    <token key="PROJECT_PROFILE" value="${project.env}" />
+   				</replacetokens>
+  			</filterchain>
+        </copy>
+    </target>
+
+    <!--
+        Target: composer 
+        Description: composer更新依赖包，如果首次执行composer install，以后执行composer update。
+    -->
+    <target name="composer">
+        <condition property="checkComposerLockIsExists">
+            <and>
+                <available file="composer.lock" />
+            </and>
+        </condition>
+        <if>
+            <equals arg1="${checkComposerLockIsExists}" arg2="yes" />
+            <then>
+                <echo message="composer update, please waiting..." />
+                <exec command="composer update" logoutput="true" />
+            </then>
+            <else>
+                <echo message="执行composer install, please waiting..." />
+                <exec command="composer install" logoutput="true" />
+            </else>
+        </if>
+    </target>
+    
+    <!--
+        Target: check 
+        Description: 代码发布压缩打包，打包以后的文件名格式：
+        ${phing.project.name}-${project.version}-build${svn.lastrevision}.tar.gz
+    -->
+    <target name="dist" depends="env, build, config">
+        <echo msg="Creating archive..." />
+
+        <tar destfile="../${phing.project.name}.tar.gz" compression="gzip">
+            <fileset dir="build">
+                <include name="*" />
+                <exclude name="dist" />
+            </fileset>
+        </tar>
+    </target>
+
+</project>

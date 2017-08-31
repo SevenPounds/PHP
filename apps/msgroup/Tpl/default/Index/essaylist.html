@@ -1,0 +1,26 @@
+<include file="../Public/header" />
+<div class="posbox">&nbsp;&nbsp;您现在的位置：
+	<a href="{:U('msgroup/Index/index', array('gid' => $gid))}" class="blue">{$msgroup_data.group_name}</a>&gt;
+	<a href="{:U('msgroup/Index/teachingresearch', array('gid' => $gid))}" class="blue">教学研讨
+	</a>&gt;<span class="sgray" style="margin-left:6px;">教学论文</span>
+</div>
+<div class="tp_box">
+	<div class="tl_con">
+		<div class="tea_tItit3">
+			<p class="left blue">教学论文</p>
+		</div>
+		<table width="100%" cellpadding="0" cellspacing="0" border="0">
+			<volist name="notices" id="vo">
+			<tr>
+				<td width="80%" class="black2"><div class="title">
+						<a href="{:U('/Index/announceDetail',array('gid'=>$gid,'announce_id'=>$vo['id']))}"
+							title="{$vo['title']}">{$vo['title']|getShort=70,'...'}</a>
+					</div></td>
+				<td align="right" class="black1" width="20%">{$vo['ctime']|date='y-m-d',###}</td>
+			</tr>
+			</volist>
+		</table>
+			<div class="page">{$page}</div>
+	</div>
+</div>
+<include file="__THEME__/public_footer" />

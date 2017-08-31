@@ -1,0 +1,14 @@
+
+<div id="menu">
+	<div class="menu_left"></div>
+	<div class="menu_cent">
+			<ul>
+				<li <php>if(in_array(APP_NAME.'/'.MODULE_NAME.'/'.ACTION_NAME,array('class/Index/main'))){</php> class="homepre" <php>}else{</php> class="home" <php>}</php> ><a href="{:U('class/Index/main')}">&nbsp;</a></li>
+				<li <php>if(in_array(APP_NAME.'/'.MODULE_NAME,array('class/ClassHome','class/ClassAlbum','class/ClassBlog'))||in_array(APP_NAME.'/'.MODULE_NAME.'/'.ACTION_NAME,array('class/Index/class_square'))){</php> class="classpre"<php>}else{</php>class="class"<php>}</php> ><a href="{:U('class/Index/class_square')}">&nbsp;</a></li>
+				<li <php>if(in_array(APP_NAME.'/'.MODULE_NAME,array('class/CampusHome'))||in_array(APP_NAME.'/'.MODULE_NAME.'/'.ACTION_NAME,array('class/Index/school_garden'))){</php> class="campuspre"  <php>}else{</php>class="campus"<php>}</php> ><a href="{:U('class/Index/school_garden')}">&nbsp;</a></li>
+				<li <php>if(in_array(APP_NAME.'/'.MODULE_NAME.'/'.ACTION_NAME,array('channel/Index/index'))){</php> class="hallpre"  <php>}else{</php> class="hall"<php>}</php> ><a href="{:U('channel/Index/index')}">&nbsp;</a></li>
+			</ul>
+	</div>
+	<div class="menu_right"></div>
+	<div class="clear"></div>
+</div>

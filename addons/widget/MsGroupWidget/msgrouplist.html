@@ -1,0 +1,26 @@
+<php>if (!empty($msgroup_list)):</php>
+<div class="app_show common">
+	<div class="title">
+		<p class="left"><b>我的名师工作室</b></p>
+		<span class="sq" event-node='up_down' event-args='id=msgroup&from=pcenter'>{:L('PUBLIC_FOLD')}</span>
+		<div class="clear"></div>
+	</div>
+	<div class="chengguo" id="msgroup">
+		<ul>
+			<volist name="msgroup_list" id="g_vo" key="k">
+			<li>
+			<div class="left">
+				<a href="{:U('msgroup/Index/index')}&gid={$g_vo.gid}"><img alt="{$g_vo.group_name}" src="{$g_vo.image.avatar_small}"></a>
+			</div>
+			<div class="left app_rig">
+				<p title="{$g_vo.group_name}">
+				<a href="{:U('msgroup/Index/index')}&gid={$g_vo.gid}" id="msgroup_{$k}">{$g_vo.group_name|mStr=###,8}</a>
+				</p>
+			</div>
+			</li>
+			</volist>
+			<div class="clear"></div>
+		</ul>
+	</div>
+</div>
+<php>endif;</php>

@@ -1,0 +1,21 @@
+
+<a href="javascript:void(0);" class="teaWSR_upL" onclick="photo.showUpload({$gid})">上传证书图片</a>
+				<div class="clear"></div>
+				
+				<volist name='photos.data' id='vo' empty="无荣誉信息">
+					<dl class="teaWSR_ry">
+						<dt>
+						<a href="{:U('msgroup/Photo/detail',array('gid'=>$gid,'pid'=>$vo['id']))}"><img src="{:getImageUrl($vo['savepath'],200,200)}" /></a>
+						</dt>
+						<dd>
+						<span><a href="{:U('msgroup/Photo/detail',array('gid'=>$gid,'pid'=>$vo['id']))}" title="{$vo['photo_name']}">{$vo['photo_name']|getShort=8,'...'}</a></span>
+						<p><font>浏览：{$vo['viewcount'] |default = 0}</font><!-- <a href="#">编辑</a> --><a href="javascript:void(0)" onclick="photo.delphoto({$gid},{$vo['id']});">删除</a></p>
+						</dd>
+					</dl>
+				</volist>
+			<div class="clear" ></div>
+			<div class="page">
+			{$photos['html']}
+			<input type='hidden' id="photoPage" value="{$photos['page']}" ></input>
+			<input type='hidden' id="msgid" value="{$gid}" ></input>
+			</div>

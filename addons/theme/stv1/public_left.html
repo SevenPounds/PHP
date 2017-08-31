@@ -1,0 +1,16 @@
+<div id="col1" class="st-index-left">
+	<div class="left-wrap">
+	<!-- 个人信息 -->
+	{:W('UserInformation', array('uid'=>$mid, 'tpl'=>'right', 'isReturn'=>$isReturn))}
+	<!-- 个人应用 -->
+	{:W('PersonalApp',array('uid'=>$mid))}
+	<!-- 广告位 -->
+	{:Addons::hook('show_ad_space', array('place'=>'home_right_top'))}
+	<!-- 话题右下广告 -->
+    {:Addons::hook('show_ad_space', array('place'=>'topic_right'))}
+	<!-- 插件位 -->
+	{:Addons::hook('home_index_right_bottom')}
+	<!-- 首页右下广告位 -->
+	{:Addons::hook('show_ad_space', array('place'=>'home_right_bottom'))}
+	</div>
+</div>

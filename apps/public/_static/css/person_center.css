@@ -1,0 +1,634 @@
+/*141107*/
+img{
+    border: none;
+}
+a {
+    color: #7b7b7b;
+    text-decoration: none;
+}
+/*141107*/
+.cy_model{
+    /* width: 558px;
+    margin: 0 0 12px -10px; *//*0721 edit*/
+
+    border-bottom: 1px solid #d3d3d1;
+    background: #f4f5f7;
+    padding: 10px 10px 10px;
+    min-height: 32px;
+}
+.cy_model .cy_model_tab{
+    height: 28px;
+    font-size: 14px;
+    color: #333;
+    line-height: 28px;
+    padding-left: 5px;
+}
+.cy_model .cy_model_tab li{
+    float: left;
+    display: inline;
+    padding: 0 3px;
+    cursor: pointer;
+  	/*   margin: 0 8px; 添加更多按钮后样式 */  
+	margin:0px 13px
+}
+.cy_model .cy_model_tab li a{
+    font-size: 14px;
+    white-space: nowrap;
+    display: block;
+}
+.cy_model .cy_model_tab li.hot_app a{
+    font-size: 14px;
+}
+.cy_model .cy_model_tab li.current,
+.cy_model .cy_model_tab li:hover{
+    background: #09f;
+}
+.cy_model .cy_model_tab li.current a,
+.cy_model .cy_model_tab li:hover a{
+    color: #fff;
+}
+.cy_model .cy_model_tab li.current a{
+    font-weight: bold;
+}
+.cy_model .cy_model_tab li.current a:hover,
+.cy_model .cy_model_tab li:hover a:hover{
+    text-decoration: none;
+}
+.cy_model .cy_model_cont dl{
+    width: 157px;
+	padding: 6px 10px;
+}
+.cy_v_line{
+    background: url("../images/cy_v_line.png") repeat-y;
+    width: 1px;
+    margin-top: 20px;
+    min-height: 407px;
+}
+.cy_model .cy_model_cont dl dt img{
+    width: 68px;
+    height: 68px;
+    float: left;
+    background: url("../images/cy_model_head.png") no-repeat left top;
+    padding: 4px;
+    margin-right: 13px;
+}
+.cy_model .cy_model_cont dl p a,
+.cy_model .cy_model_cont dl p span{
+    display: block;
+}
+.cy_model .cy_model_cont dt .cy_model_name{
+    font-size: 14px;
+    color: #333;
+    line-height: 23px;
+}
+.cy_model .cy_model_cont dd .cy_model_name{
+    font-size: 12px;
+    color: #333;
+    line-height: 14px;
+}
+.cy_model .cy_model_cont .cy_model_name:hover{
+    color: #009dee;
+    text-decoration: underline;
+}
+.cy_model .cy_model_cont dl dt span{
+    color: #aaa;
+    line-height: 20px;
+    height: 20px;
+}
+.cy_model .cy_model_cont .btn-cancel{
+    width: 48px;
+    height: 24px;
+    border: 1px solid #ccc;
+    text-align: center;
+    line-height: 24px;
+    margin-top: 5px;
+}
+.cy_model .cy_model_cont dl dd{
+    margin-top: 22px;
+}
+.cy_model .cy_model_cont dl dd:first-child{
+    margin-top: 26px;
+}
+.cy_model .cy_model_cont dl dd img{
+    width: 44px;
+    height: 44px;
+    margin: 0 13px 0 4px;
+}
+.cy_model .cy_model_cont dl>span{
+    width: 122px;
+    height: 35px;
+    display: block;
+    background: url("../images/cy_dr.png") no-repeat;
+    margin: 10px auto 15px;
+}
+.cy_model .cy_model_cont dl>span.cy_dr_jf{
+    background-position: 0 0;
+}
+.cy_model .cy_model_cont dl>span.cy_dr_fs{
+    background-position: 0 -35px;
+}
+.cy_model .cy_model_cont dl>span.cy_dr_hy{
+    background-position: 0 -70px;
+}
+
+
+/**/
+.cy_model .cy_model_easy{
+    padding: 8px 0;
+    border-top: 1px dotted #bcdeff;
+    margin: 0 13px;
+}
+.cy_model .cy_model_easy:first-child{
+    padding-top: 20px;
+    border:none;
+}
+.cy_model .cy_model_easy>span{
+    width: 33px;
+    height: 18px;
+    background: #FE5931;
+    color: #fff;
+    margin: 0 15px 0 1px;
+    text-align: center;
+}
+.cy_model .cy_model_easy .cy_model_fbNr{
+    width:460px;
+}
+.cy_model .cy_model_easy .cy_model_fbTit a.fl{
+    font-size: 14px;
+    color: #333;
+    height: 14px;
+    line-height: 14px;
+    *line-height: 17px;
+}
+/*.cy_model .current .cy_model_fbTit a.fl{
+    font-size: 16px;
+    color: #333;
+    height: 17px;
+    line-height: 17px;
+    *line-height: 22px;
+}*//*141114*/
+.cy_model .cy_model_easy .cy_model_fbTit a.fl:hover{
+    color:#009dee;
+}
+.cy_model .cy_model_easy .cy_model_fbTit span{
+    color: #888;
+    margin-top: 4px;
+    line-height: 12px;
+    width:85px;
+    white-space:nowrap;
+}/*141114*/
+.cy_model .cy_model_easy .cy_model_fbTit span a{
+    color: #38b2fe;
+}
+.cy_model .cy_model_easy .cy_model_fbTxt{
+    color: #555;
+    line-height: 20px;
+    margin-top: 5px;
+}
+.cy_model .cy_model_repeat{
+    width: 480px;
+    margin-top: 10px;
+    position: relative;
+}
+.trend_triangle{
+    position: absolute;
+    top: -7px;
+    left: 30px;
+    display: inline-block;
+    width: 0;
+    height: 0;
+    border-width: 0 7px 7px;
+    border-style: solid dashed;
+    border-color: #e6eff8 transparent;
+    overflow: hidden;
+}
+.cy_model .cy_model_repeat .cy_model_reptCon{
+    background: #e6eff8;
+    padding: 10px 15px 10px 5px;
+}
+.cy_model .cy_model_repeat .cy_model_reptCon>span{
+    background: url("../images/cy_model_z.png") no-repeat center top;
+    width: 40px;
+    padding-top: 15px;
+    display: block;
+    color: #fd7e02;
+    text-align: center;
+    margin: 5px 10px 0 0;
+}
+.cy_model .cy_model_repeat .cy_model_reptCon .cy_model_fbTit,
+.cy_model .cy_model_repeat .cy_model_reptCon .cy_model_fbTxt{
+    color: #555;
+    width: 410px;
+    line-height: 20px;
+    margin-top: 0;
+}
+.cy_model .cy_model_repeat .cy_model_reptCon .cy_model_fbTxt p{
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+.cy_model .cy_model_repeat .cy_model_reptCon .cy_model_fbTxt strong{
+    display: block;
+    font-size: 12px;
+}
+.cy_model .cy_model_repeat .cy_model_reptCon .cy_model_fbTxt strong a{
+    color: #009dee;
+}
+.cy_model .cy_model_repeat .cy_model_reptCon .cy_model_fbTxt strong a{
+    margin-right: 3px;
+}
+.cy_model .cy_model_cont .cy_model_more{
+    color: #38B2FE;
+    margin: 0 15px 0 0;
+}
+.cy_model .cy_model_cont .cy_model_more:hover{
+    text-decoration: underline;
+    color: #38B2FE;
+}
+.cy_model a.see_add,
+.cy_model a.see_tick,
+.cy_model a.see_cancle,
+.cy_model a.see_both{
+    background: url("../images/group_gz.png") no-repeat;
+    height: 24px;
+    display: block;
+    margin-top:5px;
+    font-size: 0;
+}
+.cy_model a.see_add:hover{
+    background: url("../images/group_gz.png") no-repeat 0 -24px;
+}
+.cy_model a.see_add:hover,
+.cy_model a.see_tick:hover,
+.cy_model a.see_cancle:hover,
+.cy_model a.see_both:hover{
+    font-size: 0;
+    text-decoration: none;
+    cursor:pointer;
+}
+.cy_model a.see_add{
+    width: 48px;
+    background-position: 0 0;
+}
+.cy_model a.see_cancle{
+    width: 68px;
+    background-position: 0 -168px;
+}
+.cy_model a.see_tick{
+    width: 68px;
+    background-position: 0 -48px;
+}
+.cy_model a.see_both{
+    width: 68px;
+    background-position: 0 -96px;
+
+}
+
+.font_limit{
+	display: block; 
+	width:380px;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	word-wrap:normal;
+    height: 20px;
+}
+
+
+/*个人信息模块 20150303 add yinWang*/
+/*150303 为保证模块效果添加，集成系统时删除*/
+.person-info{
+    width: 196px;
+}
+.user_detail b {
+    color: #5C7495;
+	position: relative;
+	top:7px;
+}
+.person-info .person-info-t dt img {
+    width: 85px;
+    height: 85px;
+}
+.clear {
+    clear: both;
+}
+.user_avatar_wrap .user_detail .name {
+    color: #38B2FE;
+    font-family: Microsoft YaHei;
+    height: 28px;
+    line-height: 28px;
+    font-size: 14px;
+    font-weight: bold;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+.user_detail .name{
+	margin-bottom: 4px;
+}
+.user_avatar_wrap .user_detail p.city {
+    color: #535353;
+}
+.user_detail p.city{
+	margin-top: 15px;
+}
+.person-info .person-info-t dt a.face {
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    background: none repeat scroll 0% 0% #000;
+    opacity: 0.6;
+    width: 85px;
+    height: 30px;
+    line-height: 30px;
+    color: #FFF;
+    text-align: center;
+    visibility: hidden;
+}
+.person-info .person-info-t dt {
+    float: left;
+    position: relative;
+}
+.left {
+    float: left;
+}
+/*150303 为保证模块效果添加，集成系统时删除*/
+/*150303 集成到模板添加部分，样式添加处由开发决定*/
+.person-info{
+    border-bottom: 1px solid #dbdbdb;
+}
+.city>a{
+    padding-left: 20px;
+    color: #555;
+    height: 16px;
+    line-height: 16px;
+    white-space: nowrap;
+}
+.city>a:hover{
+    color: #20adff;
+    text-decoration: none;
+}
+.set{
+    background: url("../images/set_home.png") no-repeat left 1px;
+}
+.set:hover{
+    background: url("../images/set_home.png") no-repeat left -17px;
+}
+.house{
+	position:relative;
+	top:9px;
+    background: url("../images/set_home.png") no-repeat left -36px;
+}
+.house:hover{
+    background: url("../images/set_home.png") no-repeat left -54px;
+}
+.interest{
+    margin: 15px 0 5px;
+    *width: 197px;
+}
+.interest01, .fans, .integral{
+    display: inline-block;
+    width: 57px;
+    text-align: center;
+}
+.interest a{
+    text-decoration: none;
+    color:#7b7b7b;
+}
+.interest a:hover,.interest a:visited{
+    color:#7b7b7b;
+}
+.interest span{
+    color: #fd7e02;
+    font-size: 14px;
+    font-family: arial;
+    height: 21px;
+}
+.interest01{
+    border-right: 1px solid #e7e7e7;
+}
+.interest01 span{
+    *overflow: hidden;
+    display: inline-block;
+}
+.fans{
+    border-right: 1px solid #e7e7e7;
+    width: 74px;;
+}
+.fans span span{
+    color: #fff;
+    line-height: 16px;
+    font-size: 11px;
+    line-height: 17px\9;
+    height: 18px;
+    position: absolute;
+	top:-3px;
+}
+.fans_box{
+    top:-7px;
+    right: 0;
+    background: url("../images/circle_person_info.png") no-repeat left 0;
+    float: left;
+    height:18px;
+    padding-left: 6px;
+}
+.space_tpop{
+    background: url("../images/circle_person_info.png") no-repeat right 0;
+    height:18px;
+    float: left;
+    padding-right: 6px;
+}
+/*150303 集成到模板添加部分，样式添加处由开发决定*/
+
+/*150304 动态 集成到模板添加部分，样式添加处由开发决定*/
+.cy_mr_cont_l_friend h3{
+    padding: 10px 0 15px;
+    margin-right: 20px;
+    height: 16px;
+    line-height: 16px;
+    color: #727272;
+    font-size: 14px;
+}
+.cy_mr_cont_l_friend h3 a{
+    color: #727272;
+}
+.cy_mr_cont_l_friend h3 a:hover{
+    color: #009dee;
+}
+.cy_mr_cont_l_friend h3.current a{
+    font-size: 16px;
+    color: #5089D5;
+}
+.cy_mr_cont_l_friend h3.current a:hover{
+    text-decoration: none;
+}
+/*150304 动态 集成到模板添加部分，样式添加处由开发决定*/
+
+
+/*150305 评论 集成到模板添加部分，样式添加处由开发决定*/
+.mod-feed-tab .mod_feed_sta li{
+    border-left:1px solid #ccc;
+    height: 16px;
+    line-height: 16px;
+    padding: 0 15px;
+    font-size: 14px;
+}
+.mod-feed-tab .mod_feed_sta li:first-child{
+    border-left: none;
+}
+.mod-feed-tab .mod_feed_sta li a,
+.mod-feed-tab .mod_feed_sta li a:hover{
+    padding: 0;
+    line-height:16px;
+    color:#727272;
+}
+.mod-feed-tab .mod_feed_sta li a:hover{
+    color:#5089D5;
+}
+.mod-feed-tab .mod_feed_sta li.current a{
+    border-bottom: 0;
+    color:#5089D5;
+}
+/*150305 评论 集成到模板添加部分，样式添加处由开发决定*/
+
+/*150306 搜索好友 集成到模板添加部分，样式添加处由开发决定*/
+.input_box {
+    width: 197px;
+    height: 32px;
+    line-height: 32px;
+    text-align: center;
+    margin: 15px 0px 10px 7px;
+}
+.input_box input[type="text"] {
+    width: 143px;
+    height: 30px;
+    line-height: 30px;
+    border: 1px solid #CCC;
+    float: left;
+    padding-left: 5px;
+    color: #666;
+    font-size: 12px;
+    font-family: "microsoft yahei";
+}
+.input_box a {
+    display: inline-block;
+    width: 40px;
+    height: 32px;
+    background: #09F;
+    float: left;
+}
+.input_box a i {
+    background: url("../images/find.png") no-repeat  center;
+    display: block;
+    width: 40px;
+    height: 32px;
+}
+/*150306 搜索好友 集成到模板添加部分，样式添加处由开发决定*/
+
+
+.count_tab{
+ 	margin-bottom: 10px;
+    height: 29px;
+    border:1px solid #cdcdcd;
+}
+.count_tab a{
+    width: 105px;
+    height: 29px;
+    line-height: 29px;
+    display: inline-block;
+    float: left;
+    text-align: center;
+    color: #555;
+    border-left: 1px solid #cdcdcd;
+    background: url(../images/count_btn.png) no-repeat 0 0;
+}
+.count_tab a:hover, .count_tab .active{
+    background: url(../images/count_btn.png) no-repeat 0 -36px;
+	text-decoration: none;
+}
+.count_tab a:first-child{
+    border-left:0 none;
+}
+.btn-more-arr{
+  color: #555;
+  display: inline-block;
+  font-size: 14px;
+  text-align: center;
+  margin-top: 8px;
+}
+.btn-more-arr:hover{
+	text-decoration: none;
+}
+
+.left-text li{
+    width: 125px;
+    height: 84px;
+    overflow: hidden;
+    margin: 37px 8px 0 0;/*150202*/
+    border-radius: 2px;
+    color: #fff;
+    text-align: center;
+}
+.total{
+    background: #fc9f1c;
+}
+.coverage{
+    background: #20abfe;
+}
+.resource-num{
+    background: #8dcc4e;
+}
+.tit{
+    font-size: 14px;
+    padding-top: 15px;
+}
+.img-num{
+    font-size: 22px;
+}
+.extend-foot{
+    padding: 0;
+}
+.extend-foot #weibo_edit_area,
+.extend-foot .feed-nav,
+.extend-foot .feed_lists{
+    padding: 0 10px;
+}
+.data-img{
+    width: 532px;
+    height: 276px;
+    margin: 10px auto;
+}
+/*150813 zy add*/
+.person-info-bg {
+    padding: 10px 0 0;
+    background: url(../images/tea_bg.gif) no-repeat 0 0;
+    width: 214px;
+    height: 166px;
+    border: 0 none;
+    margin: 3px auto;
+}
+#col1{
+    width: 220px;
+    background: #f5f9ff;
+}
+/*.interest01, .fans, .integral{
+    width: 68px;
+}*/
+.ml0{
+    margin-left: 0;
+}
+.hot_resource .title{
+    font-size: 14px;
+    color: #333;
+    font-weight: bold;
+}
+.right-box .title{
+    font-size: 14px;
+    color: #333;
+    font-weight: bold;
+}
+.who_watch .title{
+    font-size: 14px;
+    color: #333;
+    font-weight: bold;
+}

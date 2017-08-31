@@ -1,0 +1,439 @@
+<include file="__THEME__/header" />
+<include file="header" />
+<div id="page-wrap">
+	<div id="main-wrap">
+		<div class="crumbs">
+			<ul>
+				<if condition="$isVisitor">
+					<li class="pre_cen"><a href="{:U('public/Profile/index',array('uid'=>$data['uid']))}">{$uname}的空间</a></li>
+					<li>></li>
+					<li>网上评课</li>
+				<else />
+					<li class="pre_cen"><a href="{:U('public/Index/index')}">个人空间</a></li>
+					<li>></li>
+					<li><a href="{:U('pingke/Index/index')}">网上评课</a></li>
+				</if>
+				<li>></li>
+				<li>{$data.title|getShort=10}</li>
+			</ul>
+			<div class="clear"></div>
+		</div>
+		<div class="con_box">
+			<div class="left_box">
+				<include file="__THEME__/public_left" />
+			</div>
+			<div class="right_box">
+			<div class="online_title bottom_line">
+				<div class="left pt3"> <span><img src="__THEME__/app_icon/app_wspk.png" /></span> <span class="pl10 font3"><b>网上评课</b></span> </div>
+				<div class="right">
+					<p class="blue_btn3" onmouseover="this.className='blue_btn3hov'" onmouseout="this.className='blue_btn3'" onclick="location='{:U('/Index/add')}'"><img src="__APP__/images/add.gif" height="8" />发起评课</p>
+				</div>
+				<div class="clear"></div>
+			</div>
+			<div class="online_box">
+				<div class="online_left">
+					<div>
+					<eq name="data.status" value="1">
+						 <p class="pk_zt pk_ing">评课中</p>	
+		   			<else/>
+			   			<p class="pk_zt pk_ing">已结束</p>	
+					 </eq>
+						<div class="left pl20">
+							<p class="online_name">{$data.title}</p>
+							<p class="online_teacher"><strong>上课老师：</strong>{$data.teacher}</p>
+							<p class="online_con" style="line-height:1.5;"><strong>课例简介：</strong>{$data.description}</p>
+							<div class="online_vedio">{:W("ResourcePreview",array("width"=>450,"height"=>352,"rid"=>$data['video_id'],"researchIdo"=>$video_info))}</div>
+							<p class="online_infor pt15">
+								<span><img src="__APP__/images/on_01.gif" /></span>
+								<span class="pl3">{$data.createtime|friendlyDate=###,'ymd'}</span>
+								<span class="pl15"><img src="__APP__/images/on_02.gif" /></span>
+								<span class="pl3"><span id="memebercount">{$data.member_count}</span>个成员</span>
+								<span class="pl15"><img src="__APP__/images/on_03.gif" /></span>
+								<span class="pl3"><span id="discussionCount">{$data.discuss_count}</span>次讨论</span>
+								<div class="clear"></div>
+							</p>
+                            <php>if($data['status']==0):</php>
+                            <php>if(  $data['public_status'] == 1|| $isJoin || $isCreator):</php>
+							<div class="award_box">
+								<span class="pl8"><img src="__APP__/images/award.gif" /></span>
+								<span><strong>评课成果：</strong><a href="{:U('widget/Upload/down',array('attach_id'=>$sumAttach['attach_id']))}">{$sumAttach['name']}</a></span>
+							</div>
+							<php>endif;</php>
+                            <php>endif;</php>
+						</div>
+						<div class="clear"></div>
+					</div>
+					
+					<div class="pt20">
+						<div class="online_tab01box">
+							<div class="online_tab">
+								<ul>
+									<li style="cursor:pointer"><a onclick="getPostByAjax('1')">全部评课</a></li>
+									<if condition="!$isVisitor">	
+									<li style="cursor:pointer"><a onclick="getPostByAjax('1','{$mid}')">我的评课</a></li>
+									</if>
+								</ul>
+							</div>
+							<if condition="$data['status'] !=0 &&  (!$isVisitor || $data['accessType']==0)">	
+								<div class="pk_btn"><a style="cursor:pointer" onclick="animatedScroll('#postcontent');">发表评课</a></div>
+							</if>
+						</div>
+						<dl class="pk_con">
+			
+						</dl>
+					</div>
+					<div class="book_txt3 pb30" id="postcontent">
+						{:W('PingkePost',array('rid'=>$rid,'status'=>$data['status'],'isVisitor'=>$isVisitor))}
+					</div>
+					
+				</div>
+				<div class="online_right">
+					<div class="add_left01">
+						<ul>
+						<if condition="$data['uid'] neq $mid">
+							<li class="add01_dis" style="cursor:not-allowed"><a style="color:#aaa">结束评课</a></li>
+							<li class="add03" style="cursor:pointer"><a href="{$videoInfo:download_url}">下载视频</a></li>
+							<li class="add02_dis" style="cursor:not-allowed"><a style="color:#aaa">编辑评课</a></li>
+							<li class="add04_dis" style="cursor:not-allowed"><a style="color:#aaa">删除评课</a></li>
+						<else />	
+							<if condition="$data['status'] eq 0">
+								<li class="add01_dis" style="cursor:not-allowed"><a style="color:#aaa">结束评课</a></li>
+								<li class="add03" style="cursor:pointer"><a  href="{$videoInfo:download_url}">下载视频</a></li>
+								<li class="add02_dis" style="cursor:not-allowed"><a style="color:#aaa">编辑评课</a></li>
+								<li class="add04" style="cursor:not-pointer"><a href="#" href="javascript:void(0)" onclick="deletePost({$data.id})">删除评课</a></li>
+							<else />
+								<li class="add01" style="cursor:pointer"><a href="#" href="javascript:void(0)" onclick="finish({$data.id})">结束评课</a></li>
+								<li class="add03" style="cursor:pointer"><a  href="{$videoInfo:download_url}">下载视频</a></li>
+								<li class="add02" style="cursor:pointer"><a href="{:U('/Index/edit',array('id'=>$data['id']))}">编辑评课</a></li>
+								<li class="add04" style="cursor:pointer"><a href="#" href="javascript:void(0)" onclick="deletePost({$data.id})">删除评课</a></li>
+							</if>
+						</if>	
+						</ul>
+						<div class="clear"></div>
+					</div>
+					
+					<div class="fqr_member">
+						<div class="fqr_membername">发起人</div>
+						<ul>
+							<li>
+								<p class="member_head">
+								<a href="{$cyInfo['space_url']}" event-node="face_card" show="no" uid={$cyInfo['uid']}>
+								<img src="{$cyInfo['avatar_small']}" />
+								</a>
+								</p>
+								<p class="left pl10 pt10">
+									{$cyInfo['uname']}<br/>
+									<font class="black2" title="{$cyInfo['orgName']}">{$cyInfo['orgName']|getShort=8,'...'}</font>
+								</p>
+								
+							</li>
+						</ul>
+						<div class="clear"></div>
+					</div>
+					
+					<div class="pk_member">
+						<div class="pk_membername">评课成员</div>
+					</div>
+						
+					<div class="clear"></div>
+					<!-- 精彩回复 -->
+					{:W('CommentExcellent',array('app_name'=>'pingke','table'=>'pingke_post','row_id'=>$data['id'],'tpl'=>'jiaoyan'))}
+				</div>
+		</div>
+	  	</div>
+			<div class="clear"></div>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+var pingkeId = "<php>echo $data['id']</php>;";
+  function finish(id){
+	  ui.box.load(U('pingke/Index/edit_finish_tab') + '&id=' + id, '结束评课');
+  }
+
+  /**
+   * 删除评课评论
+   * @return void
+   */
+  var delPost = function (post_id) {
+    // 删除评课评论链接
+    var doDelPost = function () {
+      $.post(U('pingke/Index/delpost'), {post_id:post_id}, function () {
+		// 停止播放文语双显音频
+		AudioPlayer.stop();
+
+        ui.success('删除成功');
+        removeCommentPost(post_id);
+        setTimeout(function () {
+        	getPostByAjax("1");
+        	var discussionCount=parseInt($("#discussionCount").html());
+        	$("#discussionCount").html(discussionCount-1);
+
+        }, 1000);
+      });
+    };
+    ui.confirmBox('提示', '确定删除？', doDelPost)
+  };
+  
+  /**
+   * 删除评课
+   * @return void
+   */
+  var deletePost = function (pinke_id) {
+    // 删除评课链接
+    var doDelPost = function () {
+      $.post(U('pingke/Index/deletePost'), {pinke_id:pinke_id}, function (result) {
+    	  if(result.statuscode == '200'){
+			ui.success('删除成功！');
+    	  	setTimeout(function () {
+			location.href="index.php?app=pingke&mod=Index&act=index"
+			}, 1000);
+    	  }else{
+    		  ui.error('删除失败！');
+    	  }
+      },"json");
+    };
+    ui.confirmBox('提示', '确定删除？', doDelPost)
+  };
+  /**
+   * 创建一级回复信息
+   */
+  function createPost(){
+	  if(!wordLimit($('#post_content'),140,true)){
+			ui.confirmBox('字数限制','回复字数超过140个字，是否截取后发布？',function(){
+				wordLimit($('#post_content'),140);
+				_createPost();
+			},function(){
+				return ;
+			});
+		}else{
+			_createPost();
+		}
+  }
+  /**
+   * 一级回复发送请求
+   */
+  function _createPost(){
+		var data = {};	
+		data['res_id'] = jQuery("#hidden_id").val();
+		data['content'] = jQuery.trim($("#post_content").val());
+		data['record_id'] = jQuery("#talk").attr("tag");
+		data['attach_ids'] = jQuery("#attach_ids").val();
+		
+		if(data['content'] == ''){
+			ui.error("请输入要发表的内容!");
+			return false;
+		}
+		
+		$.ajax({
+			type:"POST",
+			dataType:"text",
+			url:"index.php?app=pingke&mod=Index&act=createPost",
+			data:data,
+			success:function(msg){
+				msg = eval("("+msg+")");
+				if(msg.status=="200" || msg.status=="250"){
+				    ui.success("发表成功");
+				    if('undefined'!= typeof(core.uploadFile))
+				        core.uploadFile.clean(); //清除上传控件记录文件数据 chengcheng3
+
+				    if(msg.status=="250"){ //更新参与人数
+				        $('#memebercount').text(parseInt($('#memebercount').text()) + 1);
+				        if ('function' == typeof (getMemberList))
+				            getMemberList(1); //动态刷新成员信息
+				    }    
+				  	//输入字数颜色和内容变为0
+				    $('#post_content').next().find("b").text(0);  
+				    $('#post_content').next().find("b").css("color", "#333");
+				    
+					setTimeout(function(){
+						$("#post_content").val("");
+						jQuery("#talk").attr("tag","");
+						$(".attach-file").remove();
+						getPostByAjax("1");
+						var discussionCount=parseInt($("#discussionCount").html());
+			        	$("#discussionCount").html(discussionCount+1);
+					},1500);
+				}else{
+					ui.error("评论失败");
+				}
+			}
+		})
+	}
+	function getMemberList(page){
+		var data = {"p":page,"pingke_id":pingkeId};	
+		$.ajax({
+			type:"POST",
+			dataType:"json",
+			url:U("/Index/getMemberList"),
+			data:data,
+			beforeSend:function(XHR){
+				jQuery(".pk_member").html( '<div class="loading" id="loadMore">'+L('PUBLIC_LOADING')+'<img src="'+THEME_URL+'/image/icon_waiting.gif" class="load"></div>');
+			},
+			success:function(msg){
+				if(msg.status == 1){
+					$(".pk_member").html(msg.data);
+					M($('.pk_member')[0]);
+				}else{
+					
+				}
+			},
+			error:function(){
+				
+			}
+		});
+	}
+  
+	$(function(){
+		$("#post_btn").bind("click",createPost);
+
+		//获取评课的成员列表
+		getMemberList(1);
+
+		// PostWidget里的js函数
+		getPostByAjax("1");
+
+		// 文语双显初始化
+		loadSTT(2500, "talk");
+		STTRecordPlay.SetRecordEndEvent(setRecordData,clearInput,recordCompleteFun);
+		AudioPlayer.init();
+	})
+
+	// 文语双显回调函数
+	function clearInput(talkId){
+		jQuery("#post_content").val("");
+	}
+
+	// 文语双显回调函数
+	function setRecordData(data){
+		//jQuery("#talk").attr("tag",data.audioUrlId);
+		jQuery("#post_content").val(jQuery("#post_content").val() + data.content);
+	}
+
+	// 文语双显回调函数
+	function recordCompleteFun(key){
+		jQuery("#talk").attr("tag",key);
+	}
+
+	// jQuery动态锚点跳转
+	function animatedScroll(anchor) {
+		$('html,body').animate({scrollTop:$(anchor).offset().top - 150}, 200);
+	}
+
+	/**
+	 *用ajax的方式获取发言列表
+	 */ 
+	function getPostByAjax(p,uid){
+		var rid = '{$rid}';
+		$.ajax({
+			type:"POST",
+			dataType:"text",
+			url:U('widget/PingkePost/getPost'),
+			data:{rid:rid,p:p,widget_appname:"pingke",uid:uid},
+			success:function(html){
+				if(uid==null){
+					$(".online_tab li:first").removeClass('normal');
+					$(".online_tab li:last").removeClass('present');
+					$(".online_tab li:last").addClass('normal');
+					$(".online_tab li:first").addClass('present');
+				}else{
+					$(".online_tab li:last").removeClass('normal');
+					$(".online_tab li:first").removeClass('present');
+					$(".online_tab li:first").addClass('normal');
+					$(".online_tab li:last").addClass('present');
+				}
+				$(".pk_con").replaceWith(html);
+				// 必须使用这个函数，才能在动态加载的时候使用TS自带的头像悬浮等js事件
+				M($('.pk_con')[0]);
+			},
+			error:function(){
+				ui.error("请检查网络连接");
+			}
+		})
+	}
+	
+	var agreeFlag =false;
+	//一级回复赞
+	var addAgree =function(comment_id){
+		if(agreeFlag){
+			ui.error('请勿重复点击');
+			return false;
+		}
+		agreeFlag =true;
+		$.post(U('pingke/Index/addAgree'),{
+			post_id:comment_id,
+			},function(msg){
+				if(msg.status=='200'){
+					 ui.success('赞成功');
+					 agreeCount= parseInt($('#agree'+comment_id).attr('rel'))+1;
+					 $('#agree'+comment_id).html("<img src='__THEME__/image/zan.gif' />已赞("+agreeCount+")");
+					 $('#digg'+comment_id).html("<img src='./apps/onlineanswer/_static/images/zan.gif' />已赞("+agreeCount+")");
+				}else if(smsg.status="400"){
+					jQuery('#login_popup').trigger("click");
+				}else{
+					ui.error(msg.msg);
+				}
+				agreeFlag =false;
+			},'json');
+	}
+	
+	$(window).load(function(){
+		$('#post_content').keyup(function(){
+			wordLimit($(this),140);
+		});
+	})
+	
+	/**
+	 * 限制输入字数
+	 * 
+	 * @param jQuery_obj
+	 *            jquery对象
+	 * @param length
+	 *            输入框限制的长度
+	 */
+	function wordLimit(jQuery_obj, length,cells) {
+		var cell = !((typeof(cells) != undefined) && cells == true );
+		var str = jQuery.trim(jQuery_obj.val());
+		// 字符串中英文等字符的总长度
+		var sum_english = 0;
+		// 字符串中汉字等字符的总长度
+		var sum_chinese = 0;
+		// 在页面中输入的最后一个字符在字符串中的实际位置
+		var cursor = 0;
+		for ( var i = 0; i < str.length; i++) {
+			// 英文字母等数字的长度为0.5,汉字等字符的长度为1
+			if ((str.charCodeAt(i) >= 0) && (str.charCodeAt(i) <= 255)) {
+				sum_english = sum_english + 0.5;
+			} else {
+				sum_chinese = sum_chinese + 1;
+			}
+			if ((sum_chinese + sum_english) > length && cursor == 0) {
+				cursor = i;
+			}
+		}
+	   	if(cell){
+			// 改变显示的字符数的字体颜色
+			if ((sum_chinese + sum_english) >= length && cell) {
+				// 改变显示的长度
+				jQuery_obj.next().find("b").text(length);
+				jQuery_obj.next().find("b").css("color", "red");
+			} else {
+				// 在页面上显示的字符串的总长度(向上取整)
+				var sum = sum_chinese + Math.ceil(sum_english);
+				// 改变显示的长度
+				jQuery_obj.next().find("b").text(sum);
+				jQuery_obj.next().find("b").css("color", "#333");
+			}
+	    }
+		// 截取字符串
+		if (cursor != 0 && cell) {
+			jQuery_obj.val(str.substring(0, cursor));
+		}
+		if((sum_chinese + sum_english)>length){
+			return false;
+		}
+		return true;
+	}
+</script>
+
+<include file="__THEME__/public_footer" />

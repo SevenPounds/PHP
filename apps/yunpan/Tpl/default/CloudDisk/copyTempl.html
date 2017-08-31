@@ -1,0 +1,286 @@
+<style type="text/css">
+    .popup2{
+        width: 528px;
+        border: 1px solid #ccc;
+        z-index: 1001;
+        background-color: #fff;
+        color: #535353;
+    }
+
+    .line{
+        width:auto;
+        height:auto;
+        display:block;
+    }
+
+    .ztree {
+        overflow-y: scroll;
+        overflow-x: auto;
+        height: 300px;
+    }
+</style>
+<div class="popup2 popup_move" id="popup_move" >
+    <div class="popup_tit">
+        <a href="javascript:void(0);" class="closeBtn hiddenText closePop" title="关闭">关闭</a>
+        请选择要复制到的位置
+    </div>
+    <div class="move_box">
+        <a href="javascript:void(0);" class="c_folder_btn opacityed" id="copy_new_folder" title="新建文件夹">新建文件夹</a>
+        <ul id="myTree" class="ztree" ></ul>
+    </div>
+    <div class="addBook_choice move_choice">
+        <a href="javascript:void(0);" class="dropBtn opacityed" id="copy_btn_cancel_spaecial" title="取消">取消</a>
+        <a href="javascript:void(0);" class="enterBtn opacityed" id="copy_btn_spaecial" title="确定">确定</a>
+    </div>
+</div>
+
+<script type="text/javascript">
+
+var initFlag = true;
+
+var zNodes =[];
+
+var selectedFid  = "<php>echo $fid</php>";
+var selectedIsdir  = "<php>echo $isdir</php>";
+
+var editFlag = false;
+
+//判断是否在展开后创建新建文件夹
+var expandEdit = false;
+
+/**
+ * 判断是否允许异步加载方式的进行(阻止刚创建的未提交的节点异步加载)
+ */
+function beforeAsync(treeId, treeNode){
+    if(!initFlag && typeof(treeNode.fid) == 'undefined'){
+        return false;
+    }else{
+        return true;
+    }
+}
+
+/**
+ * 让编辑事件通过正确的按钮结束
+ */
+function  beforeRename(treeId, treeNode, newName, isCancel){
+    return editFlag;
+}
+
+function onAsyncSuccess(event, treeId, treeNode, msg){
+    if(expandEdit){
+        var zTree = $.fn.zTree.getZTreeObj(treeId);
+        var newNodes = zTree.addNodes(treeNode,{isParent:true,name:'新建文件夹',shortName:'新建文件夹',open:false},true);
+        if (newNodes) {
+            zTree.editName(newNodes[0]);
+            var htmlId = newNodes[0].tId + "_a";
+            $("#" + htmlId).after(
+                '<img style="margin-left: 5px;" alt="correct" src="'+ APP +'/images/correct.png" class="rename_sign" id="copy_edit_correct" />'+
+                '<img style="margin-left: 5px;" src="'+ APP +'/images/mistake.png" alt="mistake" class="rename_sign" id="copy_edit_mistake"/>'
+            );
+        } else {
+            ui.error("请选中文件夹!");
+        }
+
+        expandEdit = false;
+    }
+}
+
+function onAsyncError(event, treeId, treeNode, XMLHttpRequest, textStatus, errorThrown){
+    ui.error('网络连接错误....');
+}
+
+// 新增的节点编辑完后的回调函数
+function onRename(event, treeId, treeNode, isCancel){
+    var zTree = $.fn.zTree.getZTreeObj(treeId);
+    var parentNode = treeNode.getParentNode();
+
+    var queryParams = {
+        name:treeNode.shortName,
+        fid:parentNode.fid
+    };
+    editFlag = false;
+    $.ajax({
+        url:'index.php?app=yunpan&mod=Ajax&act=createFolder',
+        type:"POST",
+        data:queryParams,
+        dataType:'json',
+        success:function(data){
+            data = $.parseJSON(data);
+            if(data.status == '500'){
+                ui.error(data.msg);
+                zTree.removeNode(treeNode);
+            }else{
+                zTree.reAsyncChildNodes(parentNode, "refresh");
+            }
+        },
+        error:function(){
+            ui.error("网络连接错误......");
+        }
+    });
+}
+
+function ajaxDataFilter(treeId, parentNode, responseData){
+    for(var i = 0; i< responseData.length; i++){
+        responseData[i].isParent = true;
+        if(selectedFid == responseData[i].fid){
+            responseData[i].isHidden = true;
+        }
+        if(responseData[i].foldertype == '1001' || responseData[i].foldertype == '1003'){
+            responseData[i].isHidden = true;
+        }
+    }
+
+    var arr = [];
+    if(initFlag){
+        arr[0] = {'fid':0,'shortName':'我的云盘','foldertype':'1000','name':'我的云盘','isParent':true,'isdir':true,'open':true};
+        arr[0].children = responseData;
+        initFlag = false;
+    }else{
+        arr = responseData;
+    }
+
+    return arr;
+}
+$(function(){
+    var setting = {
+        data: {
+            keep: {
+                leaf: true,
+                parent: true
+            },
+            key:{
+                name:"shortName",
+                title:"name"
+            },
+            simpleData: {
+                enable: true
+            }
+        },
+        async: {
+            enable: true,
+            url:U('yunpan/Ajax/getDirs'),
+            dataType: "json",
+            dataFilter: ajaxDataFilter,
+            autoParam:["fid"]
+        },
+        callback: {
+            beforeAsync:beforeAsync,
+            onAsyncError: onAsyncError,
+            onAsyncSuccess: onAsyncSuccess,
+            beforeRename:beforeRename,
+            onRename:onRename
+        }
+    };
+
+    $.fn.zTree.init($("#myTree"), setting, zNodes);
+
+    $("#copy_btn_spaecial").click(function(){
+        var treeObj = $.fn.zTree.getZTreeObj("myTree");
+        var nodes = treeObj.getSelectedNodes();
+        if($.isEmptyObject(nodes) || typeof(nodes[0].fid) == 'undefined'){
+            ui.error("请选择存在的文件夹!");
+            return;
+        }
+
+        // 不能复制到备课本、书本目录下
+        if(nodes[0].foldertype == '1002' || nodes[0].foldertype == '1004'){
+            ui.error("请选择到课目录!");
+            return;
+        }
+
+        var tDirID = nodes[0].fid;
+        var sDirID = selectedFid;
+
+        $.ajax({
+            url:'index.php?app=yunpan&mod=Ajax&act=copyFolder',
+            type:"POST",
+            data:{tDirID:tDirID,sDirID:sDirID,isdir:selectedIsdir},
+            dataType:'json',
+            success:function(data){
+                data = $.parseJSON(data);
+                ui.box.close();
+                if(data.status == '200'){
+                    ui.success(data.msg);
+                    var queryString = appBase.getQueryString();
+                    appBase.grid.init(queryString);
+                }else{
+                    ui.error(data.msg);
+                }
+            },
+            error:function(){
+                ui.box.close();
+                ui.error("网络连接错误......");
+            }
+        });
+    });
+
+    // 关闭弹出层
+    $("#copy_btn_cancel_spaecial").click(function(){
+        var treeObj = $.fn.zTree.getZTreeObj("myTree");
+        var nodes = treeObj.getSelectedNodes();
+        if(!nodes && typeof(nodes[0].fid) == 'undefined'){
+            treeObj.removeNode(nodes[0]);
+        }
+        ui.box.close();
+    });
+
+    // 新建文件夹
+    $("#copy_new_folder").die().live('click',function(){
+        var zTree = $.fn.zTree.getZTreeObj("myTree");
+        var nodes = zTree.getSelectedNodes();
+
+        if($.isEmptyObject(nodes)){
+            ui.error("请选中文件夹!");
+            return;
+        }else if(nodes[0].foldertype == '1002' || nodes[0].foldertype == '1004'){
+            ui.error("请选择到课目录!");
+            return;
+        }
+
+        if(typeof(nodes[0].fid) == 'undefined'){
+            return;
+        }
+
+        if(!nodes[0].open){
+            if(!nodes[0].zAsync){
+                expandEdit = true;
+                zTree.expandNode(nodes[0], true, false, true);
+                return;
+            }else{
+                zTree.expandNode(nodes[0], true, false, true);
+            }
+        }
+
+        var newNodes = zTree.addNodes(nodes[0],{isParent:true,name:'新建文件夹',shortName:'新建文件夹',open:false},true);
+
+        if (newNodes) {
+            zTree.editName(newNodes[0]);
+            var htmlId = newNodes[0].tId + "_a";
+            $("#" + htmlId).after(
+                    '<img style="margin-left: 5px;" alt="correct" src="'+ APP +'/images/correct.png" class="rename_sign" id="copy_edit_correct" />'+
+                            '<img style="margin-left: 5px;" src="'+ APP +'/images/mistake.png" alt="mistake" class="rename_sign" id="copy_edit_mistake"/>'
+            );
+        } else {
+            ui.error("请选中文件夹!");
+            return;
+        }
+    });
+
+    // 提交编辑
+    $("#copy_edit_correct").die().live('click',function(){
+        editFlag = true;
+        var treeObj = $.fn.zTree.getZTreeObj("myTree");
+        var nodes = treeObj.getSelectedNodes();
+        var htmlId = nodes[0].tId + "_input";
+        $("#" + htmlId).blur();
+    });
+
+    // 取消编辑
+    $("#copy_edit_mistake").die().live('click',function(){
+        var treeObj = $.fn.zTree.getZTreeObj("myTree");
+        var nodes = treeObj.getSelectedNodes();
+        treeObj.removeNode(nodes[0]);
+    });
+});
+</script>
+<!--移动到结束-->

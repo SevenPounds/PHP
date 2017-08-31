@@ -1,0 +1,243 @@
+<include file="__THEME__/_header" />
+<link href="__THEME__/css/public_index.css" rel="stylesheet" type="text/css" />
+<style>
+    .eui-menu-link{
+        font-size: 14px
+    }
+</style>
+
+<script type="text/javascript">
+    var webNav = "EduSNS";
+    $(document).ready(function(){
+        if($.browser.msie && $.browser.version == '6.0'){
+            var html = '<div class="ie6_update_tooltip"><a href="http://www.microsoft.com/windows/ie/downloads/default.mspx" target="_blank">当前浏览器版本(IE 6.0)过低，会影响网页浏览体验，请升级至更高版本。</a></div>';
+            $('#header').css("height","80px");
+            $('#header').prepend(html);
+        }
+        setTimeout(function(){
+            $('#header .ie6_update_tooltip').remove();
+            $('#header').css("height","45px");
+        },10000);
+
+        // SSO单点登录
+        var edusso = new EduSSO("{:C('sso_service')}", "{:C('sso_server')}");
+
+    /*    jQuery("#sso_logout, #sso_logout_link").click(function () {
+            //判断上次登陆时，是否选择了自动登陆
+            var autoLogin = getcookie('cookieMark');
+            setcookie('cookieMark','');
+            if(autoLogin == 1){
+                setcookie('cookieMark',2,3600*24*30);
+            }
+            edusso.logout(function(result) {
+                if (result.result != "success"){
+                    //alert(result.data);
+                }
+                $("#iframeZxw").attr("src","{:C('zxw_out_url')}"+'url='+ "{:C('LOGIN_URL')}");
+                window.location.href = "{:C('LOGIN_URL')}";
+            });
+        });*/
+
+        jQuery('#app_list').mouseover(function() {
+            jQuery(this).addClass("selected");
+            jQuery('.x_app_list').show();
+        });
+        jQuery('#app_list').mouseout(function() {
+            jQuery(this).removeClass("selected");
+            jQuery('.x_app_list').hide();
+        });
+        jQuery('.x_app_list').mouseover(function() {
+            jQuery("#app_list").addClass("selected");
+            jQuery(this).show();
+        });
+        jQuery('.x_app_list').mouseout(function() {
+            jQuery("#app_list").removeClass("selected");
+            jQuery(this).hide();
+        });
+    });
+</script>
+
+<!--<script src="{:C('WEB')}Public/Home/AuthNav/common_nav.js"></script>-->
+<style>
+    .tab a:visited {text-decoration: none; }
+    .tab a:hover {text-decoration: none; }
+</style>
+<script type="text/javascript" src="{:C('LZX_NATIV_URL')}?tabIndex=0&uwid=1"></script>
+
+<div id="body_page" name='body_page'>
+    <!--<div id="commonnav">-->
+    <!--</div>-->
+    <div id="body-bg" class="wrap">
+
+<php>
+    //出现注册提示的页面
+    $show_register_tips = array('public/Profile','public/Topic','weiba/Index');
+    if(!$mid && in_array(APP_NAME.'/'.MODULE_NAME,$show_register_tips)){
+</php>
+<php>$registerConf = model('Xdata')->get('admin_Config:register');</php>
+<php>}</php>
+<php>
+    $showCom = array(
+    "public_Workroom_index",	// 个人主页
+    "public_Index_userFeed",	// 说说二级页面
+    );
+</php>
+<php>if(in_array(APP_NAME.'_'.MODULE_NAME.'_'.ACTION_NAME,$showCom)):</php>
+<php>if(!$hidePerHomePage):</php>
+<style type="text/css">
+    body{background:#f2f2f2;}
+    #body-bg{padding: 0px 0 0 0;_padding:0;}
+    #page-wrap {padding-top: 155px;background: url(__THEME__/images/banner_topBg.jpg) no-repeat center -40px;}
+    .person-info .person-info-t dt img{
+        width:auto;
+        height:auto;
+    }
+    .st-index-main{
+        background:none;
+        box-shadow:inherit;
+        border:none;
+    }
+</style>
+<div id="page-wrap">
+    <div class="profile-title  boxShadow">
+        <div class="person-info-face">
+            <a href="{:U('public/Workroom/index',array('uid'=>$user_info['uid']))}" title="{$user_info['uname']}">
+                <img src="{$user_info['avatar_big']}" alt="用户头像">
+            </a>
+        </div>
+        <div class="person-info clearfix">
+            <dl class="person-info-t clearfix">
+                <dd style="padding-top: 0px;" class="fl">
+                    <div class="name">
+                        <i class="<?php if($user_info['sex'] == '1'){echo 'ico-male';}else if($user_info['sex'] == '2'){echo 'ico-female';}?>"></i>&nbsp;
+                        <strong>
+                            <a id="t_uname" href="{:U('public/Workroom/index',array('uid'=>$user_info['uid']))}">{$user_info['uname']}</a>
+                        </strong>
+                    </div>
+                    <div class="btn">
+                        <p class="left">
+                            <php>if($mid):</php>
+                            <if condition="$mid != $user_info['uid']">
+								<span class="add_focus fl">
+									{:W('FollowBtn', array('fid'=>$user_info['uid'], 'uname'=>$user_info['uname'],'follow_state'=>$follow_state, 'type'=>'studio'))}
+								</span>
+                                <a class="send_msg fl" onclick='javascript:ui.sendmessage({$user_info["uid"]}, 0);' style='cursor:pointer'>发私信</a>
+                            </if>
+                            <php>else:</php>
+                            <a onclick='ui.error("请先登录！");' href="javascript:void(0);" class="add_focus fl">加关注</a>
+                            <a onclick='ui.error("请先登录！");' href="javascript:void(0);" class="send_msg fl">发私信</a>
+                            <php>endif;</php>
+                        </p>
+                    </div>
+                    <div class="userinfo">
+                        <div>
+                            <span>{$userData.visitor_count|default=0}</span>访问&nbsp;/
+                            <span><?php if($resCount){echo $resCount;}else{echo 0;}?></span>资源&nbsp;/
+                            <!--<span>{$userCredit.credit.score.value|default=0}</span>积分&nbsp;/-->
+                            <span>{$creditRank.rank|default=0}</span>排名
+                        </div>
+                        <div>TA已超越了<span>{$creditRank.exceed|default=0}%</span>的用户</div>
+                    </div>
+                    <php>
+                        $org = '';
+                        foreach($GLOBALS['ts']['_cyuserdata']['orglist']['school'] as $key=>$val){
+                        $org = $val['name'];
+                        break;
+                        }
+                    </php>
+                    <div class="grade">
+                        <?php if($GLOBALS['ts']['_cyuserdata']['rolelist'][0][name] == 'instructor' && !empty($user_info['school'])){ echo '单位：'.$user_info['school'];}else if(!empty($user_info['school'])){ echo '学校：'.$user_info['school'];}?>
+                    </div>
+                    <div class="detial" title="{$user_info.intro|html_entity_decode=###|htmlentities}">{$user_info.intro|html_entity_decode=###|mStr=###,12|htmlentities}</div>
+                    <div class="btn"><p class="left"></p></div>
+                </dd>
+                <div class="module fl clearfix">
+                    <dl class="fl">
+                        <a href="{:U('teachingapp/Index/index',array('uid'=>$user_info['uid']))}">
+                            <dt><img src="__THEME__/images/img_01.png"></dt>
+                            <dd class="module_bg"></dd>
+                            <dd class="module_font clearfix">
+                                <span class="mod_gkk fl">资源(<?php if($resCount){echo $resCount;}else{echo 0;}?>)</span>
+                            </dd>
+                        </a>
+                    </dl>
+                    <dl class="fl">
+                        <a href="{:U('public/Index/userFeed',array('uid'=>$user_info['uid']))}">
+                            <dt><img src="__THEME__/images/img_02.png"></dt>
+                            <dd class="module_bg"></dd>
+                            <dd class="module_font">
+                                <span class="mod_ja fl">说说({$feedCount})</span>
+                            </dd>
+                        </a>
+                    </dl>
+                    <dl class="fl">
+                        <a href="{:U('blog/Index/personal',array('uid'=>$user_info['uid']))}">
+                            <dt><img src="__THEME__/images/img_03.png"></dt>
+                            <dd class="module_bg"></dd>
+                            <dd class="module_font">
+                                <span class="mod_kj fl">日志(<span id="blog_count">0</span>)</span>
+                            </dd>
+                        </a>
+                    </dl>
+                    <dl class="fl">
+                        <a href="{:U('photo/Index/albums',array('uid'=>$user_info['uid']))}">
+                            <dt><img src="__THEME__/images/img_04.png"></dt>
+                            <dd class="module_bg"></dd>
+                            <dd class="module_font">
+                                <span class="mod_photo fl">相册({$albumCount})</span>
+                            </dd>
+                        </a>
+                    </dl>
+                </div>
+            </dl>
+            <ul class="person-info-b clearfix">
+                <li class="no-border">
+                    <a href="{:U('teachingapp/Index/index',array('uid'=>$user_info['uid']))}">
+                        <span>资源</span><strong><?php if($resCount){echo $resCount;}else{echo 0;}?></strong>
+                    </a>
+                </li>
+                <li class="no-border">
+                    <a href="{:U('public/Profile/follower',array('uid'=>$user_info['uid']))}">
+                        <span>粉丝</span><strong>{$userData.follower_count|default=0}</strong>
+                    </a>
+                </li>
+                <php>if($mark == 'owner'):</php>
+                <li class="no-border">
+                    <!--<a href="{:U('public/Credit/index',array('uid'=>$user_info['uid']))}">-->
+                        <span title="{$userCredit.credit.score.value|default=0}">积分</span>
+                        <strong><php>$score_value =$userCredit['credit']['score']['value']>999999?'999999+':$userCredit['credit']['score']['value']; </php>
+                            {$score_value|default=0}
+                        </strong>
+                    <!--</a>-->
+                </li>
+                <php>else:</php>
+                <li>
+                    <span title="{$userCredit.credit.score.value|default=0}">积分</span>
+                    <strong><php>$score_value =$userCredit['credit']['score']['value']>999999?'999999+':$userCredit['credit']['score']['value']; </php>
+                        {$score_value|default=0}
+                    </strong>
+                </li>
+                <php>endif;</php>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="clear"></div>
+<script type="text/javascript">
+    $(document).ready(function(){
+        // 获取日志数量
+        $.ajax({
+            url : 'index.php?app=blog&mod=Index&act=getBlogCount',
+            type : 'post',
+            data : {uid : '<php>echo $uid;</php>'},
+            success : function(result){
+                result = $.trim(result);
+                if(result > 0){
+                    $("#blog_count").html(result);
+                }
+            }
+        });
+    });
+</script>
+<php>endif;</php>
+<php>endif;</php>

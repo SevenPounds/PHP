@@ -1,0 +1,71 @@
+<include file="__THEME__/public_header" />
+<link href="__APP__/integral.css" rel="stylesheet" type="text/css" />
+<div id="page-wrap">
+	<div id="main-wrap">
+		<div class="boxShadow">
+			<div class="find-type">
+				<div class="app-title clearfix">
+					<h4 class="left">
+						<span class="left"></span>&nbsp;&nbsp;积分
+					</h4>
+					<div class="app-tab-menu clearfix" style="margin: 0 0 0 130px;">
+						<ul>
+							<li><a href="{:U('public/Credit/index')}"<php>if(ACTION_NAME=='index'){</php>class="current"<php>}</php>>我的积分<eq
+										name="ACTION_NAME" value="index"> <span class="triangle"></span></eq></a><i
+								class="line"></i></li>
+							<li><a href="{:U('public/Credit/exchange')}"<php>if(ACTION_NAME=='exchange'){</php>class="current"<php>}</php>>积分兑换<eq
+										name="ACTION_NAME" value="exchange"> <span
+										class="triangle"></span></eq></a><i class="line"></i></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<div id="col" class="extend clearfix">
+				<div class="inte_info">
+					<img src="{$GLOBALS['ts']['user'].avatar_middle}" class="left mr10" />
+					<div class="inte_infoDetail left">
+						<span class="blue"><a href="{:U('public/Index/index')}" class="font2">{$GLOBALS['ts']['user'].uname}</a></span>
+						<!--<p>-->
+							<!--<span>积分：<font class="org">{$credit['credit']['score']['value']}</font></span>-->
+						<!--</p>-->
+					</div>
+					<div class="clear"></div>
+				</div>
+				<div class="inte_table inte_cy">
+					<div class="inte_tit mb20">积分累计记录</div>
+					<table cellpadding="0" cellspacing="0">
+						<tr>
+							<th><span>操作</span></th>
+							<th><span>详情</span></th>
+							<th><span>积分变更</span></th>
+							<th>变更时间</th>
+						</tr>
+						<volist name="list" id="record">
+						<tr>
+						    <php> $data=json_decode($record['data'],true);</php>
+							<td >{$data['rule']['alias']}</td>
+							<td class="blue" align="left" style="padding-left:25px"> 					 					      
+							  <a <if condition="$data['url'] eq null">href="javascript:void(0);" style="cursor:default" <else />  href="{$data['url']}" style="cursor:pointer"  target="_blank"</if>> {$record['description']|msubstr=0,20,'utf-8',true}</a>					 	
+							</td>
+							<td>
+							   <php> if($data['rule']['score']>0) {echo '+';} </php>
+							     {$data['rule']['score']}
+							</td>
+							<td>{$record['create_time']}</td>
+						</tr>	
+						</volist>
+					</table>
+					 <div class="page">
+			        {$paging}	
+			   		</div>
+				</div>
+			    
+				<div class="clear"></div>
+				<div class="inte_select blue">
+					<a href="{$resCloudUrl}/index.php?app=changyan&mod=HelpCenter&act=questions&unfold=credit" target="_blank">查看积分规则</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<include file="__THEME__/public_footer" />

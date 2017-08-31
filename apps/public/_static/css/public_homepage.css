@@ -1,0 +1,79 @@
+@CHARSET "UTF-8";
+/*cy_mr_profileOption*/
+.cy_mr_profileOption{
+    height: 49px;
+    background: url("../images/profile.gif") repeat-x;
+}
+.cy_mr_profileOption li{
+    float: left;
+    padding: 0 0 0 16px;
+    height: 49px;
+    line-height: 49px;
+    margin-bottom: -2px;
+}
+.cy_mr_profileOption a{
+    background: url("../images/profile_option.png") no-repeat;
+    height: 36px;
+    line-height: 36px;
+    display: inline-block;
+    vertical-align: initial;
+    padding-left: 25px;
+    font-size: 14px;
+    color: #808080;
+}
+.cy_mr_profileOption li font{
+    border-right: 1px dotted #d1d1d1;
+    margin-left: 17px;
+}
+.cy_mr_profileOption li.current a,
+.cy_mr_profileOption a:hover{
+    text-decoration: none;
+}
+.cy_mr_profileOption li.cy_pro_share a{
+    background-position: 0 0;
+}
+.cy_mr_profileOption li.current.cy_pro_share a,
+.cy_mr_profileOption li.cy_pro_share a:hover{
+    color: #20adff;
+}
+.cy_mr_profileOption li.cy_pro_talk a{
+    background-position: 0 -72px;
+}
+.cy_mr_profileOption li.current.cy_pro_talk a,
+.cy_mr_profileOption li.cy_pro_talk a:hover{
+    color: #ff9e14;
+}
+.cy_mr_profileOption li.cy_pro_daily a{
+    background-position: 0 -144px;
+}
+.cy_mr_profileOption li.current.cy_pro_photo a,
+.cy_mr_profileOption li.cy_pro_daily a:hover{
+    color: #a4d772;
+}
+.cy_mr_profileOption li.cy_pro_hot a{
+    background-position: 0 -337px;
+}
+.cy_mr_profileOption li.current.cy_pro_hot a,
+.cy_mr_profileOption li.cy_pro_hot a:hover{
+    color: #fa6567;
+}
+.cy_mr_profileOption li.cy_pro_photo a{
+    background-position: 0 -216px;
+}
+.cy_mr_profileOption li.current.cy_pro_photo a,
+.cy_mr_profileOption li.cy_pro_photo a:hover{
+    color: #d185ed;
+}
+.cy_mr_profileOption li.cy_pro_resource a{
+    background-position: 0 -278px;
+}
+.cy_mr_profileOption li.current.cy_pro_resource a,
+.cy_mr_profileOption li.cy_pro_resource a:hover{
+    color: #ff9e14;
+}
+.right-box p span a{
+	color:#5c7495;
+}
+.cy_mr_profileOption li.current {
+    background: url("../images/profile_cur.png") no-repeat center bottom;
+}

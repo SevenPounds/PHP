@@ -1,0 +1,33 @@
+<include file="_work_room_header" />
+    <!--login end-->
+	<div class="tp_box">
+			<div class="tp_top">
+				<p class="tp_title">{$paper.title}</p>
+				<p class="font1">
+					<span class="black2">作者：</span><span class="black1">{$user_info['uname']}</a></span>
+					<span class="pl20 black2">发表时间：</span><span class="black1">{$paper.cTime|date="Y年m月d日",###}</php></span>
+					<span class="pl20 black2">浏览量：</span><span class="orange">{$paper.readCount}</span>
+				</p>
+			</div>
+			<div class="tp_con">
+				<div class="max-img" id="dt_content" style="display:none;">{$paper.content}</div>
+				<iframe id="frame_1" width="100%" height="100%" scrolling="no" frameborder="0">
+			    </iframe>
+				<script>
+				window.onload=function(){
+					jQuery("#dt_content").find("a").attr('target','_blank'); 
+					document.getElementById('frame_1').contentWindow.document.body.innerHTML =  document.getElementById('dt_content').innerHTML;
+					document.getElementById('frame_1').contentWindow.document.body.scrollHeight;
+					jQuery("#frame_1").height(document.getElementById('frame_1').contentWindow.document.body.scrollHeight+20);
+				};
+				</script>
+				<form>
+					{:W('ResourceAttach',array('paper_id'=>$detail['id'],'app_name'=>"paper",'inputname'=> 'attach', 'to_action'=>'preview', 'attachIds' => $attachIds))}
+				</form>
+			</div>
+		</div>
+		<div class="tp_bot1"></div>
+		<div class="tp_bot2"></div>
+</div>
+</div>
+<include file="__THEME__/public_footer" />

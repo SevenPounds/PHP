@@ -1,0 +1,14 @@
+<include file="../Public/header" />
+<div class="posbox">&nbsp;&nbsp;您现在的位置：<a href="{:U('msgroup/Index/index', array('gid' => $gid))}" class="blue">{$msgroup_data.group_name}</a>&gt;<a href="{:U('msgroup/Config/index', array('gid' => $gid))}" class="blue">工作室维护</a>&gt;&nbsp;<a class="blue" href="{:U('msgroup/Member/audit', array('gid' => $gid))}">成员申请审批</a></div>     
+<div class="wy_box" style="width:1000px; overflow:hidden;">
+	{:W('LeftMenu', array('gid' => $gid, 'level' => $level))}
+	<div class="right">
+		<div class="teaWS_rgt">
+			<div class="teaWSR_tit"><h3>成员申请审批</h3></div>
+		</div>
+		<div class="teaWSR_con">
+		</div>
+	</div>
+	<div class="clear"></div>
+</div>
+<include file="__THEME__/public_footer" />

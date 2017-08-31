@@ -1,0 +1,163 @@
+<style type="text/css">
+.fancybox-skin{	
+	background-color:transparent;	
+}
+</style>
+<a id="login_popup" href="#login_pop" ></a>
+<div style="display: none;">
+	<div id="login_pop">
+		<div class="eva_top">
+			<div class="eva_topleft"></div>
+			<div class="eva_topcen">
+				<div class="eva_toptxt">
+					<span><img src="__THEME__/image/pop_evatop_icon2.gif" /></span>
+					<span>登录</span>
+				</div>
+				<div class="eva_close">
+					<input type="button" value="" onclick="jQuery.fancybox.close();" class="eva_closenor"  onmouseover="this.className='eva_closehov'" onmouseout="this.className='eva_closenor'" />
+				</div>
+			</div>
+			<div class="eva_topright"></div>
+		</div>
+		<div class="eva_con">
+			<div class="eva_tip">
+				<span><img src="__THEME__/image/tip.gif" /></span>
+				<span>您好，请登录后再进行此操作！</span>
+			</div>
+			<table cellpadding="0" cellspacing="0" border="0">
+				<tr>
+					<td align="right">用户名：</td>
+					<td><input id="user_name" type="text" value=""  name="username"/></td>
+				</tr>
+				<tr>
+					<td align="right"><p class="left">密</p><p class="right">码：</p></td>
+					<td><input id="user_pwd" type="password" value=""  name="password"/></td>
+				</tr>
+			</table>
+			<p style="text-align:center;color:red;"><span id="error_msg"></span></p>
+			<div class="eva_btn">
+				<input id="submit_login" type="button" value="登&nbsp;&nbsp;&nbsp;录" class="eva_btnnor"  onmouseover="this.className='eva_btnhov'" onmouseout="this.className='eva_btnnor'" />
+			</div>
+		</div>
+		<div class="eva_bot">
+			<div class="eva_botleft"></div>
+			<div class="eva_botcen"></div>
+			<div class="eva_botright"></div>
+			<div class="clear"></div>
+		</div>
+	</div>
+</div>
+<link rel="stylesheet" type="text/css" href="__THEME__/js/fancyBox/jquery.fancybox.css" />
+<link rel="stylesheet" type="text/css" href="__THEME__/css/pop_login.css" />
+<script type="text/javascript" src="__THEME__/js/cas/casform.js"></script>
+<script type="text/javascript" src="__THEME__/js/cas/index.js"></script>
+<script src="__THEME__/js/jquery-json.js"></script>
+<script type="text/javascript" src="__THEME__/js/fancyBox/jquery.fancybox.js"></script>
+<script type="text/javascript">
+	//SSO单点登录
+	var edusso = new EduSSO("{:C('sso_service')}", "{:C('sso_server')}");
+	// 调出登录框点击事件
+	jQuery("#login_popup").click(function () {
+	    if ($("#login_popup", window.parent.document).length > 0) {
+	        if('undefined'!= typeof(parent.iframeLogin)){
+	        	parent.iframeLogin();
+	        	return false;
+	        }
+	    } 
+	    jQuery("#user_name").val("");
+	    jQuery("#user_pwd").val("");
+	    jQuery("#error_msg").html("");
+	    jQuery('#login_popup').fancybox({
+	        'width': '75%',
+	        'height': '75%',
+	        'padding': 0,
+	        'margin': 0,
+	        'scrolling': false,
+	        'autoScale': false,
+	        'modal': true,
+	        helpers:{
+	            overlay:{
+	                closeClick : false,
+	                locked:false
+	            }
+	        }
+	    });
+	});
+
+    // 登录操作
+    function popLogin(account,password){
+        if(account == '' || password == ''){
+            jQuery("#error_msg").html("用户名或密码不能为空！");
+            return;
+        }
+        jQuery.ajax({
+            url : RS_SITE_URL+'/index.php?app=changyan&mod=Index&act=loginName',
+            type : 'post',
+            data : {account : account},
+            success : function(back){
+                account = jQuery.trim(back);
+                edusso.login('rrt', '', 'login_name', account, password, function(result){
+                    if (result.result != "success"){
+                        if(result.code=='1002'){
+                            jQuery("#error_msg").html("用户名或密码错误！");
+                        }else{
+                            jQuery("#error_msg").html(result.data);
+                        }
+                    }else {
+                        jQuery.ajax({
+                            url : RS_SITE_URL+'/index.php?app=changyan&mod=Index&act=checkActState',
+                            type : 'post',
+                            data : {account:account},
+                            success :function(ret){
+                                ret = jQuery.trim(ret);
+                                if(ret == '0' || ret == '5'){
+                                    // 注册帐号，未审核完成，登出
+                                    edusso.logout();
+                                    var error_msg = '';
+                                    if(ret == '0'){
+                                        error_msg = '正在审核中的帐号！';
+                                    }
+                                    if(ret == '5'){
+                                        error_msg = '被冻结的帐号！';
+                                    }
+                                    jQuery("#error_msg").html(error_msg);
+                                }else if(ret == '1'){
+                                    window.location.reload();
+                                }else if(ret == '2'){
+                                    // 跳转至下发激活页面
+                                    edusso.logout(function(result) {
+                                        if (result.result == "success"){
+                                            location.href = RS_SITE_URL+"/index.php?app=changyan&mod=Register&act=preset&account="+ account;
+                                        }
+                                    });
+                                }else if(ret == '3'){
+                                    edusso.logout();
+                                    jQuery("#error_msg").html('后台帐号无法登录！');
+                                }else{
+                                    jQuery("#error_msg").html("网络错误！");
+                                }
+                            }
+                        });
+                    }
+                });
+            }
+        });
+    };
+
+	// 提交登录请求
+	jQuery("#submit_login").click(function(){
+		var user_name = jQuery.trim(jQuery("#user_name").val());
+		var user_pwd = jQuery.trim(jQuery("#user_pwd").val());
+		popLogin(user_name,user_pwd);
+	});
+	
+	// 回车事件
+	document.onkeydown = function(e){ 
+	    var ev = document.all ? window.event : e;
+		var user_name = jQuery.trim(jQuery("#user_name").val());
+		var user_pwd = jQuery.trim(jQuery("#user_pwd").val());
+	    if(ev.keyCode==13 && user_name && user_pwd) {
+	    	popLogin(user_name,user_pwd);
+	    }
+	}
+</script>

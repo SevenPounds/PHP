@@ -1,0 +1,46 @@
+<div class="right-list wz_list" style="margin-bottom:20px">
+    <h3>推荐日志</h3>
+    <php>if(empty($reslist)){</php>暂无推荐日志<php>}</php>
+    <ul>
+        <volist name="reslist" id="fblog">
+            <li>
+                <a class="ep_link" title="{$fblog['title']}" href="{:U('blog/Index/show',array('mid'=>$fblog['uid'], 'id'=>$fblog['id']))}" >
+                    <php>if($from == 'class'){</php>class="green"<php>}</php>{$fblog['sub_title']|mStr=###,16}
+                </a>
+                <div class="ep_info">
+                    <span style="width:90px;" title="{$fblog['readCount']}">浏览：{$fblog['readCount']|default=0|mStr=###,6}</span>
+                    <span style="width:90px;" title="{$fblog['commentCount']}">回复：{$fblog['commentCount']|default=0|mStr=###,6}</span>
+                    <a href="{:U('public/Workroom/index',array('uid'=>$fblog['uid']))}" uid="{$fblog['uid']}" event-node="face_card" show="no" class="face">{$fblog['userName']|mStr=###,3}</a>
+                    <div class="clear"></div>
+                </div>
+                <p class="ep_content">{$fblog['content']}</p>
+            </li>
+        </volist>
+       <!-- <volist name="relist" id="vo">
+        <li><i class="ico-piece"></i><div class="info"><a href="{:U('blog/Index/show', array('id'=>$vo['id'], 'mid'=>$vo['uid']))}">{$vo.title}</a></div></li>
+    </volist>-->
+    </ul>
+</div>
+<div class="right-list wz_list" style="margin-bottom:20px">
+    <h3>最新日志</h3>
+    <php>if(empty($newbloglist)){</php>暂无最新日志<php>}</php>
+    <ul>
+        <volist name="newbloglist" id="fblog">
+            <li>
+                <a class="ep_link" title="{$fblog['title']}" href="{:U('blog/Index/show',array('mid'=>$fblog['uid'], 'id'=>$fblog['id']))}" >
+                    <php>if($from == 'class'){</php>class="green"<php>}</php>{$fblog['sub_title']|mStr=###,16}
+                </a>
+                <div class="ep_info">
+                    <php>$newReadCount=intval($fblog['readCount'])>999 ? '999+' : $fblog['readCount'];</php>
+                    <php>$newCommentCount=intval($fblog['commentCount'])>999 ? '999+' : $fblog['commentCount'];</php>
+                    <span style="width:90px;">浏览：{$newReadCount|default=0}</span>
+                    <span style="width:90px;">回复：{$newCommentCount|default=0}</span>
+                    <a href="{:U('public/Workroom/index',array('uid'=>$fblog['uid']))}" uid="{$fblog['uid']}" event-node="face_card" show="no" class="face">{$fblog['userName']|mStr=###,3}</a>
+                    <div class="clear"></div>
+                </div>
+                <p class="ep_content">{$fblog['content']}</p>
+            </li>
+        </volist>
+        <!--<li><i class="ico-piece"></i><div class="info"><a href="{:U('blog/Index/show', array('id'=>$vo['id'], 'mid'=>$vo['uid']))}">{$vo.title}</a></div></li>-->
+    </ul>
+</div>

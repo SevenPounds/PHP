@@ -1,0 +1,50 @@
+<table cellpadding="0" cellspacing="0" border="0" class="online_table3" id="restable">
+	<tr class="online_tabletop">
+		<th width="4%" class="pl5" style="text-align:center"><input type="checkbox" id="sel_all_up"/></th>
+		<th width="1%"><img src="__APP__/images/th_line.jpg" /></th>
+		<th width="4%" style="text-align:center">姓名</th>
+		<th width="1%"><img src="__APP__/images/th_line.jpg" /></th>
+		<th width="4%" style="text-align:center">角色</th>
+		<th width="1%"><img src="__APP__/images/th_line.jpg" /></th>
+		<th width="19%" style="text-align:center">单位</th>
+		<th width="1%"><img src="__APP__/images/th_line.jpg" /></th>
+		<th width="4%" style="text-align:center">身份</th>
+		<th width="1%"><img src="__APP__/images/th_line.jpg" /></th>
+		<th width="10%" style="text-align:center">操作</th> 
+	</tr>
+	<volist name="member_list" id="vo">
+		<tr <if condition="$i % 2 neq 0">style="background:#fff"<else />style="background:#f6f6f6"</if>>
+			<td align="center" class="pl5"><input type="checkbox" value="{$vo.uid}" name="res_list"/></td>
+			<td></td>
+			<td align="center"><a href="{:U('public/Profile/index')}&uid={$vo.uid}" target="_blank">{$vo.real_name}</a></td>
+			<td></td>
+			<td align="center">{$vo.role_name}</td>
+			<td></td>
+			<td align="center">{$vo.org_name}</td>
+			<td></td>
+			<td align="center">{$vo.level_name}</td>
+			<td></td>
+			<td align="center">
+				<if condition="$vo.level neq 3">
+				<span class="blue pl10">
+					<a id="del{$vo['id']}" href="javascript:void(0);" onclick="javascript:msMember.deleteOne({$vo.uid})">删除</a>
+				</span>
+				</if>
+			</td>
+		</tr>
+	</volist>
+</table>
+<!-- <input id="memberIds" type="hidden" value="{$member_ids}"/> -->
+<div class="online_tablebot2">
+	<div class="online_tablebot_span" id="delete_res">
+		<span>
+			<input type="checkbox" style="margin-left:3px;" id="sel_all_down"/>
+		</span>
+		<span>
+			<input type="button" class="whdel_nor" onclick="javascript:msMember.deleteAll();" value="删除" title="删除"/>
+		</span>
+	</div>
+	<div class="page">
+		{$page_info}
+	</div>
+</div>

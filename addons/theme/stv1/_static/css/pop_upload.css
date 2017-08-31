@@ -1,0 +1,263 @@
+@CHARSET "UTF-8";
+/*--------------pop_repository---------------------*/
+.pop_box1{
+	background:#fff;	
+	width:750px;
+	border:1px solid #999999;
+}
+.pop_head{
+	height:36px;
+	background:#73bfee;
+	line-height:36px;
+	color:#fff;
+	font-weight:bold;
+	font-size:14px;
+}
+.pop_close{
+	margin:10px 15px;
+	float:right;
+	height:14px;
+	width:14px;
+	background:url(../image/pop_close.gif) top no-repeat;
+	display:inline;
+	cursor:pointer;
+}
+.pop_closehov{
+	margin:10px 15px;
+	display:inline;
+	float:right;
+	height:14px;
+	width:14px;
+	background:url(../image/pop_close.gif) bottom no-repeat;
+	cursor:pointer;
+}
+.pop_con{
+	color:#535353;
+	font-size:12px;
+	font-weight:bold;
+	padding:13px 15px;
+}
+.pop_line1{
+	width:720px;
+}
+.pop_title{
+	width:60px;
+	text-align:right;
+	float:left;
+	height:28px;
+	line-height:28px;
+	margin-right:10px;
+	display:inline;
+}
+.style1{
+	width:570px;
+	height:26px;
+	float:left;
+	display:inline;
+}
+.style1 input{
+	width:560px;
+	height:26px;
+	border:1px solid #ccc;
+	line-height:26px;
+	padding:0 5px;
+}
+.add_file{
+	float:right;
+	overflow:hidden;
+	margin-top:1px;
+}
+.add_file input{
+	cursor:pointer;
+	border:none;
+	height:28px;
+	width:70px;
+}
+.add_filenor{
+	background:url(../image/green_btn5.gif) top no-repeat;
+	color:#fff;
+}
+.add_filehov{
+	background:url(../image/green_btn5.gif) bottom no-repeat;
+	color:#fff;
+}
+.pop_line2{
+	width:720px;
+	margin-top:10px;
+}
+.choose1{
+	width:90px;
+	height:148px;
+	border:1px solid #cccccc;
+	float:left;
+	display:inline;
+}
+.choose2{
+	width:90px;
+	height:148px;
+	border:1px solid #cccccc;
+	float:left;
+	margin-left:7px;
+	display:inline;
+}
+.choose3{
+	width:58px;
+	height:148px;
+	border:1px solid #cccccc;
+	float:left;
+	margin-left:7px;
+	display:inline;
+}
+.choose4{
+	width:60px;
+	height:148px;
+	border:1px solid #cccccc;
+	float:left;
+	margin-left:7px;
+	display:inline;
+}
+.choose5{
+	width:152px;
+	height:148px;
+	border:1px solid #cccccc;
+	float:left;
+	margin-left:7px;
+	display:inline;
+}
+.choose6{
+	width:153px;
+	height:148px;
+	border:1px solid #cccccc;
+	float:left;
+	margin-left:7px;
+	display:inline;
+}
+.pop_line3{
+	width:720px;
+	margin-top:10px;
+}
+.pop_line3 select{
+	float:left;
+	margin-top:5px;
+	width:94px;
+}
+.pop_line4{
+	width:720px;
+	margin-top:4px;
+}
+.pop_line4 select{
+	float:left;
+	margin-top:5px;
+	width:94px;
+}
+.pop_line5{margin-top:10px;}
+.pop_line5 textarea{
+	width:638px;
+	height:50px;
+	border:1px solid #cccccc;
+	float:left;
+	padding:4px 5px;
+}
+.pop_line6{
+	margin-top:10px;
+}
+.pop_line6 input{
+	width:638px;
+	height:26px;
+	float:left;
+	display:inline;
+}
+.pop_btn{
+	width:694px;
+	text-align:center;
+	height:28px;
+	margin:30px 0 10px;
+}
+.pop_btn input{
+	cursor:pointer;
+	border:none;
+	height:26px;
+	width:70px;
+	margin-left:26px;
+}
+.blue4_btn{
+	background:url(../image/blue_btn4.gif) top no-repeat;
+	color:#535353;
+}
+.blue4_btnhov{
+	background:url(../image/blue_btn4.gif) bottom no-repeat;
+	color:#535353;
+}
+.pop_box2{
+	background:#fff;	
+	width:420px;
+	border:1px solid #999999;
+}	
+.pop_line7 input{
+	width:308px;
+	height:26px;
+	border:1px solid #ccc;
+	line-height:26px;
+	padding:0 5px;
+	float:left;
+}
+.pop_line8{
+	margin-top:10px;
+}
+.pop_line8 select{
+	float:left;
+	width:94px;
+	margin-top:5px;
+}
+.pop_line9{
+	margin-top:10px;
+}
+.pop_line9 textarea{
+	height:90px;
+	width:378px;
+	border:1px solid #ccc;
+	padding:5px;
+}
+.pop_btn2{
+	width:380px;
+	text-align:center;
+	line-height:28px;
+	margin:16px 0 0;
+}
+.pop_btn2 input{
+	cursor:pointer;
+	border:none;
+	height:28px;
+	width:72px;
+	margin-left:30px;
+}
+.blue5_btn{
+	background:url(../image/blue_btn5.gif) top no-repeat;
+	color:#fff;
+}
+.blue5_btnhov{
+	background:url(../image/blue_btn5.gif) bottom no-repeat;
+	color:#fff;
+}
+.popcon_kc {
+    float: left;
+}
+.popcon_kc select {
+    border: 1px solid #E3E3E3;
+    height: 150px;
+}
+select.st01 {
+    margin-right: 5px;
+    width: 60px;
+}
+select.st02 {
+    margin-right: 5px;
+    width: 90px;
+}
+select.st03 {
+    margin-right: 5px;
+    width: 152px;
+}
+select.st04 {
+    width: 160px;
+}

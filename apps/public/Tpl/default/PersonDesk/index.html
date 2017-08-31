@@ -1,0 +1,364 @@
+<include file="__THEME__/public_header" />
+<link href="__APP__/css/person_desk.css" rel="stylesheet" type="text/css" />
+<style type="text/css">
+    .one,.two,.three{
+        position: relative;
+        top:-3px;
+    }
+    .one{
+        background: url(__THEME__/image/circle.png) no-repeat center center;
+        width: 18px;
+        height:18px;
+
+    }
+    .two{
+        background: url(__THEME__/image/circle01.png) no-repeat center center;
+        width: 25px;
+        height:18px;
+    }
+    .three{
+        background: url(__THEME__/image/circle02.png) no-repeat center center;
+        width: 29px;
+        height:18px;
+    }
+</style>
+
+<div class="wrapper <if condition='$roleEnName eq "student"'>stu<else/>tea</if>">
+<div class="main">
+<if condition="$roleEnName eq 'student'" >
+    <include file="_studentInfo" />
+    <elseif condition="$roleEnName eq 'teacher'"/>
+    <include file="_teacherInfo" />
+    <elseif condition="$roleEnName eq 'instructor'"/>
+    <include file="_instructorInfo" />
+</if>
+<div class="mt25 enc-myapp" >
+    <div class="app-tab clearfix">
+        <ul class="fl clearfix" id="hot_nav" >
+            <volist name="appsType" id='vo' key="k">
+                <li <if condition="$k==1"> class="active" </if> data-value="{$vo.cid}"><a href="javascript:;">{$vo.cname}</a></li>
+            </volist>
+        </ul>
+        <if condition="$num gt 6 ">
+            <a href="#" class="fl pn_btn pre dis"></a>
+            <a href="#" class="fl pn_btn next"></a>
+        </if>
+        <a href="{:U('appcenter/Index/index')}" target="_blank" class="fr blue-borbtn">管理我的应用</a>
+    </div>
+    <div id="hot_content"></div>
+
+</div>
+
+
+<div class="mt20 enc-app">
+    <h2 class="slant-tit"><span>推荐资源<i>Recommended Resources</i></span></h2>
+    <div class="clearfix">
+        <dl class="fl app-box">
+            <dt class="clearfix">
+                <a href="#" class="fl app-tbja app"></a>
+            <div class="app-info">
+                <h4><a href="#">同步教案</a></h4>
+                <p>
+                    <span><em>{$teachingPlanRes['resourceCount']}</em>&nbsp;/&nbsp;资源</span>
+                    <span><em>{$teachingPlanRes['downLoadCount']}</em>&nbsp;/&nbsp;下载</span>
+                </p>
+            </div>
+            </dt>
+            <dd>
+                <div class="circle-line mt10">
+                    <em class="fl"></em>
+                    <span></span>
+                    <em class="fr"></em>
+                </div>
+                <ul class="txt-list">
+                    <volist name="teachingPlanRes.resourceList" id='vo' offset="0" length='5'>
+                        <li class="clearfix">
+                            <span class="fl"><a href="{:C('Search')}index.php?m=Search&c=Resource&a=preview&resId={$vo['id']}">{$vo.title|getShort=20,'...'}</a></span>
+                        </li>
+                    </volist>
+                </ul>
+            </dd>
+        </dl>
+
+        <dl class="fl app-box">
+            <dt class="clearfix">
+                <a href="#" class="fl app-tbkj app"></a>
+            <div class="app-info">
+                <h4><a href="#">教学课件</a></h4>
+                <p>
+                    <span><em>{$coursewareRes['resourceCount']}</em>&nbsp;/&nbsp;资源</span>
+                    <span><em>{$coursewareRes['downLoadCount']}</em>&nbsp;/&nbsp;下载</span>
+                </p>
+            </div>
+            </dt>
+            <dd>
+                <div class="circle-line mt10">
+                    <em class="fl"></em>
+                    <span></span>
+                    <em class="fr"></em>
+                </div>
+                <ul class="txt-list">
+                    <volist name="coursewareRes.resourceList" id='vo' offset="0" length='5'>
+                        <li class="clearfix">
+                            <span class="fl"><a href="{:C('Search')}index.php?m=Search&c=Resource&a=preview&resId={$vo['id']}">{$vo.title|getShort=20,'...'}</a></span>
+                        </li>
+                    </volist>
+                </ul>
+            </dd>
+        </dl>
+
+        <dl class="fl app-box">
+            <dt class="clearfix">
+                <a href="#" class="fl app-xtk app"></a>
+            <div class="app-info">
+                <h4><a href="#">同步习题</a></h4>
+                <p>
+                    <span><em>{$exerciseRes['resourceCount']}</em>&nbsp;/&nbsp;资源</span>
+                    <span><em>{$exerciseRes['downLoadCount']}</em>&nbsp;/&nbsp;下载</span>
+                </p>
+            </div>
+            </dt>
+            <dd>
+                <div class="circle-line mt10">
+                    <em class="fl"></em>
+                    <span></span>
+                    <em class="fr"></em>
+                </div>
+                <ul class="txt-list">
+                    <volist name="exerciseRes.resourceList" id='vo' offset="0" length='5'>
+                        <li class="clearfix">
+                            <span class="fl"><a href="{:C('Search')}index.php?m=Search&c=Resource&a=preview&resId={$vo['id']}">{$vo.title|getShort=20,'...'}</a></span>
+                        </li>
+                    </volist>
+                </ul>
+            </dd>
+        </dl>
+
+        <dl class="fl app-box">
+            <dt class="clearfix">
+                <a href="#" class="fl app-sck app"></a>
+            <div class="app-info">
+                <h4><a href="#">教学素材</a></h4>
+                <p>
+                    <span><em>{$materialRes['resourceCount']}</em>&nbsp;/&nbsp;资源</span>
+                    <span><em>{$materialRes['downLoadCount']}</em>&nbsp;/&nbsp;下载</span>
+                </p>
+            </div>
+            </dt>
+            <dd>
+                <div class="circle-line mt10">
+                    <em class="fl"></em>
+                    <span></span>
+                    <em class="fr"></em>
+                </div>
+                <ul class="txt-list">
+                    <volist name="materialRes.resourceList" id='vo' offset="0" length='5'>
+                        <li class="clearfix">
+                            <span class="fl"><a href="{:C('Search')}index.php?m=Search&c=Resource&a=preview&resId={$vo['id']}">{$vo.title|getShort=20,'...'}</a></span>
+                        </li>
+                    </volist>
+                </ul>
+            </dd>
+        </dl>
+
+        <dl class="fl app-box">
+            <dt class="clearfix">
+                <a href="#" class="fl app-xn app"></a>
+            <div class="app-info">
+                <h4><a href="#">微课资源</a></h4>
+                <p>
+                    <span><em>{$microClassRes['resourceCount']}</em>&nbsp;/&nbsp;资源</span>
+                    <span><em>{$microClassRes['downLoadCount']}</em>&nbsp;/&nbsp;下载</span>
+                </p>
+            </div>
+            </dt>
+            <dd>
+                <div class="circle-line mt10">
+                    <em class="fl"></em>
+                    <span></span>
+                    <em class="fr"></em>
+                </div>
+                <ul class="txt-list">
+                    <volist name="microClassRes.resourceList" id='vo' offset="0" length='5'>
+                        <li class="clearfix">
+                            <span class="fl"><a href="{:C('Search')}index.php?m=Search&c=Resource&a=preview&resId={$vo['id']}">{$vo.title|getShort=20,'...'}</a></span>
+                        </li>
+                    </volist>
+                </ul>
+            </dd>
+        </dl>
+
+        <dl class="fl app-box">
+            <dt class="clearfix">
+                <a href="#" class="fl app-zy app"></a>
+            <div class="app-info">
+                <h4><a href="#">精品资源包</a></h4>
+                <p>
+                    <span><em>{$resPlanRes['resourceCount']}</em>&nbsp;/&nbsp;资源</span>
+                    <span><em>{$resPlanRes['downLoadCount']}</em>&nbsp;/&nbsp;下载</span>
+                </p>
+            </div>
+            </dt>
+            <dd>
+                <div class="circle-line mt10">
+                    <em class="fl"></em>
+                    <span></span>
+                    <em class="fr"></em>
+                </div>
+                <ul class="txt-list">
+                    <volist name="resPlanRes.resourceList" id='vo' offset="0" length='5'>
+                        <li class="clearfix">
+                            <span class="fl"><a href="{:C('Search')}index.php?m=Search&c=Resource&a=preview&resId={$vo['id']}">{$vo.title|getShort=20,'...'}</a></span>
+                        </li>
+                    </volist>
+                </ul>
+            </dd>
+        </dl>
+    </div>
+</div>
+<div class="clearfix mt40 enc-rec">
+    <h2 class="slant-tit"><span>热门动态<i>Popular Dynamic</i></span></h2>
+    <div class="clearfix">
+        <div class="bor-box fl hot-wk">
+            <h3 class="gray-tit clearfix"><span class="fl">热门网课</span>
+                <if condition="$roleEnName eq 'student'">
+                    <else/>
+                    <a href="{:U('pingke/Index/center')}" target="_blank" class="fr">更多&gt;</a>
+                </if>
+            </h3>
+            <if condition="$pingKeList ==null ">
+                <div class="enc-empty">
+                    <img src="__APP__/images/les_empty.png"/>
+                </div>
+                <else/>
+                <ul class="hot-list">
+                    <li class="clearfix org">
+                        <em class="fl tc">1</em>
+                        <img src="__APP__/images/default_wk.jpg" class="fl"/>
+                        <p class="fl">
+                            <span class="tit-link"><a href="{:U('pingke/Index/show',array('id'=>$pingKeList[0]['id']))}">{$pingKeList[0]['title']|getShort=10,'...'}</a></span>
+                            <span class="gray">主讲人：{$pingKeList[0]['uname']}</span>
+                            <strong class="clearfix">
+                                <!--<span class="fl clearfix">
+                                    <i class="full"></i><i class="full"></i><i class="full"></i><i class="half"></i><i class="empty"></i>
+                                </span>  <em class="fl"><i>{$pingKeList[0]['discuss_count']}</i>人</em>-->
+                                <span class="gray">评论人数：{$pingKeList[0]['discuss_count']}人</span>
+
+                            </strong>
+                        </p>
+                    </li>
+                    <volist name="pingKeList" id='vo' offset="1" length='4'>
+                        <li class="clearfix blue">
+                            <em class="fl tc">{$key+2}</em>
+                            <p class="fl clearfix">
+                                <span class="tit-link fl"><a href="{:U('pingke/Index/show',array('id'=>$vo['id']))}">{$vo.title|getShort=10,'...'}</a></span>
+                                <span class="gray fr">{$vo.uname|getShort=2,'...'}</span>
+                            </p>
+                        </li>
+                    </volist>
+                </ul>
+            </if>
+        </div>
+        <div class="bor-box fl hot-qz">
+            <h3 class="gray-tit clearfix"><span class="fl">热门日志</span><a href="{:U('blog/Index/popularblog')}" target="_blank" class="fr">更多&gt;</a></h3>
+            <if condition="$blogList ==null ">
+                <div class="enc-empty">
+                    <img src="__APP__/images/daily_empty.png"/>
+                </div>
+                <else/>
+                <ul class="hot-list">
+                    <li class="clearfix org">
+                        <em class="fl tc">1</em>
+                        <img src="__APP__/images/default_log.jpg" class="fl"/>
+                        <p class="fl">
+                            <span class="tit-link"><a href="{:U('blog/Index/show',array('id'=>$blogList[0]['id'],'mid'=>$blogList[0]['uid']))}">{$blogList[0]['title']}</a></span>
+                            <strong class="clearfix">
+                                <em class="fl mr10"><i>发表人：</i>{$blogList[0]['uname']|getShort=10,'...'}</em>
+                                <em class="fl"><i>浏览次数：</i>{$blogList[0]['readCount']}</em>
+                            </strong>
+                        </p>
+                    </li>
+                    <volist name="blogList" id='jo' offset="1" length='4'>
+                        <li class="clearfix blue">
+                            <em class="fl tc">{$key+2}</em>
+                            <p class="fl clearfix">
+                                <span class="tit-link fl"><a href="{:U('blog/Index/show',array('id'=>$jo['id'],'mid'=>$jo['uid']))}">{$jo.title|getShort=10,'...'}</a></span>
+                                <span class="gray fr">{$jo.uname|getShort=3,'...'}</span>
+                            </p>
+                        </li>
+                    </volist>
+                </ul>
+            </if>
+        </div>
+
+        <div class="bor-box fr hot-gz">
+            <h3 class="gray-tit clearfix"><span class="fl">热门关注</span>
+                <if condition="$roleEnName eq 'student'">
+                    <else/>
+                    <a href="{:U('public/Workroom/teacher_studio',array('eduRole'=>'teacher'))}" target="_blank" class="fr">更多&gt;</a>
+                </if>
+            </h3>
+            <ul class="small-head">
+                <li class="tc org">
+                    <a href="{:U('public/Profile/index',array('uid'=>$userList[0]['uid']))}"  target="_blank"><em></em><img src="{$userList[0]['userAvatarSmall']}"/><i>1</i></a>
+                    <span><a href="{:U('public/Profile/index',array('uid'=>$userList[0]['uid']))}"  target="_blank">{$userList[0]['uname']}</a></span>
+                    <php>$useCount = $userList[0]['followCounts'];</php>
+                    <strong title="{$useCount}人关注"><if condition="$useCount gt 99"><em>{$useCount}</em>人关...<else /><em>{$userList[0]['followCounts']}</em>人关注</if></strong>
+                </li>
+                <volist name="userList" id='ho' offset="1" length='2'>
+                    <li class="tc blue">
+                        <a href="{:U('public/Profile/index',array('uid'=>$ho['uid']))}"  target="_blank"><em></em><img src="{$ho.userAvatarSmall}"/><i>{$key+2}</i></a>
+                        <span><a href="{:U('public/Profile/index',array('uid'=>$ho['uid']))}"  target="_blank">{$ho.uname}</a></span>
+                        <php>$hoCount = $ho["followCounts"];</php>
+                        <strong title="{$hoCount}人关注"><if condition="$hoCount gt 99"><em>{$hoCount}</em>人关...<else /><em>{$ho.followCounts}</em>人关注</if></strong>
+                    </li>
+                </volist>
+                <volist name="userList" id='po' offset="3" length='7'>
+                    <li class="tc">
+                        <a href="{:U('public/Profile/index',array('uid'=>$po['uid']))}"  target="_blank"><em></em><img src="{$po.userAvatarSmall}"/></a>
+                        <span><a href="{:U('public/Profile/index',array('uid'=>$po['uid']))}"  target="_blank">{$po.uname}</a></span>
+                        <php>$poCount = $po["followCounts"];</php>
+                        <strong title="{$poCount}人关注"><if condition="$poCount gt 99"><em>{$poCount}</em>人关...<else /><em>{$poCount}</em>人关注</if></strong>
+                    </li>
+                </volist>
+            </ul>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+<include file="__THEME__/public_footer" />
+<script type="text/javascript">
+    //绑定应用事件
+    $(window).ready(function(){
+        $("#hot_nav li").click(function(){
+            var data_value =$(this).attr('data-value');
+            if(typeof(data_value)=='undefined'){
+                reloadHotInfo('1');
+                return;
+            }
+            reloadHotInfo(data_value);
+            $("#hot_nav li").each(function () {
+                $(this).removeClass('active');
+            });
+            $(this).addClass('active');
+        });
+        //加载教学应用数据
+        reloadHotInfo('1');
+    });
+
+    //获取应用信息
+    function reloadHotInfo(app_id){
+        $.ajax({
+            type:"POST",
+            url: U('public/PersonDesk/getAppList'),
+            data:{"app_id":app_id},
+            success:function(data){
+                $("#hot_content").html(data);
+            },
+            error:function(msg){
+
+            }
+        });
+    }
+</script>

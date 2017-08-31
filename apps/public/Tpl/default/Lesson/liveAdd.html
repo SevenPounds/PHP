@@ -1,0 +1,381 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta charset="utf-8" />
+    <title>公开课</title>
+    <link rel="stylesheet" type="text/css" href="__APP__/css/lesson_base.css"></link>
+    <link rel="stylesheet" type="text/css" href="__APP__/css/lesson_common.css"></link>
+    <link rel="stylesheet" type="text/css" href="__APP__/css/lesson.css"></link>
+    <link rel="stylesheet" type="text/css" href="__APP__/css/c_pop.css"></link>
+    <!-- 加载截取图片的插件 -->
+  	<link rel="stylesheet" type="text/css" href="__APP__/js/Utils/jcrop/css/jquery.Jcrop.css" ></link>
+  	<!-- 上传插件 -->
+    <link rel="stylesheet" type="text/css" href="__APP__/js/Utils/uploadify/uploadify.css" rel="stylesheet" ></link>
+  	
+  	<script type="text/javascript" src="__APP__/js/Utils/jQuery/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript" src="__APP__/js/Utils/My97DatePicker/WdatePicker.js"></script>
+
+	<script type="text/javascript" src="__APP__/js/Utils/jQuery/jquery.browser.js"></script>
+	<script type="text/javascript" src="__APP__/js/add.js" ></script>
+	<script type="text/javascript" src="__APP__/js/Utils/jcrop/js/jquery.Jcrop.js" ></script>
+    
+	<script type="text/javascript" src="__APP__/js/Utils/uploadify/jquery.uploadify.js?ver=<?php echo rand(0,9999);?>"></script>
+    
+    <!-- 表单验证插件 -->
+    <script type="text/javascript" src="__APP__/js/Utils/validate/js/jquery.validate.js" ></script>
+    <script type="text/javascript" src="__APP__/js/Utils/validate/js/messages_cn.js" ></script>
+    <script type="text/javascript" src="__APP__/js/Utils/validate/js/additional-methods.js" ></script>
+    <script type="text/javascript" src="__APP__/js/Utils/validate/js/jquery.metadata.js" ></script>
+   
+   <!-- 加载弹出层样式 -->
+    <script type="text/javascript" src="__APP__/js/Utils/artDialog/js/dialog-plus.js"></script>
+	<script type="text/javascript" src="__APP__/js/Utils/artDialog/js/pop.js"></script>
+	
+	<script type="text/javascript" src="__APP__/js/Utils/jQuery/jquery.json.js"></script>
+	<script type="text/javascript" src="__APP__/js/Utils/jQuery/jquery.placeholder.js"></script>
+	
+	<!-- 选择好友插件 -->
+    <link rel="stylesheet" type="text/css" href="__APP__/js/Utils/select/css/multi-select.css"></link>
+    <script type="text/javascript" src="__APP__/js/Utils/select/js/jquery.multi-select.js"></script>
+	<script type="text/javascript" src="__APP__/js/Utils/jQuery/jquery.quicksearch.js"></script>
+		
+    <style type="text/css">
+    	.uploadify-queue{
+    		display: none;
+    	}
+    	.ui-dialog-body{
+			padding: 0;
+		}
+		#SWFUpload_0{
+			margin-left: -58px;
+		}
+		#maskDiv img{
+		    width: 36px;
+		    height: 36px;
+		    position: absolute;
+		    top: 50%;
+		    left:50%;
+		    margin-top: -18px;
+		    margin-left:-18px;;
+		}
+    </style>
+    <script type="text/javascript">
+		$.validator.addMethod("stringMaxLength", function(value, element, param) {
+			var length = value.length;
+			for ( var i = 0; i < value.length; i++) {
+				if (value.charCodeAt(i) > 127) {
+					length++;
+				}
+			}
+			return this.optional(element) || (length <= param);
+
+		}, $.validator.format("长度不能大于{0}!"));
+
+	    $.validator.setDefaults({  
+	        submitHandler: function() {
+	        	//遮罩层显示
+	        	$('#maskDiv').show();
+	        	//数据异步提交
+	        	$.ajax({
+	    		   type: "POST",
+	    		   url: "index.php?app=public&mod=Lesson&act=createLive",
+	    		   data: $('#addForm').serialize(),
+	    		   cache : false,
+	    		   success: function(data){
+	       			    //遮罩层显示
+	      	        	$('#maskDiv').hide();
+	    			   var result=eval("("+data+")");
+	    			   if(result.data.status == 400){
+	    				   pop.alert(result.data.msg);
+	    			   }else if(result.data.status == 300){
+	    				   pop.alert(result.data.msg);
+	    			   }else{
+	        		      pop.alert( result.data.msg ,function (){
+	        		    	  //回调函数关闭弹出层
+	        		    	  parent.d.close();
+	        		    	  window.parent.location.reload(true);
+	        		      });
+	    			   }
+	    		   }
+	    		});
+	        }  
+	    });   
+    	$().ready(function() {
+    	 $("#addForm").validate({
+    		rules: {  
+   			 liveName: {  
+   		         required: true,
+				 stringMaxLength:60
+   		       //  minlength: 4
+   		      },  
+	   		  members :{
+		   			digits:true ,
+		   			min : 1
+		   	  },
+   		      phase: "required" ,   
+   		      grade: "required" , 
+   		      subject: "required" , 
+   		      publish: "required" ,
+   		      courseType: "required" , 
+   		      timePikerStart: "required" ,
+   		      timePikerEnd: "required" ,
+   		      remark: "required" ,
+   		      keywords: "required"
+   		   },  
+   		   messages: {  
+   			   liveName: {  
+   		         required: '请输入公开课名称',
+				 stringMaxLength: "公开课名称必须在1-30个字之间"
+				   //  minlength: '公开课名称至少四个字符'
+   		      }, 
+   		      phase: {  
+ 		         required: '请选择学段'
+ 		      }, 
+ 		     grade: {  
+ 		         required: '请选择年级'
+ 		      }, 
+  		     members:{
+  		    	digits :'上课人数必须为整数',
+  		    	min : '至少输入大于零的整数'
+  		     },
+ 		     subject: {  
+ 		         required: '请选择学科'
+ 		      }, 
+ 		     publish: {  
+ 		         required: '请选择版本'
+ 		      }, 
+ 		     courseType: {  
+ 		         required: '请选择课程类型'
+ 		      }, 
+ 		     timePikerStart: {  
+ 		         required: '请选择上课开始时间'
+ 		      }, 
+ 		     timePikerEnd: {  
+ 		         required: '请选择上课结束时间'
+ 		      }, 
+ 		     remark: {  
+ 		         required: '请输入公开课简介'
+ 		      }, 
+ 		     keywords: {  
+ 		         required: '请输入关键词'
+ 		      }
+   		   } ,
+   		 /* 重写错误显示消息方法,以alert方式弹出错误消息 */  
+           showErrors: function(errorMap, errorList) {  
+               var msg = "";  
+               $.each( errorList, function(i,v){  
+            	   if(i == 0){
+            		   msg += (v.message+"\r\n");  
+            	   }
+               });  
+               if(msg!="") pop.alert(msg);
+           },  
+           /* 失去焦点时不验证 */   
+           onfocusout: false ,
+           onclick:false,
+           onkeyup:false
+    	 });
+    	});
+    </script>
+</head>
+<body >
+    <div class="pop_kk">
+    	<form action="" method="post" id="addForm">
+        <div class="pop_kk_item clearfix">
+            <label><font>*</font>公开课名称：</label>
+            <input type="text" class="pop_kk_txt01" id="liveName" name="liveName"/>
+        </div>
+        <div class="pop_kk_item clearfix">
+            <label><font>*</font>学段年级：</label>
+            <select id="phase" name="phase" onchange="getGradesByPhase(this.value,'grade','subject')">
+                <option value="">请选择</option>
+                <volist name="phases" id="val" >
+                	<option value="{$val['code']}" title="{$val['name']}">{$val['name']}</option>
+                </volist>
+            </select>
+            <select id="grade" name="grade" >
+                <option value="">请选择</option>
+                <volist name="grades" id="val">
+                	<option value="{$val['code']}" title="{$val['name']}">{$val['name']}</option>
+                </volist>
+            </select>
+        </div>
+        <div class="pop_kk_item clearfix">
+            <label><font>*</font>学科版本：</label>
+            <select id="subject" name="subject" onchange="getPublisherBySubject(this.value,'publish','phase')">
+                 <option value="">请选择</option>
+                <volist name="subjects" id="val">
+                	<option value="{$val['code']}" title="{$val['name']}">{$val['name']}</option>
+                </volist>
+            </select>
+            <select name="publish" id="publish">
+                 <option value="">请选择</option>
+                <volist name="publishers" id="val">
+                	<option value="{$val['code']}" title="{$val['name']}">{$val['name']}</option>
+                </volist>
+            </select>
+        </div>
+        <div class="pop_kk_item clearfix">
+            <label><font>*</font>课程类型：</label>
+            <select name="courseType" id="courseType">
+                <option value="">请选择</option>
+                <volist name="coursetype" id="val">
+                	<option value="{$val['code']}" title="{$val['name']}">{$val['name']}</option>
+                </volist>
+            </select>
+        </div>
+        <div class="pop_kk_item clearfix">
+            <label>上课人数：</label>
+            <input type="text" class="pop_kk_txt02" id="members" name="members" placeholder="默认人数为20"/>          
+            <input type="hidden" name="ids" id="ids"/>
+        </div>
+        <div class="pop_kk_item clearfix">
+            <label>听课权限：</label>
+            <input onclick="selectRadio(this,'','allRights')" type="radio" checked="checked" class="pop_kk_radio" name="rightName" id="allRights" value="1"/>
+            <span onclick="selectRadio(this,'','allRights')" style="cursor: pointer;" class="mr20">对所有人开放</span>
+            <input type="radio"  class="pop_kk_radio" onclick="selectRadio(this,'part','partRights')" name="rightName" id="partRights" value="0"/>
+            <span onclick="selectRadio(this,'part','partRights')" style="cursor: pointer;" class="mr20">对部分人开放</span>
+        </div>
+        <div class="pop_kk_item clearfix">
+            <label><font>*</font>上课时间：</label>
+            <input readonly="readonly" type="text" class="pop_kk_txt02" id="timePikerStart" name="timePikerStart" onblur="changeDateEndInput(this,'timePikerEnd')" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',startDate:'%y-%M-#{%d} %H:%m:00',minDate:'%y-%M-#{%d} %H:%m:%s'})"/>
+            <strong>至</strong>
+            <input readonly="readonly" type="text" class="pop_kk_txt02" id="timePikerEnd" name="timePikerEnd" onchange="changeDateStartInput(this,'timePikerStart')" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',startDate:'%y-%M-#{%d} %H:%m:00',minDate:'%y-%M-#{%d} %H:%m:%s'})"/>
+        </div>
+        <div class="pop_kk_item clearfix">
+            <label><font>*</font>公开课简介：</label>
+            <textarea rows="" cols="" name="remark" id="remark"></textarea>
+        </div>
+        <div class="pop_kk_item clearfix">
+            <label><font>*</font>关键词：</label>
+            <input type="text" class="pop_kk_txt01" name="keywords" id="keywords"/>
+        </div>
+        <div class="pop_kk_item clearfix">
+            <label>课程封面：</label>
+            <input type="text" class="pop_kk_txt02" id="url_show"/>
+            <a href="javascript:;"><font></font>
+            <input type="file" class="pop_kk_file" id="file_upload" /></a>
+        </div>
+        <div class="pop_kk_upload clearfix" id="whatYou" style="display: none;">
+            <div class="fl">
+                <span>支持JPG,JPGE,PNG格式,大小限制15M以内</span>
+                <div class="pop_kk_viewL" style="height: 150px;">
+                	<div id="showImg2" style="margin-top: -30px;">
+	                    <div class="pop_kk_fileCon">
+	                        <img width="100%" height="100%" src="__APP__/images/upload_icon.png" />
+	                    </div>
+	                    <div class="pop_kk_click" style="margin-top: -30px;">请单击本地照片按钮，从本地选择一张照片并编辑</div>
+                    </div>
+                    <img style="display: none;" width="100%" height="100%" src="__APP__/images/upload_icon.png" id="pathImgShow"/>
+                </div>
+            </div>
+            <!-- 隐藏域 图片剪切之后的长短 -->
+            <input type="hidden" name="picX" id="picX"/>
+            <input type="hidden" name="picY" id="picY"/>
+            <input type="hidden" name="picW" id="picW"/>
+            <input type="hidden" name="picH" id="picH"/>
+            
+            <input type="hidden" id="imgRealName" name="imgRealName" />
+            <input type="hidden" id="pathImg" name="pathImg" />
+            <!--  -->
+            <div class="fl">
+                <span>预览</span>
+                <div class="pop_kk_viewR" id="previewParent" style="width: 167px; height: 102px;overflow:hidden;">
+                </div>
+            </div>
+        </div>
+        <div class="pop_kk_btn">
+        	<input type="submit" name="" value="确定开课" class="pop_kk_sure" />
+        	<input type="button" name="" value="取消" class="pop_kk_cancle" onclick="closeNewLive()" />
+        </div>
+        </form>
+        <!-- 新增弹出层 -->
+		  <div class="pop_kkF" id="pop_2" style="display: none;z-index: 1000;">
+		  	<div class="pop_kk_top">
+		  		<span>选择好友</span>
+		  		<a href="javascript:;" onclick="closePopUser()" class="pop_kk_close">&nbsp;</a>
+		  	</div>
+		  	<div class="clearfix pop_kkF_con" style="">
+		   		 <div class="row" style="">
+				    <div class="col-md-7">
+				   		 <!-- 好友选择框开始 -->
+					      <select id='custom-headers' multiple='multiple'>
+							 <optgroup label="未分组好友">
+								  <volist name="users" id="val">
+								  	<option value="{$val['fid']}">{$val['fname']}</option>
+								  </volist>
+							 </optgroup>
+							
+						</select>
+						<!-- 好友选择框结束 -->
+				    </div>
+				  </div>
+		    	</div>
+        		<div class="pop_kk_btn">
+		        	<input type="button"   name="" value="确定" class="pop_kk_sure" onclick="closeUserPop()" />
+		        	<input type="button" name="" value="取消" class="pop_kk_cancle" onclick="closePopUser()" />
+		        </div>
+    	  </div>
+    	<!--  -->
+       	<div class="mask" id="maskDiv" style="display: none;z-index: 999;">
+    		<img src="__APP__/images/loading.gif"/>
+    	</div>
+   	 <script type="text/javascript">
+    	//检查结束时间合法性
+    	function changeDateEndInput(value,obj){
+    		if($("#"+obj).val() != ''  && $(value).val() != ''){
+    			if($(value).val() >= $("#"+obj).val()){
+    				pop.alert('开始时间不能大于或者等于结束时间!',function(){
+    					$(value).val('');
+        				$(value).focus();
+    				});
+    			}else{
+    				var date1 = new Date($(value).val());
+    				var date2 = new Date($("#"+obj).val());
+    				var date3=date2.getTime()-date1.getTime();
+    				
+    				var leave1=date3%(24*3600*1000);    //计算天数后剩余的毫秒数
+    				var hours=Math.floor(leave1/(3600*1000));
+    				
+    				if(hours > 2){
+    					pop.alert('您选择的公开课时间过长，请重新选择',function(){
+    						$(value).val('');
+            				$(value).focus();
+    					});
+    				}
+    			}
+    		}
+    	}
+    	//关闭弹出层
+    	function closeNewLive(){
+    		parent.d.close();
+    	}
+    	//检测开始时间合法性
+    	function changeDateStartInput(value,obj){
+    		if($("#"+obj).val() != '' && $(value).val() != ''){
+    			if($(value).val() <= $("#"+obj).val()){
+    				pop.alert('开始时间不能大于或者等于结束时间!',function(){
+    					$(value).val('');
+        				$(value).focus();
+    				});
+    			}else{
+    				var date1 = new Date($("#"+obj).val());
+    				var date2 = new Date($(value).val());
+    				var date3=date2.getTime()-date1.getTime();
+    				
+    				var leave1=date3%(24*3600*1000);    //计算天数后剩余的毫秒数
+    				var hours=Math.floor(leave1/(3600*1000));
+    				if(hours > 2){
+    					pop.alert('您选择的公开课时间过长，请重新选择',function(){
+    						$(value).val('');
+            				$(value).focus();
+    					});
+    				}
+    			}
+    		}
+    	}
+    </script>
+<!-- 加载尾部 -->
+</div>
+</body>
+</html>

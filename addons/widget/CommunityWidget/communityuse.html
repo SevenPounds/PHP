@@ -1,0 +1,24 @@
+<div class="app_show common">
+    <div class="title">
+			<p class="left"><b>社区应用</b></p>
+			<span class="sq" event-node='up_down' event-args='id=community&from=pcenter'>{:L('PUBLIC_FOLD')}</span>
+			<!--<span class="zk"><a href="#">展开</a></span>-->
+			<div class="clear"></div>
+   </div>
+    <div class="community" id="community">
+    <ul>
+    <volist name="list" id="app_vo" key="k">
+      <li>
+        <div class="left">
+          <a href="{$app_vo['url']}"><img alt="" src="{$app_vo['img']}"></a>
+        </div>
+        <div class="left app_rig">
+          <p>
+            <a href="{$app_vo['url']}" id="socapp_{$k}">{$app_vo['appname']}</a></p>
+        </div>
+      </li>
+      </volist>
+    </ul>
+    </div>
+    <div class="clear"></div>
+</div>

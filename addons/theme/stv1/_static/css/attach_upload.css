@@ -1,0 +1,140 @@
+.add_box{
+	width:747px;
+	margin:15px 0 0 15px;
+}
+.add_top{
+	background:url(../image/add_top.jpg) no-repeat;
+	height:10px;
+	width:747px;
+	overflow:hidden;
+}
+.add_cen{
+	background:url(../image/add_cen.jpg) repeat-y;
+	width:747px;
+	overflow:hidden;
+}
+.add_bottom{
+	background:url(../image/add_bottom.jpg) no-repeat;
+	height:9px;
+	width:747px;
+	overflow:hidden;
+}
+.add_cen dt{
+	float:left;
+	width:106px;
+	height:80px;
+	padding-top:16px;
+	text-align:center;
+	color:#bcbcbc;
+}
+.add_cen dt a{
+	display:block;
+	width:106px;
+	height:80px;
+	color:#bcbcbc;
+}
+.add_cen dt a:hover{
+	display:block;
+	width:106px;
+	height:80px;
+	color:#bcbcbc;
+}
+.add_cen dd{
+	position:relative;/*--------20140116-----edit--------*/
+	float:left;
+	width:106px;
+	height:86px;
+	padding-top:10px;
+	text-align:center;
+	color:#666;
+}
+.add_cen dd a{
+	display:block;
+	width:106px;
+	height:86px;
+	color:#666;
+}
+.add_cen dd a:hover{
+	display:block;
+	width:106px;
+	height:86px;
+	color:#666;
+}
+
+
+.attach_btn{
+	background-color:transparent ! important;
+}
+
+/***********2014/1/15 start****************/
+.add_video{
+	background:url(../image/add_cen.jpg) repeat-y;
+	width:747px;
+	overflow:hidden;
+}
+.add_video dt{
+	float:left;
+	width:224px;
+	padding-left:20px;
+	height:80px;
+	padding-top:30px;
+	text-align:center;
+	color:#bcbcbc;
+}
+.add_video dt a{
+	display:block;
+	width:224px;
+	height:80px;
+	color:#bcbcbc;
+}
+.add_video dt a:hover{
+	display:block;
+	width:224px;
+	height:80px;
+	color:#bcbcbc;
+}
+.add_video dd{
+	float:left;
+	width:244px;
+	height:138px;
+	padding-top:15px;
+	text-align:center;
+	color:#666;
+}
+.add_video dd a{
+	display:block;
+	width:244px;
+	height:138px;
+	color:#666;
+}
+.add_video dd a:hover{
+	display:block;
+	width:244px;
+	height:138px;
+	color:#666;
+}
+
+/***uploadfy 样式剧中 chengcheng3**/
+.add_video,.add_cen a .uploadify{
+	margin:0 auto;
+}
+
+.add_video a div{
+	margin:0 auto;
+}
+
+/***********2014/1/15 end******************/
+
+/***********2014/1/16 关闭样式 start****************/
+.add_close{
+	position:absolute;
+	left:30px;
+	top:0px;
+	height:14px;
+	width:14px;
+}
+
+.add_video,.add_cen dd .load{
+	margin:auto;
+}
+/***********2014/1/16 end******************/

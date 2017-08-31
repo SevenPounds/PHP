@@ -1,0 +1,12 @@
+ <ul>
+     <volist name="lessons" id="vo">
+        <li>
+           <span class="detail_icon"></span>
+           <a href="javascript:;" title="{$vo:name}" lesson="{$vo:fid}"  class="booklesson"
+            <php>if($vo->metadata->course[0]){</php>  course= "{$vo:metadata:course[0]}"  <php>}</php>
+            <php>if($vo->metadata->book[0]){</php>  bookcode= "{$vo:metadata:book[0]}"  <php>}</php>
+            <php>if($vo->metadata->unit[0]){</php>  unitcode= "{$vo:metadata:unit[0]}"  <php>}</php>
+             >{$vo:name}</a>
+        </li>
+      </volist>
+</ul>

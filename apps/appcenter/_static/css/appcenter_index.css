@@ -1,0 +1,53 @@
+@charset 'UTF-8';
+/*首页*/
+.head{ background:#305696; height:57px; line-height:57px;}
+.footer{ background:#37373f; height:57px; line-height:57px;}
+
+.index_bg{ background:url(../images/index-bg.jpg) no-repeat top center; padding-top:40px;}
+.bannerwarp .banner .hd{ width:727px; height:352px;} 
+.bannerwarp .banner .bd { width:727px;text-align:right;}
+.bannerwarp .banner .bd .but1{ display:inline-block; width:40px; height:4px; background:#a6a6a6;}
+.bannerwarp .banner .bd .but2{ display:inline-block; width:40px; height:4px; background:#ff8335;}
+
+.bannerwarp .part{ width:254px; height:393px; overflow:hidden; background:url(../images/part.png) no-repeat;}/*141013 yinWang edit*/
+.bannerwarp .part h1{ font-weight:bold; color:#1c1c1c; font-size:18px; line-height:48px;height:48px;padding-left:14px;margin-bottom:6px;}/*141013 yinWang edit*/
+.bannerwarp .part .list{ width:216px; height:81px; margin:0 auto; padding:11px 18px;}/*141013 yinWang edit*/
+.bannerwarp .part .list:hover{ background: url(../images/index-yy-bgHov.png) no-repeat; }/*141013 yinWang add*/
+.bannerwarp .part .list .pic{ width:80px; height:80px;}
+
+.star_all{ background:url(../images/star.png) no-repeat left; height:15px; width:15px; display:inline-block;}
+.star_half{ background:url(../images/star.png) no-repeat ; height:15px; width:15px; display:inline-block; background-position: -15px 0px;}
+.star_no{ background:url(../images/star.png) no-repeat right; height:15px; width:15px; display:inline-block; }
+
+.star_score{ color:#ff890a; font-size:14px; margin-left:3px; font-family:Arial, Helvetica, sans-serif;}
+
+.index_title{ background:url(../images/index_title.png) repeat-x; width:1000px; height:50px; overflow:hidden; margin:20px auto 0; }
+.index_title .tag{ border-top:2px solid #23a6dc;height:50px; padding:10px 0; line-height:50px;}
+
+.index-tuijian{ border:1px solid #d5d5d5; margin:0 auto; }
+.index-tuijian ul{ width:1100px;}
+.index-tuijian ul li{ display:inline-block; margin:7px 6px 4px 11px; float:left; text-align:center;}
+.index-tuijian ul li{width:101px; height:163px; display:inline-block; padding: 20px 12px 12px 12px; }
+.index-tuijian ul li:hover{ background:url(../images/index-tuijian.png) no-repeat; }
+.index-tuijian .pic{ width:80px; height:80px; overflow:hidden; margin:0 auto;}
+
+.index-title{ margin:50px auto 0;}
+.index-title span{ margin-left:71px;}
+.index-title a{ font-weight:bold; padding:0 8px; font-size:14px; background:url(../images/index-title.png) no-repeat center right; color:#5e5e5e;}
+.index-title .last{ background:none;}
+.index-title a:hover{ color:#ff0000;}
+
+.index_yy ul{ margin-left:-8px; width:1100px;}/*20140928 hjkan edit*/
+.index_yy ul li{ margin:0 34px 0 0;display:inline-block;  padding:25px 10px 0 30px; width:276px; height:110px;float:left; position:relative;background:url(../images/index-yy-bg.png) no-repeat;  }/*20140928 hjkan edit*/
+.index_yy ul li:hover{background:url(../images/index-yy_bg.png) no-repeat;}
+.index_yy ul li .box{ float:right; font-size:12px;  background:#ebebeb; width:63px; line-height:23px; height:20px; overflow:hidden; margin-top:-4px; color:#999;}
+.index_yy ul li .add{margin: 15px 0 0 0px;cursor:pointer; width:68px; background:url(../images/add.png) no-repeat; height:25px; overflow:hidden;} /*20140928 hjkan add*/
+.index_yy ul li .del{margin: 15px 0 0 0px;cursor:pointer; width:68px; background:url(../images/del.png) no-repeat; height:25px; overflow:hidden;}  /*20140928 hjkan add*/
+.index_yy ul li .download{margin: 15px 0 0 0px;cursor:pointer; width:68px; background:url(../images/load.png) no-repeat; height:25px; overflow:hidden;}  /*20140928 hjkan add*/
+
+
+.page{ margin:30px 0;}
+.page .first,.page .last{font-size:16px;font-weight:bold;padding:3px 17px;border-radius:5px;border:1px solid #d3d3d3;background:#fff;color:#666;}
+.page .first:hover, .page .last:hover{ background:#d3d3d3;}
+.page .list{ margin:0 7px;padding:3px 17px; font-size:16px;  border-radius:5px; color:#666; font-weight:bold; font-family:Arial, Helvetica, sans-serif; border:1px solid #cbcbcb;}
+.page .list:hover{ background:#3c8ee2; color:#fff;}

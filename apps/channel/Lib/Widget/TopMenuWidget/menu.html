@@ -1,0 +1,39 @@
+<div id="channel_nav" class="channel-type clearfix">
+  <div class="right" style="display:none;">
+    <php>if(!empty($cid)):</php>
+    <php>if($followStatus):</php>
+    <a href="javascript:;" onclick="channel.upFollowStatus('{$GLOBALS['ts']['mid']}', '{$cid}', 'del', this)" class="btn-big mr5"><span><i class="ico-already"></i>已关注</span></a>
+    <php>else:</php>
+    <a href="javascript:;" onclick="channel.upFollowStatus('{$GLOBALS['ts']['mid']}', '{$cid}', 'add', this)" class="btn-big mr5"><span><i class="ico-add-black"></i>关注</span></a>
+    <php>endif;</php>
+	<a href="javascript:;" onclick="channel.contributeBox('{$cid}')" class="btn-big" style="display:none;"><span><i class="contribute"></i>我要投稿</span></a>
+    <php>endif;</php>
+  </div>
+  <div class="right">
+     <a href="javascript:;" onclick="channel.showFollowBox('{$GLOBALS['ts']['mid']}','{$cid}')" class="btn-big mr5"><span><i class="ico-add-black"></i>我要订阅</span></a>
+  </div>
+  <div class="left">
+    <div id="alreadyfollow">
+        <dl>
+          <dt>
+            <volist name="followContent" id="vo">
+             <a class="btn-cancel" href="{:U('channel/Index/index', array('cid'=>$vo['channel_category_id']))}" style="margin-left:3px;"><span>{$vo.title}</span></a>
+            </volist>
+          </dt>
+        </dl>
+    </div>
+    <div id="channel_selector" class="channel-selector" style="display:none;">
+      <h4 id="channel_category_btn" class="channel-category-btn"><span>{$title|getShort=4}</span><i class="arrow-nav-b ml5"></i></h4>
+      <div class="box channel-tab-menu clearfix channel-dropbox">
+        <dl>
+          <dt>
+            <volist name="channelCategory" id="vo">
+            <a class="btn-cancel <eq name='cid' value='$vo.channel_category_id'>current</eq>" href="{:U('channel/Index/index', array('cid'=>$vo['channel_category_id']))}" ><span>{$vo.title}</span></a>
+            </volist>
+          </dt>
+        </dl>
+      </div>
+    </div>
+    <div class="ml" style="display:none;"><span class="mr5">关注：<em id="channel_follow_nums">{$followingCount|default=0}</em></span><span>记录：<em>{$channelCount|default=0}</em></span></div>
+  </div>
+</div>

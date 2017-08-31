@@ -1,0 +1,61 @@
+<a id="show_share_position" class="pop_a" href="#share_positions"></a>
+<div id="share_positions" style="display:none;">
+	<div class="pop_wp pop_share_resource">
+	    <div class="pop_tips clearfix">
+	        <span class="tips_tit fl">请选择分享到的位置</span>
+	        <a onclick="jQuery.fancybox.close();" href="javascript:void(0);" class="pop_close"></a>
+	    </div>
+	    <div class="share_select clearfix">
+	        <input id="per_page" class="check_position" type="checkbox">
+	        <span>我的主页</span>
+	    </div>
+	
+	    <div class="share_select clearfix">
+	        <input id="class_share" class="check_position" type="checkbox">
+	        <span>我的班级</span>
+	        <strong id="choose_class_tip"></strong>
+	    </div>
+	    <!-- 屏蔽分享班级学科选择 -->
+        <!-- <div class="clearfix" id="classSubject" style="display:none;font-size: 14px;margin: 15px 15px 0;">
+            <span>请选择资源所属学科：</span>
+            <select></select>
+        </div> -->
+	    <div class="pop_choice_class" style="display:none;">
+	        <ul id="share_classes_area" class="clearfix">
+	        </ul>
+	    </div>
+	
+	    <div class="share_select clearfix" style="margin-bottom:10px;">
+	        <input id="sys_res" class="check_position" type="checkbox">
+	        <span>资源中心</span>
+	    </div>
+	    <div id="subject_info_select" style="display:none;">
+		    <div class="pop_class" style="padding-bottom:0px;">
+		        <div class="share_select pop_resource_type clearfix" style="margin:0px;border:0px;">
+		            <span>请选择资源类型：</span>
+		            <select id="res_type"></select>
+		        </div>
+		    </div>
+		    <div class="pop_class">
+		        <div class="share_select pop_resource_type clearfix" style="margin:0px;border:0px;">
+		            <span>请选择学科信息：</span>
+		            <!-- <strong>已选择：语文-一年级-人教版-第一单元-古诗词鉴赏-第一课时</strong> -->
+		        </div>
+		        <div class="pop_reBox clearfix">
+		        	<select size="9" style="height: 150px; width: 120px;" id="subject"></select>                              
+		            <select size="9" style="height:150px;width:120px;display:none;" id="edition"></select>                               
+		            <select  size="9"style="height:150px;width:120px;display:none;" id="stage"></select>
+		            <input type="hidden" id="book" book-id="" book-code=""></input>                              
+		            <select size="9" style="height:150px;width:120px;display:none;" id="unit1"></select>
+		            <select size="9" style="height:150px;width:120px;display:none;" id="unit2"></select> 
+		            <select size="9" style="height:150px;width:120px;display:none;" id="unit3"></select> 
+		        </div>
+		    </div>
+	    </div>
+	    
+	    <div class="pop_btn2 clearfix">
+	        <a onclick="jQuery.fancybox.close();" href="javascript:void(0);" class="cancle_btn fr">取消</a>
+	        <a id="space_sure" is_sub="true" class="share_btn fr" href="javascript:void(0);">确定</a>
+	    </div>
+	</div>
+</div>

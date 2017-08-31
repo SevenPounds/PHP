@@ -1,0 +1,30 @@
+<div class="tab_b mt14"><b>最新日志</b><if condition="$blogcount gt 0"><font class="gray">大家发表了{$blogcount|default=0}篇日志</font></if><p class="btn"><input type="button" value="写日志" class="green_sc"  onmouseover="this.className='green_schover'" onmouseout="this.className='green_sc'" onclick="window.location.href='index.php?app=class&mod=ClassBlog&act=addBlog&cid={$classId}'" /><input type="button" value="查看全部日志" class="green_m"  onmouseover="this.className='green_mhover'" onmouseout="this.className='green_m'" onclick="window.location.href='index.php?app=class&mod=ClassBlog&act=my_class&cid={$org['id']}'"/></p></div>
+				<ul class="rz_list" style="padding-top:15px;">
+				  <volist name="data" id="vo" empty="去发表一篇班级日志吧！">
+				    <php>
+						$cancomment_old = empty($vo['feed_data']['app_row_id'])  ? 0 : 1;
+						$cancomment = intval(CheckPermission('core_normal','feed_comment')); 
+						</php>
+					  <li model-node='blog_li'>
+							<div class="rz_tab"><a href="{:U('blog/Index/show_class', array('id'=>$vo['id'],'cid'=>$classId, 'mid'=>$vo['uid']))}" style='color:#5a9400;font-size:15px;'>{$vo['title']}</a></div>
+							<div class="rz_pic"><a href="{$user_info[$vo['uid']]['space_url']}" event-node="face_card" uid="{$user_info[$vo['uid']]['uid']}" target="_blank"><img src="{$user_info[$vo['uid']]['avatar_small']}" /></a><span class="green">{$user_info[$vo['uid']]['space_link']}</span></div>
+							<div class="rz_text">{:getShort($vo['content'],$titleshort,$suffix)}</div>
+							<div class="rz_tip"><p class="left" style="width:400px;">发表于 {$vo['cTime']|friendlyDate}&nbsp;分类：<span class="green"><a href="{:U('blog/Index/my_class', array('cid'=>$classId,'cateId'=>$vo['category']))}" class="mr10">{$vo['category_title']}</a></span>
+							<!-- &nbsp;标签： --></p><p class="right" style="width:320px;">
+							<span><img src="__APP__/image/icon_fx.gif"/>{:W('ShareToFeed',array('title'=>'分享','initHTML'=>urlencode('我分享了一篇班级日志“'.$vo["title"].'”'),'url'=>U('blog/Index/my_class',array('id'=>$vo['feed_id'],'mid'=>$vo['uid'],'cid'=>$vo['title'])),'attachId'=>'','from'=>'blog','blogId'=>$vo['id']))}</span><!-- <a href="#">分享</a> -->
+							<span>|</span><span><img src="__APP__/image/icon_xh.gif" />{:W('Collection',array('sid'=>$vo['feed_id'],'stable'=>'feed','sapp'=>'classblog','tpl'=>'simple'))}</span>
+							<span>|</span><span><img src="__APP__/image/icon_pl.gif" />
+							
+							<eq name='vo.feed_data.actions.comment' value='true'>
+							<a event-node="comment" href="javascript:void(0)" event-args='row_id={$vo.feed_id}&app_uid={$vo.feed_data.uid}&app_row_id={$vo.feed_data.app_row_id}&app_row_table={$vo.feed_data.app_row_table}&to_comment_id=0&to_uid=0&app_name={$vo.app}&table=feed&cancomment={$cancomment}&cancomment_old={$cancomment_old}'>{:L('PUBLIC_STREAM_COMMENT')}<neq name='vo.feed_data.comment_count' value='0'> ({$vo.feed_data.comment_count}) </neq></a><!-- <a href="{:U('blog/Index/show_class', array('id'=>$vo['id'], 'cid'=>$classId,'mid'=>$vo['uid']))}#comment">评论</a> -->
+							</eq>
+							
+							</span>
+							<span>|</span><span><img src="__APP__/image/icon_ll.gif" /><a href="{:U('blog/Index/show_class', array('id'=>$vo['id'],'cid'=>$_GET['cid'],'mid'=>$vo['uid']))}" >浏览</a></span></p>
+							</div>
+														<div model-node="comment_detail" class="repeat clearfix" style="display:none;"></div>
+							<div class="clear"></div>
+						</li> 
+				   </volist>
+				</ul>
+				<div class="page" <php>if(ACTION_NAME=='index'):</php>style="display:none;" <php>endif;</php> >{$html}</div>

@@ -1,0 +1,34 @@
+<style type="text/css">
+.repeat_btn a{
+	display:block;
+	width:48px;
+	height:22px;
+	line-height:22px;
+	padding-right:0px;
+	background:#6fa8d2;
+	color:#fff;
+}
+</style>
+<eq name='cancomment' value = "1">
+<div class="repeat" model-node="comment_textarea">
+		<div model-node="mini_editor" style="position:relative;">
+		   <textarea id="comment_inputor" event-node="mini_editor_textarea" hidefocus="true" model-args='t=comment' onkeyup="wordLimit(jQuery(this),140)" onkeydown="wordLimit(jQuery(this),140)"></textarea>
+		   <span style="top:10px;right:1px;position:absolute;float:right;">
+			 <b>0</b>/140
+           </span>
+		</div>
+		<div style="height:32px;line-height:32px;padding-top:6px;">
+		    <p class="right repeat_btn"><a href="javascript:void(0);" event-node="do_comment" event-args='row_id={$row_id}&app_uid={$app_uid}&app_row_id={$app_row_id}&app_row_table={$app_row_table}&app_name={$app_name}&table={$table}&canrepost={$canrepost}' addtoend ="1"  to_comment_id="0" to_uid="0" to_comment_uname="">回复</a></p>
+			<div class="acts">
+               <a class="face-block" href="javascript:;" event-node="comment_insert_face"><i class="face"></i>表情</a>
+            </div>
+            <div model-node="faceDiv"></div>
+			<div class="clear01"></div>
+		</div>	
+	</div>
+<else />
+{:L('PUBLIC_CONCENT_ISNULL')}
+</eq>
+<ul id="commentlist_{$row_id}">
+
+</ul>

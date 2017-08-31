@@ -1,0 +1,63 @@
+<dl class="pk_con">
+	<volist name="postList" id="item">  
+	<dd>
+	<p class="pk_tx">
+	<a href="{$item.user.space_url}" event-node="face_card" show="no" uid={$item.user.uid}>
+		<img src="{$item.user.avatar_small}" />
+	</a>
+	</p>
+	<div class="left pl18"  model-node="post">
+		<p class="online_name">
+		<a href="{$item.user.space_url}" event-node="face_card" show="no" uid={$item.user.uid}>
+			{$item.user.uname}
+		</a>
+		</p>
+
+		<p class="pk_nr" style="line-height:1.5;">{$item.content|parse_html}</p>
+
+		<if condition="!empty($item['record_id'])">
+		<div class="single_sound">
+			<div class="single_sound_btn" onclick="AudioPlayer.audioplay('{$item.record_id}', 'progress-bar-bordertalk-{$item.id}', 'progress-bartalk-{$item.id}')">
+				<img onmouseover="this.src='SpeechToText/images/sound12.jpg'" onmouseout="this.src='SpeechToText/images/sound11.jpg'" src="SpeechToText/images/sound11.jpg" />
+			</div>
+			<div id="progress-bar-bordertalk-{$item.id}" class="progress-bar-border">
+				<img id="initial_progress-bartalk-{$item.id}" class="initial-progress-bar1" src="SpeechToText/images/sound_bg1.jpg" />
+				<span id="time_progress-bartalk-{$item.id}" style="color:#888;">00:00</span>
+				<img id="progress-bartalk-{$item.id}" class="record_progress-bar" src="SpeechToText/images/sound_bg2.jpg" />
+			</div>
+		</div>
+		</if>
+
+		<div class="right">
+			  <if condition="$agreeArray[$item['id']] eq 0">
+                 <span id='agree{$item["id"]}' rel='{$item["agree_count"]|default="0"}'>
+                 <a href="javascript:void(0)" onclick="addAgree({$item['id']})" >赞<if condition="$item['agree_count'] neq 0">({$item['agree_count']})</if></a>
+                 </span>
+              <else />  
+              <span><img src='./apps/pingke/_static/images/zan.gif' />已赞({$item['agree_count']})</span>
+              </if>
+              &nbsp;&nbsp;|&nbsp;&nbsp;
+              <a event-node ="comment" href= "javascript:void(0)" event-args ='row_id={$item.id}&app_uid={$item.uid}&to_comment_id=&to_uid=&app_name=pingke&table=pingke_post&canrepost=0&cancomment=1&cancomment_old=1&ajax_page=1' >{:L('PUBLIC_STREAM_COMMENT')}<if condition="$item['comment_count'] neq 0">(<span id="span_{$item.id}" style="display:inline;float:none;">{$item.comment_count}</span>)</if></a>&nbsp;&nbsp;\
+         
+			  <if condition="$item['uid']==$mid && $status!=0 ">
+			     |&nbsp;&nbsp;
+				<a style="cursor:pointer" onclick="delPost({$item.id})">删除</a>
+			  </if>
+		</div>
+
+		<if condition="!empty($item['attach'])">
+		<volist name="item['attach']" id="attach">
+		<p class="mt5">附件{$i}：<span class="blue"> <a href="{:U('widget/Upload/down',array('attach_id'=>$attach['attach_id']))}">{$attachInfo[$attach['attach_id']]['name']}下载</a></span></p>
+		</volist>
+		</if>
+        <p class="online_infor pt5">{$item.ctime|friendlyDate}</p>
+        
+        <div model-node ="comment_detail" class="repeat_box" style ="display:none;"></div>
+	</div>
+	<div class="clear"></div>
+	</dd>
+	</volist>
+	<div class="page">
+		{$page}
+	</div>
+</dl>

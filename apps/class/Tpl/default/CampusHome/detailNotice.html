@@ -1,0 +1,36 @@
+
+		<include file="_top" />
+		
+		<div class="s_right">
+		<div class="title4">
+			<span class="left pl20"><b>学校公告</b></span>
+			<div class="clear"></div>
+			<p class="line2"></p>
+		</div>
+		<div class="notice_box ">
+			<div class="notice_head">
+				<p class="black2 font3 pt15"><b>{$detail.title}</b></p>
+				<p class="pt10">
+					<span class="black1 pr30">发表日期：<php>echo(date('Y年n月d日', $detail['ctime']));</php></span>
+					<span class="black1 pr30">发表人：<if condition="$mid == $detail['uid']"><a href="{:U('public/Profile/index',array('uid'=>$detail['uid']))}">
+									<else /><a href="{:U('public/Profile/index',array('uid'=>$detail['uid']))}" event-node="face_card" show="no" uid="{$detail['uid']}">
+									</if>{$detail['uname']}</a></span>
+					<span class="black1">阅读次数：{$detail.viewcount}</span>
+				</p>
+			</div>
+			<div class="notice_con">
+				<p>{$detail.content}</p>
+				<if condition="!empty($attachs)">
+					<volist name="attachs" id="attach">
+						<p class="mt14">附件{$i}：<span class="green2"> <a href="{:U('widget/Upload/down',array('attach_id'=>$attach['attach_id']))}">{$attach['name']}下载</a></span></p>
+					</volist>
+				</if>
+			</div>
+		</div>
+		<div class="notice_bot1"></div>
+		<div class="notice_bot2"></div>
+	</div>
+		</div>
+		<div class="clear"></div>
+	</div>
+<include file="__THEME__/public_footer" />

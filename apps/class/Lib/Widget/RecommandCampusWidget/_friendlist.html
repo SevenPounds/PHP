@@ -1,0 +1,9 @@
+<volist name='data' id="vo">
+					<li>
+                        <dl>
+                        	<dt><span class="green"><a href="{:U('class/CampusHome/schoolIndex',array('cid'=>$vo['id']))}" title="{$vo.name}"  event-node="face_card" show="no" orgType="{$vo['type']}" cid="{$vo['id']}">{:getShort($vo['name'],5)}</a></span>{:getOrgnizationArea($vo,2)}   {:W('FollowBtn', array('fid'=>$vo['id'], 'uname'=>$vo['name'], 'follow_state'=>$orgnization_follow_state[$vo['id']], 'type'=>'campus','ftype'=>$vo['type']))} </dt>
+                            <dd><span>已与黄山小学、稻香小学等20所学校联谊!</span></dd>
+                        </dl>
+                        <div class="clear"></div>
+                    </li>
+                       </volist>

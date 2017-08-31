@@ -1,0 +1,74 @@
+<volist name="answers" id="answer">
+<dt>
+    <p class="pk_tx">
+		<if condition="$uid == $answer['uid']">
+				<a href="{:U('public/Profile/index', array('uid'=>$answer['uid']))}" >
+					<img src="{$answer['avatar_small']}" />
+				</a>
+		<else />
+				<a href="{:U('public/Profile/index', array('uid'=>$answer['uid']))}" event-node="face_card" show="no" uid="{$answer["uid"]}">
+					<img src="{$answer['avatar_small']}" />
+				</a>
+		</if>
+    </p>
+	<div class="left pl20" model-node = "answer">
+		<p class="online_name01">
+		<if condition="$uid == $answer['uid']">
+				<a href="{:U('public/Profile/index', array('uid'=>$answer['uid']))}" >
+					<span>{$answer['uname']}</span>
+				</a>
+		<else />
+				<a href="{:U('public/Profile/index', array('uid'=>$answer['uid']))}" event-node="face_card" show="no" uid="{$answer["uid"]}">
+					<span>{$answer['uname']}</span>
+				</a>
+		</if>
+		<if condition="$answer['is_best'] == 0 && $quid == $uid && $status == 0">
+			<span class="cn_txt" id="adoptasbest"><a href="javascript:onLineAnswer.adopt({$answer['qid']},{$answer['ansid']})">采纳为最佳答案</a></span>
+			<div class="clear"></div>
+		</if>
+		</p>
+		<p class="pk_nr" id="content_{$i}" style="line-height:1.5;">{$answer['content']|parse_html}</p>
+
+		<if condition="!empty($answer['record_id'])">
+		<div class="single_sound">
+			<div class="single_sound_btn" onclick="AudioPlayer.audioplay('{$answer.record_id}', 'progress-bar-bordertalk-{$answer.ansid}', 'progress-bartalk-{$answer.ansid}')">
+				<img onmouseover="this.src='SpeechToText/images/sound12.jpg'" onmouseout="this.src='SpeechToText/images/sound11.jpg'" src="SpeechToText/images/sound11.jpg" />
+			</div>
+			<div id="progress-bar-bordertalk-{$answer.ansid}" class="progress-bar-border">
+				<img id="initial_progress-bartalk-{$answer.ansid}" class="initial-progress-bar1" src="SpeechToText/images/sound_bg1.jpg" />
+				<span id="time_progress-bartalk-{$answer.ansid}" style="color:#888;">00:00</span>
+				<img id="progress-bartalk-{$answer.ansid}" class="record_progress-bar" src="SpeechToText/images/sound_bg2.jpg" />
+			</div>
+		</div>
+		</if>
+
+		<div class="online_infor pt5">
+			<p class="left">{$answer['ctime']|friendlyDate}</p>
+			<p class="right black2">
+			   <php>if(!isset($agreeArray[$answer['ansid']])) { </php>
+				    <span id='agree{$answer["ansid"]}' rel='{$answer["agree_count"]|default="0"}'>
+				   		<a href="javascript:void(0)" onclick="addAgree({$answer['ansid']})" >赞({$answer['agree_count']|default="0"})</a>
+				    </span>
+			   <php>}else{</php>
+		       		<span><img src='./apps/onlineanswer/_static/images/zan.gif' />已赞({$answer['agree_count']|default=0})</span>
+			   <php> } </php>&nbsp;&nbsp;|&nbsp;&nbsp;
+			   <a event-node ="comment" href= "javascript:void(0)" event-args ='row_id={$answer.ansid}&app_uid={$answer.uid}&to_comment_id=0&to_uid=0&app_name=onlineanswer&table=onlineanswer_answer&canrepost=0&cancomment=1&cancomment_old=1&ajax_page=1' >{:L('PUBLIC_STREAM_COMMENT')}(<span id="span_{$answer.ansid}" style="display:inline;float:none;">{$answer.comment_count}</span>)</a>&nbsp;&nbsp;
+			   <if condition="($answer['uid'] == $uid  || $quid == $uid) && $status == 0">|&nbsp;&nbsp;<a href="javascript:delAnswerbyid({$answer['ansid']})">删除</a></if>
+			</p>
+			<div class="clear"></div>
+		</div>
+		<!-- <div model-node ="comment_detail" class= "repeat clearfix" style ="display:none;"></div> -->
+		<div model-node ="comment_detail" class="repeat_box" style ="display:none;"></div>
+	</div>
+	<div class="clear"></div>
+</dt>
+<div class="clear"></div>
+</volist>
+{$page}
+<script type="text/javascript">
+var isPublish = "<php>echo $isPublish;</php>";
+if(isPublish){
+	jQuery("#postcontent").css("display","block");
+	jQuery("#postanimate").css("display","block");
+}
+</script>

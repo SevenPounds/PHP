@@ -1,0 +1,12 @@
+<div class="find-type">
+<div class="app-title clearfix">
+		<h4 class="left"><img src="__APP__/images/class_album.png" />&nbsp;&nbsp;相册</h4>
+		<div class="app-tab-menu" style="margin:0 0 0 130px;">
+			<ul>
+		        <li><a href="{:U('class/ClassAlbum/classalbums',array('cid'=>$classId))}">班级相册</a><i class="line"></i></li>
+		        <li><a <eq name="ACTION_NAME" value="classflash">class="current"</eq> href="{:U('class/ClassAlbum/classflash',array('cid'=>$classId))}">上传照片<eq name="ACTION_NAME" value="classflash"><span class="triangle"></span></eq></a></li>
+				 <li><a href="{:U('class/ClassHome/index',array('cid'=>$classId))}">班级主页</a></li>
+			</ul>
+		</div>
+	</div>
+</div>

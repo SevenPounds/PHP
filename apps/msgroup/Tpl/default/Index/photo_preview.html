@@ -1,0 +1,27 @@
+<include file="../Public/header" />
+<style>
+.max-img img{
+	margin:0px auto;
+}
+</style>
+<div class="posbox">
+	&nbsp;&nbsp;您现在的位置：<a
+		href="{:U('msgroup/Index/index', array('gid' => $gid))}" class="blue">{$msgroup_data.group_name}</a>&gt;<a
+		class="blue">荣誉室</a>&gt;&nbsp;<a class="blue">{$photo['photo_name']}</a>
+</div>
+<div class="wy_box" style="width: 1000px; overflow: hidden;">
+	<div class="tp_top">
+		<p class="tp_title">{$photo['photo_name']}</p>
+		<p class="font1">
+			<span class="pl20 black2">发布日期：</span><span class="black1">{$photo['upload_time']|friendlyDate}</php></span>
+		</p>
+	</div>
+	<div class="tp_con">
+		<div class="max-img" id="dt_content">
+			<img alt="预览图片" src="{:getImageUrl($photo['savepath'])}" />
+		</div>
+	</div>
+	<div class="clear"></div>
+</div>
+<include file="__THEME__/public_footer" />
+

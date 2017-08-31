@@ -1,0 +1,118 @@
+<include file="_onlineanswer_header"/>
+
+<script type="text/javascript" src="__APP__/js/common.js"></script>
+<div id="page-wrap">
+   <div id="main-wrap">
+		<!--面包屑导航-->
+		<div class="crumbs">
+			<ul>
+				<li class="pre_cen"><a href="{:U('public/Index/index')}">个人空间</a></li>
+				<li>&gt;</li>
+				<li><a href="{:U('onlineanswer/Index/index')}">在线答疑</a></li>
+				<li>&gt;</li>
+				<li><if condition="$questionuid eq 1"><a href="{:U('onlineanswer/Index/index',array('nav'=>1))}">我的问题</a><elseif condition="$questionuid eq 0"/><a href="{:U('onlineanswer/Index/center',array('st'=>1))}">已解决的</a></else></if></li>
+				<li>&gt;</li>
+				<li>{$question['title']}</li>
+			</ul>
+			<div class="clear"></div>
+		</div>
+		<!-- 导航结束 -->
+		<div class="con_box">
+			<div class="left_box">
+   				<!--左侧用户信息-->
+   				<include file="__THEME__/public_left" />
+   			</div>
+   			<div class="right_box">
+				<div class="ask_box">
+					<include file="_detail_askbox" />
+					<div id="dt_content" style="display:none">{$question['content']}</div>
+					<div class="lndash_10">
+						<div class="textarea_10">
+							<iframe id="frame_1" width="95%" height="100%" scrolling="no" frameborder="0"></iframe>
+			        	</div>
+			        </div>
+					<script>
+						window.onload=function(){
+							jQuery("#dt_content").find("a").attr('target','_blank');
+							document.getElementById('frame_1').contentWindow.document.body.innerHTML =  document.getElementById('dt_content').innerHTML;
+							document.getElementById('frame_1').contentWindow.document.body.scrollHeight;
+							jQuery("#frame_1").height(document.getElementById('frame_1').contentWindow.document.body.scrollHeight+20);
+							jQuery("#frame_1").width(document.getElementById('frame_1').contentWindow.document.body.scrollWidth-10);
+						}
+					</script>
+					<div class="pl50 pt10 pb2 pb10 mycontent"></div>
+				</div>
+				<div class="ask_title">
+					<span><img src="__THEME__/app_icon/app_zxdy.png" /></span>
+					<span class="pl10 font3"><b>提问者采纳</b></span>
+				</div>
+				<div class="answear_box">
+					<volist name="answers" id="answer">
+						<if condition="$answer['is_best'] == 1">
+							<include file="_detail_answer" />
+							<div class="clear"></div>
+						</if>
+					</volist>
+				</div>
+				<if condition="count($answers) != 1">
+				<div class="ask_title">
+					<span class="font3"><b>其他<php>echo(count($answers) - 1);</php>条回答</b></span>
+				</div>
+				</if>
+				<volist name="answers" id="answer">
+					<if condition="$answer['is_best'] == 0">
+						<div class="answear_box">
+							<div class="box_left">
+								<if condition="$uid == $answer['uid']">
+									<a href="{:U('public/Profile/index', array('uid'=>$answer['uid']))}" >
+										<img src="{$answer['avatar_middle']}" />
+									</a>
+								<else />
+									<a href="{:U('public/Profile/index', array('uid'=>$answer['uid']))}" event-node="face_card" show="no" uid="{$answer["uid"]}">
+										<img src="{$answer['avatar_middle']}" />
+									</a>
+								</if>
+							</div>
+							<div class="left pl10" model-node = "answer">
+								<p>
+									<span class="blue">
+									<if condition="$uid == $answer['uid']">
+										<a href="{:U('public/Profile/index',array('uid'=>$answer['uid']))}">
+									<else />
+										<a href="{:U('public/Profile/index',array('uid'=>$answer['uid']))}" event-node="face_card" show="no" uid="{$answer["uid"]}">
+									</if>
+									{$answer['uname']}</a>
+									</span><span class="pl10">回答了此问题</span>
+								</p>
+								<div class="player_box">
+									<!-- <p class="pt10 pl10">答案详情信息</p> -->
+									<p class="pt5 pl10">{$answer['content']}</p>
+									<p class="player_sjx"></p>
+								</div>
+								<div class="comment">
+									<div id='agree{$answer["ansid"]}' rel='{$answer["agree_count"]|default="0"}' class="right2" onMouseover="this.className='right2_hov'" onMouseOut="this.className='right2'">
+										<php>if($uid == $answer['uid']){</php>
+											<span style="color:gray;cursor:default"><img src="__APP__/images/zan.gif" />赞({$answer['agree_count']|default = "0"})</span>
+										<php>} else if(!isset($agreeArray[$answer['ansid']])) { </php>
+										   <a href="javascript:void(0)" onclick="addAgree({$answer['ansid']})" ><img src="__APP__/images/zan.gif" />赞({$answer['agree_count']|default="0"})</a>
+										<php>}else{</php>
+										   <img src="__APP__/images/zan.gif" />已赞({$answer['agree_count']|default = "0"})
+										<php> } </php>
+							    	</div>
+    								<div class="right1 blue pl10 pr10"><a event-node ="comment" href= "javascript:void(0)" event-args ='row_id={$answer.ansid}&app_uid={$answer.uid}&to_comment_id=0&to_uid=0&app_name=public&table=onlineanswer_answer&canrepost=0&cancomment=1&cancomment_old=1&ajax_page=1' >{:L('PUBLIC_STREAM_COMMENT')} <neq name= 'answer.comment_count' value ='0' >({$answer.comment_count}) </neq></a></div>
+								</div>
+								<div model-node ="comment_detail" class= "repeat clearfix" style ="display:none;"></div>
+							</div>
+							<div class="clear"></div>
+							<php>if($i < (count($answers) - 1)){</php>
+								<div class="dash_line"></div>
+							<php>}</php>
+						</div>
+					</if>
+				</volist>
+			</div>
+			<div class="clear"></div>
+		</div>
+	</div>
+</div>
+<include file="__THEME__/public_footer" />

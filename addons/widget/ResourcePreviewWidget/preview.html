@@ -1,0 +1,205 @@
+<script type="text/javascript" src="__THEME__/js/jquery.media.js"></script>
+<script src="__THEME__/js/flowplayer/flowplayer-3.2.11.min.js" type="text/javascript"></script>
+<script src="__THEME__/js/flowplayer/swfobject.js" type="text/javascript"></script>
+<div id="no_preview" class="pre_font" id="no_preview" style="display:none;width:450px;height:352px;">
+  	<img alt="预览图片" src="__THEME__/image/no_preview.jpg" style="width:450px;height:352px;"/>
+</div>
+<div id="preview" style='display:block;width:450px;height:352px'>
+</div>	
+<script type="text/javascript">
+function ResourcePreview(){
+	
+	var _this = this;
+	
+	this.FLOW_PLAYER_URL = "__THEME__/js/flowplayer/flowplayer-3.2.16.swf";
+	this._extension = "";
+	this._previewUrl = "";
+	
+	this.execute = function(extension, previewUrl){
+		_this._extension = extension;
+		_this._previewUrl = previewUrl;
+		_this._filter(_this._extension);
+	};
+	this._filter = function(extension){
+		switch(extension.toLowerCase()){
+			case "jpg":
+			case "png":
+			case "gif":
+			case "jpeg":
+			case "bmp":
+				_this._viewImg(_this._previewUrl);
+			    break;
+			case "mp3":
+			case "ogg":
+			case "ape":
+			case "mid":
+			case "midi":
+				_this._viewAudio(_this._previewUrl);
+			 	break;
+			case "flv":
+			case "mp4":
+			case "mov":
+			case "m4v":
+			case "f4v":
+				_this._flowPlayerView(_this._previewUrl);//FlowPlayer支持的视频格式
+			 	break;
+			//Quicktime
+			case"mov":case"mpg":case"mpeg":case "3gp":case "wav":
+			//Windows Media Player
+			case "avi":case"wma":case"wmv":case "asx":case"asf":
+			//Real Player
+			case "ra":case "ram":case "rm":case "rpm":
+			case "rv":case "smi":case "smil":case "rpm":
+				 _this._jqueryMedia(_this._previewUrl);//jQueryMedia插件支持的格式
+				 break;
+
+			//flash
+			case "swf":
+				_this._viewSWF(_this._previewUrl);//jQueryMedia插件支持的格式
+				 break;
+			case "doc":
+			case "docx":
+			case "txt":
+			case "xlsx":
+			case "xls":
+			case "ppt":
+			case "pptx":
+			case "pdf":
+				 _this._viewOffice(_this._previewUrl);
+				 break;
+			default :
+			  jQuery("#preview").html("暂无预览");
+			  break;
+		}
+	};
+	this._viewImg = function(){
+		//暂未实现
+	};
+	this._viewAudio = function(){
+		//暂未实现
+	};
+	//预览FLV视频文件
+	this._flowPlayerView = function(){
+		var clazz = 'preview';
+		$('#'+clazz).css({
+			'width' : '450px',
+			'height' : '360px'
+		});
+		var strRegex = "^((https|http):\/\/)?" + "(([0-9]{1,3}\.){3}[0-9]{1,3}"
+				+ "|"
+				+ "([0-9a-zA-Z\u4E00-\u9FA5\uF900-\uFA2D-]+[.]{1})+[a-zA-Z-]+)"
+				+ "(:[0-9]{1,4})?"
+				+ "((/?)|(/[0-9a-zA-Z_!~*'().;?:@&=+$,%#-]+)+/?){1}";
+		var re = new RegExp(strRegex);
+		var url = _this._previewUrl;// fileurl.replace(re, "");
+		$f(clazz, "__THEME__/js/flowplayer/flowplayer-3.2.16.swf", {
+			clip: {	url: url, scaling: "fit",autoPlay:false},
+			plugins: {
+				controls: {
+					autoHide: false,
+					url: "__THEME__/js/flowplayer/flowplayer.controls-3.2.15.swf"
+				}
+			}
+		});
+//		jQuery("#preview").append("<a id=\"media\" style='margin:auto' href='" + _this._previewUrl + "' ></a>");
+//		flowplayer("media", _this.FLOW_PLAYER_URL, {clip:{autoPlay: false, autoBuffering: true}});
+	};
+	this._jqueryMedia = function(){
+		jQuery("#preview").append("<a class=\"media\" style='margin:auto;z-index: -1;' href='" + _this._previewUrl + "' ></a>");
+		$('.media').media({ 
+		    width:     450, 
+		    height:    352, 
+		    autoplay:  true, 
+		    attrs:     { attr1:  'attrValue1',  attr2:  'attrValue2' },  // object/embed attrs 
+		    params:    { BufferingTime: 5, windowlessVideo: 1}, // object params/embed attrs 
+		    caption:   false // supress caption text 
+		});
+	};
+	//预览SWF动画
+	this._viewSWF = function(){
+		var flashvars = {};
+		var params = {};
+		params.bgcolor = "#FFFFFF";
+		params.menu = "false";
+		params.quality = "high";
+		params.play = "true";
+		params.loop = "true";
+		params.scale = "1";
+		params.wmode = "Opaque";
+		params.devicefont = "false";
+		params.allowfullscreen = "true";
+		params.allowscriptaccess = "always";
+		params.align = "middle";
+		var attributes = {};
+		swfobject.embedSWF(_this._previewUrl, "preview", "450", "352", "9.0.0", "_THEME__/js/flowplayer/expressInstall.swf", flashvars, params, attributes);
+	};
+	this._viewOffice = function(){
+		//暂未实现
+	};
+	//保留
+	this._checkplugin = function(extension){
+		if(window.navigator.userAgent.indexOf("MSIE")!=-1){
+			//如果是IE浏览器
+			if(resview.CheckMediaVersion()>11){
+			    jQuery(".media").media({width:737,height:530,params:{wmode:"opaque"}});
+			    jQuery(".media").css({margin:"auto"});
+			}else{
+				if(extension=="asf"||extension=="wmv"){
+					jQuery(".media").media({width:737,height:530,params:{wmode:"opaque"}});
+					jQuery(".media").css({margin:"auto"}); 
+				}else{
+					alert("系统检测到您的MediaPlayer版本过低,无法播放该文件");
+				}
+			}
+	    }else{
+	    	//非IE浏览器
+			if(resview.isFirefoxWMPPluginInstalled()){
+				jQuery(".media").media({width:737,height:530});
+				jQuery(".media").css({margin:"auto"});
+			}
+			else{
+				jQuery("#preview").append("<strong>预览该文件需要media player plugin<a href='http://www.interoperabilitybridges.com/windows-media-player-firefox-plugin-download'><span style='color:red;font-size:20px'>点击安装</span></a>,并重启浏览器</strong>");
+			}
+	    }
+	}
+	//保留
+	this._CheckMediaVersion = function(){
+		var flash = ""; 
+	    WMPVersion= oClientCaps.getComponentVersion("{22D6F312-B0F6-11D0-94AB-0080C74C7E95}","ComponentID");  
+	    if (WMPVersion != ""){ }
+	    flash = ""; 
+	    var version = WMPVersion.split(","); 
+	    var i; 
+	    for (i = 0; i < version.length; i++){
+	      if (i != 0) 
+	       flash += "."; 
+	       flash += version[i]; 
+	    } 
+	    return flash.substring(0,2);
+	}
+	//保留
+	this._isFirefoxWMPPluginInstalled = function(){
+		var plugs = navigator.plugins;
+		for (var i = 0; i < plugs.length; i++) {
+			var plugin = plugs[i];
+			if (plugin['filename'] == 'np-mswmp.dll')
+				return true;
+		}
+		return false;
+	}
+}
+
+jQuery(function(){
+	var extension = "<php>echo $extension;</php>";
+	var previewUrl = "<php>echo $previewUrl;</php>";
+	if(previewUrl == false){
+		//如果预览地址为空，或者不存在
+		jQuery("#no_preview").css("display", "block");
+		jQuery("#preview").css("display", "none");
+	}else{
+		//正常预览
+		var resourcePreview = resourcePreview || new ResourcePreview();
+		resourcePreview.execute(extension, previewUrl);
+	}
+});
+</script>

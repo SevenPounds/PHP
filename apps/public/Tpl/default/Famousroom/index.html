@@ -1,0 +1,374 @@
+<include file="__THEME__/public_header" />
+<link href="__APP__/main.css" rel="stylesheet" type="text/css" />
+<link href="__APP__/common.css" rel="stylesheet" type="text/css" />
+<link href="__APP__/style_center.css" rel="stylesheet" type="text/css" />
+<link href="__APP__/css/jquery.slideBox.css" rel="stylesheet" type="text/css" />
+<div class="in_bg2  wy_font">
+<div id="wrapper">
+	<div style="height:122px;width:1001px;">
+		<img alt="" src="__APP__/image/top_img.png">
+	</div>
+	<!-- <div class="clear:both;"></div> -->
+    <div class="mainnav">
+        <ul>
+            <li class="mainnav_nor" onmouseover="this.className='mainnav_hov'" onmouseout="this.className='mainnav_nor'">首页</li>
+            <li class="mainnav_line"></li>
+            <li class="mainnav_nor" onmouseover="this.className='mainnav_hov'" onmouseout="this.className='mainnav_nor'">关于我们</li>
+            <li class="mainnav_line"></li>
+            <li class="mainnav_nor" onmouseover="this.className='mainnav_hov'" onmouseout="this.className='mainnav_nor'">课题研究</li>
+            <li class="mainnav_line"></li>
+            <li class="mainnav_nor" onmouseover="this.className='mainnav_hov'" onmouseout="this.className='mainnav_nor'">相关资源</li>
+            <li class="mainnav_line"></li>
+            <div class="clear"></div>
+        </ul>
+        <div class="wy_serch">
+            <input type="text" />
+            <a href="#">站内搜索</a>
+        </div>
+    </div>
+<style>
+.title{
+	font-size:12px;
+}
+</style>
+<div class="posbox">&nbsp;&nbsp;您现在的位置：<a href="#" class="blue">{$location[2]['name']}{$grade}{$subject}<php>if($rolelist&&!empty($rolelist)){</php><volist name='rolelist' id='vo' offset='0' length='1'>{$vo.name}</volist><php>}</php>{$user_info['uname']}工作室</a>&gt;&nbsp;<span class="sgray">首页</span>
+	</div>
+    
+     <div class="ts_box">
+        <div class="left">
+        
+         <div class="wy_teaIndu">
+				<div class="wy_tItit">
+					<p>工作室介绍</p>
+				</div>
+				<dl>
+					<dt class="left">
+						<img src="__APP__/image/gzs_logo.jpg" width="99"
+							height="99" />
+					</dt>
+					<dd class="left">
+						    <span>
+						                 创建者:<fontclass="red"></font>
+						    </span> 
+							<span>
+							    成员数:<font class="red"></font>
+							</span> 
+						    <span>
+						                 关注者:<fontclass="red"></font>
+						    </span> 
+							<span>
+							    访问量:<font class="red"></font>
+							</span>
+					</dd>
+					<div class="clear"></div>
+				</dl>
+				<div class="wy_teaIntro">
+					
+				</div>
+			</div>
+			
+            <div class="wy_teaIndu">
+                <div class="wy_tItit">
+					<span class="right" style="margin-right:4px;">更多</span><span class="left"><p>工作室成员</p></span>
+				</div>
+               <div class="wy_tFocus mt10">
+						<ul id="following_list">
+						  <volist name="members" id="val">
+							<li>
+							<a href="{:U('public/Profile/index',array('uid'=>$val['uid']))}" uid="{$val['uid']}" event-node="face_card">
+							<img src="{$val['avatar_small']}" /></a>
+							<a href="{:U('public/Profile/index',array('uid'=>$val['uid']))}" class="face" uid="{$val['uid']}" event-node="face_card"><span>{$val['uname']|getShort=3}</span></a>
+							</li>
+						   </volist>
+						</ul>
+						<div class="clear"></div>
+					</div>
+            </div>
+            <div class="wy_teaIndu mt10">
+                <div class="wy_tItit">
+                    <p>最新动态</p>
+                </div>
+                <div class="wy_tNewT">
+                    <ul>
+	                        <li class="wy_line">
+	                            <a href="{:U('public/Workroom/index',array('uid'=>2))}" uid="2" event-node="face_card" show="no"><img class="wy_tNewT_li_img" src="__APP__/image/original_50_50.jpg" /></a>
+	                            <div style="width:204px;">
+	                                <div><a href="{:U('public/Workroom/index',array('uid'=>$uid))}" uid="{$uid}" event-node="face_card" show="no">人人通项目组老刘</a></div>
+	                                <div>我们要搞项目活动了</div>
+	                            </div>
+	                            <div class="clear"></div>
+	                        </li>
+	                        <li class="wy_line">
+	                            <a href="{:U('public/Workroom/index',array('uid'=>2))}" uid="2" event-node="face_card" show="no"><img class="wy_tNewT_li_img" src="__APP__/image/original_50_50.jpg" /></a>
+	                            <div style="width:204px;">
+	                                <div><a href="{:U('public/Workroom/index',array('uid'=>$uid))}" uid="{$uid}" event-node="face_card" show="no">人人通项目组老刘</a></div>
+	                                <div>我们要搞项目活动了</div>
+	                            </div>
+	                            <div class="clear"></div>
+	                        </li>
+	                        <li class="wy_line">
+	                            <a href="{:U('public/Workroom/index',array('uid'=>2))}" uid="2" event-node="face_card" show="no"><img class="wy_tNewT_li_img" src="__APP__/image/original_50_50.jpg" /></a>
+	                            <div style="width:204px;">
+	                                <div><a href="{:U('public/Workroom/index',array('uid'=>$uid))}" uid="{$uid}" event-node="face_card" show="no">人人通项目组老刘</a></div>
+	                                <div>我们要搞项目活动了</div>
+	                            </div>
+	                            <div class="clear"></div>
+	                        </li>
+	                        <li class="wy_line">
+	                            <a href="{:U('public/Workroom/index',array('uid'=>2))}" uid="2" event-node="face_card" show="no"><img class="wy_tNewT_li_img" src="__APP__/image/original_50_50.jpg" /></a>
+	                            <div style="width:204px;">
+	                                <div><a href="{:U('public/Workroom/index',array('uid'=>$uid))}" uid="{$uid}" event-node="face_card" show="no">人人通项目组老刘</a></div>
+	                                <div>我们要搞项目活动了</div>
+	                            </div>
+	                            <div class="clear"></div>
+	                        </li>
+	                        <li class="wy_line">
+	                            <a href="{:U('public/Workroom/index',array('uid'=>2))}" uid="2" event-node="face_card" show="no"><img class="wy_tNewT_li_img" src="__APP__/image/original_50_50.jpg" /></a>
+	                            <div style="width:204px;">
+	                                <div><a href="{:U('public/Workroom/index',array('uid'=>$uid))}" uid="{$uid}" event-node="face_card" show="no">人人通项目组老刘</a></div>
+	                                <div>我们要搞项目活动了</div>
+	                            </div>
+	                            <div class="clear"></div>
+	                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="wy_teaIndu mt10">
+                <div class="wy_tItit">
+                    <p>最近来访</p>
+                </div>
+                <div class="wy_tFocus mt10">
+                        <ul>
+                           <volist name="members" id="val">
+								<li>
+								<a href="{:U('public/Profile/index',array('uid'=>$val['uid']))}" uid="{$val['uid']}" event-node="face_card">
+								<img src="{$val['avatar_small']}" /></a>
+								<a href="{:U('public/Profile/index',array('uid'=>$val['uid']))}" class="face" uid="{$val['uid']}" event-node="face_card"><span>{$val['uname']|getShort=3}</span></a>
+								</li>
+							</volist>
+						</ul>
+						<div class="clear"></div>
+                </div>
+            </div>
+        </div>
+        <div class="right">
+        
+            <div class="wy_teaTrends">
+                <div class="wy_teaTrecon">
+                
+                          <div id="carousel" class="slideBox">
+  								<ul class="items">
+    								<li><a href="#" title="安徽云资源平台一"><img style="width:355px; height:175px;" src="__APP__/image/carousel1.jpg"></a></li>
+    								<li><a href="#" title="安徽云资源平台二"><img style="width:355px; height:175px;" src="__APP__/image/carousel2.jpg"></a></li>
+   									<li><a href="#" title="安徽云资源平台三"><img style="width:355px; height:175px;" src="__APP__/image/carousel3.jpg"></a></li>
+    								<li><a href="#" title="安徽云资源平台四"><img style="width:355px; height:175px;" src="__APP__/image/carousel4.jpg"></a></li>
+    								<li><a href="#" title="安徽云资源平台五"><img style="width:355px; height:175px;" src="__APP__/image/carousel5.jpg"></a></li>
+  								</ul>
+						 </div>
+                    
+                    <div class="wy_teaTpart wy_w355">
+                        <div class="tea_tItit3">
+                            <p class="left blue">活动通知</p>
+                            <div class="right">
+                                <a href="#">更多</a>
+                                <span><img src="__APP__/images/icon_right.gif"/></span>
+                            </div> 
+                        </div>
+                        <ul>
+                        	<volist name="teachware" id="in_vo">
+	                        <li><a href="{:U('public/Workroom/preview', array('uid'=>$uid,'type'=>4,'appcode'=>'0600','id'=>$in_vo['rid']))}" class="left" title="{$in_vo['title']}">{$in_vo['title']|mStr=###,16}</a><span class="right">{$in_vo['uploaddateline']}</span></li>
+                        	</volist>
+                        </ul>
+                    </div>
+                    <div class="clear"></div>
+                </div>
+        	</div>
+        
+            <div class="wy_teaTrends mt10">
+        
+                <div class="wy_tItit2">
+                    <p>课题研究</p>
+                </div>
+                <div class="wy_teaTrecon">
+                    <div class="wy_teaTpart wy_w355">
+                        <div class="tea_tItit3">
+                            <p class="left blue">工作动态</p>
+                            <div class="right">
+                                <a href="#">更多</a>
+                                <span><img src="__APP__/images/icon_right.gif"/></span>
+                            </div> 
+                        </div>
+                        <ul>
+	                        <volist name="teachdesign" id="in_vo">
+		                        <li><a href="{:U('public/Workroom/preview', array('uid'=>$uid,'type'=>1,'appcode'=>'0100','id'=>$in_vo['rid']))}" class="left" title="{$in_vo['title']}">{$in_vo['title']|mStr=###,16}</a><span class="right">{$in_vo['uploaddateline']}</span></li>
+	                        </volist>
+                        </ul>
+                    </div>
+                    
+                    <div class="wy_teaTpart wy_w355">
+                        <div class="tea_tItit3">
+                            <p class="left blue">研究成果</p>
+                            <div class="right">
+                                <a href="#">更多</a>
+                                <span><img src="__APP__/images/icon_right.gif"/></span>
+                            </div> 
+                        </div>
+                        <ul>
+                        	<volist name="teachware" id="in_vo">
+	                        <li><a href="{:U('public/Workroom/preview', array('uid'=>$uid,'type'=>4,'appcode'=>'0600','id'=>$in_vo['rid']))}" class="left" title="{$in_vo['title']}">{$in_vo['title']|mStr=###,16}</a><span class="right">{$in_vo['uploaddateline']}</span></li>
+                        	</volist>
+                        </ul>
+                    </div>
+                    <div class="clear"></div>
+                </div>
+        	</div>
+        
+            <div class="wy_teaTrends mt10">
+             <div class="wy_tItit2">
+                <p>关于我们</p>
+            </div>
+            <div class="wy_teaTrecon">
+                <div class="wy_teaTpart wy_w355">
+                    <div class="tea_tItit3">
+                        <p class="left blue">工作室介绍</p>
+                        <div class="right">
+                            <a href="#">更多</a>
+                            <span><img src="__APP__/images/icon_right.gif"/></span>
+                        </div> 
+                    </div>
+                    <ul>
+                    <volist name="teach_diaries" id="vo">
+                    <li><a  href="{:U('public/Workroom/summary_preview', array('pid'=>$vo['id'],'uid'=>$vo['uid'],'type'=>1))}" class="left" title="{$vo.title}">{$vo.title|mStr=###,20}</a><span class="right"><php>echo(date("Y-m-d",$vo['cTime']))</php></span></li>
+                    </volist> 
+                    </ul>
+                </div>
+               
+                <div class="wy_teaTpart wy_w355">
+                    <div class="tea_tItit3">
+                        <p class="left blue">工作室成员</p>
+                        <div class="right">
+                            <a href="#">更多</a>
+                            <span><img src="__APP__/images/icon_right.gif"/></span>
+                        </div> 
+                    </div>
+                    <ul>
+                      <volist name="teach_reflec" id="vo">
+                    <li><a href="{:U('public/Workroom/summary_preview', array('pid'=>$vo['id'],'uid'=>$vo['uid'],'type'=>2))}" class="left" title="{$vo.title}">{$vo.title|mStr=###,20}</a><span class="right"><php>echo(date("Y-m-d",$vo['cTime']))</php></span></li>
+                    </volist>                     </ul>
+                </div>
+                
+                <div class="wy_teaTpart wy_w355" style="width:720px;">
+                    <div class="tea_tItit3">
+                        <p class="left blue">荣誉室</p>
+                        <div class="right">
+                            <a href="#">更多</a>
+                            <span><img src="__APP__/images/icon_right.gif"/></span>
+                        </div> 
+                    </div>
+                    <ul>
+                      <volist name="teach_reflec" id="vo">
+                    <li><a href="{:U('public/Workroom/summary_preview', array('pid'=>$vo['id'],'uid'=>$vo['uid'],'type'=>2))}" class="left" title="{$vo.title}">{$vo.title|mStr=###,20}</a><span class="right"><php>echo(date("Y-m-d",$vo['cTime']))</php></span></li>
+                    </volist>                     </ul>
+                </div>
+                <div class="clear"></div>
+            </div>
+            
+            </div>
+            
+            <div class="wy_teaTrends mt10">
+                <div class="wy_tItit2">
+                    <p>相关资源</p>
+                </div>
+                <div class="wy_teaTrecon">
+                    <div class="wy_teaTpart wy_w355">
+                        <div class="tea_tItit3">
+                            <p class="left blue">教学设计</p>
+                            <div class="right">
+                                <a href="#">更多</a>
+                                <span><img src="__APP__/images/icon_right.gif"/></span>
+                            </div> 
+                        </div>
+                        <ul>
+                        	<volist name="researchs" id="research">
+                        		 <li>
+                        		 	<a href="{:U('research/Index/show',array('id'=>$research['id']))}" title="{$research['title']}" class="left">{$research['title']|getShort=20,'...'}</a>
+                        		 	<span class="right">{$research['createtime']|date='Y-m-d',###}</span>
+                        		 </li>
+                        	</volist>
+                        </ul>
+                    </div>
+                    
+                    <div class="wy_teaTpart wy_w355">
+                        <div class="tea_tItit3">
+                            <p class="left blue">教学课件</p>
+                            <div class="right">
+                                <a href="#">更多</a>
+                                <span><img src="__APP__/images/icon_right.gif"/></span>
+                            </div> 
+                        </div>
+                        <ul>
+                        	<volist name="questions" id="question">
+                        		 <li>
+                        		 	<a href="{:U('onlineanswer/Index/detail',array('qid'=>$question['qid']))}" title="{$question['title']}" class="left">{$question['title']|getShort=20,'...'}</a>
+                        		 	<span class="right">{$question['ctime']|date='Y-m-d',###}</span>
+                        		 </li>
+                        	</volist>
+                        </ul>
+                    </div>
+                    <div class="clear"></div>
+                    <div class="wy_teaTpart wy_w355">
+                        <div class="tea_tItit3">
+                            <p class="left blue">教学视频</p>
+                            <div class="right">
+                                <a href="javascript:void(0)">更多</a>
+                                <span><img src="__APP__/images/icon_right.gif"/></span>
+                            </div> 
+                        </div>
+                        <ul>
+                        
+                        </ul>
+                    </div>
+                    
+                    <div class="wy_teaTpart wy_w355">
+                        <div class="tea_tItit3">
+                            <p class="left blue">媒体素材</p>
+                            <div class="right">
+                                <a href="javascript:void(0)">更多</a>
+                                <span><img src="__APP__/images/icon_right.gif"/></span>
+                            </div> 
+                        </div>
+                        <ul>
+                          
+                        </ul>
+                    </div>
+                    <div class="clear"></div>
+                </div>
+            </div>
+            
+        </div>
+        <div class="clear"></div>
+    </div>
+    
+</div>
+</div>
+<script src="__APP__/js/jquery.slideBox.min.js" type="text/javascript"></script>
+<script>
+	function changeRoleMenu(obj)
+	{
+		jQuery("#followMenu li").each(function(){
+			jQuery(this).removeClass('current') ;	
+		}); 
+		jQuery("#following_list").css('display','none') ;
+		jQuery("#follower_list").css('display','none') ;
+		jQuery('#'+obj.id).addClass('current');
+		jQuery('#'+obj.id+'st').css('display','block');
+	}
+</script>
+<script>
+jQuery(function($){
+	$('#carousel').slideBox({
+		hideClickBar : false,//不自动隐藏点选按键
+	});
+});
+</script>
+<include file="__THEME__/public_footer" />

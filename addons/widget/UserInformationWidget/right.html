@@ -1,0 +1,199 @@
+<style>
+	.one,.two,.three{
+		position: relative;
+	    top:-3px;
+	}
+    .one{
+        background: url(__THEME__/image/circle.png) no-repeat center center;
+        width: 18px;
+    	height:18px;
+    	
+    }
+    .two{
+        background: url(__THEME__/image/circle01.png) no-repeat center center;
+        width: 25px;
+    	height:18px;
+    }
+    .three{
+        background: url(__THEME__/image/circle02.png) no-repeat center center;
+        width: 29px;
+    	height:18px;
+    }
+</style>
+<script type="text/javascript">
+$(document).ready(function(){
+	 $('#search_friend').focus(function(){
+		 if(this.value=="输入想要搜索的好友姓名"){
+			  this.value='';
+		 }
+	  });
+	  $('#search_friend').blur(function(){
+		  if(this.value==""||this.value.replace(/[ ]/g,"")==""){
+			  this.value='输入想要搜索的好友姓名';
+		  }
+	  });
+	  // $(document).keyup(function(event) {
+			// if (event.keyCode == 13) {
+			// 	submit_search_friend();
+			// }
+	  // });
+});
+ 
+function submit_search_friend(){
+	 var serach_val=$('#search_friend').val();
+	 var search_values =serach_val.replace(/[ ]/g,"");
+	 if(search_values==''||serach_val==""||serach_val=="输入想要搜索的好友姓名"){
+	     return ;
+	 }else{
+		 window.location.href=U("public/Search/index")+'&k='+serach_val;
+	 }
+
+}
+
+
+</script>
+
+<div class="user_avatar_wrap person-info clearfix border-b mb20" style="margin:0px;padding:10px 0 10px 0;"><!--20150303 edit yinWang 修改标签添加在页面的样式-->
+    <dl class="person-info-t clearfix mb20 avatar_inner left" style="margin:0 10px;"><!--20150303 edit yinWang 修改标签添加在页面的样式-->
+        <dt>
+            <img src="{$userInfo.avatar_big}">
+            <!--<a href="{:U('public/Account/avatar')}" class="face">更换头像</a>--><!--20160308 edit qiangjia 将个人设置的入口屏蔽掉-->
+        </dt>
+    </dl>
+    <div class="user_detail">
+        <p class="name" style="height: 18px;line-height: 18px;">
+           <a href="{$userInfo.space_url}" title="{$userInfo.uname}">
+            	<b style="top:0;">{$userInfo.uname|mStr=###,4}</b>
+            </a>
+        </p>
+        
+        <p class="name" style="height: 18px;line-height: 18px;">
+            <if condition="$managerLevel eq 'city'">
+            	市级管理员
+            <elseif condition="$managerLevel eq 'district'"/>
+            	区县管理员
+           	<elseif condition="$managerLevel eq 'school'"/>
+           		学校管理员
+           	<elseif condition="$managerLevel eq 'province'"/>
+           		省级管理员
+            <else />
+            	{$managerLevel}
+            </if>
+        </p>
+        
+        
+     
+        <p class="city" style="margin-top: 0;">
+            <php>if(!empty($curRoleEnName)):</php>
+              <a href="{:U('public/Workroom/index')}" class="house">我的主页</a>
+            <php>else:</php>
+            <php>endif;</php>
+        </p>
+        <div class="clear"></div>
+    </div>
+    <div class="clearfix interest">
+        <div class="fl interest01">
+        	<a href="{:U('public/Profile/following')}">
+            	<span title="{$userData.following_count|default=0}"> 
+            		{$userData['following_count']|default=0}
+            	</span>
+            	<br>关注
+            </a>
+        </div>
+        <div class="fl fans">
+            <a href="{:U('public/Profile/follower')}">
+        		<span style="display:inline-block;position:relative;" title="{$userData.follower_count|default=0}">
+        			{$userData.follower_count|default=0}
+                    <span class="">
+	             		<span id="new_follower_total"></span>
+           			</span>
+        		</span>
+                <br>粉丝
+            </a>
+        </div>
+        <div class="fl integral">
+            <a href="javascript:void(0)" style="cursor:default">
+                <!--<a href="{:U('public/Credit/index')}">-->
+            	 <span style="display:inline-block;position:relative;" title="{$userCredit.credit.score.value|default=0}">
+        			<php>$score_value =$userCredit['credit']['score']['value']>999999?'999999+':$userCredit['credit']['score']['value']; </php>
+        				{$score_value|default=0}
+       			 </span>
+            	<br>积分
+            </a>
+        </div>
+    </div>
+    <div class="clear"></div>
+</div>
+<!-- <div class="input_box clearfix">
+    <input value="输入想要搜索的好友姓名" id="search_friend" type="text">
+    <a href="javascript:void(0);" onclick="submit_search_friend();"><i></i></a>
+</div> -->
+<div class="clear"></div>
+<script type="text/javascript">
+// 事件监听
+M.addEventFns({
+	ico_level_right: {
+		load: function() {
+			var offset = $(this).offset();
+			var top = offset.top + 23;
+			var left = offset.left -10;
+			var html = '<div id="layer_level_right" class="layer-open experience" style="display:none;position:absolute;z-index:9;top:'+top+'px;left:'+left+'px;">\
+						<dl>\
+						<dd>{:L('PUBLIC_USER_LEVEL')}：{$userCredit.level.name}</dd>\
+						<dd>{:L('PUBLIC_USER_POINTS_CALCULATION',array('num'=>$userCredit['credit']['experience']['value'],'experience'=>$userCredit['creditType'][$userCredit['level']['level_type']]))}</dd>\
+						<dd class="textb">{:L('PUBLI_USER_UPGRADE_TIPS',array('num'=>$userCredit['level']['nextNeed'],'experience'=>$userCredit['creditType'][$userCredit['level']['level_type']]))}</dd>\
+						</dl>\
+						</div>';
+			$("body").append(html);
+
+			this._model = document.getElementById("layer_level_right");
+		},
+		mouseenter: function() {
+			var offset = $(this).offset();
+			var width = $(window).width();
+			if ($(window).width() > $(this._model).width() + offset.left) {
+				$(this._model).css('left', offset.left);
+			} else {
+				$(this._model).css('left', offset.left - $(this._model).width() + $(this).width());
+			}
+			$(this._model).css('display', 'block');
+		},
+		mouseleave: function() {
+			$(this._model).css('display', 'none');
+		}
+	},
+	ico_wallet_right: {
+		load: function() {
+			var offset = $(this).offset();
+			var top = offset.top + 23;
+			var left = offset.left - 20;
+			var html = '<div id="layer_wallet_right" class="layer-open scale" style="display:none;position:absolute;top:'+top+'px;left:'+left+'px;">\
+						<dl>\
+						<dt></dt>\
+						<dd>{:L('PUBLIC_USER_POINTS_CALCULATION',array('num'=>intval($userCredit['credit']['score']['value']),'experience'=>$userCredit['creditType']['score']))}</dd>\
+						</dl>\
+						</div>';
+			$("body").append(html);
+			this._model = document.getElementById("layer_wallet_right");
+		},
+		mouseenter: function() {
+			$(this._model).css('display', 'block');
+		},
+		mouseleave: function() {
+			$(this._model).css('display', 'none');
+		}
+	},
+	show_medal:{
+		click:function (){
+			var status = $(this).children().attr('class');
+			if ( status == 'arrow-next-page'){
+				$(this).children().attr('class','arrow-previous-page');
+				$("li[status='hide']").show();
+			} else {
+				$(this).children().attr('class','arrow-next-page');
+				$("li[status='hide']").hide();
+			}
+		}
+	}
+}); 
+</script>

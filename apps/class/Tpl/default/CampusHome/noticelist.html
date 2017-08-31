@@ -1,0 +1,105 @@
+<include file="__THEME__/public_header" />
+<link href="__APP__/css/fonts.css" rel="stylesheet" type="text/css" />
+<link href="__APP__/css/main.css" rel="stylesheet" type="text/css" />
+<div class="cloud">
+	<include file="__THEME__/public_class_menu" />
+	<div class="content">
+		<div class="s_banner">
+			<p class="font5 pt50 ml30"><b>{$org.name}<span class="font4 ml20">{$org['area'][1]['name']} {$org['area'][2]['name']}  {$org['area'][3]['name']}</b></span></p>
+		</div>
+		<include file="_left" />
+		<div class="s_right" >
+			<div class="title4">
+				<span class="left pl20"><b>学校公告列表</b></span>
+				<span class="more2"><a href="{$org.spaceurl}"><span class="green">返回学校主页</span></a></span>
+				<div class="clear"></div>
+				<p class="line2"></p>
+			</div>
+		    <table cellpadding="0" cellspacing="0" border="0" class="online_table3">
+				<tr class="online_tabletop">
+					<th width="4%" class="pl5"><p>序号</p></th>
+					<th width="1%"><img src="__APP__/images/th_line.jpg" /></th>
+					<th width="40%">公告名称</th>
+					<th width="1%"><img src="__APP__/images/th_line.jpg" /></th>
+					<th width="7%">
+						<div class="left pl10" style="line-height:26px;">浏览量</div>
+						<div class="left pl5">
+							<p class="pt4">
+								<a href="javascript:orderViewcount('{$order}');">
+									<if condition="$order == 'uv'">
+										<img src="__APP__/images/time_up.gif" />
+										<elseif condition="$order == 'dv'" /><img src="__APP__/images/time_down.gif" />
+										<else /><img src="__APP__/images/time_dis.gif" />
+									</if>
+								</a>
+							</p>
+						</div>
+						<div class="clear"></div>
+					</th>
+					<th width="1%"><img src="__APP__/images/th_line.jpg" /></th>
+					<th width="10%">
+						<div class="left pl20" style="line-height:26px;">发布时间</div>
+						<div class="left pl5">
+							<p class="pt4">
+								<a href="javascript:orderTime('{$order}');">
+									<if condition="$order == 'ut'">
+										<img src="__APP__/images/time_up.gif" />
+										<elseif condition="$order == 'dt'" /><img src="__APP__/images/time_down.gif" />
+										<else /><img src="__APP__/images/time_dis.gif" />
+									</if>
+								</a>
+							</p>
+						</div>
+						<div class="clear"></div>
+					</th>
+				</tr>
+				<volist name="list" id="vo">
+					<tr <if condition="$i%2 neq 0">style="background:#fff"<else />style="background:#f6f6f6"</if>>
+						<td align="center" class="pl5">{$j+$i}</td>
+						<td></td>
+						<td align="left" class="green2 pl10"><a href="{:U('class/CampusHome/detailNotice',array('cid'=>$cid,'id'=>$vo['id']))}">{$vo.title}</a></td>
+						<td></td>
+						<td align="center">{$vo.viewcount}</td>
+						<td></td>
+						<td align="center"><php>echo(date('Y-n-d',$vo['ctime']));</php></td>
+					</tr>
+				</volist>
+			</table>
+			<div class="online_page">
+				<div class="page">
+					{$page}
+				</div>
+			</div>
+		</div>
+		<div class="clear"></div>
+	</div>
+</div>
+<script type="text/javascript">
+/**
+ * 时间排序
+ */
+function orderTime(order){
+	switch(order){
+	case 'ut':order = 'dt';break;
+	case 'dt':order = 'ut';break;
+	default:order = 'dt';break;
+	}
+	
+	window.location.href = "index.php?app=class&mod=CampusHome&act=indexNotice&cid="+{$cid}+"&order="+order+"&flag=1";
+}
+
+/**
+ * 浏览量排序
+ */
+function orderViewcount(order){
+	switch(order){
+	case 'uv':order = 'dv';break;
+	case 'dv':order = 'uv';break;
+	default:order = 'dv';break;
+	}
+	
+	window.location.href = "index.php?app=class&mod=CampusHome&act=indexNotice&cid="+{$cid}+"&order="+order+"&flag=1";
+}
+
+</script>
+<include file="__THEME__/public_footer" />

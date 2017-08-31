@@ -1,0 +1,43 @@
+<include file="__THEME__/public_header" />
+<link href="__APP__/css/fonts.css" rel="stylesheet" type="text/css" />
+<link href="__APP__/css/main.css" rel="stylesheet" type="text/css" />
+<div class="cloud">
+	<include file="__THEME__/public_class_menu" />
+	<div class="content">
+	    <include file="_top" />
+		<div class="class_info">
+			<div class="bj_left" id="homeworkcontent">
+				
+			</div>
+			<include file="_right" />
+		<div class="clear"></div>
+		</div>
+	</div>
+</div>
+	
+</div>
+<include file="__THEME__/public_footer" />
+<script type="text/javascript">
+var Homework=Homework||{};
+Homework.uid=UID;
+Homework.cid='<php> echo $classId;</php>';
+/**
+ * 初始化班级作业列表
+ */
+Homework.init=function(page,cid){
+	$.ajax({
+		type: "POST",
+		url: U('class/Ajax/getClassHomework'),
+		data:{"cid":cid,'p':page},
+		success:function(msg){
+			$("#homeworkcontent").html("").html(msg);
+		},
+		error:function(msg){
+			ui.error(msg);
+		}
+	});
+}
+jQuery(document).ready(function(){
+	Homework.init(1,Homework.cid);
+});
+</script>

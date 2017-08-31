@@ -1,0 +1,115 @@
+<style type="text/css">
+.pop_title {
+    font-size: 14px;
+    font-weight: bold;
+    line-height: 32px;
+    padding-left: 15px;
+}
+.pop_cont {
+    padding: 10px 15px;
+}
+.pop_tex {
+    line-height: 24px;
+    margin-bottom: 10px;
+}
+
+.pop_tex .textfield {
+    background: none repeat scroll 0 0 #FFFFFF;
+    border: 1px solid #CCCCCC;
+    color: #666666;
+    height: 24px;
+    line-height: 24px;
+    padding: 0 10px;
+    width: 200px;
+}
+input {
+    font-size: 12px;
+}
+.pop3 .pop_tex .textfield_l {
+    background: none repeat scroll 0 0 #FFFFFF;
+    border: 1px solid #CCCCCC;
+    color: #666666;
+    float: left;
+    height: 100px;
+    line-height: 24px;
+    outline: medium none;
+    padding: 0 10px;
+    resize: none;
+    width: 370px;
+}
+.pop_under {
+    height: 26px;
+    padding: 0 0 20px 140px;
+}
+
+.pop_under_btn {
+    float: left;
+    height: 26px;
+    margin-right: 20px;
+    width: 70px;
+}
+.pop_under input {
+    float: left;
+    margin-right: 20px;
+}
+.pop_under_btn input {
+    border: 1px solid #BEBEBE;
+    cursor: pointer;
+    font-size: 12px;
+    height: 26px;
+    line-height: 26px;
+    width: 70px;
+}
+.pop_under_btn01 {
+    background: none repeat scroll 0 0 #F4F4F4;
+    color: #666666;
+}
+.pop_under_btn02 {
+    background: none repeat scroll 0 0 #E7F2FF;
+    color: #3687DA;
+}
+
+element.style {
+    background: none repeat scroll 0 0 transparent;
+}
+.pop3 .select {
+    border: 1px solid #CCCCCC;
+    height: 24px;
+    line-height: 24px;
+    width: 120px;
+}
+.ps, select {
+    padding: 2px 2px 2px 1px;
+}
+</style>
+<div style="width:422px;">
+<table cellspacing="0" cellpadding="0" class="fwin">
+	<tbody>
+	<tr>
+	<td id="fwin_content_id_win_updateResWin" class="m_c" fwin="id_win_updateResWin">
+		<div class="pop3">
+		<div class="pop_cont">
+		<input type="hidden" id="answer_qid" value="{$qid}"/>
+		<input type="hidden" id="ansid" value="{$ansid}"/>
+		<div class="pop_tex">
+		<div class="text_l">答案描述：</div>
+			  <textarea class="textfield_l" cols="4" name="textfield" id="txl_describe" fwin="id_win_updateResWin">{$content}</textarea>
+		</div>
+		<div class="clear"></div>
+	</div>
+		<div class="pop_under">
+		<div class="pop_under_btn"><input type="button" value="确定" id="editanswer" onmouseout="this.className='pop_under_btn01'" onmouseover="this.className='pop_under_btn02'" class="pop_under_btn01" name="确定"></div>
+		<div class="pop_under_btn"><input type="button" value="取消" onclick="closeEditBox()" onmouseout="this.className='pop_under_btn01'" onmouseover="this.className='pop_under_btn02'" class="pop_under_btn01" name="取消"></div>
+		</div>
+			<div class="clear"></div>
+		</div>
+		</td>
+		</tr>
+		</tbody>
+	</table>
+	</div>
+<script type="text/javascript">
+   function closeEditBox(){
+	   ui.box.close();
+   }
+</script>

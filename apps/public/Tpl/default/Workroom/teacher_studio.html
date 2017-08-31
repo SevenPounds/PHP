@@ -1,0 +1,599 @@
+<include file="__THEME__/public_header" />
+<!-- <!DOCTYPE html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title><neq name= '_title' value=''>{$_title} - {$site.site_name}<else />{$site.site_name} - {$site.site_slogan}</neq></title>
+<meta content="<neq name= '_keywords' value=''>{$_keywords}<else />{$site.site_header_keywords}</neq>" name="keywords">
+<meta content="<neq name= '_description' value=''>{$_description}<else />{$site.site_header_description}</neq>" name="description">
+ -->
+ <script>
+/**
+ * 全局变量
+ */
+var SITE_URL  = '<php> echo SITE_URL;</php>';
+var UPLOAD_URL= '<php> echo UPLOAD_URL;</php>';
+var THEME_URL = '__THEME__';
+var RS_SITE_URL = '{:C('RS_SITE_URL')}';
+var RS_VIEW_APP = '{:C('RESLIB_VIEW_APP')}';
+var APPNAME   = '<php> echo APP_NAME;</php>';
+var MID		  = '<php> echo $mid;</php>';
+var UID		  = '<php> echo $uid;</php>';
+var initNums  =  '<php> echo $initNums;</php>';
+var SYS_VERSION = '<php> echo $site["sys_version"];</php>'
+// Js语言变量
+var LANG = new Array();
+</script>
+<php>if(!empty($langJsList)) {</php>
+<volist name="langJsList" id="vo">
+<script src="{$vo}?v={$site.sys_version}"></script>
+</volist>
+<php>}</php>
+<style type="text/css">
+	table{
+		font-size: 13px;
+	}
+	.ts_tab li{
+	  cursor:pointer;
+	}
+</style>
+<link href="__THEME__/css/module.css?v={$site.sys_version}" rel="stylesheet" type="text/css" />
+<link href="__THEME__/css/global.css?v={$site.sys_version}" rel="stylesheet" type="text/css" /> 
+<script src="__THEME__/js/js.php?t=js&f=jquery-1.7.1.min.js,jquery.form.js,common.js,core.js,module.js,module.common.js,jwidget_1.0.0.js,jquery.atwho.js,jquery.caret.js,ui.core.js,ui.draggable.js&v={$site.sys_version}.js"></script>
+<script src="__THEME__/js/plugins/core.comment.js?v={$site.sys_version}"></script>
+<link href="__APP__/css/main.css" rel="stylesheet" />
+<link href="__APP__/common.css" rel="stylesheet" />
+<script src="__APP__/js/PeopleSelector.js"></script>
+<link rel="stylesheet" type="text/css" href="__APP__/js/fancyBox/jquery.fancybox.css" />
+<script type="text/javascript" src="__APP__/js/fancyBox/jquery.fancybox.js"></script>
+<script>
+
+var defaultTab = 1;
+
+var isLoading = false;
+var subjectcode = '{$subjectcode}';
+//解决eduRole参数后添加';alert(1);'的xss攻击，2015.11.30
+//var eduRole = '{$eduRole}';
+var eduRole = '<php>echo htmlentities($eduRole)</php>';
+function resetHead(role){
+    switch(role.toLowerCase()){
+        case 'teacher':
+            jQuery('.right_box:eq(0)').css('display','block');
+            jQuery('.right_box:eq(1)').css('display','none');
+            jQuery('.right_box:eq(2)').css('display','none');
+				
+            jQuery('.sr_con01 .sr_type:eq(3)').html('学校：');
+            jQuery('.sr_con01 .sr_type:eq(2)').css('display','none');
+            jQuery('.sr_con01 .left:first').css('display','none');
+            jQuery('.sr_con01 .sr_type:first').css('display','block');
+            jQuery('.sr_con01 .left:last').css('display','block');
+            jQuery('.sr_con01 .sr_txt:last').css('display','block');
+            jQuery('#gradelist').css('display','block');
+				
+            //满足12月10日版本中教师研栏目将“政治与生活”和“政治与社会”合并成“政治与生活（社会）”的需求
+            /* jQuery('#subjectlist_10').css('display','block');
+            jQuery('#subjectlist_07').html('<a>品德与生活</a>') */
+            jQuery('.sr_btn').css('float','left');
+            jQuery('.ts_tab li:eq(0)').addClass("current");
+            defaultTab = 0;
+            break;
+        case 'researcher':
+            jQuery('.right_box:eq(1)').css('display','block');
+            jQuery('.right_box:eq(0)').css('display','none');
+            jQuery('.right_box:eq(2)').css('display','none');
+				
+            jQuery('.sr_con01 .sr_type:eq(3)').html('区域：');
+            jQuery('.sr_con01 .sr_type:eq(2)').css('display','block');
+            jQuery('.sr_con01 .left:first').css('display','block');
+            jQuery('.sr_con01 .sr_type:first').css('display','none');
+            jQuery('.sr_con01 .left:last').css('display','none');
+            jQuery('.sr_con01 .sr_txt:last').css('display','none');
+            jQuery('#gradelist').css('display','none');
+				
+            //满足12月10日版本中教师研栏目将“政治与生活”和“政治与社会”合并成“政治与生活（社会）”的需求
+            /* jQuery('#subjectlist_10').css('display','none');
+            jQuery('#subjectlist_07').html('<a>品德与生活（社会）</a>'); */
+
+            jQuery('.sr_btn').css('float','left');
+            jQuery('.ts_tab li:eq(1)').addClass("current");
+            defaultTab = 1;
+            break;
+        case 'famteacher':
+            jQuery('.right_box:eq(2)').css('display','block');
+            jQuery('.right_box:eq(0)').css('display','none');
+            jQuery('.right_box:eq(1)').css('display','none');
+				
+            jQuery('.sr_con01 .sr_type:eq(0)').css('display','none');
+            jQuery('.sr_con01 .sr_type:eq(2)').css('display','none');
+            jQuery('.sr_con01 .sr_type:eq(3)').css('display','none');
+            jQuery('#gradelist').css('display','none');
+				
+            jQuery('.sr_con01 .left:eq(0)').css('display','none');
+            jQuery('.sr_con01 .left:eq(1)').css('display','none');
+            jQuery('.sr_con01 .left:eq(2)').css('display','none');
+            jQuery('.sr_con01 .left:eq(3)').css('display','none');
+            jQuery('.sr_con01 .left:eq(4)').css('display','none');
+            
+            jQuery('.sr_con01 .sr_txt:eq(0)').css('display','none');
+            jQuery('.sr_con01 .sr_txt:eq(1)').css('display','none');
+            jQuery('.sr_con01 .sr_txt:eq(2)').css('display','none');
+            jQuery('.sr_con01 .sr_txt:eq(3)').css('display','none');
+            
+            jQuery('.sr_btn').css('float','right');
+				
+            //满足12月10日版本中教师研栏目将“政治与生活”和“政治与社会”合并成“政治与生活（社会）”的需求
+           /*  jQuery('#subjectlist_10').css('display','none');
+            jQuery('#subjectlist_07').html('<a>品德与生活（社会）</a>'); */
+            jQuery('.ts_tab li:eq(2)').addClass("current");
+            defaultTab = 2;
+            break;
+    }
+}
+
+$(function () {
+	
+	//满足12月10日版本中教师研栏目将“政治与生活”和“政治与社会”合并成“政治与生活（社会）”的需求
+	/* jQuery('#subjectlist_10').css('display','none');
+	jQuery('#subjectlist_07').html('<a>品德与生活（社会）</a>'); */
+	
+	//满足12月27日所有学科信息中将“高中研究性学习”学科删掉，将“小学科学”改成“科学”
+	/* jQuery('#subjectlist_108').css('display','none');
+	jQuery('#subjectlist_19').html('<a>科学</a>'); */
+	
+	
+	jQuery('#gradelist li:first').addClass('current');	
+	if(subjectcode ){
+		jQuery("#subjectlist_"+subjectcode).addClass('current');
+		jQuery("#teacher_level").get(0).selectedIndex = 3;
+		jQuery("#showqx").css('display','none');
+	}else{
+		jQuery('#subjectlist li:first').addClass('current');
+	}
+	$("#searchName_text").focus(function(){
+		var _searchKey = $("#searchName_text").val();
+		if(_searchKey == "根据名称搜索"){
+			$("#searchName_text").val("");
+		}
+	})
+	$("#searchName_text").blur(function(){
+		var _searchKey = $("#searchName_text").val();
+		if(_searchKey == ""){
+			$("#searchName_text").val("根据名称搜索");
+		}
+	})
+
+	$('.ts_tab li').click(function(){
+
+        // 触发点击事件时置空
+	    subjectcode = '';
+	    eduRole = '';
+
+		$('#searchName_text').val('根据名称搜索');
+		var index = jQuery(this).index();
+		
+		if(isLoading){
+			//ui.error('正在加载数据，请稍等……');
+			return ;
+		}
+		
+		
+		if( defaultTab == index ){
+			return ;
+		}else {
+			defaultTab = index;
+		}
+		
+		isLoading = true;
+		
+		$('.ts_tab li').each(function(){
+			$(this).removeClass("current");
+		});
+		
+		if(!subjectcode){
+			$("#province_selected").get(0).selectedIndex=0;
+			$("#city_selected").get(0).selectedIndex=0;
+			$("#area_selected").get(0).selectedIndex=0;
+			$("#teacher_level").get(0).selectedIndex=0;
+			$("#school_selected").get(0).selectedIndex=0;
+			jQuery('#gradelist li').each(function(){
+				$(this).removeClass("current");
+			});
+			jQuery('#subjectlist li').each(function(){
+				$(this).removeClass("current");
+			});
+			jQuery('#gradelist li:first').addClass('current');	
+			jQuery('#subjectlist li:first').addClass('current');
+		}else{
+			if(index == 1){
+				jQuery("#showqx").css("display","none");
+			}else{
+				jQuery("#showqx").css("display","block");
+			}
+			jQuery('#subjectlist li').each(function(){
+				$(this).removeClass("current");
+			});	
+			jQuery('#subjectlist li:first').addClass('current');
+		}
+		
+		if($('.sr_con01 p[name="location"]').css('display')=='none'){
+			$('.sr_con01 p[name="location"]').css('display','block');
+		}
+		if($('.sr_con01 p[name="province"]').css('display')=='none'){
+			$('.sr_con01 p[name="province"]').css('display','block');
+		}
+		if($('.sr_con01 p[name="city"]').css('display')=='none'){
+			$('.sr_con01 p[name="city"]').css('display','block');
+		}
+		if($('.sr_con01 p[name="county"]').css('display')=='none'){
+			$('.sr_con01 p[name="county"]').css('display','block');
+		}
+		
+		var role  = $(this).attr('role');
+		resetHead(role);
+		var option = {};
+		if(role != 'researcher'){
+		    option.role = role;
+		}
+        PeopleSelector.init(option);
+	    jQuery('.ts_tab li:eq('+index+')').addClass("current");
+	    isLoading = false;
+	});
+
+
+	//PeopleSelector.changeAreaCity();
+	var option = {};
+	if(eduRole != 'researcher'){
+	    option.role = eduRole;
+	}
+	option.subject = subjectcode;
+    //如果资源平台传学科code过来，则查询条件设为省级教研员、学科设为对应学科sjzhao
+	if(subjectcode && (!eduRole ||  eduRole == "researcher" )){
+		option.role = "province";
+		option.subject = subjectcode;
+	}
+
+	jQuery('.ts_tab li').each(function(){
+	    $(this).removeClass("current");
+    });
+
+	resetHead(eduRole);
+	PeopleSelector.init(option);
+});
+</script>
+<!-- </head>
+<body> -->
+<div class="in_bg2">
+	<div class="in_wrap">
+		<div class="ts_box">
+			<div class="left_box">
+				<div class="left_con01">
+					<div class="infor_box">
+						<div class="title_style01">
+							<ul class="ts_tab ts_tab2">
+								<li  role='teacher' class="nor"><a >教师空间</a></li>
+								<!--<li  role='researcher'   class="nor" ><a >教研员空间</a></li>-->
+								<!-- <li  role='famteacher' class="nor"><a >名师工作室</a></li> -->
+							</ul>
+							<div class="ts_input">
+								<p class="ts_srk01"><input type="text" id="searchName_text" value="根据名称搜索"/></p>
+								<p class="ts_btn"><input type="button" value="搜索" class="ts_btnnor"  onmouseover="this.className='ts_btnhov'" onmouseout="this.className='ts_btnnor'" onclick='javascript:PeopleSelector.searchName();'/></p>
+							</div>
+							<div class="clear"></div>
+						</div>
+						<div class="sr_con01"  id='researcher_menu' style='display:block;'>
+							<p class="sr_type sr_type01" style='display:none;'>年级：</p>
+							<ul id='gradelist' style='display:none;'>
+								<volist name='grades' id='vo'>
+								 <li  id='gradelist_{$vo['code']}'   onclick="PeopleSelector.changeGrade(this);" code="{$vo['code']}"  style='cursor: pointer;'><a>{$vo.name}</a></li>
+								</volist>
+							</ul>
+							<div class="clear"></div>
+							<p class="sr_type sr_type01">学科：</p>
+							<ul id='subjectlist'>
+								<volist name='subjects' id='vo'>
+								 <li  id='subjectlist_{$vo['code']}'   onclick="PeopleSelector.changeSubject(this);" code="{$vo['code']}"  style='cursor: pointer;'><a>{$vo.name}</a></li>
+								</volist>
+							</ul>
+							<div class="clear"></div>
+							<p class="sr_type sr_type02">级别：</p>
+							<p class="left">
+							<select id='teacher_level' class="mt4"  onchange='PeopleSelector.changeLevel(this);'>
+								<option value ='0'>请选择</option>
+								<volist name='roles' id='vo'>
+								 <option value='{$vo.roleid}'>{$vo.rolename}</option>
+								</volist>
+							</select>
+							</p>
+								<p class="sr_type" name='location' style='display:block;'>区域：</p>
+								<p class="left" name='province'>
+								<select id="province_selected" class="mt4" onchange='PeopleSelector.changeAreaProvince(this);'>
+									<option value ='0'>请选择</option>
+									<volist name='provinces' id='vo'>
+									<option value='{$vo["code"]}'>{$vo['name']}</option>
+									</volist>
+								</select></p>
+								<p class="sr_txt" name='province'>省 </p>
+								
+								<p class="left" name='city'>
+								<select id="city_selected" class="mt4" onchange='PeopleSelector.changeAreaCity(this);'>
+									<option value ='0'>请选择</option>
+									<volist name='citys' id='vo'>
+									<option value='{$vo.code}'>{$vo.name}</option>
+									</volist>
+								</select></p>
+								<p class="sr_txt" name='city'>市</p>
+								
+								<p class="left" name='county'>
+								<select id="area_selected" class="mt4 ml10"  onchange='PeopleSelector.changeAreaCounty(this);'>
+								<option value ='0'>请选择</option>
+								</select>
+								</p>
+								<p class="sr_txt"  name='county'>区/县</p>
+							
+							<p class="left" style='display:none;'>
+							<select id="school_selected" style="width:120px" class="mt4 ml10"  >
+								<option value ='0'>请选择</option>
+								<volist name='schools' id='vo' >
+								<option value='{$vo.code}' >{$vo.name}</option>
+								</volist>
+							</select>
+							</p>
+							<p class="sr_txt" style='display:none;'>学校</p>
+							
+							<p class="sr_btn"><input type="button" value="查询" class="sr_btnnor"  onmouseover="this.className='sr_btnhov'" onmouseout="this.className='sr_btnnor'" onclick="PeopleSelector.search()"/></p>
+							<div class="clear"></div>
+						</div>
+						
+						<div id='userlist_div'>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+				<div class="right_box" style="display:none;">
+				<div class="right_con">
+					<div class="best_title01">最受欢迎教师TOP5</div>
+						<div class="best_con">
+							<ul>
+								<volist name="popularTeachers" id="vo">
+									<li  <if condition="$i lt count($popularTeachers)"> class="line1" </if> >
+										<div class="nr_pic2">
+											<a uid="{$vo['uid']}" href="{:U('public/Profile/index',array('uid'=>$vo['uid']))}" target="_blank">
+												<img style="width: 45px;height: 45px;" src="{$vo['avatar_small']}" />
+											</a>
+										</div>
+										<div class="left">
+											<p style="width:152px;">
+												<span class="blackfont">
+													<a uid="{$vo['uid']}" href="{:U('public/Profile/index',array('uid'=>$vo['uid']))}" target="_blank">
+														{$vo['uname']|getShort=3,'...'}
+													</a>
+												</span>
+												<span class="blackfont">共有</span>
+												<span class="red ">{$vo['value']|default=0}</span>
+												人关注
+											</p>
+											<p class="nr_btn2">
+												<if condition="($currentUid != $vo['uid']) && !empty($mid)">
+													<if condition="0 eq $vo['following']">
+	    												<a event-node="doFollow" event-args="uid={$vo['uid']}&uname={$vo['uname']}&following={$vo['following']}&follower={$vo['follower']}&refer='following_right'&type=studio" href="{:U('public/Follow/doFollow', array('fid'=>$vo['uid']))}" class="btn-cancel"></a>
+													<else />
+	    												<a event-node="unFollow" event-args="uid={$vo['uid']}&uname={$vo['uname']}&following={$vo['following']}&follower={$vo['follower']}&refer='following_right'&type=studio" href="{:U('public/Follow/unFollow', array('fid'=>$vo['uid']))}" class="btn-cancel"></a>
+													</if>
+													<span class="see_message"><a onclick="javascript:ui.sendmessage({$vo['uid']}, 0)" style='cursor:pointer'>发私信</a></span>
+												</if>
+											</p>
+										</div>
+										<div class="clear"></div>
+									</li>
+								</volist>
+							</ul>
+						</div>
+					</div>
+					<div class="right_con mt10">
+					<div class="best_title01">最活跃教师TOP5</div>
+						<div class="best_con">
+							<ul>
+								<volist name="activeTeachers" id="vo">
+									<li  <if condition="$i lt count($activeTeachers)"> class="line1" </if> >
+										<div class="nr_pic2">
+											<a uid="{$vo['uid']}" href="{:U('public/Workroom/index',array('uid'=>$vo['uid']))}" target="_blank">
+												<img style="width: 45px;height: 45px;" src="{$vo['avatar_small']}" />
+											</a>
+										</div>
+										<div class="left">
+											<p style="width:152px;">
+												<span class="blackfont">
+													<a uid="{$vo['uid']}" href="{:U('public/Workroom/index',array('uid'=>$vo['uid']))}" target="_blank">
+														{$vo['uname']|getShort=4,'...'}
+													</a>
+												</span>
+												<span class="blackfont">共有</span>
+												<span class="red ">{$vo['value']|default=0}</span>
+												次访问
+											</p>
+											<p class="nr_btn2">
+												<if condition="($currentUid != $vo['uid']) && !empty($mid)">
+													<if condition="0 eq $vo['following']">
+	    												<a event-node="doFollow" event-args="uid={$vo['uid']}&uname={$vo['uname']}&following={$vo['following']}&follower={$vo['follower']}&refer='following_right'&type=studio" href="{:U('public/Follow/doFollow', array('fid'=>$vo['uid']))}" class="btn-cancel"></a>
+													<else />
+	    												<a event-node="unFollow" event-args="uid={$vo['uid']}&uname={$vo['uname']}&following={$vo['following']}&follower={$vo['follower']}&refer='following_right'&type=studio" href="{:U('public/Follow/unFollow', array('fid'=>$vo['uid']))}" class="btn-cancel"></a>
+													</if>
+													<span class="see_message"><a onclick="javascript:ui.sendmessage({$vo['uid']}, 0)" style='cursor:pointer'>发私信</a></span>
+												</if>
+											</p>
+										</div>
+										<div class="clear"></div>
+									</li>
+								</volist>
+							</ul>
+						</div>
+				</div>
+			</div>
+			
+			<div class="right_box">
+				<div class="best_box">
+					<div class="best_title01">最受欢迎教研员TOP5</div>
+						<div class="best_con">
+							<ul>
+								<volist name="popularResearchers" id="popularResearcher">
+									<li  <if condition="$i lt count($popularResearchers)"> class="line1" </if> >
+										<div class="nr_pic2">
+											<a uid="{$popularResearcher['uid']}" href="{:U('public/Workroom/index',array('uid'=>$popularResearcher['uid']))}" target="_blank">
+												<img style="width: 45px;height: 45px;" src="{$popularResearcher['avatar_small']}" />
+											</a>
+										</div>
+										<div class="left">
+											<p style="width:152px;">
+												<span class="blackfont">
+													<a uid="{$popularResearcher['uid']}" href="{:U('public/Workroom/index',array('uid'=>$popularResearcher['uid']))}" target="_blank">
+														{$popularResearcher['uname']|getShort=4,'...'}
+													</a>
+												</span>
+												<span class="blackfont">共有</span>
+												<span class="red ">{$popularResearcher['value']|default=0}</span>
+												人关注
+											</p>
+											<p class="nr_btn2">
+												<if condition="($currentUid != $popularResearcher['uid']) && !empty($mid)">
+													<if condition="0 eq $popularResearcher['following']">
+	    												<a event-node="doFollow" event-args="uid={$popularResearcher['uid']}&uname={$popularResearcher['uname']}&following={$popularResearcher['following']}&follower={$popularResearcher['follower']}&refer='following_right'&type=studio" href="{:U('public/Follow/doFollow', array('fid'=>$popularResearcher['uid']))}" class="btn-cancel"></a>
+													<else />
+	    												<a event-node="unFollow" event-args="uid={$popularResearcher['uid']}&uname={$popularResearcher['uname']}&following={$popularResearcher['following']}&follower={$popularResearcher['follower']}&refer='following_right'&type=studio" href="{:U('public/Follow/unFollow', array('fid'=>$popularResearcher['uid']))}" class="btn-cancel"></a>
+													</if>
+													<span class="see_message"><a onclick="javascript:ui.sendmessage({$popularResearcher['uid']}, 0)" style='cursor:pointer'>发私信</a></span>
+												</if>
+											</p>
+										</div>
+										<div class="clear"></div>
+									</li>
+								</volist>
+							</ul>
+						</div>
+					</div>
+					<div class="right_con mt10">
+					<div class="best_title01">最活跃教研员TOP5</div>
+						<div class="best_con">
+							<ul>
+								<volist name="activeResearchers" id="activeResearcher">
+									<li  <if condition="$i lt count($activeResearchers)"> class="line1" </if> >
+										<div class="nr_pic2">
+											<a uid="{$activeResearcher['uid']}" href="{:U('public/Workroom/index',array('uid'=>$activeResearcher['uid']))}" target="_blank">
+												<img style="width: 45px;height: 45px;" src="{$activeResearcher['avatar_small']}" />
+											</a>
+										</div>
+										<div class="left">
+											<p style="width:152px;">
+												<span class="blackfont">
+													<a uid="{$activeResearcher['uid']}" href="{:U('public/Workroom/index',array('uid'=>$activeResearcher['uid']))}" target="_blank">
+														{$activeResearcher['uname']|getShort=4,'...'}
+													</a>
+												</span>
+												<span class="blackfont">共有</span>
+												<span class="red ">{$activeResearcher['value']|default=0}</span>
+												次访问
+											</p>
+											<p class="nr_btn2">
+												<if condition="($currentUid != $activeResearcher['uid']) && !empty($mid)">
+													<if condition="0 eq $activeResearcher['following']">
+	    												<a event-node="doFollow" event-args="uid={$activeResearcher['uid']}&uname={$activeResearcher['uname']}&following={$activeResearcher['following']}&follower={$activeResearcher['follower']}&refer='following_right'&type=studio" href="{:U('public/Follow/doFollow', array('fid'=>$activeResearcher['uid']))}" class="btn-cancel"></a>
+													<else />
+	    												<a event-node="unFollow" event-args="uid={$activeResearcher['uid']}&uname={$activeResearcher['uname']}&following={$activeResearcher['following']}&follower={$activeResearcher['follower']}&refer='following_right'&type=studio" href="{:U('public/Follow/unFollow', array('fid'=>$activeResearcher['uid']))}" class="btn-cancel"></a>
+													</if>
+													<span class="see_message"><a onclick="javascript:ui.sendmessage({$activeResearcher['uid']}, 0)" style='cursor:pointer'>发私信</a></span>
+												</if>
+											</p>
+										</div>
+										<div class="clear"></div>
+									</li>
+								</volist>
+							</ul>
+						</div>
+				</div>
+			</div>
+			
+			
+			<div class="right_box" style="display:none;">
+				<div class="right_con">
+					<div class="best_title01">最受欢迎工作室TOP5</div>
+						<div class="best_con">
+							<ul>
+								<volist name="popularFamteachers" id="vo">
+									<li>
+										<div class="nr_pic2">
+											<a  href="{:U('msgroup/Index/index',array('gid'=>$vo['gid']))}"  target="_blank">
+												<img src="{$vo['image']['avatar_small']}" />
+											</a>
+										</div>
+										<div class="left">
+											<p style="width:152px;">
+												<span class="blackfont">
+													<a  href="{:U('msgroup/Index/index',array('gid'=>$vo['gid']))}"  target="_blank" title="{$vo['group_name']}">
+														{$vo['group_name']|getShort=4,'...'}
+													</a>
+												</span>
+												<!-- <span class="blackfont">共有</span> -->
+												<span class="red follower_{$vo['gid']}">{$vo['count']|default=0}</span>
+												人关注
+											</p>
+											<p class="nr_btn2">
+												<if condition="!empty($mid) && !in_array($vo['gid'], $user_groups)">
+												 	{:W('FollowBtn', array('fid' => $vo['gid'], 'uname' => $vo['group_name'], 'follow_state' => $msgroup_follow_state[$vo['gid']], 'type' => 'ms_studio'))}
+												</if>
+											</p>
+										</div>
+										<div class="clear"></div>
+									</li>
+								</volist>
+							</ul>
+						</div>
+					</div>
+					<div class="right_con mt10">
+					<div class="best_title01">最活跃工作室TOP5</div>
+						<div class="best_con">
+							<ul>
+								<volist name="activeFamteachers" id="vo">
+									<li>
+										<div class="nr_pic2">
+											<a href="{:U('msgroup/Index/index',array('gid'=>$vo['gid']))}" target="_blank">
+												<img src="{$vo['image']['avatar_small']}" />
+											</a>
+										</div>
+										<div class="left">
+											<p style="width:152px;">
+												<span class="blackfont">
+													<a href="{:U('msgroup/Index/index',array('gid'=>$vo['gid']))}" target="_blank"  title="{$vo['group_name']}">
+														{$vo['group_name']|getShort=4,'...'}
+													</a>
+												</span>
+												<!-- <span class="blackfont">共有</span> -->
+												<span class="red ">{$vo['count']|default=0}</span>
+												次访问
+											</p>
+											<p class="nr_btn2">
+												<if condition="!empty($mid) && !in_array($vo['gid'], $user_groups)">
+													{:W('FollowBtn', array('fid' => $vo['gid'], 'uname' => $vo['group_name'], 'follow_state' => $msgroup_follow_state[$vo['gid']], 'type' => 'ms_studio'))}
+												</if>
+											</p>
+										</div>
+										<div class="clear"></div>
+									</li>
+								</volist>
+							</ul>
+						</div>
+				</div>
+			</div>
+			<div class="clear"></div>
+		</div>	
+			</div>
+			</div>
+		
+<!-- </body> -->
+<script>
+//未登录状态弹出登陆框
+function showLogin(){
+	jQuery('#login_popup').trigger("click");
+}
+</script>
+<include file="__THEME__/login_pop" />
+<!-- </html> -->
+<include file="__THEME__/public_footer" />

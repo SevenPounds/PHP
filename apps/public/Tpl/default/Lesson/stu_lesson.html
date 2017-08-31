@@ -1,0 +1,122 @@
+<include file="__THEME__/public_header" />
+<link href="__APP__/fonts.css" rel="stylesheet" type="text/css" />
+<link href="__APP__/per_zone.css" rel="stylesheet" type="text/css" />
+<link href="__APP__/css/library.css" rel="stylesheet" type="text/css" />
+<link href="__APP__/css/style_library.css" rel="stylesheet" type="text/css" />
+<link href="__APP__/css/lesson.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="__APP__/js/stu_lesson.js"></script>
+<script type="text/javascript" src="__APP__/js/recordList.js"></script>
+<link rel="stylesheet" href="__APP__/css/person_center.css">
+<!-- 加载弹出层样式 -->
+<script type="text/javascript" src="__APP__/js/Utils/artDialog/js/dialog-plus.js"></script>
+<script type="text/javascript" src="__APP__/js/Utils/artDialog/js/pop.js"></script>
+<div id="page-wrap">
+	<div id="feedback" class="feedback-fixed">
+		<a href="{:U('public/Index/feedback')}" target="_blank">{:L('PUBLIC_FEEDBACK')}</a>
+	</div>
+	<input type="hidden" value="{$lessonUrl}" id="lessonUrl">
+	<div id="main-wrap">
+		<div id="st-index-grid" class="st-grid content-bg">
+			<!--左边 -->
+			<include file="__THEME__/public_left" />
+			<div class="st-section"
+				style="border-left: 1px solid #e1e1e1; height: 1600px; line-height: 26px;">			
+					<div class="wrapper">
+						<div class="lesson_thid">
+							<!--141009 最小宽度-->
+							<div class="public_class_box">
+								<div class="public_tab_box clearfix">
+									<div class="public_tab fl">
+										<a href="javascript:void(0);" class="active"><span>公开课提醒</span><b></b></a>
+									</div>
+								</div>
+								<div class="public_tab_content">
+									<ul class="public_tab_ul" id="lives">
+										<volist name="live" id="val">
+										<li class="clearfix"><input type="hidden" id="cuttime_{$val['id']}"
+											value="{$val['countdown']}" /> <input type="hidden" id="flag_{$val['id']}" value="0"><input type="hidden"
+											id="overtime_{$val['id']}" value="{$val['overtime']}" />
+											<p class="fl" id="live_{$val['id']}" onclick="startLesson({$val['id']});" style="cursor: pointer;">
+												<span id="warn_{$val['id']}" style="cursor: pointer;" title="《{$val['name']}》">{$val['st_time']}
+													《{$val['name']|getShort=15,'...'}》</span><span class="blue">{$val['count']}</span>人报名。 <strong
+													id="warn2_{$val['id']}">距开课<span id="day_{$val['id']}"></span>天<span
+													id="hour_{$val['id']}"></span>时<span id="min_{$val['id']}"></span>分。
+												</strong>
+											</p> <a class="fr" href="javascript:;" id="invite_{$val['id']}"
+											onclick="startLesson({$val['id']});">点击进入</a></li>
+										</volist>
+									</ul>
+								</div>
+							</div>
+							</div>
+							<div class="lesson_tit">
+								<span id="lessonTitle">听课记录</span>
+							</div>
+							<div class="w1000 les_screen clearfix mt15">
+								<ul class="fl clearfix ml25" id="type">
+									<a href="javascript:;" class="fl current" code="0">全部</a>
+									<volist name="types" id="type_lesson">
+										<a href="javascript:;" class="fl" code="{$type_lesson:code}">{$type_lesson:name}</a>
+									</volist>
+								</ul>
+							</div>
+							<div id="recordList">
+								<div class="les_video_con clearfix">
+								<if condition="$record eq null">
+								<img src="__APP__/images/mr_tkjl.png" />
+								</if>
+									<volist name="record" id="val">
+										<dl class="fl">
+											<dt onclick="preview({$val['record_id']},{$val['has_record']})">
+												<img src="{$val['cover_url']}" /><span>&nbsp;</span><label>{$val['end_time']}</label>
+												<font></font> <a href="javascript:void(0)">&nbsp;</a>
+											</dt>
+											<dd>
+												<h3>
+													<a href="javascript:void(0)" onclick="preview({$val['record_id']},{$val['has_record']})" title="{$val['name']}">
+													{$val['name']|getShort=12,'...'}
+													</a>
+												</h3>
+												<div class="les_star">
+													<php> $score=$val['score']/20; if(strlen($score)>3){
+					$score=substr($score,0,3); } </php>
+					{$val['score']|getStars}<font>{$score}</font>
+												</div>
+												<div class="les_comment clearfix">
+													<span class="fl"><font>{$val['attend_count']}</font>人参加</span> <span class="fl"><font>{$val['c_count']}</font>人评论</span>
+												</div>
+											</dd>
+										</dl>
+									</volist>
+								</div>
+								<div class="page mt15">
+									{$paging}
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<input type="hidden" value="{$pre_url}" id="pre_url">
+<include file="__THEME__/public_footer" />
+<script>
+/**
+ * 跳转资源预览页面
+ */
+function preview(id,state){
+	if(state==0){
+		pop.alert('录播视频生成中');
+	}else if(state==1){
+		if(id!=0&&id!='0'){
+			var pre_url=$('#pre_url').val();
+			window.open(pre_url+"/index.php?m=Home&c=Record&a=preview&id="+id);	
+		}else{
+			pop.alert('该直播课没有录播视频');
+		}
+	}else{
+		pop.alert('该直播课没有录播视频');
+	}
+}
+</script>

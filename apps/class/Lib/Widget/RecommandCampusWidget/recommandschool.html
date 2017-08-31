@@ -1,0 +1,45 @@
+
+			<div class="xxgc_box" >
+				<p class="title3">
+					<span class="left" >{$title}</span>
+					<span class="more" style="display:none;"><a href="#">更多</a></span>
+				</p>
+				<ul class="ul_hyxx" id="{$tpl}_list">
+
+				</ul>
+			</div>		
+
+<script>
+ var recommandcampus = {};
+recommandcampus.setting = {};
+
+recommandcampus.init = function(option)
+{
+	this.setting.container = '#'+option.container+'_list';	
+	this.setting.tpl = option.container;
+	if($(recommandcampus.setting.container).length > 0){
+		$(recommandcampus.setting.container).append("<div class='loading' id='"+option.container+"_loadMore'>" + L('PUBLIC_LOADING') + "<img src='" + THEME_URL + "/image/load.gif' class='load'></div>");
+		recommandcampus.loaddata();	
+	}
+};
+recommandcampus.loaddata = function()
+{
+	 var appname='class';
+	 var tpl = this.setting.tpl;
+	 var t = Math.random();
+	 
+ 	  $.post(U('widget/RecommandCampus/ajax_render'), {widget_appname:appname,tpl:tpl,t:t }, function(content) {
+ 		 if(content.status==1){
+ 			 $(recommandcampus.setting.container).html(content.html);
+ 		 }
+ 		  $('#'+recommandcampus.setting.tpl+'_loadMore').remove();
+ 	 	 M($(recommandcampus.setting.container)[0]);
+	}, 'json');	
+};
+
+var {$tpl}option = {
+		container: '{$tpl}'
+	};
+recommandcampus.init({$tpl}option);
+
+</script>

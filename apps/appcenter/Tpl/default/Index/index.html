@@ -1,0 +1,173 @@
+<include file="__THEME__/public_header" />
+<link href="__APP__/css/appcenter_base.css" type="text/css" rel="stylesheet" />
+<link href="__APP__/css/appcenter_index.css" type="text/css" rel="stylesheet" />
+<script src="__APP__/js/appcenter_index.js" type="text/javascript"></script>
+<style type="text/css">
+body{background:white;}
+.star{float:none;}
+.star span{margin-right:3px;}
+.footer{margin:0px;width:100%;}
+#body-bg{padding:24px 0 0 0;}
+#body_page{background:none;}
+</style>
+<div class="index_bg">
+	<div class="bannerwarp main">
+		<div class="banner fl">
+			<div class="hd">
+				<img src="__APP__/images/banner.jpg" width="727" height="352" />
+			</div>
+			<div class="bd mt10">
+				<!-- 轮播按钮，暂时屏蔽 -->
+				<!-- <a href="#" class="but1 mr5"></a><a href="#" class="but1 mr5"></a><a class="but2" href="#"></a> -->
+			</div>
+		</div>
+		<div class="fr part">
+			<h1>热门应用</h1>
+			<volist name="hotApps" id="app">
+				<div class="list show-hide-operate">
+					<div class="pic fl">
+						<php>if(in_array($app['app_en_name'],array_keys(C("CLIENT_APPS")))):</php>
+							<a onclick="Appcenter.addAppCount(this);" data-appid="{$app['appid']}" href="{:U('appcenter/Index/appDetail',array('appid'=>$app['appid']))}" target="_blank">
+						<php>elseif(empty($app['is_login'])):</php>
+							<a href="javascript:void(0);" onclick="$('#login_popup').trigger('click');">
+						<php>elseif($app['access']):</php>
+							<a href="{$app['url']}" onclick="Appcenter.addAppCount(this);" target="_blank" data-appid="{$app['appid']}">
+						<php>else:</php>
+							<a href="javascript:void(0);" onclick="ui.error('您无此应用使用权限！');">
+						<php>endif;</php>
+							<img src="__APP__/app_icon/{$app['app_icon']}" width="80" height="80" />
+						</a>
+					</div>
+					<div class="txt fl ml10">
+						<php>if(in_array($app['app_en_name'],array_keys(C("CLIENT_APPS")))):</php>
+							<a onclick="Appcenter.addAppCount(this);" data-appid="{$app['appid']}" href="{:U('appcenter/Index/appDetail',array('appid'=>$app['appid']))}" target="_blank">
+						<php>elseif(empty($app['is_login'])):</php>
+							<a href="javascript:void(0);" onclick="$('#login_popup').trigger('click');">
+						<php>elseif($app['access']):</php>
+							<a href="{$app['url']}" onclick="Appcenter.addAppCount(this);" target="_blank" data-appid="{$app['appid']}">
+						<php>else:</php>
+							<a href="javascript:void(0);" onclick="ui.error('您无此应用使用权限！');">
+						<php>endif;</php>
+							<p class="ft16 col1 lh23">{$app['app_zh_name']}</p>
+						</a>
+						<div class="app-ucount-score">
+							<p class="col9 ft14 lh30">
+								<php>if(!in_array($app['app_en_name'],array_keys($clientApps))):</php>
+									<em class="col2">{$app['usercount']}</em>人添加
+								<php>else:</php>
+									<em class="col2">{$app['downloadcount']}</em>人添加
+								<php>endif;</php>
+							</p>
+							<p class="star mt5">
+								<php>echo getStar($app['score'],false);</php>
+								<b class="star_score">{$app['score']}</b>
+							</p>
+						</div>
+						<div class="app-operate" style="display:none;">
+							<!-- 检查是否为客户端应用 -->
+							<php>if(!in_array($app['app_en_name'],array_keys($clientApps))):</php>
+								<!-- 检查是否有权限 -->
+								<php>if(empty($app['is_login'])):</php>
+									<div style="display:<?php if($app['is_add']){echo 'none';}?>;" onclick="$('#login_popup').trigger('click');" data-appid="{$app['appid']}" data-app="{$app['app_en_name']}" class="add appcenter-app-add-{$app['app_en_name']}"></div>
+								<php>elseif($app['access']):</php>
+									<div style="display:<?php if($app['is_add']){echo 'none';}?>;" onclick="Appcenter.appOperate(this,'add');" data-appid="{$app['appid']}" data-app="{$app['app_en_name']}" class="add appcenter-app-add-{$app['app_en_name']}"></div>
+								<php>else:</php>
+									<div style="display:<?php if($app['is_add']){echo 'none';}?>;" onclick="ui.error('您无此应用使用权限！');" class="add appcenter-app-add"></div>
+								<php>endif;</php>
+									<div style="display:<?php if(!$app['is_add']){echo 'none';}?>;" onclick="Appcenter.appOperate(this,'delete');" data-appid="{$app['appid']}" data-app="{$app['app_en_name']}" class="del appcenter-app-delete-{$app['app_en_name']}"></div>
+							<php>else:</php>
+								<div onclick="Appcenter.addDownloadCount(this);" data-appid="{$app['appid']}" data-download="{$clientApps[$app['app_en_name']]['download_url']}" class="download"></div>
+							<php>endif;</php>
+						</div>
+					</div>
+				</div>
+				<div class="clear"></div>
+			</volist>
+		</div>
+	</div>
+	
+	<div class="index_title">
+		<b class="tag ft18">推荐</b>
+	</div>
+	<div class="index-tuijian main">
+		<ul>
+			<volist name="recommendApps" id="app">
+				<li class="show-hide-operate">
+					<div class="pic">
+						<php>if(in_array($app['app_en_name'],array_keys(C("CLIENT_APPS")))):</php>
+							<a onclick="Appcenter.addAppCount(this);" data-appid="{$app['appid']}" href="{:U('appcenter/Index/appDetail',array('appid'=>$app['appid']))}" target="_blank">
+						<php>elseif(empty($app['is_login'])):</php>
+							<a href="javascript:void(0);" onclick="$('#login_popup').trigger('click');">
+						<php>elseif($app['access']):</php>
+							<a href="{$app['url']}" onclick="Appcenter.addAppCount(this);" target="_blank" data-appid="{$app['appid']}">
+						<php>else:</php>
+							<a href="javascript:void(0);" onclick="ui.error('您无此应用使用权限！');">
+						<php>endif;</php>
+							<img src="__APP__/app_icon/{$app['app_icon']}" width="80" height="80" />
+						</a>
+					</div>
+					<div class="txt">
+						<php>if(in_array($app['app_en_name'],array_keys(C("CLIENT_APPS")))):</php>
+							<a onclick="Appcenter.addAppCount(this);" data-appid="{$app['appid']}" href="{:U('appcenter/Index/appDetail',array('appid'=>$app['appid']))}" target="_blank">
+						<php>elseif(empty($app['is_login'])):</php>
+							<a href="javascript:void(0);" onclick="$('#login_popup').trigger('click');">
+						<php>elseif($app['access']):</php>
+							<a href="{$app['url']}" onclick="Appcenter.addAppCount(this);" target="_blank" data-appid="{$app['appid']}">
+						<php>else:</php>
+							<a href="javascript:void(0);" onclick="ui.error('您无此应用使用权限！');">
+						<php>endif;</php>
+							<p class="ft16 col1 lh23 mt5">{$app['app_zh_name']}</p>
+						</a>
+						<div class="app-ucount-score">
+							<p class="col9 ft14 lh23 mt5">
+								<php>if(!in_array($app['app_en_name'],array_keys($clientApps))):</php>
+									<em class="col2">{$app['usercount']}</em>人添加
+								<php>else:</php>
+									<em class="col2">{$app['downloadcount']}</em>人添加
+								<php>endif;</php>
+							</p>
+							<p class="star mt5">
+								<php>echo getStar($app['score'],false);</php>
+							</p>
+						</div>
+						<div class="app-operate" style="display:none;">
+							<!-- 检查是否为客户端应用 -->
+							<php>if(!in_array($app['app_en_name'],array_keys($clientApps))):</php>
+								<!-- 检查是否有权限 -->
+								<php>if(empty($app['is_login'])):</php>
+									<div style="display:<?php if($app['is_add']){echo 'none';}?>;" onclick="$('#login_popup').trigger('click');" data-appid="{$app['appid']}" data-app="{$app['app_en_name']}" class="add appcenter-app-add-{$app['app_en_name']}"></div>
+								<php>elseif($app['access']):</php>
+									<div style="display:<?php if($app['is_add']){echo 'none';}?>;" onclick="Appcenter.appOperate(this,'add');" data-appid="{$app['appid']}" data-app="{$app['app_en_name']}" class="add appcenter-app-add-{$app['app_en_name']}"></div>
+								<php>else:</php>
+									<div style="display:<?php if($app['is_add']){echo 'none';}?>;" onclick="ui.error('您无此应用使用权限！');" class="add appcenter-app-add"></div>
+								<php>endif;</php>
+									<div style="display:<?php if(!$app['is_add']){echo 'none';}?>;" onclick="Appcenter.appOperate(this,'delete');" data-appid="{$app['appid']}" data-app="{$app['app_en_name']}" class="del appcenter-app-delete-{$app['app_en_name']}"></div>
+							<php>else:</php>
+								<div onclick="Appcenter.addDownloadCount(this);" data-appid="{$app['appid']}" data-download="{$clientApps[$app['app_en_name']]['download_url']}" class="download"></div>
+							<php>endif;</php>
+						</div>
+					</div>
+				</li>
+			</volist>
+		</ul>
+	</div>
+	<div class="clear"></div>
+	
+	<div class="index_title index-title">
+		<b class="tag ft18">应用</b>
+		<span>
+			<a onclick="Appcenter.changeCategory(this);" data-cid="0" data-show="show_app_list" href="javascript:void(0);" style="color:red;">全部</a>
+			<php>$flag = count($appCategory);</php>
+			<volist name="appCategory" id="item" offset="0" length="count($appCategory)-1">
+				<a onclick="Appcenter.changeCategory(this);" data-cid="{$item['cid']}" data-show="show_app_list" href="javascript:void(0);">{$item['cname']}</a>
+			</volist>
+			<a onclick="Appcenter.changeCategory(this);" data-cid="{$appCategory[count($appCategory)-1]['cid']}" data-show="show_app_list" href="javascript:void(0);" class="last">{$appCategory[count($appCategory)-1]['cname']}</a>
+		</span>
+	</div>
+	<div class="clear"></div>
+	<div id="show_app_list" class="main index_yy">
+		<include file="./appList"/>
+	</div>
+</div>
+<include file="__THEME__/login_pop" />
+<include file="__THEME__/public_footer" />

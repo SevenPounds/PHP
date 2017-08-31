@@ -1,0 +1,93 @@
+<include file="__THEME__/header" />
+<include file="header" />
+<style type="text/css">
+.mt4{
+	margin-top:4px;
+}
+.pr5{
+	padding-right:5px;
+}
+</style>
+<div id="page-wrap">
+	<div id="main-wrap">
+		<div class="crumbs">
+			<ul>
+				<li class="pre_cen"><a href="{:U('public/Index/index')}">个人空间</a></li>
+				<li>></li>
+				<li><a href="{:U('/Index/index')}">主题讨论</a></li>
+				<li>></li>
+				<li>我发起的主题</li>
+			</ul>
+			<div class="clear"></div>
+		</div>
+		<div class="con_box">
+			<div class="left_box">
+				<include file="__THEME__/public_left" />
+			</div>
+			<div class="right_box">
+				<div class="online_title">
+					<div class="left">
+						<span><img src="__THEME__/app_icon/app_zttl.png" /></span> <span
+							class="pl10 font3"><b>主题讨论</b></span>
+					</div>
+					<div class="right">
+					  <a id="t_newresearch" href="{:U('/Index/add')}">
+						<p class="blue_btn3" onmouseover="this.className='blue_btn3hov'"
+							onmouseout="this.className='blue_btn3'">
+							<img src="__APP__/images/add.gif" height="8" />发起主题
+						</p>
+					  </a>
+					</div>
+				</div>
+				<div class="re_tab">
+					<ul>
+						<li class="current"><a href="{:U('/Index/index')}">我发起的主题</a></li>
+						<li>
+						   <a href="{:U('/Index/follows')}">我参加的主题</a>
+						   {$newcountdiv}
+						</li>
+					</ul>
+					<p class="pkzx"><a href="{:U('/Index/center')}">主题中心</a></p>
+				</div>
+				
+				<div class="tab_choose">
+						<ul id="ul_status">
+								<li class="current" id="status_all">
+									<a href="javascript:create.changeStatus(-1);">全部<span id="count_all"></span></a>
+								</li>
+								<li class="blue" id="status_ing">
+									<a href="javascript:create.changeStatus(1);">进行中</a>
+								</li>
+								<li class="black1" id="status_end">
+								    <a class="black1" href="javascript:create.changeStatus(0);">已结束</a>
+								</li>
+							</ul>
+						<div class="topic_search mt4 pr5">
+							<div class="left"></div>
+							<div class="cen">
+								<input type="text" id="keyword_txt" onkeydown="create.enter(event)"/>
+								<p class="topic_searchbtn"><a href="javascript:create.search();"></a></p>
+							</div>
+							<div class="right"></div>
+						</div>
+						<div class="clear"></div>
+			    </div>
+			    
+			    <div class="topic_con" id="cf_list">
+						
+			    </div>
+			</div>
+			<div class="clear"></div>
+		</div>
+	</div>
+</div>
+<input type="hidden" value="-1" id="status_val" autocomplete="off"/>
+<script type="text/javascript" src="__APP__/js/CAndFTopic.js"></script>
+<script type="text/javascript">
+var create;
+jQuery(document).ready(function(){
+	create = create || new _CAndFTopic('C');
+	create.init();
+});
+</script>
+<include file="__THEME__/public_footer" />

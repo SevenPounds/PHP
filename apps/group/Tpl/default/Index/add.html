@@ -1,0 +1,85 @@
+<include file="__THEME__/header" />
+<!-- <script type="text/javascript" src="../Public/Js/json2select.js" ></script>
+<script type="text/javascript" src="../Public/Js/group.info.form.js" ></script>
+<link  href="../Public/group.css" rel="stylesheet" type="text/css"/> -->
+<link href="__APP__/group.css" rel="stylesheet" type="text/css" />
+
+<script type="text/javascript" src="__APP__/Js/json2select.js"></script> 
+<script type="text/javascript" src="__APP__/Js/group.info.form.js"></script> 
+
+<div class="content_holder">
+<div class="content no_bg boxShadow"><!-- 内容 begin  -->
+<include file="../Public/_mainNav" />
+  <div class="main no_l"> <!-- 右侧内容 begin  -->
+  <div class="mainbox"> 
+  		<!-- 添加创建圈子说明 -->
+    	<include file="../Public/_createGroupRight"/>
+        <!-- 添加创建圈子说明 -->
+      <div class="mainbox_appC">
+  <div class=page_title> <!-- page_title begin -->
+    	<h2><span class="right fn f12px">
+        <!--<a href="javascript:history.go(-1)">&lt;&lt;返回上一页</a>--></span>创建新的圈子</h2>
+</div><!-- page_title end -->
+  <!-- 切换标签 end  -->
+  <div class="groupBox">
+  <form name="addform" action="{:U('group/Index/doAdd')}" method="post" onsubmit="return group_info.check_form(this);" enctype="multipart/form-data">
+    <ul class="add_group">
+          <li>
+          	<div class="c1"><font color="red">*</font>圈子名称：</div>
+            <div class="c2">
+              <input type="text" name="name" value="{$search_key}" class="text" style="width: 400px;" onblur="this.className='text';group_info.text_length(this,30);" onfocus="this.className='text2'" />
+              <span id="group_name_tips" class="cRed pr5"></span>
+            </div>
+       	  </li>
+          <li>
+          	<div class="c1"><font color="red">*</font>圈子分类：</div>
+            <div class="c2" id="pid"></div>
+       	  </li>
+          <li>
+          	<div class="c1">圈子头像：</div>
+            <div class="c2"><input type="file"  name="logo" /><label id="logo_waring" style="color:red;"></label>
+            </div>
+       	  </li>
+          <li>
+          	<div class="c1">圈子简介：</div>
+            <div class="c2">
+              <textarea rows="6" style="padding:0;overflow:auto;width:400px;height:100px" class="text" onblur="this.className='text';group_info.text_length(this,200);" onfocus="this.className='text2'" name="intro"></textarea>
+              <span id="group_intro_tips" class="cRed pr5"></span>
+            </div>
+       	  </li>         
+          <li>
+          	<div class="c1"><font color="red">*</font>内容权限：</div>
+            <div class="c2">
+            	<div class="mb10"><label><input id="t_public" type="radio" style="margin-top: -3px;" name="type" value="open" checked="checked" />公开<span class="cGray2">（圈子内容公开，所有用户可见）</span></label></div>
+                <div><label><input id="t_privite" type="radio" style="margin-top: -3px;" name="type" value="close" />私密<span class="cGray2">（圈子内容私密，仅成员可见）</span></label></div>
+            </div>
+       	  </li>        
+          <li>
+          	<div class="c1">&nbsp;</div>
+            <div class="c2">
+            <input type="hidden" name="dosubmit" value="1">
+            <input name="button" type="submit" class="btn_b" id="button" value="确定"/>
+
+            </div>
+       	  </li>
+          </ul>
+    </form>
+  </div>
+  <div class="c"></div>
+
+
+</div>
+<div class="c"></div>
+</div>
+</div><!-- 内容 end -->
+
+</div>
+</div>
+ <script type="text/javascript">
+ $(document).ready(function(){
+	 var category_json = {:getCategorySelect(0)};
+	 $("#pid").json2select(category_json,'','cid');
+ });
+</script>
+
+<include file="__THEME__/public_footer" />

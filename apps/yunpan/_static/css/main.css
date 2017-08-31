@@ -1,0 +1,1470 @@
+body {
+    font: 12px/1.5 microsoft yahei,tahoma,srial,helvetica,sans-sefir;
+}
+input,img {
+    vertical-align: middle;
+}
+.none {
+    display: none;
+}
+/*清楚浮动*/
+.clearfix:before,.clearfix:after {
+    content:'';
+    display:table;
+}
+.clearfix:after{
+    clear:both;
+}
+.clearfix {
+    zoom:1;
+}
+.fl {
+    float: left;
+    display: inline;
+}
+.fr {
+    float: right;
+    display: inline;
+}
+.hiddenText {
+    white-space: nowrap;
+    text-indent: 100%;
+    overflow: hidden;
+}
+.opacityed {
+    opacity: 1;
+    -ms-filter: alpha(opacity=100);
+    filter: alpha(opacity=100);
+    color: #fff;
+    text-align: center;
+}
+.opacityed:hover {
+    opacity: .8;
+    -ms-filter: alpha(opacity=80);
+    filter: alpha(opacity=80);
+    color: #fff;
+}
+input[type="checkbox"] {
+    position: relative;
+    top: 2px;
+    margin-right: 14px;
+    margin-left: 12px;
+}
+
+.yunfile {
+    background-color: #fff;
+    color: #535353;
+}
+/*yunfile_l*/
+.yunfile_l {
+    width: 220px;
+}
+.yunfile_h1,
+.yunfile_home_btn,
+.yunfile_book_btn {
+    background-image: url(../images/yunfile_tits.jpg);
+    background-repeat: no-repeat;
+}
+.yunfile_h1 {
+    height: 55px;
+    background-position: 0 0;
+}
+.yunfile_home_btn,
+.yunfile_book_btn {
+    display: block;
+    height: 41px;
+    background-position: 0 -56px;
+}
+.yunfile_home_btn.current {
+    background-position: 0 -98px;
+}
+.yunfile_book_btn {
+
+    background-position: 0 -140px;
+}
+.yunfile_book_btn.current {
+    background-position: 0 -182px;
+}
+.yunfile_list_cover {
+    background-color: #e1e1e1;
+    border-right: 1px solid #e9e9e9;
+    border-bottom: 1px solid #e9e9e9;
+    text-align: center;
+}
+/*20140422 by wangyh*/
+.yunfile_list {
+    height: 451px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    position: relative;
+}
+.yunfile_list li {
+    min-height: 180px;
+}
+/*20140422 by wangyh end*/
+.yunfile_del_btn,
+.yunfile_add_btn,
+.yunfile_upload_btn,
+.sort_btn,
+.yunfile_search,
+.more_list .first-child,
+.more_list .last-child,
+.status,
+.yunfile_r_fun_btn,
+.omit,
+.my_book_amount_sign,
+.slide_sign,
+.yunfile_book_map_list_tit_icon,
+.detail_icon,
+.sort_detail_more_list .firstChild,
+.more_tri,
+.return_home_btn {
+    background-image: url(../images/yunfile_btns.png);
+    background-repeat: no-repeat;
+}
+.yunfile_del_btn {
+    position: absolute;
+    left: 18px;
+    top: 14px;
+    width: 20px;
+    height: 23px;
+    background-position: -69px -144px;
+    display: none;
+}
+.yunfile_list li img {
+    width: 80px;
+    height: 108px;
+}
+.yunfile_book {
+    position: relative;
+    padding-top: 14px;
+    height: 166px;
+    line-height: 21px;
+}
+.yunfile_book:hover {
+    background-color: #d5d5d5;
+}
+.yunfile_book:hover .yunfile_del_btn {
+    display: block;
+}
+.yunfile_book_des1 {
+    font-size: 14px;
+}
+.yunfile_book_des2 {
+    color: #787878;
+}
+.yunfile_add_btn_box {
+    padding-top: 28px;
+}
+.yunfile_add_btn {
+    display: block;
+    width: 64px;
+    height: 64px;
+    background-position: 0 -144px;
+    margin: 0 auto;
+}
+
+/*yunfile_r*/
+.yunfile_r {
+    width: 779px;
+    border-right: 1px solid #f6f6f6;
+}
+.yunfile_r_logo {
+    height: 54px;
+    line-height: 52px;
+    background: url(../images/yunfile_logo.jpg) no-repeat;
+    font-size: 14px;
+    overflow: hidden;
+}
+.yunfile_crumb {
+    float: left;
+    display: inline;
+    height: 100%;
+    overflow: hidden;
+    margin-left: 44px;
+    color: #787878;
+}
+.yunfile_crumb a,
+.yunfile_crumb span {
+    float: left;
+    display: inline;
+    margin-right: 4px;
+}
+.yunfile_crumb a {
+    color: #535353;
+}
+.yunfile_crumb a:hover {
+    color: #229bd7;
+}
+.yunfile_crumb .yunfile_crumb_home {
+    font-size: 18px;
+    color: #333;
+}
+.yunfile_r_logo .db_line {
+    line-height: 16px;
+    padding-top: 12px;
+    font-size: 12px;
+}
+.yunfile_upload_btn {
+    float: right;
+    display: inline;
+    width: 89px;
+    height: 33px;
+    line-height: 33px;
+    background-position: 0 -110px;
+    margin-right: 25px;
+    margin-top: 13px;
+}
+.yunfile_r_cont {
+    width: 752px;
+    padding-left: 14px;
+    padding-bottom: 14px;
+}
+.yunfile_r_cont_tit {
+    height: 49px;
+    line-height: 49px;
+    background-color: #e3f6ff;
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+}
+.yunfile_r_cont_tit_des,
+.sort_btn {
+    float: left;
+    display: inline;
+}
+.yunfile_search {
+    float: right;
+    display: inline;
+}
+.yunfile_r_cont_tit_des {
+    padding-left: 12px;
+    margin-right: 14px;
+}
+.sort_btn {
+    width: 23px;
+    height: 22px;
+    /*margin-right: 20px;*/
+    margin-top: 13px;
+}
+.sort_btn_1 {
+    background-position: 0 -31px;
+}
+.sort_btn_1:hover,
+.sort_btn_1.current {
+    background-position: 0 -54px;
+}
+.sort_btn_2 {
+    background-position: -43px -31px;
+}
+.sort_btn_2:hover,
+.sort_btn_2.current {
+    background-position: -43px -54px;
+}
+.sort_btn_3 {
+    background-position: -86px -31px;
+}
+.sort_btn_3:hover,
+.sort_btn_3.current {
+    background-position: -86px -54px;
+}
+.sort_btn_4 {
+    background-position: -128px -31px;
+}
+.sort_btn_4:hover,
+.sort_btn_4.current {
+    background-position: -128px -54px;
+}
+.sort_btn_5 {
+    background-position: -171px -31px;
+}
+.sort_btn_5:hover,
+.sort_btn_5.current {
+    background-position: -171px -54px;
+}
+.sort_btn_6 {
+    background-position: -213px -31px;
+}
+.sort_btn_6:hover,
+.sort_btn_6.current {
+    background-position: -213px -54px;
+}
+
+.yunfile_search {
+    width: 209px;
+    height: 32px;
+    background-position: 0 -77px;
+    margin: 8px 12px 0 0;
+}
+.yunfile_search_input {
+    float: left;
+    display: inline;
+    background-color: transparent;
+    border: 0 none;
+    width: 162px;
+    height: 26px;
+    padding-left: 8px;
+    line-height: 26px;
+    color: #535353;
+    margin-top: 3px;
+    margin-left: 4px;
+}
+.yunfile_search_btn {
+    float: left;
+    display: inline;
+    width: 30px;
+    height: 26px;
+    margin-left: 3px;
+    margin-top: 3px;
+    cursor: pointer;
+}
+.yunfile_tab {
+    min-height: 472px;
+   /*  overflow: hidden; */
+}
+
+.yunfile_tab_bkb {
+    min-height: 302px;
+   /*  overflow: hidden; */
+}
+
+.yunfile_r_cont_list {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: auto;
+}
+.yunfile_r_cont_list tr th {
+    background-color: #f3f3f3;
+    height: 42px;
+    line-height: 42px;
+    font-weight: normal;
+    font-size: 14px;
+    text-align: center;
+}
+.yunfile_r_cont_list tr th:first-child {
+    text-align: left;
+}
+.yunfile_r_cont_list tr td {
+    height: 42px;
+    line-height: 42px;
+    border-bottom: 1px dashed #ddd;
+    text-align: center;
+}
+.yunfile_r_cont_list tr td:first-child {
+    text-align: left;
+}
+.yunfile_r_cont_list tr td:last-child {
+    color: #999;
+}
+.yunfile_r_cont_list tr td.color_78 {
+    color: #c8c8c8;
+}
+.yunfile_r_cont_list tr td img {
+    vertical-align: middle;
+    margin-right: 10px;
+}
+.operation_btn,
+.dl_btn,
+.copy_btn,
+.move_btn,
+.public_btn,
+.more_btn {
+    margin-right: 14px;
+    color: #0099cc;
+}
+.dl_btn:hover,
+.copy_btn:hover,
+.move_btn:hover,
+.more_btn:hover {
+    text-decoration: underline;
+}
+.yunfile_r_cont_list tr .op_box {
+    position: relative;
+    text-align: right;
+    width: 164px;
+}
+.my_book_detail_choice {
+    *padding-left: 12px;
+}
+.my_book_detail_choice input {
+    *margin-right: 0;
+}
+.my_book_detail_des {
+    float: left;
+    display: inline;
+    line-height: 16px;
+    padding-top: 6px;
+    margin-left: 6px;
+    color: #999;
+}
+.more_list {
+    position: absolute;
+    right: -10px;
+    top: 31px;
+    width: 72px;
+    z-index: 100;
+}
+.more_list li {
+    line-height: 33px;
+}
+.more_list li a {
+    width: 70px;
+    display: block;
+    height: 33px;
+    text-align: center;
+    background-color: #f1f1f1;
+    color: #666;
+    border-bottom: 1px solid #ccc;
+    border-left:1px solid #ccc;
+    border-right:1px solid #ccc;
+}
+.more_list .first-child {
+    padding-top: 7px;
+    background-position: -164px -144px;
+}
+.more_list .last-child {
+    height: 40px;
+    line-height: 40px;
+    background-position: -91px -143px;
+    overflow: visible;
+}
+.more_list li a:hover {
+    background-color: #d9edf7;
+}
+.status {
+    float: left;
+    display: inline;
+    width: 17px;
+    height: 16px;
+    margin-top: 13px;
+    margin-left: 10px;
+}
+.status_pri {
+    background-position: -186px -110px;
+}
+.status_pub {
+    background-position: -167px -110px;
+}
+.new_folder {
+    border: 1px solid #e7e7e7;
+    color: #999;
+    width: 146px;
+    height: 28px;
+    /*line-height: 28px;*/
+    text-indent: 6px;
+}
+.yunfile_r_cont_list tr td img.rename_sign {
+    margin-right: 0;
+    margin-left: 6px;
+    cursor: pointer;
+}
+.yunfile_r_fun {
+    height: 38px;
+    padding-top: 10px;
+    background-color: #f7f7f7;
+}
+.yunfile_r_fun_btn {
+    float: left;
+    display: inline;
+    margin-right: 6px;
+    width: 60px;
+    height: 30px;
+    line-height: 30px;
+}
+.yunfile_r_fun_btn:first-child {
+    margin-left: 8px;
+}
+.yunfile_r_fun_btn_add {
+    width: 80px;
+    background-position: 0 0;
+}
+.yunfile_r_fun_btn_copy,
+.yunfile_r_fun_btn_move {
+    background-position: -86px 0;
+}
+
+.yunfile_r_fun_btn_del {
+    background-position: -218px 0;
+}
+.page_box {
+    padding-right: 9px;
+}
+.page_box a {
+    float: left;
+    display: inline;
+    width: 28px;
+    height: 28px;
+    line-height: 28px;
+    text-align: center;
+    border: 1px solid #ccc;
+    color: #535353;
+    margin-right: 4px;
+}
+.page_box a.current {
+    border: 1px solid #bebebe;
+    color: #fff;
+    background-color: #bebebe;
+}
+.omit {
+    float: left;
+    display: inline;
+    width: 30px;
+    height: 30px;
+    background-position: -90px -110px;
+    margin-right: 4px;
+}
+.page_box .pageBtn {
+    width: 58px;
+}
+.page_box .pre,.page_box .next{
+    width: 58px;
+}
+.page_box .noClicked {
+    color: #ddd;
+    cursor: default;
+}
+
+/*mask*/
+.mask {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #000;
+    opacity: .6;
+    -ms-filter: alpha(opacity=60);
+    filter: alpha(opacity=60);
+    z-index: 1000;
+    display: none;
+}
+
+/*popup*/
+.popup {
+    position: absolute;
+    left: 30%;
+    top: 40%;
+    width: 528px;
+    border: 1px solid #ccc;
+    z-index: 1001;
+    background-color: #fff;
+    color: #535353;
+}
+.popup_statusSet{
+	display:none;
+}
+.closeBtn,
+.pop_btn_g,
+.enterBtn,
+.dropBtn,
+.c_folder_btn {
+    background-image: url(../images/pop_btns.png);
+    background-repeat: no-repeat;
+}
+.popup_tit {
+    background-color: #73bfee;
+    font-size: 14px;
+    height: 40px;
+    line-height: 40px;
+    padding-left: 1em;
+    color: #fff;
+}
+.closeBtn {
+    float: right;
+    display: inline;
+    width: 20px;
+    height: 20px;
+    background-position: 0 -129px;
+    margin: 10px 13px 0 0;
+}
+.upload_box {
+    padding-top: 19px;
+    height: 309px;
+    background: url(../images/pop_upload_bg.jpg) no-repeat;
+}
+.pop_btn_g {
+    display: block;
+    width: 89px;
+    height: 32px;
+    line-height: 32px;
+    background-position: 0 0;
+    margin: 20px auto 0;
+}
+.addBook_box {
+    padding: 20px 0 28px;
+    border-bottom: 1px solid #ddd;
+}
+.addBook_input {
+    padding-left: 20px;
+    height: 26px;
+    line-height: 26px;
+    margin-bottom: 12px;
+}
+.addBook_input label {
+    float: left;
+    display: inline;
+    width: 85px;
+    text-align: right;
+}
+.addBook_input select {
+    width: 303px;
+    height: 26px;
+    line-height: 26px;
+    padding: 2px;
+    color: #535353;
+    text-align: center;
+}
+.addBook_input select.xuenianxinxi {
+    width: 148px;
+    margin-right: 4px;
+}
+.addBook_choice {
+    height: 50px;
+    padding-right: 5px;
+}
+.enterBtn,
+.dropBtn {
+    float: right;
+    display: inline;
+    width: 60px;
+    height: 30px;
+    line-height: 30px;
+    color: #fff;
+    margin-right: 5px;
+    margin-top: 10px;
+}
+.enterBtn {
+    background-position: 0 -67px;
+}
+.dropBtn {
+    background-position: 0 -98px;
+}
+.move_box {
+    position: relative;
+    height: 337px;
+    border-bottom: 1px solid #ddd;
+}
+.c_folder_btn {
+    position: absolute;
+    right: 16px;
+    top: 5px;
+    width: 89px;
+    height: 32px;
+    line-height: 32px;
+    color: #fff;
+    font-size: 14px;
+    background-position: 0 0;
+}
+.del_box {
+    height: 157px;
+    line-height: 150px;
+    padding-left: 55px;
+    font-size: 18px;
+    color: #787878;
+    border-bottom: 1px solid #ddd;
+}
+/*my_book_sort*/
+.my_book_amount_sign_box {
+    position: relative;
+}
+.my_book_amount_sign {
+    position: absolute;
+    right: 8px;
+    top: -8px;
+    width: 20px;
+    height: 20px;
+    line-height: 20px;
+    background-position: -69px -189px;
+    text-align: center;
+    color: #ff6600;
+    font-size: 11px;
+}
+.my_book_amount_sign_long {
+    width: 29px;
+    right: 5px;
+    background-position: -90px -189px;
+}
+
+/*yunfile_book_map_tit*/
+.yunfile_book_map_tit {
+    height: 64px;
+    background-color: #1ca6d4;
+    position: relative;
+    cursor: pointer;
+}
+.yunfile_book_map_tit img {
+    float: left;
+    display: inline;
+    margin: 9px 0 0 13px;
+}
+.yunfile_book_map_tit_des {
+    float: left;
+    display: inline;
+    padding-top: 12px;
+    padding-left: 6px;
+    font-size: 14px;
+    color: #fff;
+}
+.yunfile_book_map_tit_more_des {
+    font-size: 12px;
+    color: #dfdfdf;
+}
+.slide_sign {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    width: 10px;
+    height: 6px;
+    background-position: -129px -133px;
+}
+.slide_sign.current {
+    background-position: -140px -133px;
+}
+.yunfile_book_map_list_box {
+    height: 410px;
+    overflow: auto;
+    background-color: #e1e1e1;
+}
+.yunfile_book_map_list {
+    margin: 0 17px 0 11px;
+}
+.yunfile_book_map_list_tit {
+    height: 33px;
+    line-height: 33px;
+    color: #333;
+    border-bottom: 1px dashed #e9f5f9;
+    cursor: pointer;
+}
+.yunfile_book_map_list_tit_icon {
+    float: left;
+    display: inline;
+    width: 19px;
+    height: 15px;
+    margin: 9px 4px 0 7px;
+    background-position: -204px -110px;
+}
+/*20140422 by wangyh*/
+.yunfile_book_map_list_tit_icon.folded {
+    background-position: -224px -110px;
+}
+/*20140422 by wangyh end*/
+.yunfile_book_map_list li ul {
+    padding: 4px 0 8px 20px;
+}
+.yunfile_book_map_list li ul li {
+    height: 24px;
+    line-height: 24px;
+}
+.detail_icon {
+    float: left;
+    display: inline;
+    width: 3px;
+    height: 6px;
+    margin: 9px 8px 0 0;
+    background-position: -121px -133px;
+}
+.yunfile_book_map_list li ul li.current .detail_icon {
+    background-position: -125px -133px;
+}
+.yunfile_book_map_list li ul li a {
+    color: #787878;
+}
+.yunfile_book_map_list li ul li a:hover,
+.yunfile_book_map_list li ul li.current a {
+    color: #229bd7;
+}
+
+/*具体详情页*/
+.yunfile_r_cont_tit_detail {
+    background-color: #f7efd9;
+    padding-left: 30px;
+    position: relative;
+    z-index: 100;
+}
+.sort_detail_btn,
+.checked_mask,
+.my_book_detail_pri,
+.title_icon,
+.book_package_logo,
+.star,
+.book_package_collect,
+.book_package_dl {
+    background-image: url(../images/my_book_detail_btns.png);
+    background-repeat: no-repeat;
+}
+.sort_detail_btn {
+    float: left;
+    display: inline;
+    width: 25px;
+    height: 24px;
+    margin-right: 24px;
+    margin-top: 12px;
+}
+.sort_detail_btn_1:hover,
+.sort_detail_btn_1.current {
+    background-position: 0 -25px;
+}
+.sort_detail_btn_2 {
+    background-position: -48px 0;
+}
+.sort_detail_btn_2:hover,
+.sort_detail_btn_2.current {
+    background-position: -48px -25px;
+}
+.sort_detail_btn_3 {
+    background-position: -99px 0;
+}
+.sort_detail_btn_3:hover,
+.sort_detail_btn_3.current {
+    background-position: -99px -25px;
+}
+.sort_detail_btn_4{
+    width: 27px;
+    background-position: 0 -196px;
+}
+.sort_detail_btn_4:hover,
+.sort_detail_btn_4.current {
+    background-position: 0 -221px;
+}
+.sort_detail_btn_5{
+    background-position: -28px -196px;
+}
+.sort_detail_btn_5:hover,
+.sort_detail_btn_5.current {
+    background-position: -28px -221px;
+}
+.sort_detail_btn_6{
+    background-position: -54px -196px;
+}
+.sort_detail_btn_6:hover,
+.sort_detail_btn_6.current {
+    background-position: -54px -221px;
+}
+.sort_detail_more_list {
+    position: absolute;
+    width: 72px;
+    left: 152px;
+    top: 36px;
+    z-index: 1000;
+}
+.sort_detail_more_list li {
+    width: 72px;
+    height: 35px;
+    text-align: center;
+}
+.sort_detail_more_list li a {
+    display: block;
+    height: 34px;
+    line-height: 34px;
+    border: 1px solid #ccc;
+    border-top: none;
+    background-color: #f1f1f1;
+    color: #535353;
+}
+.sort_detail_more_list li a:hover {
+    color: #229bd7;
+}
+.sort_detail_more_list li a:hover {
+    background-color: #d9edf7;
+}
+.sort_detail_more_list li:first-child,
+.sort_detail_more_list .firstChild {
+    padding-top: 7px;
+    background-position: -164px -144px;
+}
+/*20140422 by wangyh*/
+.my_book_details_box {
+    height: 342px;
+    overflow: hidden;
+}
+.noResourced {
+    background: url(../images/no-resource.png) no-repeat center;
+}
+.my_book_details {
+    height: 264px;
+    padding: 20px 0 10px 16px;
+    overflow: hidden;
+    position: relative;
+}
+/*20140422 by wangyh end*/
+.my_book_details li {
+    float: left;
+    display: inline;
+    width: 90px;
+    height: 110px;
+    padding-top: 10px;
+    position: relative;
+    text-align: center;
+    margin: 0 30px 12px 0;
+}
+.my_book_details li img {
+    display: block;
+    width: 64px;
+    height: 64px;
+    margin: 8px auto 4px;
+}
+.my_book_details li p {
+    padding-left: 5px;
+}
+.checked_mask {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 90px;
+    height: 120px;
+    background-position: 0 -75px;
+}
+.checked_mask input {
+    position: absolute;
+    margin: 0;
+    left: 5px;
+    top: 6px;
+}
+.my_book_detail_pri {
+    position: absolute;
+    right: 12px;
+    bottom: 32px;
+    width: 28px;
+    height: 28px;
+    background-position: -138px -50px;
+}
+
+/*book_detail_resource*/
+.book_detail_resource {
+    padding: 0 10px 0 11px;
+    margin-top: 17px;
+    background-color: #f6f6f6;
+}
+.book_detail_resource_tit {
+    height: 40px;
+    line-height: 40px;
+    font-size: 16px;
+    color: #333;
+    border-bottom: 1px solid #ddd;
+}
+.title_icon {
+    float: left;
+    display: inline;
+    width: 4px;
+    height: 16px;
+    background-position: -122px -50px;
+    margin: 13px 5px 0 3px;
+}
+.book_package {
+    width: 290px;
+    padding-top: 28px;
+    padding-bottom: 18px;
+}
+/*20140422 by wangyh*/
+.book_package_logo {
+    width: 60px;
+    height: 60px;
+    background-position: -91px -108px;
+    margin: 10px 8px 0;
+}
+.book_package_des_top p {
+    font-size: 14px;
+    color: #535353;
+    vertical-align: middle;
+}
+.star_box {
+    height: 28px;
+    line-height: 28px;
+    vertical-align: middle;
+}
+.star {
+    float: left;
+    display: inline;
+    width: 16px;
+    height: 15px;
+    background-position: -91px -92px;
+    margin-right: 1px;
+    margin-top: 7px;
+}
+.star_des {
+    padding-left: 6px;
+}
+.star_half {
+    background-position: -108px -92px;
+}
+.star_gray {
+    background-position: -125px -92px;
+}
+/*20140422 by wangyh end*/
+.book_package_f18 {
+    font-size: 18px;
+    color: #f16c00;
+}
+.book_package_f12 {
+    font-size: 12px;
+    color: #787878;
+}
+.book_package_des_bot {
+    padding-top: 5px;
+}
+.book_package_collect,
+.book_package_dl {
+    float: left;
+    display: inline;
+    width: 60px;
+    height: 24px;
+    line-height: 24px;
+    text-align: center;
+    color: #fff;
+    background-position: 0 -50px;
+    margin-right: 10px;
+    font-size: 12px;
+}
+.book_package_dl {
+    background-position: -61px -50px;
+}
+.resource_details {
+    width: 426px;
+}
+.resource_details_tit {
+    height: 38px;
+    line-height: 38px;
+    font-size: 14px;
+    color: #535353;
+}
+.more_res_btn {
+    float: right;
+    display: inline;
+    color: #0099cc;
+    position: relative;
+    font-size: 12px;
+    padding-right: 20px;
+}
+.more_tri {
+    position: absolute;
+    top: 50%;
+    margin-top: -2px;
+    right: 12px;
+    width: 3px;
+    height: 6px;
+    background-position: -125px -133px;
+}
+.resource_details_list li {
+    float: left;
+    display: inline;
+    width: 202px;
+    white-space: nowrap;
+    overflow: hidden;
+    height: 20px;
+    line-height: 20px;
+    margin-bottom: 6px;
+    margin-right: 10px;
+}
+.resource_details_list li img {
+    vertical-align: middle;
+    margin-right: 10px;
+}
+.res_choice .book_package_collect,
+.res_choice .book_package_dl {
+    float: right;
+    display: inline;
+    margin: 13px 5px 0 0;
+}
+.res_review_tit {
+    height: 53px;
+    line-height: 53px;
+    padding-left: 22px;
+    color: #25bcef;
+    font-size: 16px;
+}
+.res_review_btn {
+    margin: 10px 10px 0 0;
+}
+.res_review_box {
+    height: 270px;
+    overflow: auto;
+    border-bottom: 1px solid #ddd;
+}
+.res_review_tab_tit {
+    height: 40px;
+    line-height: 40px;
+    background-color: #eee;
+    font-size: 14px;
+    color: #333;
+}
+.res_review_tab_format,
+.res_review_doc_name {
+    float: left;
+    display: inline;
+    width: 68px;
+    text-align: center;
+}
+.res_review_tab_list {
+    color: #535353;
+    padding: 0 18px;
+}
+.res_review_tab_list li {
+    height: 40px;
+    line-height: 40px;
+    border-bottom: 1px dashed #ddd;
+}
+.res_review_tab_list li img {
+    vertical-align: middle;
+    margin: 0 24px 0 11px;
+}
+
+/*提示信息 add by yangjs*/
+.book-modal-blackout{position: absolute;left: 0; top: 0;}
+/*遮罩层样式*/
+.book-modal-blackout { position: absolute;background:#000;left: 0; top: 0;filter:alpha(opacity=30); /*IE*/-moz-opacity:0.8; /*MOZ , FF*/opacity:0.8;background:#000;background:-webkit-radial-gradient(center,rgba(0,0,0,0.3),rgba(0,0,0,1) 80%);background:-moz-radial-gradient(center,rgba(0,0,0,0.3),rgba(0,0,0,1) 80%);background:radial-gradient(center,rgba(0,0,0,0.3),rgba(0,0,0,1) 80%);}
+/*分享备课本*/
+.book_share_btn {
+	background-image: url(../images/yunfile_btns.png);
+    background-repeat: no-repeat;
+    float: right;
+    display: inline;
+    width: 89px;
+    height: 33px;
+    line-height: 33px;
+    background-position: 0 -110px;
+    margin-right: 25px;
+    margin-top: 13px;
+}
+
+/*资源上传后*/
+.upload_after {
+    height: 309px;
+    color: #787878;
+}
+.upload_after_list {
+    height: 240px;
+    overflow: auto;
+}
+.upload_after_list li {
+    height: 59px;
+    padding: 0 20px 0 40px;
+    border-bottom: 1px solid #ebebeb;
+    overflow: hidden;
+    cursor: pointer;
+}
+.upload_after_list li:hover {
+    background-color: #e1f1f7;
+}
+.upload_after_list_detail {
+    padding-top: 14px;
+}
+.upload_after_list_detail p,
+.upload_status {
+    float: left;
+    display: inline;
+}
+.upload_after_list_detail p {
+    color: #333;
+}
+.upload_status.successed,
+.upload_after_btn_cancel,
+.upload_after_btn_done {
+    background-image: url(../images/upload_btns.png);
+    background-repeat: no-repeat;
+}
+.upload_status {
+    width: 15px;
+    height: 15px;
+    margin-left: -20px;
+}
+.upload_status.successed {
+    background-position: -152px -14px;
+}
+.upload_btn_cancel {
+    color: #259ed0;
+}
+.upload_btn_cancel:hover {
+    color: #28bbf7;
+}
+.upload_process {
+    width: 418px;
+    height: 6px;
+    border-radius: 3px;
+    background-color: #ddd;
+    -moz-linear-gradient: top #bcbcbc #ddd;
+    -webkit-linear-gradient: top #bcbcbc #ddd;
+    -o-linear-gradient: top #bcbcbc #ddd;
+    margin-top: 10px;
+}
+.upload_process_bar {
+    width: 30%;
+    height: 100%;
+    background-color: #6ede06;
+    -moz-linear-gradient: top #6bd50c #6ede06;
+    -webkit-linear-gradient: top #6bd50c #6ede06;
+    -o-linear-gradient: top #6bd50c #6ede06;
+    border-radius: 3px;
+}
+.upload_after_btns {
+    padding-top: 10px;
+    padding-right: 10px;
+    margin-top: 18px;
+    border-top: 1px solid #ddd;
+}
+.upload_after_btn_cancel,
+.upload_after_btn_done {
+    float: right;
+    display: inline;
+    height: 30px;
+    line-height: 30px;
+    color: #fff;
+    text-align: center;
+    margin-right: 6px;
+}
+.upload_after_btn_cancel {
+    width: 90px;
+    background-position: 0 -14px;
+}
+.upload_after_btn_done {
+    width: 60px;
+    background-position: -91px -14px;
+}
+/*20140422 by wangyh*/
+.return_home_btn {
+    float: right;
+    display: inline;
+    width: 32px;
+    height: 30px;
+    background-position: -246px -110px;
+    margin: 10px 10px 0 0;
+}
+.return_home_btn:hover {
+    background-position: -246px -141px;
+}
+/*20140422 by wangyh end*/
+
+.sort_detail_btn_7 {
+    background-position: -80px -196px;
+}
+.sort_detail_btn_7:hover,
+.sort_detail_btn_7.current {
+    background-position: -80px -221px;
+}
+
+/*---20140505 add--*/
+.status_setbtn,
+.status_setbtn:hover {
+	cursor:default;
+    color: #c8c8c8;
+}
+.status_radio_box {
+    position: absolute;
+    z-index: 101;
+    width: 140px;
+    background-color: #fff;
+    color: #535353;
+    border: 1px solid #ccc;
+    text-align: left;
+    line-height: 24px;
+    padding: 4px 0 4px 1em;
+}
+.status_radio_box input[type='radio'] {
+    margin-left: 14px;
+    margin-right: 4px;
+}
+.statusSet_box {
+    padding: 16px 0;
+    border-bottom: 1px solid #ddd;
+}
+.statusSet_input_box {
+    height: 24px;
+    line-height: 24px;
+    vertical-align: middle;
+    margin-bottom: 4px;
+}
+.statusSet_input_box input[type='checkbox'],
+.statusSet_input_box select {
+    vertical-align: text-bottom;
+}
+.statusSet_input_box input[type='checkbox'] {
+    margin: 0;
+    top: -2px;
+    *top: 1px;
+}
+.statusSet_input_box select {
+    margin-left: 12px;
+}
+.xk_res_list {
+    width: 320px;
+    padding: 10px 0;
+    border-radius: 4px;
+    background-color: #f6f6f6;
+}
+.popup table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: auto;
+    line-height: 24px;
+}
+.popup table tr td {
+    vertical-align: top;
+    padding-bottom: 10px;
+}
+.popup table tr td:first-child {
+    width: 100px;
+    text-align: right;
+    padding-right: 1em;
+}
+.popup table tr td input[type='text'],
+.popup table tr td textarea {
+    width: 320px;
+    border: 1px solid #ddd;
+    color: #535353;
+}
+.popup table tr td input[type='text'] {
+    height: 24px;
+    line-height: 24px;
+}
+.popup .row {
+    height: 26px;
+    line-height: 26px;
+    overflow: hidden;
+    margin-bottom: 12px;
+}
+.popup .row label {
+    float: left;
+    display: inline;
+    width: 60px;
+    margin-right: 12px;
+    text-align: right;
+}
+.row select {
+    color: #535353;
+    height: 22px;
+    line-height: 22px;
+    padding: 2px;
+    text-align: center;
+    width: 202px;
+}
+.failed_tip{
+    color: #a72525;
+}
+.popup_collect p {
+    line-height: 24px;
+    padding: 30px 20px;
+    text-align: center;
+    font-size: 14px;
+}
+.popup_collect .enterBtn {
+    float: none;
+    display: block;
+    margin: 0 auto;
+}
+.popup_res {
+    width: 678px;
+}
+.res_review_wrap {
+    padding: 14px 10px;
+    height: 400px;
+    border-bottom: 1px solid #ddd;
+    overflow: auto;
+}
+.res_review_img {
+    height: 100%;
+    overflow-x: hidden;
+    overflow-y: hidden;
+}
+.res_review_wrap img {
+    display: block;
+    margin: 0 auto;
+    max-width: 100%;
+    height: 560px;
+}
+/*---20140505 add end--*/
+
+/*--20140509 add--*/
+.yunfile_r_fun_btn_del {
+    color: #787878;
+}
+.yunfile_r_fun_btn_del:hover {
+    color: #787878;
+}
+/*--20140509 add end--*/
+
+/*--20140513 add--*/
+.yunfile_tab_mypub {
+    height: 472px;
+}
+.yunfile_tab_mydownload {
+    height: 522px;
+    border-top: 1px solid #ddd;
+}
+.yunfile_r_cont_list_record tr th:first-child,
+.yunfile_r_cont_list_record tr td:first-child {
+    padding-left: 1em;
+}
+.record_btn {
+    float: left;
+    display: inline;
+    width: 60px;
+    height: 30px;
+    line-height: 30px;
+    margin-right: 6px;
+    margin-top: 9px;
+    color: #333;
+}
+.record_btn.current,
+.record_btn:hover {
+    color: #fff;
+    background: url(../images/yunfile_btns.png) no-repeat -86px 0;
+}
+.my_pub_btn {
+    background-position: 0 -224px;
+}
+.my_pub_btn.current {
+    background-position: 0 -266px;
+}
+.my_download_btn {
+    background-position: 0 -308px;
+}
+.my_download_btn.current {
+    background-position: 0 -350px;
+}
+.yunfile_tab_mydownload .star,
+.yunfile_tab_mydownload .book_package_f18 {
+    float: none;
+    display: inline-block;
+    vertical-align: middle;
+    margin: 0;
+}
+.yunfile_list_cover {
+    padding-bottom: 10px;
+}
+.my_book_add_1 {
+    float: right;
+    display: inline-block;
+    width: 32px;
+    height: 32px;
+    margin: 3px 3px 0 0;
+}
+
+/*--20140513 add end--*/
+
+/*--20140514 add--*/
+.res_review_img.no-resource {
+    background: url(../images/none-review.jpg) no-repeat center;
+}
+/*--20140514 add end--*/
+
+.yunfile_book_map_list_tit a{color:#787878;}
+/*20140616 add*/
+.dir_btn_next,
+.dir_btn_prev {
+    float: right;
+    display: inline;
+    width: 18px;
+    height: 18px;
+    margin-top: 11px;
+    margin-left: 2px;
+    background: url(../images/dir_btns.jpg) no-repeat;
+}
+.dir_btn_prev.disabled {
+    background-position: 0 -19px;
+    cursor: default;
+}
+.dir_btn_next {
+    background-position: -20px 0;
+}
+.dir_btn_next.disabled {
+    background-position: -20px -19px;
+    cursor: default;
+}

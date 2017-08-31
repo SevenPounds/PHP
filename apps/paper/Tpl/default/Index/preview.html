@@ -1,0 +1,87 @@
+<include file="paper_header" />
+<script type="text/javascript">
+var id = {$id};
+var uid = {$uid};
+var mid = {$mid};
+var type = {$type};
+</script>
+<script type="text/javascript" src="./apps/paper/_static/js/attachment.js"></script>
+<script type="text/javascript" src="./apps/paper/_static/js/preview.js"></script>
+<div class="wrap">
+	<div class="crumbs">
+		<ul>
+			<li class="pre_cen"><a href="{:U('public/Index/index')}">个人中心</a></li>
+			<li>&gt;</li>
+			<li><a href="{:U('paper/Index/index',array('uid'=>$uid,'type'=>$type))}">{$nav}</a></li>
+			<li>&gt;</li>
+			<li>{$paper['title']|html_entity_decode=###|htmlentities}</li>
+		</ul>
+		<div class="clear"></div>
+	</div>
+	<div class="con_box">
+		<php> if($uid == $mid): </php>
+		<div class="left_box" style="background-color:#EFF9FB;">
+			<include file="__THEME__/public_left"/>
+		</div>
+		<php> endif; </php>
+		<div class="right_box" style="background-color:#FFFFFF;">
+			<php> if($paper != null):</php>
+			<input id="feed_id" type="hidden" value="{$paper['feed_id']}">
+			<div class="ep_title">
+				<div class="title_left" title="{$paper['title']|html_entity_decode=###|htmlentities}">{$paper['title']|html_entity_decode=###|getShort=###,33,'...'|htmlentities}</div>
+				<div class="title_right">
+				<input name="button" type="button" class="blue_btn7" onmouseover="this.className='blue_btn7hov'"
+					onmouseout="this.className='blue_btn7'" onclick="location.href='{:U('paper/Index/index',array('uid'=>$uid,'type'=>$type))}';" value="返回" />
+				</div>
+				<div class="clear"></div>
+			</div>
+			<div class="black1 pl15">发布日期：{$paper['cTime']|friendlyDate}</div>
+			
+			<!-- 预览操作条 顶部 -->
+			<include file="./apps/paper/Tpl/default/Index/previewoperatebar.html" />
+			<div class="notice_box2">
+				<div class="notice_head2">
+					<p title="{$paper['title']|html_entity_decode=###|htmlentities}">{$paper['title']|html_entity_decode=###|htmlentities}</p>
+				</div>
+				<div id="paper_content" class="notice_con" style="display:none;">
+					{$paper["content"]}
+				</div>
+				<iframe id="frame_1" width="100%" scrolling="no" frameborder="0">
+			    </iframe>
+				<script>
+				window.onload=function(){
+					jQuery("#paper_content").find("a").attr('target','_blank');
+					document.getElementById('frame_1').contentWindow.document.body.innerHTML =  document.getElementById('paper_content').innerHTML;
+					document.getElementById('frame_1').contentWindow.document.body.scrollHeight;
+					jQuery("#frame_1").height(document.getElementById('frame_1').contentWindow.document.body.scrollHeight+20);
+				};
+				</script>
+				<!-- 附件 -->
+				<php>$attachment = $paper['attachment'];</php>
+				<php>if(count($attachment)>0){</php>
+				<volist name='attachment' id='attach' key="k">
+				<p class="mt5" style="margin:10px 0 10px 20px;">附件{$k}：<span class="blue"><i class="ico-{$attach.extension}-small"></i><a href="{$attach['downloadurl']}">{$attach['title']}</a></span>
+				</volist>
+				<php>}</php>
+			</div>
+			<div class="notice_bot1"></div>
+			<div class="notice_bot2"></div>
+			<!-- 预览操作条 底部 -->
+			<include file="./apps/paper/Tpl/default/Index/previewoperatebar.html" />
+			<!-- 分享框 -->
+			<include file="__THEME__/share" />
+			<!-- 评论区域 -->
+			<div class="faculty_top">评论<span class="black2 ">({$paper['commentCount']}个评论)</span></div>
+			<div class="paper-comments" style="margin:15px;">
+				<div class="publish-comment">
+					{:W('Comment',array('tpl'=>'detail', 'table'=>'paper', 'row_id'=>$id, 'canrepost'=>'0', 'cancomment'=>1, 'cancomment_old'=>0, 'showlist'=>1, 'limit'=>'20', 'order'=>'DESC'))}
+				</div>
+			</div>
+			<php> else: </php>
+				<h3 style="text-align:center;">该文章已被删除，或者您无查看权限！</h3>
+			<php> endif;</php>
+		</div>
+		<div class="clear"></div>
+	</div>
+</div>
+<include file="__THEME__/public_footer" />

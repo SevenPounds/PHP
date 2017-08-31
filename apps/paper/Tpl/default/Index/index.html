@@ -1,0 +1,50 @@
+<include file="paper_header" />
+<script type="text/javascript" src="./apps/paper/_static/js/index.js"></script>
+<div class="wrap">
+	<div class="crumbs">
+		<ul>
+			<li class="pre_cen"><a href="{:U('public/Index/index')}">个人中心</a></li>
+			<li>&gt;</li>
+			<li>{$nav}</li>
+		</ul>
+		<div class="clear"></div>
+	</div>
+	<div class="con_box">
+		<php> if($uid == $mid): </php>
+		<div class="left_box" style="background-color:#EFF9FB;">
+			<include file="__THEME__/public_left"/>
+		</div>
+		<php> endif; </php>
+		<div class="right_box" style="background-color:#FFFFFF;height:1600px;<php>if($mid!=$uid){ echo "padding-left:110px;height:auto;"; }</php>">
+			<div class="online_title">
+				<div class="left">
+					<span>
+						<img src="{$icon_url}" style="width:24px;height:24px;"/>
+					</span>
+					<span class="pl10 font3"><b>{$nav}</b></span>
+				</div>
+				<div class="right">
+					<php> if($mid == $uid): </php>
+					<p class="blue_btn3" onMouseover="this.className='blue_btn3hov'" onMouseOut="this.className='blue_btn3'">
+						<a href="{:U('paper/Index/publish',array('type'=>$type))}" style="color:white;">
+							<img src="./apps/paper/_static/images/btnicon_paper.gif" height="8"/>发表{$category}
+						</a>
+					</p>
+					<php> endif; </php>
+				</div>
+			</div>
+			<php> if($papers): </php>
+				<include file="./apps/paper/Tpl/default/Index/list.html" />
+				<php> if($page): </php>
+				<div class="online_tablebot">
+					<div class="page">{$page}</div>
+				</div>
+				<php> endif; </php>
+			<php> else: </php>
+				<h2 style="font-size:24px;color:red;text-align:center;">暂无文章！</h2>
+			<php> endif; </php>
+		</div>
+		<div class="clear"></div>
+	</div>
+</div>
+<include file="__THEME__/public_footer" />

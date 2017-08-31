@@ -1,0 +1,70 @@
+
+<div class="right-mod">
+    <h3 class="stu-rgt-tit clearfix"><strong class="fl"><php>if($role == 'student'){</php>我的老师<php>}elseif($role == 'parent'){</php>孩子老师<php>}</php></strong><a href="javascript:void(0);" class="fr" id="changeTeacher" onclick="changeTeacher()">换一换</a></h3>
+
+<php>
+	$teacher_total = count($teachers);
+	$teacher_totalPage = ceil($teacher_total/$teacher_limit);
+</php>
+<input type="hidden" id="teacher_total" value="{$teacher_total}" />
+<input type="hidden" id="teacher_totalPage" value="{$teacher_totalPage}" />
+
+<volist name="teachers" id="vo">
+	<php>
+		if($i%$teacher_limit == 0){
+			$teacher_nowPage = intval($i/$teacher_limit);
+		 }else{
+		 	$teacher_nowPage = intval($i/$teacher_limit)+1;
+		 }
+	</php>
+	<if condition="$i%$teacher_limit eq 1">
+		<div class="myTeacher_list" rel="{$teacher_nowPage}" <if condition="$teacher_nowPage gt 1">style="display:none"</if>>
+	</if>
+     
+     <dl model-node="clearfix" rel='{$i}' class="clearfix my-teacher">
+
+		<dt class="clearfix">	
+			<a event-node="face_card" uid="{$vo['uid']}" target="_blank" href="{$vo.space_url}" class="fl head-radius"><span></span><img src="{$vo.avatar_middle}"/></a>
+	     	  <php>
+		     	  	if($vo['gradeName'] == '已毕业') { 
+		     	  		$grade_subject = $vo['subjectName'].'教师';
+	     	  		}else{
+	               		$grade_subject = $vo['gradeName'].$vo['subjectName'].'教师';
+	               	}
+				</php>
+	        <strong><a href="{$vo.space_url}" event-node="face_card" uid="{$vo['uid']}" target="_blank" >{$vo.uname|getShort=4,'..'}</a>
+	        <span>{$grade_subject|getShort=9,'...'}</span></strong>
+	    </dt>
+      </dl>
+	<if condition="($i%$teacher_limit eq 0) OR ($i eq $teacher_total)">
+		</div>
+	</if>
+</volist>
+	
+</div>
+
+<script type="text/javascript">
+
+function changeTeacher(){
+	var teacher_nextPage = '';
+	$(".myTeacher_list").each(function(){
+		 if($(this).css("display") == 'block'){
+			 var totalPage = $("#teacher_totalPage").val();
+			 var nowPage = $(this).attr('rel');
+			 if(nowPage == totalPage){
+				 teacher_nextPage = 1;
+			 }else{
+				 teacher_nextPage = parseInt(nowPage) + 1;
+			 }
+		 }
+	});
+	$(".myTeacher_list").each(function(){
+		 if($(this).attr('rel') == teacher_nextPage){
+			 $(this).css("display","block");
+		 }else{
+			 $(this).css("display","none");
+		 }
+	});
+	
+}
+</script>

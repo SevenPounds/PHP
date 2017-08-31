@@ -1,0 +1,15 @@
+<div class="pop_box3">
+	<div id="privacy_settings" class="radio_btn">
+		<p><span><input value="1" <php> if($privacy == 1){ echo "checked='checked'"; }</php> type="radio" name="privacy"/></span><span class="pl5">公开</span></p>
+		<!-- <p><span><input value="2" <php> if($privacy == 2){ echo "checked='checked'"; }</php> type="radio" name="privacy"/></span><span class="pl5">仅好友可见</span></p> -->
+		<p><span><input value="3" <php> if($privacy == 3){ echo "checked='checked'"; }</php> type="radio" name="privacy" /></span><span class="pl5">仅自己可见</span></p>
+		<input id="privacy_set" type="hidden" value="{$privacy}" >
+	</div>
+	<div class="clear"></div>
+	<div class="pop_con">
+		<div class="pop_btn2">
+			<input id="confirm_set" onclick="Paper.submitPrivacySet();" type="button" value="确定" class="blue5_btn" onMouseover="this.className='blue5_btnhov'" onMouseOut="this.className='blue5_btn'">
+			<input id="cancel_set" onclick="Paper.cancelPrivacySet();" type="button" value="取消" class="blue4_btn" onMouseover="this.className='blue4_btnhov'" onMouseOut="this.className='blue4_btn'">
+	  	</div>
+	</div>
+</div>

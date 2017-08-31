@@ -1,0 +1,59 @@
+<include file='_top' />
+		<div class="s_right">
+			<div class="title4">
+				<span class="left pl20"><b>班级园地</b></span>
+				<span class="gray font1 pl6">共有{$count}个班级</span>
+				<span class="more2"><a href="{$org.spaceurl}"><span class="green">返回学校主页</span></a></span>
+				<div class="clear"></div>
+				
+			</div>
+			<div class="sea_box2">
+				<div class="sea2">
+				<!-- 
+					<p>
+						<a href="#" class="current">全部</a>
+						<a href="#">合肥</a>
+						<a href="#">芜湖</a>
+						<a href="#">马鞍山</a>
+						<a href="#">蚌埠</a>
+						<a href="#">淮南</a>
+						<a href="#">淮北</a>
+						<a href="#">铜陵</a>
+						<a href="#">安庆</a>
+					</p>
+				 -->
+					<div class="clear"></div>
+				</div>
+			</div>
+			<div class="cg_box">
+				<ul>
+					<volist name="classes" id="vo">
+					<if condition="$i%2 eq 1" >
+					<li>
+					<else />
+					<li class="ml10"> 
+					</if>
+						<div class="cg_pic"><a href="{:U('class/ClassHome/index',array('cid'=>$vo['id']))}" event-node="face_card" show="no" orgType="{$vo['type']}" cid="{$vo['id']}"><img src="{$vo['id']|getCampuseAvatar=###,$vo['type'],'avatar_middle'}" style="width:64px;height:64px"/></a></div>
+						<div class="cg_btn">
+						{:W('FollowBtn', array('fid'=>$vo['id'], 'uname'=>$vo['name'], 'follow_state'=>$orgnization_follow_state[$vo['id']], 'type'=>'campus','ftype'=>$vo['type']))} 
+						</div>
+						<div class="left">
+							<p class="pt18 green1 font2"><a href="{:U('class/ClassHome/index',array('cid'=>$vo['id']))}" title="{$vo.name}" event-node="face_card" show="no" orgType="{$vo['type']}" cid="{$vo['id']}">{$vo.name}</a></p>
+							
+							<!-- <p class="pt8">12级四班</p> -->
+							{:getClassInfoBox($vo)}
+						</div>
+						
+						<div class="clear"></div>
+					</li>
+					</volist>
+				</ul>
+			</div>
+			<div class="page online_page right pr10">
+				{$page}
+			</div>
+		</div>
+		<div class="clear"></div>
+	</div>
+</div>
+<include file="__THEME__/public_footer" />

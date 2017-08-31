@@ -1,0 +1,54 @@
+<style type="text/css">
+.sign_box{
+	padding-left:10px;
+	border-bottom:1px dashed #c9c9c9;
+	line-height:50px;
+	overflow:hidden;
+	_height:50px;
+	_overflow:inherit;
+}
+.pl10 {
+    padding-left: 10px;
+}
+.left {
+    float: left;
+}
+</style>
+<link rel="stylesheet" type="text/css" href="__THEME__/css/tagwidget.css">
+<div class="sign_box">
+		<p class="pl10 left"><b>热门标签：</b></p>
+		<div class="other" id="hottag_list">
+		   <volist name="hottag" id="vo">
+		      <p class="card_pre" id="ptag{$vo['tag_id']}"><a href="javascript:;" onclick="return HotTag.changeStyle({$vo['tag_id']});"><span>{$vo['name']}</span></a></p>
+		   </volist>
+		</div>
+</div>
+<input type="hidden" value="" id="selected_tagid"/>
+<script type="text/javascript">
+var HotTag={};
+var type = '<php>echo $type;</php>';
+HotTag.changeStyle = function(id){
+	var _obj = jQuery("#ptag"+id);
+	var selected =_obj.attr("class") == "card";
+	jQuery('#hottag_list p').each(function(){
+		jQuery(this).attr("class","card_pre");
+	});
+	if(selected){
+		_obj.attr("class","card_pre");
+		jQuery("#selected_tagid").val("");
+	}else{
+		_obj.attr("class","card");
+		jQuery("#selected_tagid").val(id);
+	}
+	switch(type){
+	    case 'research':
+	         topic.loadData();
+	         break;
+	    case 'onlineanswer':
+	    	 Question.tagid = jQuery("#selected_tagid").val();
+	    	 Question.initData();
+	    default:
+	    	 break;
+	}
+}
+</script>

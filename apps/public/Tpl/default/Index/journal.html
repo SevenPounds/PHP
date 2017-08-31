@@ -1,0 +1,88 @@
+<include file="__THEME__/public_header" />
+<link rel="stylesheet" href="__THEME__/css/base.css">
+<link rel="stylesheet" href="__THEME__/css/common.css">
+<link rel="stylesheet" href="__ROOT__/apps/public/_static/css/person_center.css">
+<link href="__APP__/fonts.css" rel="stylesheet" type="text/css" />
+<link href="__APP__/per_zone.css" rel="stylesheet" type="text/css" />
+<link href="__APP__/css/library.css" rel="stylesheet" type="text/css" />
+<link href="__APP__/css/style_library.css" rel="stylesheet"
+	type="text/css" />
+<div id="page-wrap">
+	<div id="feedback" class="feedback-fixed">
+		<a href="{:U('public/Index/feedback')}" target="_blank">{:L('PUBLIC_FEEDBACK')}</a>
+	</div>
+	<div id="main-wrap">
+		<div id="st-index-grid" class="st-grid content-bg">
+			<!--左边 -->
+			<include file="__THEME__/public_left" />
+			<div class="st-section"
+				style="border-left: 1px solid #e1e1e1; height: 1600px; line-height: 26px;">
+				<div class="container">
+					<input type="hidden" id="RS_SITE_URL" value="{:C('RS_SITE_URL')}"/>
+						<div class="kright">
+						<volist name="mods" id="m" key="y">
+						<div class="kopen-right-list">
+							<div class="hd">
+								<div class="fl tag  ft18 col3 pl5">{$m['title']}</div>
+								<a onclick="openJournal(this);" href="javascript:void(0);" url="{$m['url']}" class="fr more">更多</a>
+							</div>
+							<div class="clear"></div>
+							<ul>
+ 							<volist name="journals" id="journal" key="y">
+								<if condition="$journal['mod'] eq $m['mod']">
+									<li>
+									<div class="pic">
+										<a onclick="openJournal(this);" title="{$journal['title']}" href="javascript:void(0);" url="{$journal['url']}"><img src="__APP__/images/{$journal['img']}" width="120" height="160"/></a>
+									</div>
+									<div class="txt">
+										<a onclick="openJournal(this);" title="{$journal['title']}" href="javascript:void(0);" url="{$journal['url']}" class="col6 pt5 show">{$journal['title']}</a>
+									</div>
+								</li>
+								</if>
+							</volist>
+							</ul>
+						</div>
+						<div class="clear"></div>
+						</volist>
+					</div>			
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<include file="__THEME__/public_footer" />
+<script type="text/javascript">
+	function openJournal(obj){
+		var url=$(obj).attr('url');
+		if(url.length>0){
+			var RS_SITE_URL=$('#RS_SITE_URL').val();
+			url=url.replace(/&/gm, "@");
+			url=URLEncode(url);
+			window.open(RS_SITE_URL+'/index.php?app=changyan&mod=Index&act=loginQikan&url='+url); 
+		}
+	}
+	function URLEncode (clearString) {
+		var output = '';
+	  	var x = 0;
+		clearString = clearString.toString();
+		var regex = /(^[a-zA-Z0-9-_.]*)/;
+		while (x < clearString.length) {
+			var match = regex.exec(clearString.substr(x));
+			if (match != null && match.length > 1 && match[1] != '') {
+		    	output += match[1];
+		        x += match[1].length;
+	     	}else{
+		    	if (clearString.substr(x, 1) == ' ') {
+		         output += '+';
+		    	}
+		        else{
+		        	var charCode = clearString.charCodeAt(x);
+		        	var hexVal = charCode.toString(16);
+		         	output += '%' + ( hexVal.length < 2 ? '0' : '' ) + hexVal.toUpperCase();
+		       }
+		       x++;
+		     }
+		}
+		   return output;
+	}
+</script>

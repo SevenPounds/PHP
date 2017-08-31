@@ -1,0 +1,20 @@
+<div class="who_watch">
+	<eq name="from" value="profile">
+		<h3>谁看过我</h3>
+	<else/>
+		<div class="title">谁看过我</div>
+	</eq>
+	<ul id="last_visitors_list" class="clearfix">
+		<volist name="visitors" id="visitor">
+			<li class="fl" title="{$visitor['user_info']['uname']}">
+				<a href="{$visitor['user_info']['space_url']}" >
+					<img src="{$visitor['user_info']['avatar_small']}" uid="{$visitor['vuid']}" event-node="face_card" show="no" alt="">
+				</a>
+				<a href="{$visitor['user_info']['space_url']}"  uid="{$visitor['vuid']}" event-node="face_card" show="no">
+					<span>{$visitor['user_info']['uname']|mStr=###,3}</span>
+				</a>
+				<a href="{$visitor['user_info']['space_url']}" class="blue">{$visitor['time']}</a>
+			</li>
+		</volist>
+	</ul>
+</div>

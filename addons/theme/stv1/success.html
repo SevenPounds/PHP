@@ -1,0 +1,130 @@
+<php>if($isAdmin != '1'){</php>
+<include file="public_header" />
+<php>}else {</php>
+<body>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link href="__THEME__/admin/admin.css" rel="stylesheet" type="text/css" />
+<script src="__THEME__/js/js.php?t=js&f=jquery-1.7.1.min.js" type="text/javascript"></script>
+<php>}</php>
+<style type="text/css">
+.result_promoteText{
+  font-size: 16px;
+  text-align: center;
+}
+.result_promoteText span{
+    color: #e8a014;
+    font-size: 24px;
+}
+.result_promoteText span font{
+    font-family: arial, helvetica, sans-serif;
+    font-size: 32px;
+}
+</style>
+<script>
+/**
+ * 全局变量
+ */
+var SITE_URL  = '<php> echo SITE_URL;</php>';
+var UPLOAD_URL= '<php> echo UPLOAD_URL;</php>';
+var THEME_URL = '__THEME__';
+var APPNAME   = '<php> echo APP_NAME;</php>';
+var MID		  = '<php> echo $mid;</php>';
+var UID		  = '<php> echo $uid;</php>';
+var initNums  =  '<php> echo $initNums;</php>';
+var SYS_VERSION = '<php> echo $site["sys_version"];</php>'
+// Js语言变量
+var LANG = new Array();
+//判断当前页面是否能返回上一页
+var go_flag = goBackFlag();
+function Jump(){
+	if(!go_flag&&'{$jumpUrl}'=='javascript:history.back(-1);'){
+		//关闭本窗口
+		window.opener=null;window.close();  
+	}else{
+		window.location.href = '{$jumpUrl}';
+	}
+}
+var waitSecond = '{$waitSecond}';
+
+//动态改变跳转文字
+jQuery(function(){
+	if(!go_flag&&'{$jumpUrl}'=='javascript:history.back(-1);'){
+		var html = '<span><font id="wait_second">'+waitSecond+'</font>s</span>后自动关闭本窗口';
+		jQuery('#result_promoteText_1').html(html);
+	}
+	var set = setInterval(function(){
+		var i = --waitSecond;
+//		console.info(i);
+		if(i > 0){
+			$("#wait_second").html(i);
+			
+		}else{
+			Jump();
+			clearInterval(set);
+		}
+	},1000);
+})
+
+/** 
+ * 能否返回前一页的判断
+ * <li>如果没有前一页历史，则直接关闭当前页面</li> 
+ */  
+function goBackFlag(){  
+    if ((navigator.userAgent.indexOf('MSIE') >= 0) && (navigator.userAgent.indexOf('Opera') < 0)){ // IE  
+        if(history.length > 0){  
+            return true;
+        }else{  
+           return false; 
+        }  
+    }else{ //非IE浏览器  
+        if (navigator.userAgent.indexOf('Firefox') >= 0 ||  
+            navigator.userAgent.indexOf('Opera') >= 0 ||  
+            navigator.userAgent.indexOf('Safari') >= 0 ||  
+            navigator.userAgent.indexOf('Chrome') >= 0 ||  
+            navigator.userAgent.indexOf('WebKit') >= 0){  
+  
+            if(window.history.length > 1){  
+                return true;//window.history.go( -1 );  
+            }else{  
+                return false;//window.opener=null;window.close();  
+            }  
+        }else{ //未知的浏览器  
+            return true;//window.history.go( -1 );  
+        }  
+    }  
+}  
+//document.onload = setTimeout("Jump()" , {$waitSecond}* 1000);
+</script>
+
+<php>$notifyLang = LANG_URL.'/public_'.getLang().'.js';</php>
+<script type="text/javascript" src="{$notifyLang}"></script>
+
+<link href="{$publicCss}" rel="stylesheet" type="text/css">
+<base target="_self" />
+<eq name="status" value="1">
+  <div class="Prompt">
+  	<div class="Prompt-inner">
+      <p><i class="ico-ok-big"></i>{$message}</p>
+  </div>
+  </div>
+</eq>
+<eq name="status" value="0">
+  <div class="Prompt">
+  	<div class="Prompt-inner">
+       <div class="box-ver"><i class="ico-error-big"></i>{$message}</div>
+       <div class="result_promoteText" id="result_promoteText_1"><span><font id="wait_second">{$waitSecond}</font>s</span>后自动跳转</div>
+    </div>
+    </div>
+</eq>
+<php>if($isAdmin != '1'){</php>
+	<style type="text/css">
+	.footer{
+		position: fixed;
+		bottom: 0px;
+		width: 100%;
+	}
+	</style>
+    <include file="public_footer" />
+<php>}else {</php>
+    </body>
+<php>}</php>

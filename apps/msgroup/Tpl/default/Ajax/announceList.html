@@ -1,0 +1,75 @@
+<table cellpadding="0" cellspacing="0" border="0" class="online_table3" id="restable">
+	<tr class="online_tabletop">
+		<th width="4%" class="pl5"><input type="checkbox" id="sel_all_up"/></th>
+		<th width="1%"><img src="__APP__/images/th_line.jpg" /></th>
+		<th width="30%" style="text-align:center">文件名称</th>
+		<th width="1%"><img src="__APP__/images/th_line.jpg" /></th>
+		<th width="7%">
+			<div class="left pl10" style="line-height:26px;">浏览量</div>
+			<div class="left pl5">
+				<p class="pt4">
+					<a href="javascript:msAnnounce.changeOrder('view_count');">
+						<if condition="$orderBy == 'viewcount asc'">
+							<img src="__APP__/images/time_up.gif" />
+							<elseif condition="$orderBy == 'viewcount desc'" /><img src="__APP__/images/time_down.gif" />
+							<else /><img src="__APP__/images/time_dis.gif" />
+						</if>
+					</a>
+				</p>
+			</div>
+			<div class="clear"></div>
+		</th>
+		<th width="1%"><img src="__APP__/images/th_line.jpg" /></th>
+		<th width="10%">
+			<div class="left pl20" style="line-height:26px;">发布时间</div>
+			<div class="left pl5">
+				<p class="pt4">
+					<a href="javascript:msAnnounce.changeOrder('ctime');">
+						<if condition="$orderBy == 'ctime asc'">
+							<img src="__APP__/images/time_up.gif" />
+							<elseif condition="$orderBy == 'ctime desc'" /><img src="__APP__/images/time_down.gif" />
+							<else /><img src="__APP__/images/time_dis.gif" />
+						</if>
+					</a>
+				</p>
+			</div>
+			<div class="clear"></div>
+		</th>
+		<th width="1%"><img src="__APP__/images/th_line.jpg" /></th>
+		<th width="10%" style="text-align:center">操作</th> 
+	</tr>
+	<volist name="announceList" id="vo">
+		<tr <if condition="$i%2 neq 0">style="background:#fff"<else />style="background:#f6f6f6"</if>>
+			<td align="center" class="pl5"><input type="checkbox" value="{$vo.id}" name="res_list"/></td>
+			<td></td>
+			<td align="left" class="blue"><a href="{$vo.detailurl}" title="{$vo.title}">{$vo.title|mStr=###,25}</a></td>
+			<td></td>
+			<td align="center">{$vo.viewcount}</td>
+			<td></td>
+			<td align="center"><php>echo(date('Y-m-d',$vo['ctime']));</php></td>
+			<td></td>
+			<td align="center">
+				<span class="blue">
+					<a href="{$vo.editurl}">编辑</a>
+				</span>
+				<span class="blue pl10">
+					<a id="del{$vo['id']}" href="javascript:void(0);" onclick="javascript:msAnnounce.deleteAnnounce({$vo['id']})">删除</a>
+				</span>
+			</td>
+		</tr>
+	</volist>
+</table>
+<!-- <input id="announceIds" type="hidden" value="{$announceIds}"/> -->
+<div class="online_tablebot2">
+	<div class="online_tablebot_span" id="delete_res" style="padding-left:13px;">
+		<span>
+			<input type="checkbox" style="margin-left:3px;" id="sel_all_down"/>
+		</span>
+		<span>
+			<input type="button" class="whdel_nor" style="padding-left:10px;" onclick="javascript:msAnnounce.deleteAll();" value="删除" title="删除"/>
+		</span>
+	</div>
+	<div class="page">
+		{$pageInfo}
+	</div>
+</div>

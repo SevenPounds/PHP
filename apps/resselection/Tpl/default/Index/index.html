@@ -1,0 +1,27 @@
+<include file="_header" />
+<div id="page-wrap">
+	   <div id="main-wrap">
+	   		<!--面包屑导航-->
+			<div class="crumbs">
+					<ul>
+						<li class="pre_cen"><a href="{:U('public/Index/index')}">个人中心</a></li>
+						<li>&gt;</li>
+						<li>资源遴选</li>
+					</ul>
+					<div class="clear"></div>
+				</div>
+			<!-- 导航结束 -->
+	   		<div class="con_box">
+	   			<div class="left_box">
+	   				<!--左侧用户信息-->
+	   				<include file="__THEME__/public_left" />
+	   			</div>
+	   			<div class="right_box">
+	   			<!--右侧区县资源列表-->
+	   				<include file="_right_quxian"/>
+	   				<div class="clear"></div>
+	   			</div>
+	   		</div>
+		</div>
+</div>	
+<include file="__THEME__/public_footer" />

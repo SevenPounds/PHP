@@ -1,0 +1,189 @@
+<include file="__THEME__/public_header" />
+<link href="__APP__/css/fonts.css" rel="stylesheet" type="text/css" />
+<link href="__APP__/css/main.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+
+	// 是否正在加载区县
+	var isLoadingTown = false;
+	
+	//是否正在加载学校
+	var isLoading = false;
+
+jQuery(function(){
+	 
+	 // 点击城市
+	 jQuery(".city").click(function(){
+		 
+		 // 不能重复加载
+		 if(isLoadingTown || isLoading){
+			 return false;
+		 }
+		 
+		 isLoadingTown = true;
+		 
+		 var areaId = jQuery(this).attr("areaId");
+		 jQuery('.city').removeClass("current");
+		 jQuery('.all').removeClass("current");
+		 jQuery(this).addClass("current");
+		 jQuery(".townlist").empty();
+		 $.ajax({
+			type: "POST",
+			url:U('class/Index/getOrg'),
+			data:{areaId:areaId},
+			dataType: "text",
+            success: function (data) {
+            	jQuery(".townlist").addClass("sea_box");
+            	 data = eval('('+data+')');
+                jQuery(".townlist").append("<div class='mt6 left'><b>按区县查看：</b></div><div class='sea'><p></p></div><div class='clear'></div>");
+                if(data['city']){
+               		 jQuery(".townlist p").append("<a class='town current' href='javascript:void(0)' areaId ="+areaId+">"+"全部"+"</a>");
+                }else{
+                	var countyId =areaId;
+                	jQuery(".townlist p").append("<a class='town'>未查询到相关数据</a>");
+                }
+                for(var obj in data['data']){
+           			jQuery(".townlist p").append("<a class='town' href='javascript:void(0)' areaId ="+data['data'][obj].id+">"+data['data'][obj].name+"</a>");
+              	}
+                
+                // 下面2行是为了解决页面在ie7下container的css的触发问题
+                jQuery(".left_box").css("position","relative");
+                jQuery(".left_box").css("position","static");
+                 
+                 jQuery("#container").remove();
+             	 $('#page').remove();
+             	 jQuery("#main-wrap").append("<div id='container'></div>");
+                 var cityname = jQuery('.city.current').text();
+                		var option = {
+                			container: 'container',
+                			loadcount: '',
+                			loadmax: '',
+                			loadId: '',
+                			loadlimit: '',
+                			cid: areaId,
+                			categoryJson: '',
+                			cityname:cityname
+                		 }; 
+                channel.init(option); 
+              
+          		
+                isLoadingTown = false;
+            },
+            error: function (msg) {
+            }
+		 });
+	 });
+	 
+	 // 点击市区
+	 jQuery('.town').live('click',function(){
+
+		 // 不能重复加载
+		 if(isLoading){
+			 return false;
+		 }
+		 
+		 isLoading = true;
+		 
+		 jQuery('.town').removeClass("current");
+		 jQuery(this).addClass("current");
+		/*  if(jQuery(this).index() == 0){
+			 	isLoading = false;
+				return;	 
+		 } */
+		 var areaId = jQuery(this).attr("areaId");
+		 jQuery("#container").remove();
+		 $('#page').remove();
+		 jQuery("#main-wrap").append("<div id='container'></div>");
+		 if(jQuery(this).index() != 0){
+			 
+			 var townname = jQuery('.town.current').text();
+			
+		 }
+		 var cityname = jQuery('.city.current').text();
+		 var option = {
+			container: 'container',
+			loadcount: '',
+			loadmax: '',
+			loadId: '',
+			loadlimit: '',
+			cid: areaId,
+			categoryJson: '',
+			cityname:cityname,
+			townname:townname
+		};
+		 
+		channel.init(option);
+	 });
+	 
+	 jQuery(".all").click(function(){
+		 
+		 // 不能重复加载
+		 if(isLoadingTown){
+			 return false;
+		 }
+		 
+		 jQuery(this).addClass("current");
+		 jQuery(".townlist").empty();
+		 jQuery('.city').removeClass("current");
+		 
+		// 下面2行是为了解决页面在ie7下container的css的触发问题
+		 jQuery(".left_box").css("position","relative");
+		 jQuery(".left_box").css("position","static");
+		 
+		 
+		 jQuery("#container").remove();
+		 $('#page').remove();
+		 jQuery("#main-wrap").append("<div id='container'></div>");
+		 var option = {
+	       			container: 'container',
+	       			loadcount: '',
+	       			loadmax: '',
+	       			loadId: '',
+	       			loadlimit: '',
+	       			cid: '{$province}',
+	       			categoryJson: '',
+	       			cityname:''
+	       		 }; 
+	     channel.init(option);
+	 });
+ });
+ 
+ 
+</script>
+
+<div class="cloud">
+	<!--目录 -->
+	<include file="__THEME__/public_class_menu" />
+	
+	<div class="sea_box">
+		<div class="mt6 left"><b>按地区查看：</b></div>
+		<div class="sea">
+			<p>
+				<a href="javascript:void(0)" class="current all">全部</a>
+	    		<volist name="citys" id="city">
+	    			<a class="city" href="javascript:void(0)" areaId = "{$city['id']}">{$city["name"]}</a>
+	   			</volist>
+			</p>
+		</div>
+		<div class="clear"></div>
+	</div>
+	
+	<div class="townlist">
+	</div>
+
+	<div class="content">
+		<div class="con_left">
+			<div class="left_box" id="main-wrap">
+				<p class="title pt12 pl20"></p>
+				 {:W('Content', array('tpl'=>'load'))}
+		 	</div> 
+			<div class="clear"></div>
+		</div>
+
+		<div class="con_right">
+		{:W('RecommandCampus', array('tpl'=>'activeschool','title'=>'活跃学校'))}
+    	{:W('RecommandCampus', array('tpl'=>'friendshipschool','title'=>'联谊校'))}
+    	{:W('RecommandCampus', array('tpl'=>$tpl))}
+		</div>
+		<div class="clear"></div>
+	</div>
+<include file="__THEME__/public_footer" />

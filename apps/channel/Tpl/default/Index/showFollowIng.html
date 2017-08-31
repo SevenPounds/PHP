@@ -1,0 +1,120 @@
+<style>
+.kh_content ul li a{
+	cursor:pointer;
+}
+</style>
+<div class="kh_bg1">
+	<div class="kh_box">
+		<div class="kh_head">
+			<span class="left">我要订阅</span>
+			<span class="kh_close"><input type="button" value="" class="kh_closenor"  onmouseover="this.className='kh_closehov'" onmouseout="this.className='kh_closenor'" onclick="ui.box.close()"/></span>
+			<div class="clear"></div>
+		</div>
+		<p class="font1 pt10 pl10"><b>请选择分类</b></p>
+		<div class="kh_content">
+			<ul>
+				<li class="top">小&nbsp;&nbsp;&nbsp;学</li>
+				<volist name="channelCategory['cat10']" id="xiaovo">
+					<eq name='true' value='$xiaovo.followstatus'><li><a onclick="changeFollwStatus('{$xiaovo.channel_category_id}', '{$GLOBALS['ts']['mid']}', 'del')" id="afoll_{$xiaovo.channel_category_id}" tag='del' class="current">{$xiaovo.title}</a></li></eq>
+                    <eq name='false' value='$xiaovo.followstatus'><li><a onclick="changeFollwStatus('{$xiaovo.channel_category_id}', '{$GLOBALS['ts']['mid']}', 'add')" id="afoll_{$xiaovo.channel_category_id}" tag='add'>{$xiaovo.title}</a></li></eq>    
+                </volist>
+			</ul>
+			<p class="line1"></p>
+			<ul>
+				<li class="top">中&nbsp;&nbsp;&nbsp;学</li>
+				<volist name="channelCategory['cat11']" id="zhongvo">
+				    <eq name='true' value='$zhongvo.followstatus'><li><a onclick="changeFollwStatus('{$zhongvo.channel_category_id}', '{$GLOBALS['ts']['mid']}', 'del')" id="afoll_{$zhongvo.channel_category_id}" tag='del' class="current">{$zhongvo.title}</a></li></eq>
+                    <eq name='false' value='$zhongvo.followstatus'><li><a onclick="changeFollwStatus('{$zhongvo.channel_category_id}', '{$GLOBALS['ts']['mid']}', 'add')" id="afoll_{$zhongvo.channel_category_id}" tag='add'>{$zhongvo.title}</a></li></eq>
+                </volist>
+			</ul>
+			<p class="line1"></p>
+			<ul>
+				<li class="top">专题类</li>
+				<volist name="channelCategory['cat12']" id="zhuanvo">
+				    <eq name='true' value='$zhuanvo.followstatus'><li><a onclick="changeFollwStatus('{$zhuanvo.channel_category_id}', '{$GLOBALS['ts']['mid']}', 'del')" id="afoll_{$zhuanvo.channel_category_id}" tag='del' class="current">{$zhuanvo.title}</a></li></eq>
+                    <eq name='false' value='$zhuanvo.followstatus'><li><a onclick="changeFollwStatus('{$zhuanvo.channel_category_id}', '{$GLOBALS['ts']['mid']}', 'add')" id="afoll_{$zhuanvo.channel_category_id}" tag='add'>{$zhuanvo.title}</a></li></eq>
+                </volist>
+			</ul>
+		</div>
+		<div class="save_btn"><input type="button" value="保&nbsp;存" class="save_btnnor"  onmouseover="this.className='save_btnhov'" onmouseout="this.className='save_btnnor'" onclick="saveFollow({$GLOBALS['ts']['mid']})"/></div>
+	</div>
+</div>
+<script type="text/javascript">
+   var ids=new Array();
+   function saveFollow(uid){
+	   ui.box.close();
+	   if(ids.length>0){
+	  		$.post(U('widget/TopMenu/upFollowStatus2')+"&fresh="+new Date().getTime(), {uid:uid, cid:ids, widget_appname:'channel'}, function(res) {
+	 		      if(res.status == 1) {
+	 		    	 $.post(U('widget/TopMenu/getFollowDatas')+"&fresh="+new Date().getTime(), {uid:uid, widget_appname:'channel'}, function(fdata) {
+	 					  if(fdata.status){
+	 						  var content="";
+	 						  var data=fdata.data;
+	 						  var length=data.length;
+	 						  var title='';
+	 						  for(var i=0;i<length;i++){
+	 							 if(data[i].pid==10){
+	 								 title="小学"+data[i].title;
+	 							 }else if(data[i].pid==11){
+	 								 title="中学"+data[i].title;
+	 							 }else{
+	 								 title=data[i].title;
+	 							 }
+	 							 content+='<span class="pl10"><a href={:U(channel/Index/index, array(cid=>channel_category_id))}>'+title+'</a></span>';
+	 							 content=content.replace(/channel_category_id/,data[i].channel_category_id);
+	 						  }
+	 						  jQuery("#alreadyfollow").html("").html(content);
+	 						  ui.success("保存成功");
+	 					  }
+	 					  else{
+	 						  jQuery("#alreadyfollow").html("");
+	 					  }
+	 				  }, 'json');
+	 	    	  }else {
+	 	  			
+	 	  		  }
+	 	      }, 'json');
+	   }else{
+		   $.post(U('widget/TopMenu/upFollowStatus2')+"&fresh="+new Date().getTime(), {uid:uid, type:2, widget_appname:'channel'}, function(fdata) {
+				  if(fdata.status){
+					  jQuery("#alreadyfollow").html("");
+					  ui.error('没有关注的内容');
+				  }
+			}, 'json');
+	   }
+   }
+   (function (){
+	   $.post(U('widget/TopMenu/getFollowIds'), {widget_appname:'channel'}, function(res) {
+		   if(res.status == 1) {
+    		  for(var i=0,data=res['data'];i<data.length;i++){
+    			ids.push(data[i]);
+    		  }
+	    	  }else {
+	  			
+	  		  }
+	      }, 'json');
+   }());
+   function changeFollwStatus(id, uid, type){
+	      var _obj2 = jQuery("#afoll_"+id);
+	      var type=_obj2.attr("tag");
+	      // 数据验证
+	  	  if(typeof uid == 'undefined' || typeof id == 'undefined' || typeof type == 'undefined') {
+	  		return false;
+	  	  }
+	  	  // 异步提交处理
+   		  if(_obj2.attr("class")=="current")
+   		  {
+   			  _obj2.attr("class","");
+   			  ids=jQuery.grep(ids,function(n,i){
+   				  return n==id;
+   			  },true);
+   			  _obj2.attr('tag', 'add');
+   		  }
+   		  else
+   		  {
+   			  _obj2.attr("class","current");
+   			  ids.push(id);
+   			  _obj2.attr('tag', 'del');
+   		  }
+   }
+</script>

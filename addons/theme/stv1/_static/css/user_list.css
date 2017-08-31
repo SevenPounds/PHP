@@ -1,0 +1,220 @@
+@CHARSET "UTF-8";
+.con_box{
+	width:1000px;
+	background:url(../image/con_box_bg.jpg) repeat-y;
+}
+.con_box .left_box{
+	width:220px;
+	float:left;
+	overflow:hidden;
+}
+.con_box .right_box{
+	width:780px;
+	float:left
+}
+.cr_chose{
+	margin:10px;
+}
+
+.cr_box{
+	width:716px;
+	border:1px solid #e8e8e8;
+	background:#f9f9f9;
+	margin:15px;
+	overflow:hidden;
+}
+.cr_box ul li{
+	width:65px;
+	height:97px;
+	margin:5px 0px 0 22px;
+	text-align:center;
+	float:left;
+	display:inline;
+}
+.cr_box ul li a{
+	display:block;
+}
+.cr_box ul li a:hover{
+	display:block;
+	background:#f1fbff;
+	border:1px solid #cbdde3;
+	width:63px;
+	height:95px;
+}
+.cr_pickpic{
+	background:url(../image/cr_pic.gif) no-repeat;
+	height:56px;
+	width:56px;
+	margin:7px 4px;
+}
+.cr_pickpic img{
+	padding:2px 3px 0 2px ;
+}
+.cr_title{
+	border-bottom:1px solid #e8e8e8;
+	width:676px;
+	background:url(../image/blue_line.gif) left center no-repeat;
+	padding-left:10px;
+	margin:8px auto;
+	font-size:14px;
+}
+.cr_input{
+	width:330px;
+	height:32px;
+	float:left;
+	padding:3px 5px 0 0;
+}	
+.cr_input .input_left{
+	float:left;
+	height:32px;
+	width:5px;
+	background:url(../image/cr_input_left.gif) no-repeat;
+}
+.cr_input .input_cen{
+	float:left;
+	height:32px;
+	width:320px;
+	background:url(../image/cr_input_cen.gif) repeat-x;
+}
+.input_cen input{
+	background:none;
+	border:none;
+	height:32px;
+	width:320px;
+	line-height:32px;
+}
+.cr_input .input_right{
+	float:left;
+	height:32px;
+	width:5px;
+	background:url(../image/cr_input_right.gif) no-repeat;
+}
+.subject{
+	width:92px;
+}
+.unit_big{
+	width:200px;
+}
+.unit_bigger{
+	width:130px;
+	margin-left:10px;
+}
+.unit_biggest{
+	width:130px;
+	margin-left:10px;
+}
+.cr_pop{
+	width:748px;
+	border:1px solid #cccccc;
+	margin:15px;
+	overflow:hidden;
+}
+
+.cr_head{
+	position:relative;
+	height:38px;
+	background:#f9f9f9;
+	border-bottom:1px solid #dddddd;
+}
+.cr_tab{
+	position:absolute;
+	height:34px;
+}
+
+.cr_tab ul{
+	margin-left:10px;
+} 
+.cr_tab ul li{
+	width:82px;
+	height:34px;
+	float:left;
+	margin:5px 5px 0 0;
+	line-height:34px;
+	text-align:center;
+	font-size:14px;
+	background:url(../image/tab_nor2.gif) no-repeat;
+}/*------------2013.9.17-----------*/
+.cr_tab ul li a{
+	color:#787878;
+}																																	
+.cr_tab	.current{
+	background:url(../image/tab_pre.gif) no-repeat;
+}
+.cr_tab	.current a{
+	color:#229bd7;
+}
+.dy_btn2{
+	float:left;
+	height:35px;
+	width:72px;
+	margin:3px 3px 0 0;
+	display:inline;
+}
+.dy_btn2{
+	float:left;
+	height:35px;
+	width:72px;
+	margin:3px 3px 0 0;
+	display:inline;
+}
+.dy_btn input,.dy_btn2 input{	
+	cursor:pointer;
+	border:none;
+	height:34px;
+	width:72px;
+	color:#fff;
+	font-size:14px;
+	font-weight:bold;
+}
+.dy_btnnor{background:url(../image/blue_btn2.gif) top no-repeat;}
+.dy_btnhov{background:url(../image/blue_btn2.gif) bottom no-repeat;}
+.add_news{margin-top:4px;}
+/*-----------修改选择多个成员时悬浮样式出错的BUG by xypan 0929--------------*/
+.add_news ul li{
+	width:65px;
+	height:97px;
+	margin:4px 0px 5px 22px;
+	text-align:center;
+	float:left;
+	display:inline;
+	border:1px solid #fff;/*add by xypan 0929*/
+}
+.add_news .current{
+	position:relative;
+	text-align:center;
+	float:left;
+	display:inline;
+	background:#f1fbff;
+	border:1px solid #cbdde3;
+	}
+/*-------------end------------*/	
+	
+.delete_member{
+	position:absolute;
+	display:none;
+	height:15px;
+	width:15px;
+	right:0;
+	top:0;
+	_right:-1px;
+}/*---------2013.9.17---------*/
+.cr_btn{
+	width:750px;
+	margin:15px auto;
+	text-align:center;
+}
+.cr_btn input{
+	width:92px;
+	height:34px;
+	cursor:pointer;
+	border:none;
+	font-size:14px;
+	font-weight:bold;
+	margin:10px;
+}
+.cr_roll{
+	height:210px;
+	overflow:scroll;
+	overflow-y:auto;
+	overflow-x:hidden;
+}

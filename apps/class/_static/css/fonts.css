@@ -1,0 +1,181 @@
+/* CSS Document */
+body {
+	margin: 0;
+	padding: 0;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	color: #666;
+	background: url(../image/body_bg.jpg);
+}
+/*--------color
+----------------------------------------------------------------------------------*/
+.gray{color:#b0b0b0;}
+
+.orange{color:#ff6600;}
+.orange a{color:#ff6600;text-decoration:none;}
+.orange a:hover{color:#ff6600;text-decoration:underline;}
+
+.red{color:#ff3300;}
+.red a{color:#ff3300;text-decoration:none;}
+.red a:hover{color:#ff3300;text-decoration:underline;}
+
+.green{color:#5a9400;}
+.green a{color:#5a9400;}
+.green a:hover{color:#5a9400;text-decoration:underline;}
+
+/*-把green改成green2,防止和TS的green冲突  by xypan 10.6-*/
+.green2{color:#5a9400;}
+.green2 a{color:#5a9400;}
+.green2 a:hover{color:#5a9400;text-decoration:underline;}
+
+.green1{color:#5a9400;}
+.green1 a{color:#5a9400;}
+.green1 a:hover{color:#5a9400;}
+
+a.green_color{color:#5a9400;}
+a:hover.green_color{color:#5a9400;}
+
+.blue{color:#017bb4;}
+.blue a{color:#017bb4;text-decoration:none;}
+.blue a:hover{color:#017bb4;text-decoration:underline;}
+.black{color:#999;}
+.black a{color:#999;}
+.black1{color:#535353;}
+.black1 a{color:#535353;}
+.black1 a:hover{color:#535353;}
+.black2 a{
+	color:#666;
+}
+.black2 a:hover{
+	color:#68ab00;
+}
+.black3{color:#cccccc;}
+/*----------margin padding------------*/
+.pt2{padding-top:2px;}
+.pt4{padding-top:4px;}
+.pt5{padding-top:5px;}
+.pt8{padding-top:8px;}
+.pt10{padding-top:10px;}
+.pt12{padding-top:12px;}
+.pt18{padding-top:18px;}
+.pt20{padding-top:20px;}
+.pt30{padding-top:30px;}
+.pt40{padding-top:40px;}
+.pl6{padding-left:6px;}/*---8.29---add-----*/
+.pl10{padding-left:10px;}
+.pl12{padding-left:12px;}
+.pl20{padding-left:20px;}
+.pl40{padding-left:40px;}
+.pl60{padding-left:60px;}
+.pl170{padding-left:170px;}
+.pr10{padding-right:10px;}
+.pr15{padding-right:15px;}/*---8.27---add-----*/
+.pr20{padding-right:20px;}/*---8.27---add-----*/
+.pr30 {padding-right: 30px;}/**--10.6--add--*/
+.ml10{margin-left:10px;}
+.ml20{margin-left:20px;}
+.ml30{margin-left:30px;}
+.mt6{margin-top:6px;}/**--0913--add by xypan --*/
+.mt7{margin-top:7px;}
+.mt10{margin-top:10px;}
+.mt14{margin-top:14px;}
+.mt22{margin-top:22px;}
+.mt30{margin-top:30px;}/*---8.27---add-----*/
+.mr8{margin-right:8px;}
+.mr4{margin-right:4px;}/*---8.27---add-----*/
+.mr19{margin-right:19px;}/*---10.9---add-----*/
+.mr20{margin-right:20px;}
+.mt26{margin-top:26px;}
+.pt50{padding-top:50px;}
+.mb8{margin-bottom:8px;}
+.mb4{margin-bottom:4px;}/*---8.27---add-----*/
+.mb16{margin-bottom:16px;}
+
+/*----------font---------*/
+.font1{font-size:12px;}
+.font2{font-size:14px;}
+.font3{font-size:16px;}
+.font4{font-size:18px;}
+.font5{font-size:30px;}
+
+/*----------btn---------*/
+.btn input{
+	vertical-align:bottom;
+	border:none;
+	position:relative;	
+}
+.green_normal{
+	width:122px;
+	height:36px;
+	color:#fff;
+	font-size:14px;
+	background:url(../image/green_btn.gif) left top no-repeat;
+}
+.green_hover{
+	width:122px;
+	height:36px;
+	color:#fff;
+	font-size:14px;
+	background:url(../image/green_btn.gif) left bottom no-repeat;
+	cursor:pointer;
+}
+.focus_small_normal{
+	width:52px;
+	height:24px;
+	background:url(../image/foucs_btn.jpg) left top no-repeat;
+}
+.focus_small_hover{
+	width:52px;
+	height:24px;
+	background:url(../image/foucs_btn.jpg) left -24px no-repeat;
+	cursor:pointer;
+}
+.focus_small_disable{
+	width:52px;
+	height:24px;
+	background:url(../image/foucs_btn.jpg) left bottom no-repeat;
+}
+.green_s{
+	width:60px;
+	height:24px;
+	color:#fff;
+	background:url(../image/green_s.jpg) left top no-repeat;
+	border:0px;
+}
+.green_shover{
+	width:60px;
+	height:24px;
+	color:#fff;
+	background:url(../image/green_s.jpg) left bottom no-repeat;
+	cursor:pointer;
+	border:0px;
+}
+.green_m{
+	width:90px;
+	height:24px;
+	color:#fff;
+	background:url(../image/green_m.jpg) left top no-repeat;
+}
+.green_mhover{
+	width:90px;
+	height:24px;
+	color:#fff;
+	background:url(../image/green_m.jpg) left bottom no-repeat;
+	cursor:pointer;
+}
+.green_sc{
+	width:70px;
+	height:24px;
+	color:#fff;
+	background:url(../image/green_sc.jpg) right top no-repeat;
+	border:0px;
+}/*-------2013.9.16------*/
+.green_schover{
+	width:70px;
+	height:24px;
+	color:#fff;
+	background:url(../image/green_sc.jpg) right bottom no-repeat;
+	cursor:pointer;
+	border:0px;
+}/*-------2013.9.16------*/
+

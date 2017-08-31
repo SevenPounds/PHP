@@ -1,0 +1,727 @@
+<script type="text/javascript">
+<!--
+/**
+ * 用于加载教师列表
+ * @author yxxing
+ */
+function TeacherList(){
+	
+	var _this = this;
+	this._city = "";
+	this._district = "";
+	this._school = "";
+	this._subject = "";
+	this._page = "";
+	this._toChange = "";
+	this._type = "";
+	this._loading = false;
+    this._loadOnce = false;
+    this._province ="";
+	
+	this.change = function(change_data, toChange){
+		_this._page = 1;
+		switch(toChange){
+			case "subject":
+				_this._subject = change_data;
+				_this._toChange = "";
+				_this._type = "";
+				break;
+			case "city":
+				_this._city = change_data;
+				_this._type = "city";
+				_this._district = "";
+				_this._school = "";
+				_this._toChange = "district";
+				break;
+			case "district":
+				_this._district = change_data;
+				_this._type = "district";
+				_this._school = "";
+				_this._toChange = "school";
+				break;
+			case "school":
+				_this._type = "";
+				_this._toChange = "";
+				_this._school = change_data;
+				break;
+            case "province":
+                _this._province = change_data;
+                _this._toChange = "city";
+                _this._type = "province";
+                _this._city = "";
+                _this._district = "";
+                _this._school = "";
+                break;
+		}
+		_this._reloadData();
+	}
+	this.page = function(page){
+		_this._page = typeof(page) == "undefined" ? 1 : page;
+		_this._reloadData();
+	}
+    this.loadOnce = function(){
+        _this._page = 1;
+        if(_this._loadOnce == false){
+            _this._loadOnce = true;
+            _this._reloadData();
+        }
+    }
+	this._callBack = function(msg){
+		var _html = "<option value='0'>请选择</option>";
+		if(msg.status == 1){
+			if(_this._toChange != ""){
+				var _areaList = msg.eduOrgList;
+				if(_this._toChange == "district"){
+					jQuery("#school").html(_html);
+				}
+                if(_this._toChange == "city"){
+                    jQuery("#district").html(_html);
+                    jQuery("#school").html(_html);
+                }
+				for(var area in _areaList){
+					_html +=  "<option title='" + _areaList[area].name + "' value='" + _areaList[area].id + "'>" + _areaList[area].name + "</option>";
+				}
+				jQuery("#" + _this._toChange).html(_html);
+			}
+			//更新教研员列表
+			jQuery("#jslist").html(msg.teacherList);
+		}else{
+			jQuery("#" + _this._toChange).html(_html);
+		}
+	};
+	this._reloadData = function(){
+		if(_this._loading == true){
+			return;
+		}
+		var _data = _this._getData();
+		$.ajax({
+			type:"POST",
+			url:U('widget/UserSelect/getTeacherList'),
+			data:_data,
+			dataType:"json",
+			beforeSend:function(){
+                jQuery("#jslist").html('<div class="loading" id="loadMore">'+L('PUBLIC_LOADING')+'<img src="'+THEME_URL+'/image/icon_waiting.gif" class="load"></div>');
+				_this._loading = true;
+			},
+			success:function(msg){
+				_this._callBack(msg);
+			},
+			error:function(msg){
+				ui.error("加载失败！");
+			},
+			complete:function(){
+				_this._loading = false;
+			}
+
+		});
+	};
+	this._getData = function(){
+		var _data = {};
+        _data.province = typeof(_this._province) == "undefined" ? "" : _this._province;
+		_data.city = typeof(_this._city) == "undefined" ? "" : _this._city;
+		_data.district = typeof(_this._district) == "undefined" ? "" : _this._district;
+		_data.school = typeof(_this._school) == "undefined" ? "" : _this._school;
+		_data.subject = typeof(_this._subject) == "undefined" ? "" : _this._subject;
+		_data.keywords = typeof(_this._keywords) == "undefined" ? "" : _this._keywords;
+		_data.type = typeof(_this._type) == "undefined" ? "" : _this._type;
+		_data.p = _this._page;
+        if(_data.province == false){
+            _data.city = "";
+            _data.district = "";
+            _data.school = "";
+        }
+		if(_data.city == false){
+			_data.district = "";
+			_data.school = "";
+		}
+		if(_data.district == false){
+			_data.school = "";
+		}
+		return _data;
+	}
+}
+/**
+ * 用于加载教研员
+ * @author yxxing
+ */
+function ResearcherList(){
+	
+	var _this = this;
+	this._eduorg_province = "0";
+	this._eduorg_city = "";
+	this._eduorg_district = "";
+	this._subject = "";
+	this._toChange = "";
+	this._areaId = "";	
+	this._page = "";
+	this._loading = false;
+    this._loadOnce = false;
+    this._type = 'province';
+	
+	this.change = function(change_data, type){
+		_this._page = 1;
+		switch(type){
+			case "subject":
+				_this._subject = change_data;
+				_this._toChange = "";
+                _this._type = "subject";
+				break;
+			case "eduorg_province":
+				_this._eduorg_province = change_data;
+				_this._type = 'province';
+				_this._toChange = "eduorg_city";
+				_this._eduorg_city = "";
+				_this._eduorg_district = "";
+				break;
+			case "eduorg_city":
+				_this._eduorg_city = change_data;
+                _this._type = 'city';
+				_this._toChange = "eduorg_district";
+				break;
+			case "eduorg_district":
+				_this._eduorg_district = change_data;
+                _this._type = 'district';
+				_this._toChange = "";
+				break;
+		}
+		_this._reloadData();
+	}
+	this.page = function(page){
+		_this._page = typeof(page) == "undefined" ? 1 : page;
+		_this._reloadData();
+	}
+    this.loadOnce = function(){
+        _this._page = 1;
+        if(_this._loadOnce == false){
+            _this._loadOnce = true;
+            _this._reloadData();
+        }
+    }
+	this._callBack = function(msg){
+		var _html = "<option value='0'>请选择</option>";
+		if(msg.status == 1){
+			if(_this._toChange != ""){
+				var _areaList = msg.eduOrgList;
+				if(_this._toChange == "eduorg_city"){
+					jQuery("#eduorg_district").html(_html);
+				}
+				for(var area in _areaList){
+					_html +=  "<option title='" + _areaList[area].name + "' value='" + _areaList[area].id + "'>" + _areaList[area].name + "</option>";
+				}
+				jQuery("#" + _this._toChange).html(_html);
+			}
+			//更新教研员列表
+			jQuery("#jyylist").html(msg.researcherList);
+		}else{
+			jQuery("#" + _this._toChange).html(_html);
+		}
+	};
+	this._reloadData = function(){
+		if(_this._loading == true){
+			return;
+		}
+		var _data = _this._getData();
+		$.ajax({
+			type:"POST",
+			url:U('widget/UserSelect/getResearcherList'),
+			data:_data,
+			dataType:"json",
+			beforeSend:function(){
+                jQuery("#jyylist").html('<div class="loading" id="loadMore">'+L('PUBLIC_LOADING')+'<img src="'+THEME_URL+'/image/icon_waiting.gif" class="load"></div>');
+				_this._loading = true;
+			},
+			success:function(msg){
+				_this._callBack(msg);
+			},
+			error:function(msg){
+				ui.error("加载失败！");
+			},
+			complete:function(){
+				_this._loading = false;
+			}
+		});
+	};
+	this._getData = function(){
+		var _data = {};
+		_data.eduorg_province = typeof(_this._eduorg_province) == "undefined" ? "" : _this._eduorg_province;
+		_data.eduorg_city = typeof(_this._eduorg_city) == "undefined" ? "" : _this._eduorg_city;
+		_data.eduorg_district = typeof(_this._eduorg_district) == "undefined" ? "" : _this._eduorg_district;
+		_data.subject = typeof(_this._subject) == "undefined" ? "" : _this._subject;
+		_data.keywords = typeof(_this._keywords) == "undefined" ? "" : _this._keywords;
+		_data.p = _this._page;
+		_data.type = _this._type;
+		if(_data.eduorg_province == false){
+			_data.eduorg_city = "";
+			_data.eduorg_district = "";
+		}
+		if(_data.eduorg_city == false){
+			_data.eduorg_district = "";
+		}
+		return _data;
+	}
+    //保留
+	this._getEduOrgList = function(areaId, toChange, area_type){
+		var data = {};
+		data.areaId = areaId;
+		$.ajax({
+			type:"POST",
+			url:U('widget/UserSelect/getEduOrg'),
+			data:data,
+			dataType:"text",
+			success:function(msg){
+				if(msg.status == 1){
+					var _areaList = msg.data;
+					for(var area in _areaList){
+						_html +=  "<option title='" + _areaList[area].name + "' value='" + _areaList[area].id + "'>" + _areaList[area].name + "</option>";
+					}
+					if(area_type == "city"){
+						jQuery("#eduorg_district").html(_html);
+					}
+					jQuery("#" + toChange).html(_html);
+				}else{
+					jQuery("#" + toChange).html(_html);
+				}
+			},
+			error:function(msg){
+			}
+		});
+	}
+}
+/**
+ * 用于教研员和教师的查询
+ * @author yxxing
+ */
+function UserSearch(){
+	var _this = this;
+	this._loading = false;
+	this._keywords = "";
+	this._p = 1;
+    this._loadOnce = false;
+	this.page = function(page){
+		_this._p = typeof(page) == "undefined" ? 1 : page;
+		this._reloadData();
+	};
+    this.loadOnce = function(){
+        _this._page = 1;
+        if(_this._loadOnce == false){
+            _this._loadOnce = true;
+            _this._reloadData();
+        }
+    }
+	this.search = function(){
+        _this._p = 1;
+		_this._reloadData(_this._callBack);
+	};
+    this.enter = function(e){
+        var e = e || window.event;
+        if(e.keyCode == 13){
+            _this.search();
+        }
+    }
+	this._reloadData = function(callBack){
+		_this._keywords = jQuery.trim(jQuery("#keywords").val());
+		if(!keywords){
+			ui.error("请输入查询关键字!");
+			return false;
+		}
+		if(_this._loading == true){
+			return;
+		}
+		var data = _this._getData();
+		$.ajax({
+			type:"POST",
+			url:U('widget/UserSelect/search'),
+			data:data,
+			dataType:"text",
+			beforeSend:function(XMLHttpRequest){
+                jQuery("#sslist").html('<div class="loading" id="loadMore">'+L('PUBLIC_LOADING')+'<img src="'+THEME_URL+'/image/icon_waiting.gif" class="load"></div>');
+				_this._loading = true;
+			},
+			success:function(html){
+                if("function" == typeof(callBack)){
+                    callBack(html);
+                }else{
+                    $("#sslist").html(html);
+                }
+			},
+			error:function(msg){
+				ui.error("查询失败！");
+			},
+			complete:function(XHR, TS){
+				_this._loading = false;
+			}
+		});
+	};
+    this._callBack = function(html){
+        var ssImgObj = $("#ss_img");
+        $('.member_choose01').children().removeClass();
+        $('.member_choose02').children().removeClass();
+        ssImgObj.parent().parent().addClass('current');
+        $('#opt_list').find('img').each(function(){
+            var _src = $(this).attr('src');
+            _src = _src.replace('_nor.gif', '.gif');
+            _src = _src.replace('.gif', '_nor.gif');
+            $(this).attr('src', _src);
+        });
+        var _src = ssImgObj.attr('src');
+        _src = _src.replace('_nor.gif', '.gif');
+        ssImgObj.attr('src', _src);
+        $('#jyylist').css('display', 'none');
+        $('#jslist').css('display', 'none');
+        $('#cylist').css('display', 'none');
+        $('#jyy_opt').css('display', 'none');
+        $('#js_opt').css('display', 'none');
+        $("#sslist").css('display', 'block').html(html);
+    }
+	this._getData = function(){
+		var _data = {};
+		_data.p = _this._p;
+		_data.keywords = _this._keywords;
+
+		return _data;
+	};
+}
+/**
+ * 常用用户
+ * @param appName 应用名称（research、pingke）
+ * @constructor
+ */
+function FavoriteUser(appName){
+    var _this = this;
+    this._appName = appName;
+    this._page = 1;
+    this._loadOnce = false;
+
+    this.page = function(page){
+        _this._page = page;
+        _this._reloadData();
+    }
+    this.loadOnce = function(){
+        _this._page = 1;
+        if(_this._loadOnce == false){
+            _this._loadOnce = true;
+            _this._reloadData();
+        }
+    }
+    this._getData = function(){
+        var _data = {};
+        _data.app_name = _this._appName;
+        return _data;
+    }
+    this._reloadData = function(){
+        if(_this._loading == true){
+            return;
+        }
+        var data = _this._getData();
+        $.ajax({
+            type:"POST",
+            url:U('widget/UserSelect/getFavoriteUser'),
+            data:data,
+            dataType:"json",
+            beforeSend:function(XMLHttpRequest){
+                jQuery("#cylist").html('<div class="loading" id="loadMore">'+L('PUBLIC_LOADING')+'<img src="'+THEME_URL+'/image/icon_waiting.gif" class="load"></div>');
+                _this._loading = true;
+            },
+            success:function(msg){
+                if(msg.status == 1){
+                    $("#cylist").html(msg.favoriteUserList);
+                }else{
+                    $("#cylist").html("<p style='padding:20px;'>暂无用户！</p>");
+                }
+            },
+            error:function(msg){
+                $("#cylist").html("<p style='padding:20px;'>加载失败，<a href='javascript:favoriteUser.page();'>请重试！</a></p>");
+            },
+            complete:function(XHR, TS){
+                _this._loading = false;
+            }
+        });
+    };
+}
+/**
+ * 用于用户选择
+ * @param userIds 用户ID
+ * @constructor
+ */
+function UserSelect(userIds){
+    var _this = this;
+    this._userList = userIds != "" ? userIds.split('|') : [];
+    this.changeTab = function(_obj, _opt){
+        _this._allHidden();
+        switch(_opt){
+            case 'cycy':
+                _this._changeType1(_obj);
+                favoriteUser.loadOnce();
+                $('#cylist').css('display', 'block');
+                break;
+            case 'qbcy':
+                _this._changeType1(_obj);
+                userSearch.loadOnce();
+                $('#sslist').css('display', 'block');
+                break;
+            case 'jyy':
+                _this._changeType2(_obj);
+                researcherList.loadOnce();
+                $('#jyylist').css('display', 'block');
+                $('#jyy_opt').css('display', 'block');
+                break;
+            case 'js':
+                _this._changeType2(_obj);
+                teacherList.loadOnce();
+                $('#jslist').css('display', 'block');
+                $('#js_opt').css('display', 'block');
+                break;
+        }
+    }
+    this._allHidden = function(){
+        $('#cylist').css('display', 'none');
+        $('#jyylist').css('display', 'none');
+        $('#jslist').css('display', 'none');
+        $('#sslist').css('display', 'none');
+        $('#jyy_opt').css('display', 'none');
+        $('#js_opt').css('display', 'none');
+    }
+    this._changeType1 = function(_obj){
+        $(_obj).parent().parent().children().removeClass();
+        $(_obj).parent().addClass('current');
+        $('.member_choose02').children().removeClass();
+        $(_obj).parent().parent().find('img').each(function(){
+            var _src = $(this).attr('src');
+            _src = _src.replace('_nor.gif', '.gif');
+            _src = _src.replace('.gif', '_nor.gif');
+            $(this).attr('src', _src);
+        });
+        $(_obj).children('img').each(function(){
+            var _src = $(this).attr('src');
+            _src = _src.replace('_nor.gif', '.gif');
+            $(this).attr('src', _src);
+        });
+    }
+    this._changeType2 = function(_obj){
+        var member_choose01 = $('.member_choose01');
+        member_choose01.children().removeClass();
+        $('.member_choose02').children().removeClass();
+        $(_obj).parent().addClass('current');
+        member_choose01.find('img').each(function(){
+            var _src = $(this).attr('src');
+            _src = _src.replace('_nor.gif', '.gif');
+            _src = _src.replace('.gif', '_nor.gif');
+            $(this).attr('src', _src);
+        });
+    }
+    this.clear = function(){
+        for(var i = 0; i < _this._userList.length; i++){
+            var _userId = _this._userList[i];
+            $("#user_"+_userId).remove();
+        }
+        $("#user_ids").val('||');
+        _this._userList = [];
+    }
+    this.selectUser = function(userId, userName, userPic){
+        if(userId == MID){
+            ui.error("不能添加自己");
+        }else if(jQuery.inArray((userId+""), _this._userList)<0){
+            _this._userList.push(userId+"");
+            _this._addUser(userId, userName, userPic);
+        }else{
+            ui.error("该用户已经添加");
+        }
+    };
+    this._addUser = function(userId, userName, userPic){
+        var _temp = [];
+        _temp.push('<li id="user_'+userId+'" title="'+userName+'" onmouseover="javascript:userSelect.mouserOver(this);" onmouseout="javascript:userSelect.mouserOut(this);">');
+        _temp.push('<p class="left pt3"><img style="width:48px;height: 48px;" src="'+userPic+'"></p>');
+        _temp.push('<p class="left pl8 pt12" title="'+userName+'">' + _this._subStr(userName, 4) + '</p>');
+        _temp.push('<p class="add_doneclose"><a href="javascript:userSelect.deleteUser(\''+ userId +'\')"><img src="__THEME__/image/close.gif"></a></p>');
+        _temp.push('</li>');
+        $("#selectedlist").append(_temp.join(''));
+        $("#user_ids").val($("#user_ids").val() + userId+'|');
+    };
+    this.deleteUser = function(userId){
+        var index= jQuery.inArray((userId+""), _this._userList);
+        var ids = $("#user_ids").val();
+        _this._userList.splice(index, 1);
+        $("#user_"+userId).remove();
+        $("#user_ids").val(ids.replace('|'+userId+'|','|'));
+    };
+    // 截取字符串
+    this._subStr = function(str, len) {
+        if(!str) {
+            return '';
+        }
+        len = len > 0 ? len * 2 : 280;
+        var count = 0;			// 计数：中文2字节，英文1字节
+        var temp = '';  		// 临时字符串
+        for(var i = 0; i < str.length; i ++) {
+            if(str.charCodeAt(i) > 255) {
+                count += 2;
+            } else {
+                count ++;
+            }
+            // 如果增加计数后长度大于限定长度，就直接返回临时字符串
+            if(count > len - 1) {
+                return temp;
+            }
+            // 将当前内容加到临时字符串
+            temp += str.charAt(i);
+        }
+        return str;
+    };
+    this.mouserOver = function(obj){
+        $(obj).find('.add_doneclose').css('display','block');
+    }
+    this.mouserOut = function(obj){
+        $(obj).find('.add_doneclose').css('display','none');
+    }
+}
+
+var researcherList = new ResearcherList();
+var teacherList = new TeacherList();
+var userSearch = new UserSearch();
+var favoriteUser = new FavoriteUser("{$appName}");
+var userSelect = new UserSelect("{$userids}");
+$(function(){
+    favoriteUser.page(1);
+    $("[class='left pl8 pt12']").each(function(){
+        var _name = $(this).text();
+        $(this).text(userSelect._subStr(_name,4));
+    })
+});
+//-->
+</script>
+<link rel="stylesheet" type="text/css" href="__THEME__/css/user_select.css">
+<div class="add_member" style="{$style}">
+    <div class="add_head">
+        <p class="left pl10">添加{$app.app_alias}成员</p>
+        <div class="topic_search pt3 pr5">
+            <div class="left"></div>
+            <div class="cen">
+                <input type="text" id="keywords" onkeypress="userSearch.enter(event);">
+                <p class="topic_searchbtn"><a href="javascript:userSearch.search();"></a></p>
+            </div>
+            <div class="right"></div>
+        </div>
+    </div>
+
+    <div class="add_con">
+        <div class="add_left02" id="opt_list">
+            <ul class="member_choose01">
+                <li class="current"><a href="javascript:void(0);" onclick="userSelect.changeTab(this,'cycy')"><img src="__THEME__/image/member01.gif" />常用成员</a></li>
+                <li><a href="javascript:void(0);" onclick="userSelect.changeTab(this,'qbcy')"><img id="ss_img" src="__THEME__/image/member02_nor.gif" />全部成员</a></li>
+            </ul>
+            <ul class="member_choose02">
+                <li><a href="javascript:void(0);" onclick="userSelect.changeTab(this,'jyy')">教研员</a></li>
+                <li><a href="javascript:void(0);" onclick="userSelect.changeTab(this,'js')">教师</a></li>
+            </ul>
+        </div>
+        <div class="add_right">
+            <div id="jyy_opt" style="display: none;">
+                <div class="find_member">
+                    <span class="pl5 pt16">学科：</span>
+                    <span>
+                        <select style="width:80px;" onchange="researcherList.change(this.value,'subject')">
+                            <volist name="subjectList" id="subject">
+                                <option value="{$subject.code}" title="{$subject.name}">{$subject.name}</option>
+                            </volist>
+                        </select>
+                    </span>
+                    <span class="pl5 pt16">地区：</span>
+                    <span>
+                        <select style="width:95px;" id="eduorg_province" onchange="researcherList.change(this.value,'eduorg_province')">
+                            <option value="0">请选择</option>
+                            <volist name="provinceOrgList" id="pOrg">
+                                <option value="{$pOrg.id}" title="{$pOrg.name}">{$pOrg.name}</option>
+                            </volist>
+                        </select>
+                    </span>
+                    <span class="pl5">
+                        <select style="width:95px;" id="eduorg_city" onchange="researcherList.change(this.value,'eduorg_city')">
+                            <option value="0">请选择</option>
+                        </select>
+                    </span>
+                    <span class="pl5">
+                        <select style="width:95px;" id="eduorg_district" onchange="researcherList.change(this.value,'eduorg_district')">
+                            <option value="0">请选择</option>
+                        </select>
+                    </span>
+                </div>
+             </div>
+            <div id="js_opt" style="display: none;">
+                <div class="find_member">
+                    <span class="pl5 pt16">学科：</span>
+                    <span>
+                        <select style="width:95px;"  id="subject" onchange="teacherList.change(this.value,'subject')">
+                            <volist name="subjectList" id="subject">
+                                <option value="{$subject.code}" title="{$subject.name}">{$subject.name}</option>
+                            </volist>
+                        </select>
+                    </span>
+                    <span class="pl5 pt16">省：</span>
+                    <span>
+                        <select style="width:95px;"  id="province" onchange="teacherList.change(this.value,'province')">
+                            <option value="0">请选择</option>
+                            <volist name="proviceList" id="pro">
+                                <option value="{$pro.id}" title="{$pro.name}">{$pro.name}</option>
+                            </volist>
+                        </select>
+                    </span>
+                   <span class="pl5 pt16">市：</span>
+                    <span>
+                        <select style="width:95px;"  id="city" onchange="teacherList.change(this.value,'city')">
+                            <option value="0">请选择</option>
+                        </select>
+                    </span>
+                    <span class="pl5 pt16">区县：</span>
+                    <span>
+                        <select style="width:95px;" id="district" onchange="teacherList.change(this.value,'district')">
+                            <option value="0">请选择</option>
+                        </select>
+                    </span>
+                </div>
+				<div class="pl10">
+                    <span class="pl5 left">学校：</span>
+                    <span class="left">
+                        <select style="width:95px;height:20px;padding:0px;" id="school" onchange="teacherList.change(this.value,'school')">
+                            <option value="0">请选择</option>
+                        </select>
+                    </span>
+				</div>
+            </div>
+			<div class="clear">
+			</div>
+            <div id="cylist">
+            </div>
+            <div id="jyylist" style="display: none;">
+            </div>
+            <div id="jslist" style="display: none;">
+            </div>
+            <div id="sslist" style="display: none;">
+            </div>
+        </div>
+    </div>
+    <div class="clear"></div>
+    <div class="add_done">
+        <div class="pl15 pr15 pt10">
+            <p class="left black2">已添加成员</p>
+            <p class="right blue"><a href="javascript:userSelect.clear();">清空</a></p>
+            <div class="clear"></div>
+        </div>
+        <ul id="selectedlist">
+            <li>
+                <p class="left pt3"><img style="width:48px;height: 48px;" src="{$currentUser.avatar_small}"></p>
+                <p class="left pl8 pt12" title="{$currentUser.uname}">{$currentUser.uname}</p>
+            </li>
+            <volist name="userList" id="user">
+                <if condition="$user['uid'] neq $currentUser['uid']">
+                    <li id="user_{$user.uid}" onmouseover="javascript:userSelect.mouserOver(this);" onmouseout="javascript:userSelect.mouserOut(this);">
+                        <p class="left pt3"><img style="width:48px;height: 48px;" src="{$user.avatar_small}"></p>
+                        <p class="left pl8 pt12" title="{$user.uname}">{$user.uname}</p>
+                        <p class="add_doneclose"><a href="javascript:userSelect.deleteUser('{$user.uid}');"><img src="__THEME__/image/close.gif"></a></p>
+                    </li>
+                </if>
+            </volist>
+        </ul>
+        <div class="clear"></div>
+    </div>
+</div>
+<input type="hidden" value="|{$userids}|" id="user_ids" autocomplete='off'/>

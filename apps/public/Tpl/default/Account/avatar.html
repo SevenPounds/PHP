@@ -1,0 +1,115 @@
+<include file="__THEME__/public_header" />
+<script type="text/javascript" src="__APP__/js/slide.js"></script>
+<link href="__APP__/css/nav_message_left.css" rel="stylesheet" type="text/css" />
+<link href="__APP__/css/slide.css" rel="stylesheet" type="text/css" />
+<link href="__APP__/account.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+//更换头像
+function changeHeadDefault(current,imgName){
+	$('.img-box a').removeClass();
+	$(current).addClass('active');
+	$('#imgId img').attr('src','__APP__/images/'+imgName+'.jpg');
+	$('#imgId').removeClass().addClass(imgName);
+	$('#submitType').val('defaultType');
+}
+//保存头像
+function saveHeadImg(){
+	var submitType = $('#submitType').val();
+	var type = $('#type').val();
+	var imgName = $("#imgId").prop("className");
+	var savePath = $('#savePath').val();
+	// 保存图片
+	$.ajax({
+		url : 'index.php?app=public&mod=Account&act=saveAvatar',
+		type : 'post',
+		data : {submitType:submitType,imgName:imgName,type:type,savePath:savePath},
+		success : function(result){
+			if(result == "success"){
+				ui.success('头像保存成功');
+		         setTimeout(function(){
+		         	window.location.reload();
+		         },1000);
+			}else{
+				ui.success('头像保存失败');
+			}
+			 
+		}
+	});
+}
+
+function chooseImg(){
+	$('#submitType').val('chooseLocalImg');
+	$('#type').val('upload');
+	var options = {
+			success:function(result){
+				var result = eval('('+result+')');
+				if(result.data.status == "success"){
+					$('#imgId img').attr('src',UPLOAD_URL+"/"+result.data.save_path+result.data.save_name);
+					$('#imgId').removeClass().addClass(result.data.save_name);
+					$('#type').val('cut');
+					$('#savePath').val(result.data.save_path);
+				}else{
+					alert(result.data.info);
+				}
+			}
+	};
+	$('#chooseLocalImgForm').ajaxSubmit(options);
+}
+</script>
+    <div id="page-wrap">
+        <div id="main-wrap">
+            <div id="col" class="st-grid content-bg">
+            	<div id="col4" class="main-left">
+                    <!--tab菜单-->
+                    <include file="_tabs" />
+                </div>
+                
+                <div id="col7" class="main-right">
+			        <div class="extend minh person-set">
+			            <div class="set-hd"><h3>头像设置</h3></div><!--模板中原有div-->
+			            <!--add-->
+			            <div class="head-set">
+			                <dl class="clearfix">
+			                    <dt class="fl">当前头像</dt>
+			                    <dd class="img-default fl">
+			                        <span id="imgId" class="head_default">
+			                        	<img src="{$user_info['avatar_big']}"/>
+			                        </span>
+			                    </dd>
+			                </dl>
+			                <dl class="clearfix">
+			                    <dt>可选头像</dt>
+			                    <dd class="img-box">
+			                        <a href="javascript:;" class="active" onclick="changeHeadDefault(this,'student_male')"><img src="__APP__/images/student_male.jpg"/></a>
+			                        <a href="javascript:;" onclick="changeHeadDefault(this,'student_female')"><img src="__APP__/images/student_female.jpg"/></a>
+			                        <a href="javascript:;" onclick="changeHeadDefault(this,'teacher_male')"><img src="__APP__/images/teacher_male.jpg"/></a>
+			                        <a href="javascript:;" onclick="changeHeadDefault(this,'teacher_female')"><img src="__APP__/images/teacher_female.jpg"/></a>
+			                        <a href="javascript:;" onclick="changeHeadDefault(this,'instructor_male')"><img src="__APP__/images/instructor_male.jpg"/></a>
+			                        <a href="javascript:;" onclick="changeHeadDefault(this,'instructor_female')"><img src="__APP__/images/instructor_female.jpg"/></a>
+			                    </dd>
+			                </dl>
+			                <dl class="clearfix">
+			                    <dt>自定义上传头像</dt>
+			                    <dd class="img-private">
+			                        <!-- <a href="javascript:;" class="org-btn"><span> <input type="file" name="Filedata" class="" />选择文件</span></a> -->
+			                        <form id="chooseLocalImgForm" enctype="multipart/form-data"  action="index.php?app=public&mod=Account&act=saveAvatar" method="post">
+			                        	<a href="javascript:;"><input type="file" name="chooseLocalImg" id="chooseLocalImg"  onchange="chooseImg()"/></a> 
+			                        	<font>请选择个人正面照，不小于200*200，支持JPG，JPEG，PNG格式，不大于{$attach_max_size|default=0}M</font>
+			                        	<input type="hidden" name="submitType" id="submitType">
+			                        	<input type="hidden" name="type" id="type">
+			                        	<input type="hidden" name="savePath" id="savePath">
+			                    	</form> 
+			                    </dd>
+			                </dl>
+			            </div>
+			            <div class="two-btn">
+			                <a href="javascript:;" class="org-btn" onclick="saveHeadImg();"><span>保存</span></a>
+			                <a href="javascript:;" class="gray-btn" onclick="cancelHeadImg();"><span>取消</span></a>
+			            </div>
+			            <!--add-->
+			        </div>
+    			</div>
+            </div>
+        </div>
+    </div>
+<include file="__THEME__/public_footer" />

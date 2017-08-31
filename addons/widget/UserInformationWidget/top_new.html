@@ -1,0 +1,66 @@
+
+<script type="text/javascript">
+$(document).ready(function(){
+	jQuery("body").click(function(e){
+		  var target_id = e.target.id;
+		  if(target_id != 'showMyClazzs'){
+			  jQuery('#tea-entrance-cla-list').hide();
+		  }
+	  });
+
+});
+</script>
+<div class="beside fl">
+    <dl class="user-box">
+        <!-- new-->
+        <dt class="user-info">
+            <a href="javascript:;"><em>&nbsp;</em></a>
+            <!-- <a href="{:U('public/Account/avatar')}"><em>更换头像</em></a> -->
+            <img src="{$userInfo.avatar_big}" class="user-head"/>
+            <strong><em>{$userInfo.uname|mStr=###,3}</em><!-- <a href="{:U('public/Account/index')}"></a> --></strong>
+        </dt>
+        <!-- new-->
+        <dd class="user-fans">
+            <ul class="fl">
+                <li class="fl"><a href="{:U('public/Profile/following')}"><em>{$userData['following_count']|default=0}<!-- <strong class="fr clearfix"><em class="fr"></em></strong> --></em><span>关注</span></a></li>
+                     <li class="fl"><a href="{:U('public/Profile/follower')}"><em>{$userData['follower_count']|default=0}<strong class="fr clearfix" id="new_follower_total_show"><em class="fr" id="new_follower_total"></em></strong></em><span>粉丝</span></a></li>
+                  	 <li class="fl">
+                         <!--<a href="{:U('public/Credit/index')}">-->
+                             <em> <php>$score_value =$userCredit['credit']['score']['value']>999999?'999999+':$userCredit['credit']['score']['value']; </php>
+{$score_value|default=0}<!-- <strong class="fr clearfix"><em class="fr"></em></strong> --></em><span>积分</span>
+                         <!--</a>-->
+                     </li>
+            </ul>
+        </dd>
+    </dl>
+<!-- 隐藏班级入口的班级  和 显示班级-->
+<script type="text/javascript">
+$(document).ready(function(){
+	 $('#search_friend').focus(function(){
+		 if(this.value=="输入想要搜索的好友姓名"){
+			  this.value='';
+		 }
+	  });
+	  $('#search_friend').blur(function(){
+		  if(this.value==""||this.value.replace(/[ ]/g,"")==""){
+			  this.value='输入想要搜索的好友姓名';
+		  }
+	  });
+	  $(document).keyup(function(event) {
+			if (event.keyCode == 13) {
+				submit_search_friend();
+			}
+	  });
+});
+
+function submit_search_friend(){
+	 var serach_val=$('#search_friend').val();
+	 var search_values =serach_val.replace(/[ ]/g,"");
+	 if(search_values==''||serach_val==""||serach_val=="输入想要搜索的好友姓名"){
+	     return ;
+	 }else{
+		 window.location.href=U("public/Search/index")+'&k='+serach_val;
+	 }
+
+}
+</script>

@@ -1,0 +1,43 @@
+	<div class="class_tip">
+			<div class="left">
+				<div class="pic"><img src="{$org['id']|getCampuseAvatar=###,$org['type'],'avatar_big'}"/></div><!--__APP__/image/icon_pic.jpg-->
+				<dl class="pic_info">
+					<dt><b class="class_name">{$org.name} </b><span>{:W('FollowBtn', array('fid'=>$org['id'], 'uname'=>$org['name'], 'follow_state'=>$org['follow_state'], 'type'=>'campus','ftype'=>$org['type']))}</span><!--<span class="btn"> <input type="button" value="" class="focus_small_normal"  onmouseover="this.className='focus_small_hover'" onmouseout="this.className='focus_small_normal'" /> </span>--></dt>
+					<dd>{$org['area']['city']['name']} {$org['area']['district']['name']} <span class="green"><a href="{:getHomeUrl($org['parent'])}">{$org['parent']['name']}</a>-2010级&nbsp;&nbsp;{$class.name}</span></dd>
+					<dd>教师&nbsp;<span class="green"><a href="{:U('class/ClassHome/class_people',array('cid'=>$org['id']))}">{$org.tcount|default = 0}</a></span>&nbsp;|&nbsp;学生&nbsp;<span class="green"><a href="{:U('class/ClassHome/class_people',array('cid'=>$org['id']))}">{$org.scount|default = 0}</a></span>&nbsp;|&nbsp;家长&nbsp;<span class="green"><a href="{:U('class/ClassHome/class_people',array('cid'=>$org['id']))}">{$org.pcount|default = 0}</a></span>&nbsp;|&nbsp;粉丝&nbsp;<span class="green  follower_{$_GET['cid']}"><a href="{:U('class/ClassHome/class_follower',array('cid'=>$org['id']))}">{$org.follower|default = 0}</a></span></dd>
+					<dd>班级简介：{$org['intro']} </dd>
+				</dl>
+				<div class="clear"></div>
+			</div>
+			<div class="right">
+				<div class="class_date">
+					<div class="date">{$dateTime['date']}&nbsp;&nbsp;{$dateTime['week']}</div>
+					<!-- <div class="holiday"><a href="{:U('class/ClassHome/calendar')}">国际电影节</a></div> -->
+					<div class="today"><a href="{:U('class/ClassHome/today',array('cid'=>$org['id']))}">历史上的今天>></a></div>
+				</div>
+				<div class="btn"><input type="button" value="班级管理" class="green_normal"  onmouseover="this.className='green_hover'" onmouseout="this.className='green_normal'"  onclick="window.location.href='index.php?app=class&mod=ClassHome&act=class_manage&cid={$org['id']}'"/></div>
+			</div>
+			<div class="clear"></div>
+		</div>
+		<div class="class_tab" id="class_menu">
+			<ul>
+				<li id="class_menu_1" <eq name="ACTION_NAME" value="index">class="current" </eq> onclick="window.location.href='index.php?app=class&mod=ClassHome&act=index&type=home&cid={$org['id']}'" >班级主页</li>
+				<li id="class_menu_2" <eq name="ACTION_NAME" value="blog">class="current" </eq> onclick="window.location.href='index.php?app=class&mod=ClassHome&act=blog&type=blog&cid={$org['id']}'" >班级日志</li>
+				<li id="class_menu_3" <eq name="ACTION_NAME" value="album">class="current" </eq> onclick="window.location.href='index.php?app=class&mod=ClassHome&act=album&type=album&cid={$org['id']}'" >照片墙</li>
+				<li id="class_menu_4" <eq name="ACTION_NAME" value="treasurebox">class="current" </eq> onclick="window.location.href='index.php?app=class&mod=ClassHome&act=treasurebox&type=treasurebox&cid={$org['id']}'" >百宝箱</li>
+				<li id="class_menu_5" >投票站</li>
+				<li id="class_menu_6" <eq name="ACTION_NAME" value="class_praise">class="current" </eq> onclick="window.location.href='index.php?app=class&mod=ClassHome&act=praise&cid={$org['id']}'" >表扬栏</li>
+				<li id="class_menu_7"  <eq name="ACTION_NAME" value="class_work">class="current" </eq> onclick="window.location.href='index.php?app=class&mod=ClassHome&act=class_work&type=classwork&cid={$org['id']}'" >班级作业</li>
+			</ul>
+		</div>
+<script>
+	function changeMenu(obj)
+	{
+		jQuery("#class_menu ul li").each(function(){
+			jQuery(this).removeClass('current') ;	
+		}); 
+	
+		obj.style.className = 'current' ;
+		jQuery('#'+obj.id).addClass('current');
+	}
+</script>

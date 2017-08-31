@@ -1,0 +1,19 @@
+<link href="__APP__/css/main.css"  rel="stylesheet" type="text/css" />
+<link href="__APP__/css/font.css" rel="stylesheet" type="text/css" />
+
+<div class="pop_box3">
+	<div class="pop_head">
+		<div class="left pl15">遴选结果</div>
+		<div class="pop_close" onMouseover="this.className='pop_closehov'" onMouseOut="this.className='pop_close'"  onclick="ResourceSelector.AuditCancle();"></div>
+	</div>
+	<div class="pop_con">
+		<div class="ep_p2">
+			<span><img src="__APP__/images/icon_problem.gif" /></span><span><php>if($resoptype==1):</php>您确定将选定的资源评选为非精品资源吗？<php>else:</php>您确定将选定的资源评选为精品资源吗？<php>endif;</php></span>
+		</div>
+		<div class="clear"></div>
+		<div class="pop_btn2">
+			<input type="button" value="确定" class="blue5_btn" onMouseover="this.className='blue5_btnhov'" onMouseOut="this.className='blue5_btn'" onclick="ResourceSelector.OpratorRecommand({$resoptype},this,{$type});">
+			<input type="button" value="取消" class="blue4_btn" onMouseover="this.className='blue4_btnhov'" onMouseOut="this.className='blue4_btn'" onclick="ResourceSelector.AuditCancle();">
+	  	</div>
+	</div>
+</div>

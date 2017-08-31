@@ -1,0 +1,356 @@
+<include file="_work_room_header" />
+<div class="wy_box" style="width: 1000px; overflow: hidden;">
+				<div class="left studio_box01">
+
+					<div class="studio_id">
+					<div class="id_top"></div>
+					<div class="id_box">
+						<div class="id_pic"><img src="{$user_info['avatar_big']}"  width="86px" height="86px"/></div>
+						<div class="id_infor">
+							<p class="name" title="{$user_info['uname']}">{$user_info['uname']|mStr=###,6}</p>
+                            <p class="id_xx"><span>{$subject}</span><span>{$levelName}</span></p>
+                            <p class="id_xx" title="{$user_info['location']}"><span>{$user_info['location']|mStr=###,13}</span></p>
+	                        <php>if($mid):</php>
+	                            <if condition="$mid != $user_info['uid']">
+									<div class="focus_mod">
+			                            {:W('FollowBtn', array('fid'=>$user_info['uid'], 'uname'=>$user_info['uname'],'follow_state'=>$follow_state, 'type'=>'studio'))}
+			                            |<a class="see_message" onclick='javascript:ui.sendmessage({$user_info["uid"]}, 0);' style='cursor:pointer'>私信</a>
+			                            <div class="clear"></div>
+		                            </div>
+	                            </if>
+                            <php>else:</php>
+								<div class="focus_mod">
+			                            <a onclick='javascript:showLogin();' style='cursor:pointer' class="see_add">关注</a>
+			                            |<a onclick='javascript:showLogin();' style='cursor:pointer' class="see_message">私信</a>
+			                            <div class="clear"></div>
+			                    </div>
+							<php>endif;</php>
+						</div>
+						<div class="clear"></div>
+                        <div class="focus_quantity">
+                            <p><span class="orange">{$userData.follower_count|default=0}</span>粉丝数</p>
+							<p><span class="orange">{$userData.visitor_count|default=0}</span>访问量</p>
+                            <!--<p class="focus_none"><span class="orange">{$userCredit.credit.score.value|default=0}</span>积分</p>-->
+                            <div class="clear"></div>
+                        </div>
+					</div>
+					</div>
+
+					<div class="studio_infor">
+
+						<div>
+							<div class="studio_title01">
+								<ul id="followMenu">
+									<li id="following_li" class="current" onclick="changeRoleMenu(this)"><a><php>if($user_info['uid']==$mid){</php>我<php>}else{</php>TA<php>}</php>关注的</a></li>
+									<li id="follower_li" onclick="changeRoleMenu(this)"><a>关注<php>if($user_info['uid']==$mid){</php>我<php>}else{</php>TA<php>}</php>的</a></li>
+								</ul>
+							</div>
+							<div class="studio_namegroup">
+								<ul id="following_list">
+							<volist name="sidebar_following_list['data']" id="vo" offset="0" length='9' empty="$empty"> 
+							<php>if($vo['type']==0):</php>
+								<li>
+									<a href="{:U('public/Profile/index',array('uid'=>$vo['fid']))}" uid="{$vo['fid']}" event-node="face_card">
+									<img src="{$follow_info[$vo['fid']]['avatar_small']}" /></a>
+									<a href="{:U('public/Profile/index',array('uid'=>$vo['fid']))}" class="face" uid="{$vo['fid']}" event-node="face_card"><span>{$follow_info[$vo['fid']]['uname']|getShort=3,'...'}</span></a>
+								</li>
+							<php>elseif($vo['type']==1):</php>
+								<li>
+									<a href="{:getHomeUrl($schoolListData[$vo['fid']])}" orgType="{$vo['type']}" cid="{$vo['fid']}" event-node="face_card">
+									<img src="{$vo['fid']|getCampuseAvatar=###,$vo['type'],'avatar_small'}" /></a>
+									<a href="{:getHomeUrl($schoolListData[$vo['fid']])}" class="face" orgType="{$vo['type']}" cid="{$vo['fid']}" event-node="face_card"><span>{$schoolListData[$vo['fid']]['name']|getShort=3,'...'}</span></a>	
+								</li>
+							<php>elseif($vo['type']==2):</php>
+								<li>
+									<a href="{:getHomeUrl($classListData[$vo['fid']])}" orgType="{$vo['type']}" cid="{$vo['fid']}" event-node="face_card">
+									<img src="{$vo['fid']|getCampuseAvatar=###,$vo['type'],'avatar_small'}" /></a>
+									<a href="{:getHomeUrl($classListData[$vo['fid']])}" class="face" orgType="{$vo['type']}" cid="{$vo['fid']}" event-node="face_card"><span>{$classListData[$vo['fid']]['name']|getShort=3,'...'}</span></a>	
+								</li>
+							<php>elseif($vo['type']==3):</php>
+								<li>
+									<a href="{:U('msgroup/Index/index',array('gid'=>$vo['fid']))}" title="{$msgroupData[$vo['fid']]['group_name']}">
+									<img src="{$msgroupData[$vo['fid']]['image']['avatar_small']}" /></a>
+									<a href="{:U('msgroup/Index/index',array('gid'=>$vo['fid']))}" class="face" title="{$msgroupData[$vo['fid']]['group_name']}"><span>{$msgroupData[$vo['fid']]['group_name']|getShort=3,'...'}</span></a>
+								</li>
+							<php>endif;</php> 
+							<if condition="$i%3 == 0">
+								<div class="clear"></div>
+							</if>
+							</volist>
+						</ul>
+						<ul id="follower_list"  style="display: none;">
+							<volist name="sidebar_follower_list['data']" id="vo" offset='0' length='9' empty="$empty">
+							<li><a
+								href="{:U('public/Profile/index',array('uid'=>$vo['fid']))}"><img
+									src="{$follow_info[$vo['fid']]['avatar_small']}"
+									uid="{$vo['fid']}" event-node="face_card" /></a><a
+								href="{:U('public/Profile/index',array('uid'=>$vo['fid']))}"
+								uid="{$vo['fid']}" event-node="face_card" title="{$follow_info[$vo['fid']]['uname']}"><span>{$follow_info[$vo['fid']]['uname']|getShort=3,'...'}</span></a>	
+							</li>
+							<if condition="$i%3 == 0">
+								<div class="clear"></div>
+							</if>
+							</volist>
+						</ul>
+								<div class="clear"></div>
+							</div>
+						</div>
+
+						<div>
+							<div class="studio_title02">
+								<span><img src="__APP__/images/icon_message.gif" /></span> <span>最新动态</span>
+							</div>
+							<div class="news_group">
+								 <ul>
+                        <volist name="lastFeeds" id="feed" key="key">
+                        	 <li>
+								<div class="news_box">
+									<div class="head_pic">
+									<a href="{:U('public/Workroom/index',array('uid'=>$uid))}" uid="{$uid}" event-node="face_card" show="no"><img src="{$user_info['avatar_middle']}"  height="64px" width="64px"/></a>
+									</div>
+									<div class="news_con">
+										<p><a href="{:U('public/Workroom/index',array('uid'=>$uid))}" uid="{$uid}" event-node="face_card" show="no"><strong>{$user_info['uname']}</strong></a></p>
+										<p class="font1 pt4"><span class="blue03">{$feed['feed_content']}</span></p>
+									</div>
+									<div class="clear"></div>
+								</div>
+							</li>
+                        </volist>
+                    </ul>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="studio_box02 left">
+					<div class="teaWS_rgt">
+					
+					<div class="pt10">
+							<div class="title_red">
+								<h3 class="left">教学资源</h3>
+								<div class="clear"></div>
+							</div>
+							<div class="studio_line">
+								<div class="left">
+									<div class="studio_name">
+										<p class="red1 left">教学设计</p>
+										<p class="right">
+											<a href="{:U('public/Workroom/teaching_more', array('uid'=>$uid,'type'=>1,'appcode'=>'0100'))}"><img src="__APP__/images/more_btn.gif" /></a>
+										</p>
+										<div class="clear"></div>
+									</div>
+									<ul class="xw_box02" style="border-right: 1px dashed #d5d5d5;">
+									<volist name="teachdesign" id="in_vo">
+									<li><p class="left">
+												<span class="black1 pr10">•</span><a href="{:U('public/Workroom/preview', array('uid'=>$uid,'type'=>1,'appcode'=>'0100','id'=>$in_vo['rid']))}" title="{$in_vo['title']}">{$in_vo['title']|mStr=###,16}</a>
+											<p>
+											<p class="time  right">{$in_vo['uploaddateline']}</p>
+											<div class="clear"></div></li>
+                        			</volist>
+									</ul>
+								</div>
+								<div class="right">
+									<div class="studio_name">
+										<p class="red1 left">教学课件</p>
+										<p class="right">
+											<a href="{:U('public/Workroom/teaching_more', array('uid'=>$uid,'type'=>4,'appcode'=>'0600'))}"><img src="__APP__/images/more_btn.gif" /></a>
+										</p>
+										<div class="clear"></div>
+									</div>
+									<ul class="xw_box02">
+									<volist name="teachware" id="in_vo">
+										<li><p class="left">
+												<span class="black1 pr10">•</span><a href="{:U('public/Workroom/preview', array('uid'=>$uid,'type'=>4,'appcode'=>'0600','id'=>$in_vo['rid']))}" title="{$in_vo['title']}">{$in_vo['title']|mStr=###,16}</a>
+											<p>
+											<p class="time  right">{$in_vo['uploaddateline']}</p>
+											<div class="clear"></div></li>
+									</volist>
+									</ul>
+								</div>
+								<div class="clear"></div>
+								<div class="left">
+									<div class="studio_name">
+										<p class="red1 left">教学视频</p>
+										<p class="right">
+											<a href="{:U('public/Workroom/teaching_more', array('uid'=>$uid,'type'=>2,'appcode'=>'0200'))}"><img src="__APP__/images/more_btn.gif" /></a>
+										</p>
+										<div class="clear"></div>
+									</div>
+									<ul class="xw_box02" style="border-right: 1px dashed #d5d5d5;">
+									<volist name="teachvideo" id="in_vo">
+									<li><p class="left">
+												<span class="black1 pr10">•</span><a href="{:U('public/Workroom/preview', array('uid'=>$uid,'type'=>2,'appcode'=>'0200','id'=>$in_vo['rid']))}" title="{$in_vo['title']}">{$in_vo['title']|mStr=###,16}</a>
+											<p>
+											<p class="time  right">{$in_vo['uploaddateline']}</p>
+											<div class="clear"></div></li>
+                        			</volist>
+									</ul>
+								</div>
+								<div class="right">
+									<div class="studio_name">
+										<p class="red1 left">媒体素材</p>
+										<p class="right">
+											<a href="{:U('public/Workroom/teaching_more', array('uid'=>$uid,'type'=>3,'appcode'=>'0300'))}"><img src="__APP__/images/more_btn.gif" /></a>
+										</p>
+										<div class="clear"></div>
+									</div>
+									<ul class="xw_box02">
+									<volist name="mediamaterial" id="in_vo">
+										<li><p class="left">
+												<span class="black1 pr10">•</span><a href="{:U('public/Workroom/preview', array('uid'=>$uid,'type'=>3,'appcode'=>'0300','id'=>$in_vo['rid']))}" title="{$in_vo['title']}">{$in_vo['title']|mStr=###,16}</a>
+											<p>
+											<p class="time  right">{$in_vo['uploaddateline']}</p>
+											<div class="clear"></div></li>
+									</volist>
+									</ul>
+								</div>
+							</div>
+						</div>
+						<div class="pt20">
+							<div class="title_orange">
+								<h3 class="left">课后总结</h3>
+								<div class="clear"></div>
+							</div>
+							<div class="studio_line">
+							<div class="left">
+									<div class="studio_name">
+										<p class="orange left">教学日志</p>
+										<p class="right">
+											<a href="{:U('public/Workroom/more_summary', array('uid'=>$vo['uid'],'type'=>1))}"><img src="__APP__/images/more_btn.gif" /></a>
+										</p>
+										<div class="clear"></div>
+									</div>
+									<ul class="xw_box02" style="border-right: 1px dashed #d5d5d5;">
+									<volist name="teach_diaries" id="vo">
+										<li><p class="left">
+												<span class="black1 pr10">•</span><a href="{:U('public/Workroom/summary_preview', array('pid'=>$vo['id'],'uid'=>$vo['uid'],'type'=>1))}" title="{$vo.title}">{$vo.title|mStr=###,16}</a>
+											<p>
+											<p class="time  right"><php>echo(date("y-m-d",$vo['cTime']))</php></p>
+											<div class="clear"></div></li>
+									</volist>
+									</ul>
+								</div>
+								<div class="right">
+									<div class="studio_name">
+										<p class="orange left">课后反思</p>
+										<p class="right">
+											<a href="{:U('public/Workroom/more_summary', array('uid'=>$uid,'type'=>2))}"><img src="__APP__/images/more_btn.gif" /></a>
+										</p>
+										<div class="clear"></div>
+									</div>
+									<ul class="xw_box02">
+										<volist name="teach_reflec" id="vo">
+										<li><p class="left">
+												<span class="black1 pr10">•</span><a href="{:U('public/Workroom/summary_preview', array('pid'=>$vo['id'],'uid'=>$vo['uid'],'type'=>2))}" title="{$vo.title}">{$vo.title|mStr=###,16}</a>
+											<p>
+											<p class="time  right"><php>echo(date("y-m-d",$vo['cTime']))</php></p>
+											<div class="clear"></div></li>
+										</volist>
+									</ul>
+								</div>
+							</div>
+						</div>
+						<div class="pt20">
+							<div class="title_green">
+								<h3 class="left">教学研讨</h3>
+								<div class="clear"></div>
+							</div>
+							<div class="studio_line">
+								<div class="left">
+									<div class="studio_name">
+										<p class="ggreen left">主题讨论</p>
+										<p class="right">
+											<a href="{:U('public/Workroom/moreResearch',array('uid'=>$uid))}"><img src="__APP__/images/more_btn.gif" /></a>
+										</p>
+										<div class="clear"></div>
+									</div>
+									<ul class="xw_box02" style="border-right: 1px dashed #d5d5d5;">
+									<volist name="researchs" id="research">
+										<li><p class="left">
+												<span class="black1 pr10">•</span><a href="{:U('research/Index/show',array('id'=>$research['id']))}" title="{$research['title']}">{$research['title']|mStr=###,16}</a>
+											<p>
+											<p class="time  right">{$research['createtime']|date='y-m-d',###}</p>
+											<div class="clear"></div></li>
+									</volist>
+									</ul>
+								</div>
+								<div class="right">
+									<div class="studio_name">
+										<p class="ggreen left">在线答疑</p>
+										<p class="right">
+											<a href="{:U('public/Workroom/moreQuestion',array('uid'=>$uid))}"><img src="__APP__/images/more_btn.gif" /></a>
+										</p>
+										<div class="clear"></div>
+									</div>
+									<ul class="xw_box02">
+										<volist name="questions" id="question">
+										<li><p class="left">
+												<span class="black1 pr10">•</span><a href="{:U('onlineanswer/Index/detail',array('qid'=>$question['qid']))}" title="{$question['title']}">{$question['title']|mStr=###,16}</a>
+											<p>
+											<p class="time  right">{$question['ctime']|date='y-m-d',###}</p>
+											<div class="clear"></div></li>
+										</volist>
+									</ul>
+								</div>
+								<div class="clear"></div>
+								<div class="left">
+									<div class="studio_name">
+										<p class="ggreen left">网络调研</p>
+										<p class="right">
+											<a href="{:U('public/Workroom/moreVote',array('uid'=>$uid))}"><img src="__APP__/images/more_btn.gif" /></a>
+										</p>
+										<div class="clear"></div>
+									</div>
+									<ul class="xw_box02" style="border-right: 1px dashed #d5d5d5;">
+									<volist name="votes" id="vote">
+									<li><p class="left">
+												<span class="black1 pr10">•</span><a href="{:U('vote/Index/detail',array('id'=>$vote['id']))}" title="{$vote['title']}">{$vote['title']|getShort=16,'...'}</a>
+											<p>
+											<p class="time  right">{$vote['cTime']|date='y-m-d',###}</p>
+											<div class="clear"></div></li>
+                        			</volist>
+									</ul>
+								</div>
+								<div class="right">
+									<div class="studio_name">
+										<p class="ggreen left">网上评课</p>
+										<p class="right">
+											<a href="{:U('public/Workroom/morePingke',array('uid'=>$uid))}"><img src="__APP__/images/more_btn.gif" /></a>
+										</p>
+										<div class="clear"></div>
+									</div>
+									<ul class="xw_box02">
+									<volist name="pingkes" id="pingke">
+										<li><p class="left">
+												<span class="black1 pr10">•</span><a href="{:U('pingke/Index/show',array('id'=>$pingke['id']))}" title="{$pingke['title']}">{$pingke['title']|getShort=16,'...'}</a>
+											<p>
+											<p class="time  right">{$pingke['createtime']|date='y-m-d',###}</p>
+											<div class="clear"></div></li>
+									</volist>
+									</ul>
+								</div>
+							</div>
+						</div>
+						
+						
+					</div>
+					<div class="clear"></div>
+				</div>
+			</div>
+<script>
+	function changeRoleMenu(obj)
+	{
+		jQuery("#followMenu li").each(function(){
+			jQuery(this).removeClass('current') ;	
+		}); 
+		jQuery("#following_list").css('display','none') ;
+		jQuery("#follower_list").css('display','none') ;
+		jQuery('#'+obj.id).addClass('current');
+		jQuery('#'+obj.id+'st').css('display','block');
+	}
+	//触发登录事件，弹出登陆框
+	function showLogin(){
+		jQuery('#login_popup').trigger("click");
+	}
+</script>
+<include file="__THEME__/login_pop" />
+<include file="__THEME__/public_footer" />

@@ -1,0 +1,130 @@
+.friendlist li{
+	margin-left:20px;
+	line-height:20px;
+}
+
+.grouplist{
+	height:250px;
+	overflow-y:auto;
+	padding-left:5px;
+}
+
+.grouplist li{
+	line-height:20px;
+}
+
+.friendli{
+	margin:0  0 5px 0 ;
+	color:rgb(51,51,51);
+}
+
+.friendliclicked{
+	margin:0  0 5px 0 ;
+	color:rgb(120,120,120);
+}
+
+.btn-green-big{
+	background:#ADADAD;
+}
+
+#body-bg{
+	padding-top:20px;
+}
+
+.ico-at-group{
+	background:url(../image/ep_up.gif) no-repeat;
+}
+
+.pop_close{
+	margin:2px 0;
+	float:right;
+	height:14px;
+	width:14px;
+	background:url(../image/pop_close.gif) top no-repeat;
+	display:inline;
+	cursor:pointer;
+}
+.pop_closehov{
+	margin:2px 0;
+	display:inline;
+	float:right;
+	height:14px;
+	width:14px;
+	background:url(../image/pop_close.gif) bottom no-repeat;
+	cursor:pointer;
+}
+
+.blue5_btn{
+	background:url(../image/blue_btn5.gif) top no-repeat;
+	color:#fff;
+	width:72px;
+	height:28px;
+	border:0;
+}
+.blue5_btnhov{
+	background:url(../image/blue_btn5.gif) bottom no-repeat;
+	color:#fff;
+	width:72px;
+	height:28px;
+	border:0;
+}
+
+.blue4_btn{
+	background:url(../image/blue_btn4.gif) top no-repeat;
+	color:#535353;
+	width:72px;
+	height:28px;
+	border:0;
+}
+.blue4_btnhov{
+	background:url(../image/blue_btn4.gif) bottom no-repeat;
+	color:#535353;
+	width:72px;
+	height:28px;
+	border:0;
+}
+
+.ep_search{
+	background:url(../image/ep_line.jpg) repeat-x;
+	height:26px;
+	line-height:30px;
+	padding-top:4px;
+}
+.ep_searchbar{
+	width:175px;
+	height:21px;
+	line-height:21px;
+	margin:0 auto;
+}
+.ep_searchleft{
+	float:left;
+	background:url(../image/ep_searchleft.jpg) no-repeat;
+	height:21px;
+	width:8px;
+	font-size:0;
+	line-height:0;
+}
+.ep_searchright{
+	float:right;
+	background:url(../image/ep_searchright.jpg) no-repeat;
+	height:21px;
+	width:8px;
+	font-size:0;
+	line-height:0;
+}
+.ep_searchcen{
+	border-top:1px solid #c3d2db;
+	border-bottom:1px solid #c3d2db;
+	background:#fff;
+	width:159px;
+	height:19px;
+	float:left;
+}
+.ep_searchcen input{
+	border:none;
+	background:none;
+	height:19px;
+	_height:17px;
+	width:144px;
+	outline:none;
+}

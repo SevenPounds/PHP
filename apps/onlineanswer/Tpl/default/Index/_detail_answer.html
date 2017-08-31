@@ -1,0 +1,49 @@
+<div class="box_left">
+	<if condition="$uid == $answer['uid']">
+		<a href="{:U('public/Profile/index', array('uid'=>$answer['uid']))}" >
+			<img src="{$answer['avatar_middle']}" />
+		</a>
+	<else />
+		<a href="{:U('public/Profile/index', array('uid'=>$answer['uid']))}" event-node="face_card" show="no" uid="{$answer["uid"]}">
+			<img src="{$answer['avatar_middle']}" />
+		</a>
+	</if>
+</div>
+<div class="left pl10 answer_info" model-node = "answer">
+	<p><span class="blue"><if condition="$uid == $answer['uid']">
+			<a href="{:U('public/Profile/index',array('uid'=>$answer['uid']))}">
+		<else />
+			<a href="{:U('public/Profile/index',array('uid'=>$answer['uid']))}" event-node="face_card" show="no" uid="{$answer["uid"]}">
+		</if>
+		{$answer['uname']}</a></span><span class="pl10">回答了此问题</span></p>
+	<div class="player_box answer_content">
+		<p class="player_sjx"></p>
+		<div class="pt5 pl10 content_ans">{$answer['content']}</div>
+	</div>
+	<div class="comment">
+		<div id='agree{$answer["ansid"]}' rel='{$answer["agree_count"]|default="0"}' class="right2" onMouseover="this.className='right2_hov'" onMouseOut="this.className='right2'">
+			<php>if($uid == $answer['uid']){</php>
+				<span style="color:gray;cursor:default"><img src="__APP__/images/zan.gif" />赞({$answer['agree_count']|default = "0"})</span>
+			<php>} else if(!isset($agreeArray[$answer['ansid']])) { </php>
+			   <a href="javascript:void(0)" onclick="addAgree({$answer['ansid']})" ><img src="__APP__/images/zan.gif" />赞({$answer['agree_count']|default="0"})</a>
+			<php>}else{</php>
+			   <img src="__APP__/images/zan.gif" />已赞({$answer['agree_count']|default = "0"})
+			<php> } </php>
+    	</div>
+    	<div class="right1 blue pl10 pr10"><a event-node ="comment" href= "javascript:void(0)" event-args ='row_id={$answer.ansid}&app_uid={$answer.uid}&to_comment_id=0&to_uid=0&app_name=public&table=onlineanswer_answer&canrepost=0&cancomment=1&cancomment_old=1&ajax_page=1' >{:L('PUBLIC_STREAM_COMMENT')} <neq name= 'answer.comment_count' value ='0' >({$answer.comment_count}) </neq></a></div>
+		<if condition="$answer['is_best'] == 0 && $question['uid'] == $user['uid'] ">
+		<div class="right1">
+			<input type="button" value="此回答满意，采纳" class="adopt blue2_btnnor" onMouseover="this.className='blue2_btnhov'" onMouseOut="this.className='blue2_btnnor'">
+			<input type="hidden" class="adopt_qid" value="{$answer['qid']}"/>
+			<input type="hidden" class="adopt_ansid" value="{$answer['ansid']}"/>
+		</div>
+		</if>
+		<if condition="$answer['uid'] == $user['uid'] && $answer['is_best'] == 0">
+		<div class="alter_btn"><input type="button" class="alter_btnnor" onMouseover="this.className='alter_btnhov'" onMouseOut="this.className='alter_btnnor'" value="完善我的答案"/></div>
+		<input type="button" class="cancel_alter alter_btnnor" value="取消修改"/>
+		<input type="hidden" id="answer_qid" value="{$answer['qid']}"/>
+		<input type="hidden" id="ansid" value="{$answer['ansid']}"/>
+		</if>
+	</div>
+	<div model-node ="comment_detail" class= "repeat clearfix" style ="display:none;"></div>
+</div>

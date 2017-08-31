@@ -1,0 +1,519 @@
+<div class="pop_box1">
+	<input id="cyuid" value="{$cyuid}" type="hidden">
+	<input id="refresh" value="{$refresh}" type="hidden">
+	<input id="file_size" value="" type="hidden"/>
+	<input id="used_capacity" value="{$usedCapacity}" type="hidden"/>
+	<input id="total_capacity" value="{$totalCapacity}" type="hidden"/>
+	<input id="savepath" value="" type="hidden"/>
+	<input id="savename" value="" type="hidden"/>
+	<div class="pop_con">
+		<div class="pop_line1">
+			<p class="pop_title">选择资源:</p>
+			<p class="style1"><input value="{$uname}" type="hidden" id="uname" /><input value="not_uploaded" type="hidden" id="upload_status" /><input value="" type="hidden" id="rid" /><input type="text" value=""  id="title" readonly="readonly"/></p>
+			<p class="add_file"><input type="button" id="file_upload" value="添加文件" class="add_filenor" onMouseover="this.className='add_filehov'" onMouseOut="this.className='add_filenor'"></p>
+			<div class="clear"></div>
+		</div>
+		<div id="uploadQueue">
+		</div>
+		<if condition="$sync eq 'true'"><div ><input type="checkbox" id='sync_to_res' <php> if($checked):</php>checked="checked"<php>endif;</php> >将附件同步至学科资源</div></if>
+		<div class="pop_line2">
+			<p class="pop_title">课程:</p>
+			<div class="popcon_kc">
+                  <table cellpadding="0" cellspacing="0" border="0" style="float: left;">
+                  <tr>
+                   <td >
+		              <select id="subjectoption" class="st02" size=2 onchange="resUpload.changeValue(this);">
+		                
+		              </select>
+		          </td>
+		          <td>
+		              <select id="publisheroption" class="st02" style="display:none;" size=2 onchange="resUpload.changeValue(this)">
+		               
+		              </select>
+		         </td> 
+		         <td>
+		              <select id="gradeoption" class="st01" style="display:none;" size=2 onchange="resUpload.changeValue(this);">
+		                 
+		              </select>
+		         </td>
+		         <td>
+		               <select id="volumnoption" class="st01" style="display:none;" size=2 onchange="resUpload.changeValue(this);">
+		                 
+		              </select>
+		         </td>
+		         <td>
+		              <select id="bookoption" class="st03" style="display:none;" size=2 onchange="resUpload.changeValue(this);">
+		                
+		              </select>
+		          </td>
+		          <td>
+		              <select id="unitoption" class="st04" style="display:none;" size=2 onchange="resUpload.changeValue(this);">
+		                
+		              </select>
+		          </td>
+                  </tr>
+                </table>
+               </div>
+			<div class="clear"></div>
+		</div>
+		<div class="pop_line3">
+			<p class="pop_title">资源类型:</p>
+				<select id="res_type">
+					<volist name="res_list" id="restype">
+                   	  <option value="{$restype['code']}">{$restype['name']}</option>
+	                </volist>
+                 </select>
+			<div class="clear"></div>
+		</div>
+		<div class="pop_line4" style="display: none;">
+			<p class="pop_title">资源来源:</p>
+				<select id="res_source">
+                      <option value="IFLY" >讯飞</option>
+                      <option value="YANGGUAN">央馆</option>
+                      <option value="SHENGGUAN">省馆</option>
+                      <option value="UGC" selected="selected">用户上传</option>                      
+                   </select>
+			<div class="clear"></div>
+		</div>
+		<div class="pop_line5">
+			<p class="pop_title">描述:</p>
+				<textarea id="descriptor"  style="color:#999999" name="描述" title="选填，简要介绍资源的主要内容，方便资源被更多人浏览和下载" onfocus="tipInputFocus(this)" onblur="tipInputBlur(this)">选填，简要介绍资源的主要内容，方便资源被更多人浏览和下载</textarea>
+			<div class="clear"></div>
+		</div>
+		<div class="pop_line6">
+			<p class="pop_title">关键词:</p>
+			<p class="style1"><input name="" type="text"  style="color:#999999" id="keyword" name="关键词" type="text" title="建议为您的文档填写关键词,多个关键词用逗号分隔" value="建议为您的文档填写关键词,多个关键词用逗号分隔"   onfocus="tipInputFocus(this)" onblur="tipInputBlur(this)"/></p>
+			<div class="clear"></div>
+		</div>
+		<div class="pop_btn">
+			<input type="button" value="上传" class="add_filenor" onMouseover="this.className='add_filehov'" onMouseOut="this.className='add_filenor'" onclick="resUpload.upload();">
+			<input type="button" value="关闭" class="blue4_btn" onMouseover="this.className='blue4_btnhov'" onMouseOut="this.className='blue4_btn'" onclick="resUpload.close();">
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+function tipInputFocus(obj) {
+	if(obj.value==obj.title) {
+		obj.value='';
+		obj.style.color="black";
+	}
+}
+function tipInputBlur(obj) {
+	if(obj.value=='') {
+		obj.value=obj.title;
+		obj.style.color="#999999";
+	}
+}
+var RS_SITE_URL = '<php>echo C("RS_SITE_URL");</php>';
+var RESLIB_VIEW_APP = '<php>echo C('RESLIB_VIEW_APP');</php>';
+var resUpload=resUpload||{};
+var upload_btnlock = 0; 
+resUpload.uid = $("#cyuid").val();
+//是否是同步到学科资源
+resUpload.check = 1;
+//是否显示同步到学科资源
+resUpload.sync = '<php>echo $sync;</php>';
+resUpload.url = U('reslib/Ajax/nodes');
+resUpload.bookurl = U('reslib/Ajax/book');
+resUpload.subject_url = U('reslib/Ajax/subject');
+resUpload.request_data = {"PHPSESSID":"<php>echo $_session_id;</php>","login":"<php>echo $GLOBALS['ts']['user']['login'];</php>","type":1};
+
+resUpload.requestData=function(url,data,callback){
+	jQuery.ajax({
+		type: "POST",
+		url: url,
+		data:data,
+		success:function(msg){
+			callback&&callback(data['node'],msg);
+		},
+		error:function(msg){
+			
+		}
+	});
+}
+
+resUpload.callBack=function(nodename,data){
+	var nodes = eval('('+data+')');
+	var length = nodes.length;
+	var current_obj = jQuery("#"+nodename+'option');
+	var temp = ''
+    current_obj.html('');
+	if(length>0){
+		current_obj.append('<option value="000" selected="selected">请选择</option>');	
+	}
+	if(nodename=="unit"){
+		var units= nodes;
+		var _len=units.length;
+		for(var i=0;i<_len;i++){
+			var unit = units[i];
+			temp+='<option unit="'+unit.Code+'" value="'+unit.Code+'">'+unit.Name+'</option>';
+			var courses = unit.Courses;
+			var len=courses.length;
+			for(var j=0;j<len;j++){
+				var course = courses[j];
+				temp+='<option unit="'+unit.Code+'" course="'+course.Code+'" value="'+course.Code+'">&nbsp;&nbsp;&nbsp;&nbsp;'+course.Name+'</option>';
+			}
+		}
+	}else{
+		for(var i = 0; i < length; i++){
+			var node = nodes[i];
+			//去除演示和其他等选择项
+			if(nodename == "subject"){
+				if(node.code != '00' && node.code != '17'){
+					temp+='<option value="'+node.code+'">'+node.name+'</option>';
+				}
+			} else if(nodename == "publisher"){
+				if(node.code != '25' && node.code != '48'){
+					temp+='<option value="'+node.code+'">'+node.name+'</option>';
+				}
+			} else if(nodename == "grade"){
+				if(node.code != '00' && node.code != '13'){
+					temp+='<option value="'+node.code+'">'+node.name+'</option>';
+				}
+			} else if(nodename == "book"){
+				temp+='<option bookcode="'+node.code+'" value="'+node.id+'">'+node.name+'</option>';
+			} else {
+				temp+='<option value="'+node.code+'">'+node.name+'</option>';
+			}
+		}
+	}
+	current_obj.append(temp);
+}
+
+
+resUpload.changeValue=function(obj){
+	var id=jQuery(obj).attr("id");
+  	switch(id){
+	case "subjectoption":
+		var subjectId=jQuery(obj).val();
+		if(subjectId!="000"){
+			resUpload.requestData(resUpload.url,{'node':'publisher','subject':subjectId},resUpload.callBack);
+			jQuery("#publisheroption").css("display","block");
+			jQuery("#gradeoption").css("display","none");
+			jQuery("#volumnoption").css("display","none");
+			jQuery("#bookoption").css("display","none");
+			jQuery("#unitoption").css("display","none");
+		}else{
+			jQuery("#gradeoption").css("display","none");
+			jQuery("#gradeoption").val("000");
+			jQuery("#publisheroption").css("display","none");
+			jQuery("#publisheroption").val("000");
+			jQuery("#volumnoption").css("display","none");
+			jQuery("#volumnoption").val("000");
+			jQuery("#bookoption").css("display","none");
+			jQuery("#bookoption").val("000");
+			jQuery("#unitoption").css("display","none");
+			jQuery("#unitoption").val("000");
+		}
+		break;  		
+	case "publisheroption":
+		var publisherId=jQuery(obj).val();
+		var subjectId=jQuery("#subjectoption").val();
+		resUpload.requestData(resUpload.url,{'node':'grade','subject':subjectId,'publisher':publisherId},resUpload.callBack);
+		jQuery("#gradeoption").css("display","block");
+		jQuery("#volumnoption").css("display","none");
+		jQuery("#bookoption").css("display","none");
+		jQuery("#unitoption").css("display","none");
+		break;
+	case "gradeoption":
+		var gradeId=jQuery(obj).val();
+		var subjectId=jQuery("#subjectoption").val();
+		var publisherId=jQuery("#publisheroption").val();
+		resUpload.requestData(resUpload.url,{'node':'volumn','subject':subjectId,'publisher':publisherId,'grade':gradeId},resUpload.callBack);
+		jQuery("#volumnoption").css("display","block");
+		jQuery("#bookoption").css("display","none");
+		jQuery("#unitoption").css("display","none");
+  		break;
+	case "volumnoption":
+		var volumnId=jQuery(obj).val();
+		var subjectId=jQuery("#subjectoption").val();
+		var publisherId=jQuery("#publisheroption").val();
+		var gradeId=jQuery("#gradeoption").val();
+		resUpload.requestData(resUpload.url,{'node':'book','subject':subjectId,'publisher':publisherId,'grade':gradeId,'volumn':volumnId},resUpload.callBack);
+		jQuery("#bookoption").css("display","block");
+		jQuery("#unitoption").css("display","none");
+		break;
+	case "bookoption":
+		var bookId = jQuery(obj).val();
+		resUpload.requestData(resUpload.bookurl,{'node':'unit','id':bookId},resUpload.callBack);
+		jQuery("#unitoption").css("display","block");
+		break;
+  	default:
+  		break;
+  	}
+}
+
+resUpload.getSelectValue=function(){
+	var title = jQuery("#title").val();
+	var savepath = jQuery("#savepath").val();
+	var savename = jQuery("#savename").val();
+	var subject = jQuery("#subjectoption").val();	
+	var publisher = jQuery("#publisheroption").val();
+	var grade = jQuery("#gradeoption").val();
+	var volumn = jQuery("#volumnoption").val();
+	var book = jQuery("#bookoption option:selected").attr("bookcode");
+	var unit = jQuery("#unitoption option:selected").attr("unit");
+	var course = jQuery("#unitoption option:selected").attr("course");
+	var keywords = jQuery("#keyword").val()!=jQuery("#keyword").attr("title")?jQuery("#keyword").val():'';
+	keywords = jQuery.trim(keywords);
+	var descriptor = jQuery("#descriptor").val() == jQuery("#descriptor").attr("title") ? '' : jQuery("#descriptor").val();
+	descriptor = jQuery.trim(descriptor);
+	var restype = jQuery("#res_type").val();
+	var ressource = jQuery("#res_source").val();
+	var size = jQuery("#file_size").val();
+	if(title == ""){
+		ui.error("文件不能为空！");
+		return;
+	}
+	if(resUpload.check == 1){
+		if(subject=="000"){
+			ui.error("请选择学科！");
+			return false;
+		}if(publisher=="000"){
+			ui.error("请选择出版社！");
+			return false;
+		}if(grade=="000"){
+			ui.error("请选择年级！");
+			return false;
+		}if(volumn=="000"){
+			ui.error("请选择上下册！");
+			return false;
+		}if(book===undefined){
+			ui.error("请选择书本！");
+			return false;
+		}if(unit===undefined){
+			ui.error("请选择课时！");
+			return false;
+		}if(restype=="0000"){
+			ui.error("请选择资源类型！");
+			return false;
+		}
+		return {"title":title,"subject":subject,"publisher":publisher,"grade":grade,"volumn":volumn,"book":book,"unit":unit,"course":course,"keywords":keywords,"description":descriptor,"restype":restype,"ressource":ressource,"size":size,"type":resUpload.check,"savepath":savepath,"savename":savename};
+	}
+	return {"title":title,"keywords":keywords,"description":descriptor,"ressource":ressource,"size":size,"type":resUpload.check,"savepath":savepath,"savename":savename};
+}
+
+resUpload.clearSelectValue=function(){
+	var default_des = "选填，简要介绍资源的主要内容，方便资源被更多人浏览和下载";
+	var des_obj = jQuery("#descriptor");
+	var kw_obj = jQuery("#keyword");
+	jQuery("#title").val('');
+	des_obj.focus();
+	des_obj.html(default_des);
+	kw_obj.focus();
+	kw_obj.val(kw_obj.attr("title"));
+	jQuery("#subjectoption").val("000");
+	jQuery("#subjectoption").trigger('change');
+}
+
+/**
+ * 上传资源信息
+ */
+resUpload.upload=function(){
+	//是否刷新当前页面
+	var refresh = jQuery("#refresh").val();
+	//资源信息选择
+	if(d = resUpload.getSelectValue()){
+		//资源上传状态
+		var upload_status = jQuery("#upload_status").val();
+		if(upload_status == "uploaded"){
+			//避免重复上传
+			if (upload_btnlock == 0) {
+				upload_btnlock = 1;
+			} else {
+				//如果弹出提示，感觉是向堆栈里push弹窗事件，下次的事件可能会弹出上次未响应的弹框
+				//ui.error('正在上传请勿重复点击！');
+				return false;
+			}
+			//将上传资源的资料更新到网关中
+			jQuery.ajax({
+				type:'POST',
+				url:U('reslib/Ajax/uploadToGateWay'),
+				data:d,
+				success:function(json){
+					data=eval('('+json+')');//包含上传文件id
+					if(data.status == 1 || data.status == 201){
+						jQuery("#upload_status").val("complete");
+						//保存资源的id和title，用户上传附件
+						if(resUpload.sync == 'true' && ("undefined" != typeof attachments)){
+							var ary = new Array();
+							ary.push(data.id);
+							ary.push(d['title']);
+							ary.push(data.type);
+							attachments.push(ary);
+						}
+						resUpload.close();
+						// 动态类型
+						var type = "post";
+						if(d){
+							switch(d['restype']){
+							case '0100' : type = "teaching_design";break;
+							case '0200' : type = "teaching_class";break;
+							case '0300' : type = "teaching_material";break;
+							case '0600' : type = "teaching_ware";break;
+							default : type = "post";
+							}
+						}
+						if(resUpload.check == 1 && data.status == 1){
+							//文件上传成功发布微博
+							$.post(U('public/Feed/PostFeed'), {body:'我上传了一个资源【'+d['title']+'】&nbsp;', "app_name":"reslib", type:type, content:'',feed_title:d['title'],source_url:Ures('//',new Array('id='+data.id))}, function(msg) {
+								if(msg.status == 1) {
+									ui.success(d['title']+"文件上传成功");
+								} else {
+									ui.error(msg.data);
+								}
+							}, 'json');
+						} else if(data.status == 201){
+							ui.error("上传成功，但因容量不足未同步到学科资源！");
+						}
+						//如果当前页面是同步资源页面，则在资源上传完成后进行刷新
+						var operation = jQuery("#operation").val();
+						if(5 == operation){
+							MyResLib.resPageList(1, 5);
+						} else if("true" == refresh){
+							//是否刷新资源上传页面
+							setTimeout(function(){
+									window.location.reload();
+							},1500);
+						}
+						
+					} else{
+						ui.error("文件上传失败");
+					}
+					//成功返回解除上传按钮锁
+					upload_btnlock = 0;
+				}
+			});
+		}else if(upload_status =="uploading"){
+			ui.showMessage("资源上传中，请稍等！", 1, 2);
+		} else {
+			ui.confirmBox("提示", "资源上传失败，请重新上传！", function(){});
+		}
+	} 
+}
+
+/**
+ * 初始化uploadify控件
+ */
+resUpload.init_uploadify = function(){
+	jQuery("#file_upload").uploadify({
+		auto:  true,
+		multi: false,
+		queueSizeLimit:1,
+		width         : 70,
+		height        : 28,
+		swf           : '__THEME__/js/uploadify/uploadify.swf',
+		uploader      : U('reslib/Ajax/uploadToServer'),
+		buttonImage     : "__THEME__/image/green_btn_addfile.gif",
+		buttonText      : '添加文件',
+		fileTypeExts : "*.*",
+		queueID         : "uploadQueue",
+		progressData   :'all',
+		fileSizeLimit     :'<php>echo C("RESLIB_FILE_SIZE_LIMIT");</php>',
+		successTimeout  : 3600,//将时间变60分钟，不然上传大文件时出现错误，The number of seconds to wait for Flash to detect the server's response after the file has finished uploading
+		debug	: false,
+		formData        : resUpload.request_data, 
+		onSelect:function(file){
+			jQuery("#file_size").val(file.size);
+			jQuery("#title").val(file['name']);
+			jQuery("#upload_status").val('uploading');
+			upload_btnlock = 0;
+		},
+		onUploadSuccess:function(file, data, response){
+			if("undefined" != typeof data && data){
+				data=eval('('+data+')');//包含上传文件id
+				if(data.status == 1 && data.savepath){
+//					jQuery("#rid").val(data.id);
+					jQuery("#savepath").val(data.savepath);
+					jQuery("#savename").val(data.savename);
+					jQuery("#upload_status").val('uploaded');
+					return;
+				}
+			}
+			jQuery("#upload_status").val('faield');
+			ui.error("上传失败，请重新上传！");
+		},
+		onUploadError:function(file, errorCode, errorMsg){
+			var _upload_status = jQuery("#upload_status").val();
+			if(_upload_status == "capacity_exceeded"){
+				ui.error("资源库容量不足!");
+				setTimeout(function(){
+					resUpload.close();
+				},1500);
+			} else{
+				ui.error("上传出错，请稍后重新上传!");
+			}
+			jQuery("#upload_status").val('faield');
+		}
+	});
+	jQuery(".swfupload").css("visibility","visible");
+	
+}
+
+resUpload.destroy_uploadify=function(){	
+	jQuery("#file_upload").uploadify('cancel','*');
+}
+
+//初始化数据
+resUpload.init=function(){
+	resUpload.init_uploadify();
+	resUpload.requestData(resUpload.subject_url,{"node":"subject"},resUpload.callBack);
+}
+
+//关闭窗口
+resUpload.close = function(){
+
+	var swf_id = "SWFUpload_" + (SWFUpload.movieCount - 1); 
+	swfobject.removeSWF(swf_id);
+	//上传资源完成后，提交资源信息失败时，将上传的资源删除
+	var upload_status = jQuery("#upload_status").val();
+	if('uploaded' == upload_status){
+		var rid = jQuery("#rid").val();
+		if(rid){
+			$.post(U('reslib/Ajax/deleteRid'), {"rid":rid}, function(msg) {
+				jQuery("#rid").val("");
+			}, 'json');
+		}
+	}
+	//关闭窗口
+	ui.box.close();
+}
+
+jQuery(function(){
+	resUpload.init();
+	//是否显示同步到学科资源年级学科出版社选择列表
+	if(resUpload.sync == 'true'){
+		
+		var checked = $('#sync_to_res').attr("checked");
+		if(undefined == checked){
+			$(".pop_line2").css("display","none");
+			$(".pop_line3").css("display","none");
+			resUpload.check = 0;
+		}else{
+			$(".pop_line2").css("display","block");
+			$(".pop_line3").css("display","block");
+			resUpload.check = 1;
+		}
+		
+		$("#sync_to_res").change(function(){
+			var checked = $(this).attr("checked");
+			if(undefined == checked){
+				$(".pop_line2").css("display","none");
+				$(".pop_line3").css("display","none");
+				resUpload.check = 0;
+			}else{
+				$(".pop_line2").css("display","block");
+				$(".pop_line3").css("display","block");
+				resUpload.check = 1;
+			}
+		})
+	}
+	//解决弹出框的关闭问题
+	$('#tsbox').find('.ico-close').unbind("click"); 
+	$('#tsbox').find('.ico-close').bind("click",function(){
+		var swf_id = "SWFUpload_" + (SWFUpload.movieCount - 1);
+		swfobject.removeSWF(swf_id);
+		ui.box.close();
+	}); 
+})
+</script>

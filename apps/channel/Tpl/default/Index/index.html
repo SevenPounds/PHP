@@ -1,0 +1,22 @@
+<include file="channel_header" />
+    <!-- 顶部导航-->
+    <!-- 内容渲染 -->
+	<php>if($cid == -1):</php>
+    <!-- 首页main -->
+       <include file="main_content" />
+    <script type="text/javascript" src="__APP__/channel.js"></script>
+    <php>else:</php>
+    <php>if($tpl == 'load'):</php>
+       <div style="width:1000px;margin-left:auto;margin-right:auto;">
+        {:W('Content', array('tpl'=>$tpl,'cid'=>$cid,'channelCategoryall'=>$channelCategoryall))}
+       </div>
+    <php>endif;</php>
+    <php>endif;</php>
+	<!--内容渲染-->
+<script type="text/javascript" src="__THEME__/js/module.weibo.js"></script>
+<script type="text/javascript">
+function addShareLink(){
+	ui.box.load(U('channel/Index/addShareLink'));
+}
+</script>
+<include file="__THEME__/public_footer" />

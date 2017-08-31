@@ -1,0 +1,77 @@
+<script type="text/javascript" src="__APP__/js/xueke.js"></script>
+<link href="__APP__/css/xueke.css" rel='stylesheet'  type="text/css" />
+<script type="text/javascript">
+    $(function(){
+        Xueke.init('<php> echo $num_limit; </php>');
+    });
+</script>
+<dd style="display:block;">
+ 	<div class="form-tt"> 学科信息：</div>
+           	<div class="form-row">
+           		<ul class="form_row_ul">
+           		<php>if(empty($teaching)){</php>
+           		<li name="xueke_list" >
+            		<select class="form_row_select" name="subjects[]">
+            		<option value='0'>请选择学科</option>
+            		<volist name="subjects" id="val">
+			<option value="{$val.code}" title="{$val.name}" >{$val.name}</option>
+			</volist>
+            		</select>
+            		<select class="form_row_select" name="grades[]">
+            		<option value='0'>请选择学段</option>
+             		<volist name="gradeList" id="val">
+				<option value="{$val.code}"  title="{$val.name}"
+				>{$val.name}</option>
+				</volist>
+            		</select>
+            		<p class="delete_xx xueke_delete hover"  style="display:none;" ><a href="javascript:void(0)" ></a></p>
+           		</li>
+           		<php>}</php>
+           		<volist name="teaching" id="vo">
+           		<li name="xueke_list" >
+            		<select class="form_row_select" name="subjects[]">
+            		<option value='0'>请选择学科</option>
+            		<volist name="subjects" id="val">
+			<option value="{$val.code}" title="{$val.name}" <php>if($val['code'] == $vo['subject']){</php>selected<php>}</php>>{$val.name}</option>
+			</volist>
+            		</select>
+            		<select class="form_row_select" name="grades[]">
+            		<option value='0'>请选择学段</option>
+             		<volist name="gradeList" id="val">
+				<option value="{$val.code}"  title="{$val.name}"
+					<php>if($val['code'] == $vo['grade']){</php>selected<php>}</php>
+				>{$val.name}</option>
+				</volist>
+            		</select>
+            		<p class="delete_xx xueke_delete hover" style="display:none;" ><a href="javascript:void(0)" ></a></p>
+           		</li>
+           		</volist>
+           		</ul>
+           		<div class="clear"></div>
+           		<php>if($num_limit-1>0){</php>
+           		<div class="form_row_addbtn"  onclick="Xueke.more(this);" style="display:none;" >
+              		<img src="__THEME__/image/add_xueke.png">
+              		<p>添加学科信息</p>
+              		</div>
+              		<php>}</php>
+              	</div>
+			 </dd> 
+			 
+<dd>
+        	<div class="form-tt"> 职位：</div>
+        	<div class="form-row">
+        	<input  class="s-txt" type="text" name="user_position"  maxlength="25"  value="{$cyuser.position|html_entity_decode=###|htmlentities}"></input>
+        	</div>
+        </dd>
+        <dd>
+        	<div class="form-tt"> 职称：</div>
+        	<div class="form-row">
+        	<input  class="s-txt" type="text" name="user_title"  maxlength="25"  value="{$cyuser.job_title|html_entity_decode=###|htmlentities}"></input>
+        	</div>
+        </dd>
+        <dd>
+        	<div class="form-tt"> 荣誉：</div>
+        	<div class="form-row">
+        	<input  class="s-txt" type="text" name="user_honor"  maxlength="50"  value="{$cyuser.honor|html_entity_decode=###|htmlentities}"></input>
+        	</div>
+        </dd>

@@ -1,0 +1,138 @@
+<include file="__THEME__/header" />
+<include file="header" />
+<div id="page-wrap">
+	<div id="main-wrap">
+		<div class="crumbs">
+			<ul>
+				<li class="pre_cen"><a href="{:U('public/Index/index')}">个人空间</a></li>
+				<li>></li>
+				<li><a href="{:U('/Index/index')}">网上评课</a></li>
+				<li>></li>
+				<li>我发起的评课</li>
+			</ul>
+			<div class="clear"></div>
+		</div>
+		<div class="con_box">
+			<div class="left_box">
+				<include file="__THEME__/public_left" />
+			</div>
+			<div class="right_box">
+				<div class="online_title">
+					<div class="left">
+						<span><img src="__THEME__/app_icon/app_wspk.png" /></span> <span
+							class="pl10 font3"><b>网上评课</b></span>
+					</div>
+					<div class="right">
+					  <a id="t_create" href="{:U('/Index/add')}">
+						<p class="blue_btn3" onmouseover="this.className='blue_btn3hov'"
+							onmouseout="this.className='blue_btn3'">
+							<img src="__APP__/images/add.gif" height="8" />发起评课
+						</p>
+					  </a>
+					</div>
+				</div>
+				
+				<div class="re_tab">
+					<ul>
+						<li class="current"><a href="{:U('/Index/index')}">我发起的评课</a></li>
+						<li><a href="{:U('/Index/follows')}">我参加的评课</a>
+							{$newdiv}					</li>
+					</ul>
+					<p class="pkzx"><a href="{:U('/Index/center')}">评课中心</a></p>
+				</div>
+				
+				<div class="tab_choose">
+					<ul>
+						<li class="current" status='-1'><a href="javascript:void(0);" >全部<span id="count_all"></span></a></li>
+						<li class="blue" status='1'><a href="javascript:void(0);"   >进行中</a></li>
+						<li class="black1" status='0'><a href="javascript:void(0);"  class="black1" >已结束</a></li>
+					</ul>
+					<input type='hidden' value='' id='pingke_status' autocomplete='off'/>
+					
+					<div class="topic_search mt4 pr5">
+						<div class="left"></div>
+						<div class="cen">
+							<input type="text" id="pingke_search" autocomplete='off'/>
+							<p class="topic_searchbtn"><a href="javascript:void(0);" ></a></p>
+						</div>
+						<div class="right"></div>
+					</div>
+					<div class="clear"></div>
+				</div>
+
+				<div class="topic_con" id="pingke_list">
+				</div>
+			</div>
+			<div class="clear"></div>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+	function loadData(page){
+		var postArg = {};
+		postArg.p = page;
+		postArg.type = 1;
+		var status = jQuery('#pingke_status').val();
+		if(typeof status != undefined && status != ''){
+			postArg.status = status;
+		}
+		
+		var keywords = jQuery('#pingke_search').val();
+		if(typeof keywords != undefined && keywords != ''){
+			postArg.keywords = keywords;
+		}        postArg.t = Math.random();
+		$.ajax({
+			type:"POST",
+			url:U('/Index/getPingkeAjaxList'),
+			data:postArg,
+			dataType:"json",
+			beforeSend:function(XHR){
+				jQuery("#pingke_list").html( '<div class="loading" id="loadMore">'+L('PUBLIC_LOADING')+'<img src="'+THEME_URL+'/image/icon_waiting.gif" class="load"></div>');
+			},
+			success:function(msg){
+				if(msg.status == 1){
+					jQuery("#pingke_list").html(msg.data);
+				}else{
+					jQuery("#pingke_list").html("<p style='padding:20px;'>加载失败，<a href='javascript:loadData(" + page + ");'>请重试！</a></p>");
+				}
+			},
+			error:function(msg){
+				jQuery("#pingke_list").html("<p style='padding:20px;'>加载失败，<a href='javascript:loadData(" + page + ");'>请重试！</a></p>");
+			}
+		});
+	}
+
+	jQuery(function () {
+	    loadData(1);
+	    //修改选择状态
+	    jQuery('.tab_choose ul li').click(function () {
+	        $('.tab_choose ul li').each(function () {
+	            jQuery(this).removeClass('current');
+	        });
+	        //  jQuery('#pingke_search').val('');
+	        jQuery(this).addClass('current');
+	        var status = jQuery(this).attr('status');
+	        jQuery('#pingke_status').val(status);
+	        loadData(1);
+	    });
+
+	    jQuery('.topic_searchbtn').click(function () {
+	        jQuery('#pingke_status').val('-1');
+	        jQuery('.tab_choose ul li').each(function () {
+	            jQuery(this).removeClass('current');
+	        });
+	        jQuery('.tab_choose ul li:first').addClass('current');
+
+	        loadData(1);
+	    });
+
+	    jQuery("#pingke_search").keypress(function (e) {
+	        var ev = e || window.event;
+	        if (ev.keyCode == 13) {
+	            jQuery(".topic_searchbtn").trigger('click');
+	        }
+	    });
+
+	});
+</script>
+<include file="__THEME__/public_footer" />

@@ -1,0 +1,15 @@
+ <volist name='data' id="vo">
+					<li>
+					<elt name="i" value='3'><span class="l_cn_0{$i} l_cn">{$i}</span><else/><span class="l_cn_04 l_cn">{$i}</span></elt>
+					
+                        <dl>
+                        	<dt><span class="green"><a href="{:U('class/CampusHome/schoolIndex',array('cid'=>$vo['id']))}" title="{$vo.name}" event-node="face_card" show="no" orgType="{$vo['type']}" cid="{$vo['id']}">{:getShort($vo['name'],7)}</a></span> {:getOrgnizationArea($vo,2)} </dt>
+                        	<php>if($active){</php>
+                            <dt class="pt5"><span class="pr10">访问量:{$vcount[$vo['id']]['value']|default=0}</span>{:W('FollowBtn', array('fid'=>$vo['id'], 'uname'=>$vo['name'], 'follow_state'=>$orgnization_follow_state[$vo['id']], 'type'=>'campus','ftype'=>$vo['type']))}</dt>
+                       		<php>}else{</php>
+                       		<dt class="pt5"><span class="pr10">粉丝数：<a style="color:#666;"><span class="follower_{$vo['id']}">{:getCountByType('follower',$vo)}</span></a></span>{:W('FollowBtn', array('fid'=>$vo['id'], 'uname'=>$vo['name'], 'follow_state'=>$orgnization_follow_state[$vo['id']], 'type'=>'campus','ftype'=>$vo['type']))}</dt>
+                       		<php>}</php>
+                        </dl>
+                        <div class="clear"></div>
+                    </li>
+				   </volist>

@@ -1,0 +1,115 @@
+<neq name="to_action" value="preview">
+	<div style="float:left;width:600px;">
+		<p class="style4">
+			</span>
+			<a href="javascript:void(0);" onclick="Paper.popup_uploadattach()" style="line-height:26px;color:#3366cc;text-decoration:underline;">请选择文件</a>
+		</p>
+		<div class="clear"></div>
+	</div>
+</neq>
+<script type="text/javascript">
+(function(win){
+	win.Paper = win.Paper || {};
+	Paper.app_name = '<php>echo $app_name;</php>';
+	Paper.attachments = new Array();
+	//上传附件 by zhaoliang 2013/11/5
+	Paper.popup_uploadattach = function(){
+		if(Paper.attachments.length >= 5){
+			ui.error("超过最大可上传附件数量");
+			return;
+		}
+		window.attachments = Paper.attachments;
+		ui.box.load(U('reslib/Index/upload' +"&sync=true"),'上传资源',function(){
+			//为了避免应用间相互影响，应用加载时清空attachments变量 by zhaoliang 2013/11/8
+			Paper.attachments = attachments;
+			if(Paper.attachments.length > 0){
+				$("#attachlist").css("display","block");
+			}
+			$(".weibo-file-list").html("");
+			for(var i = 0; i < Paper.attachments.length; i++){
+				//$("#attachments").append('<a style="padding-right:10px;" href="{:U(\'reslib/Ajax/downloadResource\')}&rid='  + attachments[i][0] + '&filename=' + attachments[i][1] +'">' + attachments[i][1] + '</a>');
+				var _title = Paper.attachments[i][1];
+				if("undefined" != typeof Paper.attachments[i][3]){
+					var _paper_id = Paper.attachments[i][3];
+				}else{
+					var _paper_id = "";
+				}
+				var _attach_id = Paper.attachments[i][0];
+				var _attach_type = Paper.attachments[i][2];
+				var _title = Paper.attachments[i][1];
+				var _extension = _title.substr(_title.lastIndexOf('.') + 1);
+				var html = "<li id='" + Paper.attachments[i][0] + "'>";
+				html += '<i class="ico-' + _extension + '-small"></i>';
+				html += '<a href="javascript:void(0)" onclick="Paper.deleteattach(\'' + _attach_id +  '\',\'' + _attach_type + '\',\''+_paper_id+'\',\''+Paper.app_name+'\')" class="ico-close right"></a>';
+				if(Paper.attachments[i][2] == "0"){
+					downurl = U('widget/Upload/down') + "&attach_id=" + Paper.attachments[i][0];
+				}else{
+					downurl = U('reslib/Ajax/downloadResource') + "&rid=" + Paper.attachments[i][0] + '&filename=' + Paper.attachments[i][1];
+				}
+				html += '<a href = "' + downurl + '">' + Paper.attachments[i][1] + '</a>';
+				html += "</li>";
+				$(".weibo-file-list").append(html);
+			}
+//			Paper.attachments = new Array();
+		});
+	}
+	//删除添加的附件 by zhaoliang
+	Paper.deleteattach = function(attachid, attachtype, paper_id, app_name){
+		//发送ajax请求删除资源网关该资源
+		ui.confirmBox("删除资源","确认删除所选资源？",function(){
+			//删除paper_attach表的记录
+			$.ajax({
+				type:"POST",
+				url:"index.php?app=widget&mod=ResourceAttach&act=deleteAttach",
+				data:{'attach_type':attachtype,"paper_id":paper_id,"attach_id":attachid,"app_name":app_name},
+				dataType:"json",
+				success:function(msg){
+					if(msg != "1"){
+						ui.error("删除失败！");
+					}
+					else{
+						$("#" + attachid).remove();
+						//删除attament变量
+						for(var i=0;i<Paper.attachments.length;i++){
+							var attachment = Paper.attachments[i];
+							if(attachment[0] == attachid && attachment[2] == attachtype){
+								Paper.attachments.splice(i,1);
+								break;
+							}
+						}
+						//window.attachments = Paper.attachments;
+						if(Paper.attachments.length == 0){
+							$("#attachlist").css("display","none");
+						}
+					}
+				},
+				error:function(msg){
+					ui.error("删除失败！");
+				}
+			})
+		});
+	}
+})(window);
+</script>
+	<div class="clear"></div>
+	<div uploadcontent="file" class="input-content" >
+		<ul id="attachlist" class="weibo-file-list" <php>if(empty($attachInfo)){</php>style="display:none;"<php>}</php>>
+		<php>if(!empty($attachInfo)){</php>
+			<volist name='attachInfo' id='a'>
+			<script>
+				var _attach = new Array();
+				_attach.push('{$a.attach_id}');
+				_attach.push('{$a.name}');
+				_attach.push({$a.attach_type});
+				_attach.push({$paper_id});
+				Paper.attachments.push(_attach);
+			</script>
+			<li id="{$a.attach_id}"><i class="ico-{$a.extension}-small"></i>
+				<neq name="to_action" value="preview">
+				<a onclick="Paper.deleteattach('{$a.attach_id}','{$a.attach_type}','{$paper_id}','{$app_name}')" href="javascript:void(0)" class="ico-close right"></a></neq>
+				<a href="{$a.download_url}">{$a.name}</a><span>({$a.size|byte_format})</span></li>
+			</volist>
+			<php>}</php>
+		</ul>
+		<input type="hidden" id="{$inputname}_ids" name="{$inputname}_ids" feedtype="file" value="|{$attachIds}|" class="attach_ids">
+	</div>	

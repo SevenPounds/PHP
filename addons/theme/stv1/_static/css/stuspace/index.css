@@ -1,0 +1,1766 @@
+/*@charset 'UTF-8';
+/**********************
+Date：2015-02-05
+BuilderVersion：v1.2.0
+CopyRight:iflytek_EUED
+***********************/
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,textarea,p,blockquote,th,td,hr,button,article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section {
+    margin:0;
+    padding:0;
+}
+body,button,input,select,textarea {
+    font-family:SimSun,arial,sans-serif,tahoma;
+}
+body{
+    -webkit-text-size-adjust:none; 
+}
+input,select,textarea {
+    font-size:100%;
+}
+article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section {
+    display: block;
+}
+table {
+    border-collapse:collapse;
+    border-spacing:0;
+}
+fieldset,img { 
+    border:0 none;
+}
+iframe {
+    display:block;
+}
+abbr,acronym {
+    border:none;
+    font-variant:normal;
+}
+del {
+    text-decoration:line-through;
+}
+address,caption,cite,code,dfn,em,th,var {
+    font-style:normal;
+    font-weight:500;
+}
+ol,ul {
+    list-style:none;
+}
+caption,th {
+    text-align:left;
+}
+h1,h2,h3,h4,h5,h6 {
+    font-size:100%;
+    font-weight:500;
+}
+q:before,q:after {
+    content:'';
+}
+sub, sup {
+    font-size:75%;
+    line-height:0;
+    position:relative;
+    vertical-align:baseline;
+}
+sup {
+    top:-0.5em;
+}
+sub {
+    bottom:-0.25em;
+}
+ins,a {
+    text-decoration:none;
+}
+.clearfix:before,.clearfix:after {
+    content:"";
+    display:table;
+}
+.clearfix:after {
+    clear:both;
+    overflow:hidden;
+}
+.fl {
+    float:left;
+}
+.fr {
+    float:right;
+}
+.hidenone{
+    display:none;
+    visibility:hidden;
+}
+.hide{
+    visibility:hidden;
+}
+.mt10{
+	margin-top:10px;
+}
+.mt20{
+	margin-top:20px;
+}
+.ml10{
+	margin-left:10px;
+}
+.mr10{
+	margin-right:10px;
+}
+.pt10{
+	padding-top:10px;
+}
+.pl10{
+	padding-left:10px;
+}
+.pr10{
+	padding-right:10px;
+}
+.tc{
+	text-align:center;
+}
+
+.stu-con{
+    background: url("../../images/stuspace/stu_bg.png") repeat-y;
+    border-bottom: 1px solid #e1e2e5;
+}
+.stu-mid-con a:hover,
+.stu-mid-con em:hover,
+.choose-user .user-list li .content a:hover{
+    text-decoration: none;
+}
+.stu-mid-con .feed_list .contents a:hover{
+    text-decoration: underline;
+}
+/* -------------------main----------------------- */
+.stu-main{
+    width:557px;
+    background: url("../../images/stuspace/main_bg.png") no-repeat 0 0;
+    font-family: simsun;
+
+}
+.cy_mr_cont_l .stu-main{
+	margin-left: -15px;
+}
+.tips{
+    height: 74px;
+}
+.reading{
+    position: relative;
+    padding: 0 20px;
+}
+.reading-tab{
+    padding: 5px 0;
+    height: 42px;
+}
+.read-active,
+.hall,
+.line{
+    line-height: 42px;
+    font-weight: bold;
+    font-size: 16px;
+    color: #666;
+    text-decoration: none;
+}
+.read-active:hover,
+.line:hover,
+.tit-co{
+    color: #4381d7;
+}
+.reaction {
+    display: inline-block;
+    background: url("../../images/stuspace/btn.png") no-repeat 0 0;
+    width: 102px;
+    height: 42px;
+    line-height: 42px;
+    color: #fff;
+    font-weight: bold;
+    text-align: center;
+    font-size: 14px;
+}
+.reaction:hover{
+    background: url("../../images/stuspace/btn.png") no-repeat 0 -103px;
+    color: #fff;
+    text-decoration: none;
+}
+.reading-box{
+    position: relative;
+    margin-top: 5px;
+    background: #fffcf5;
+    padding: 15px 25px;
+    border: 1px solid #f2ede2;
+    *height: 350px;
+}
+.reading-box>img{
+    display: block;
+    margin: 10px auto;
+}
+.phone-box,
+.phone-box span,
+.phone-box img{
+    width: 54px;
+    height: 54px;
+    overflow: hidden;
+}
+.phone-box{
+    position: relative;
+    padding-right: 10px;
+}
+.phone-box span,
+.phone-box img{
+    position: absolute;
+    left: 0;
+    top:0;
+}
+.phone-box span{
+    z-index: 2;
+    background: url("../../images/stuspace/small_ic.png") no-repeat 0 -190px;
+}
+.phone-box img{
+    z-index: 1;
+}
+.reading-info h3{
+    font-size: 16px;
+    font-weight: bold;
+}
+.edit-name{
+    color: #2593f0;
+    font-size: 12px;
+}
+.reader-des{
+    display: inline-block;
+    padding-top: 5px;
+    width: 400px;
+    font-size: 12px;
+    color: #999;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.reading-info{
+    width: 400px;
+    padding-top: 6px;
+}
+.reading-info a{
+    color: #666;
+    display: inline-block;
+}
+.reading-box li{
+    padding-top: 20px;
+    float: left;
+}
+.reading-box li:first-child{
+    padding-top: 0;
+}
+.reading-f{
+    display: block;
+    position: absolute;
+    left: 0;
+    bottom: -5px;
+    background: url("../../images/stuspace/active_f.png") no-repeat 0 0;
+    width: 513px;
+    height: 4px;
+}
+.more-btn{
+    display: block;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+}
+.send-box{
+    margin-top: 20px;
+    background: url("../../images/stuspace/send.png") no-repeat 0 0;
+    width: 520px;
+    height: 119px;
+}
+.textarea{
+    position: relative;
+    top:8px;
+    margin:0 7px;
+    width: 508px;
+    height: 71px;
+    background: url("../../images/stuspace/textarea.png") no-repeat 0 0;
+}
+.textarea textarea{
+    position: absolute;
+    top:16px;
+    left: 15px;
+    border: 0;
+    resize:none;
+    padding: 0 5px;
+    width: 460px;
+    height: 45px;
+    font-size: 14px;
+    overflow: auto;
+    line-height: 12px;
+    color: #999;
+}
+.marked{
+    position: absolute;
+    left: 20px;
+    top: 26px;
+}
+.send-ic{
+    padding: 14px 8px 0 0;
+}
+.send-ic a{
+    display: inline-block;
+}
+.expression,
+.file,
+.voice{
+    padding-left: 8px;
+    background: url("../../images/stuspace/small_ic.png") no-repeat;
+}
+.expression{
+    background-position:8px 0;
+    width: 22px;
+    height: 22px;
+}
+.file{
+    background-position: -24px 0;
+    width: 24px;
+    height: 21px;
+}
+.voice{
+    background-position: -58px -1px;
+    width: 14px;
+    height: 20px;
+}
+.send-btn{
+    display: inline-block;
+    background: url("../../images/stuspace/btn.png") no-repeat 0 -69px;
+    width: 82px;
+    height: 28px;
+    color: #fff;
+    font-size: 14px;
+    font-weight: bold;
+    text-align: center;
+    line-height: 28px;
+}
+.send-btn:hover{
+    background: url("../../images/stuspace/btn.png") no-repeat 0 -172px;
+    color: #fff;
+}
+.hail-box{
+    position: relative;
+    margin-top: 36px;
+    border-top:2px solid #699adf;
+}
+.hail-tit{
+    position: absolute;
+    left: 20px;
+    top:-14px;
+    background: url("../../images/stuspace/small_ic.png") no-repeat 0 -49px #fff;
+    width: 130px;
+    height: 29px;
+}
+.par-tit{
+	background: url("../../images/stuspace/small_ic.png") no-repeat -139px -49px #fff;
+}
+.phone-hail,
+.phone-hail span,
+.phone-hail img{
+    display: inline-block;
+    width: 54px;
+    height: 54px;
+    overflow: hidden;
+}
+.phone-hail{
+    position: relative;
+    padding-right: 15px;
+    height: 80px;
+}
+.phone-hail span,
+.phone-hail img{
+    position: absolute;
+    left: 0;
+    top:0;
+}
+.phone-hail span{
+    z-index: 2;
+    background: url("../../images/stuspace/small_ic.png") no-repeat 0 -190px;
+}
+.phone-hail img{
+    z-index: 1;
+}
+.hail-ul{
+    padding-top: 30px;
+}
+.hail-name{
+    padding-top: 58px;
+    font-size: 14px;
+    color: #666;
+    width: 54px;
+    height: 20px;
+    line-height: 20px;
+    text-align: center;
+    font-weight: bold;
+}
+.speak-t{
+    background: url("../../images/stuspace/speak_t.png") no-repeat 1px 3px;
+    width: 448px;
+    height: 7px;
+}
+.speak-m{
+    width: 446px;
+    background: #fffcf5;
+    border-left: 1px solid #f4efe3;
+    border-right: 1px solid #f4efe3;
+}
+.speak-f{
+    background: url("../../images/stuspace/speak_f.png") no-repeat 0 0;
+    width: 447px;
+    height: 7px;
+}
+.speak{
+    position: relative;
+}
+.speak-des{
+    padding: 10px;
+    font-size: 14px;
+    color: #666;
+}
+.speak em{
+    display: block;
+    position: absolute;
+    left:-9px;
+    top:10px;
+    background: url("../../images/stuspace/speak_p.png") no-repeat 0 0;
+    width: 11px;
+    height: 18px;
+}
+.operate{
+    padding-top:5px;
+}
+.operate span{
+    padding-left: 5px;
+    line-height: 20px;
+    color: #aaa;
+    font-size: 12px;
+    float:left;
+}
+.operate strong{
+    padding:0 15px;
+    color:#ababab;
+    float: right;
+    line-height:20px;
+    font-weight: normal;
+}
+.operate a{
+    display: block;
+    float: right;
+    background: url("../../images/stuspace/forward_ic.png") no-repeat;
+    height: 20px;
+    color:#ababab;
+    font-size:14px;
+    line-height:20px;
+}
+.operate .praise{
+    background-position: 0 0;
+    padding-left: 22px;
+}
+.operate .transmit{
+    background-position: -65px 0;
+    padding-left: 22px;
+}
+.operate .reply{
+    background-position: -140px 0;
+    padding-left: 22px;
+}
+.hail-ul li{
+    padding-top:20px;
+}
+.hail-ul li:first-child{
+    padding-top:0;
+}
+.hail-ul {
+    padding-bottom:80px;
+}
+
+.small_banner_box{
+    position: relative;
+    width:557px;
+    margin:0 auto;
+}
+.small_banner{
+    position: relative;
+    margin:0 auto;
+    height: 88px;
+    overflow:hidden;
+}
+.small_banner_list{
+    position: absolute;
+    margin:10px auto 15px;
+    overflow: hidden;
+    left: 30px;
+    top:0;
+}
+.small_banner_list a{
+    display:inline-block;
+    margin-right: 25px;
+    width:80px;
+    height:80px;
+    font-size:14px;
+    float:left;
+    position:relative;
+    overflow:hidden;
+    text-align: center;
+    cursor: pointer;
+}
+
+.small_banner a b{
+    width:100%;
+    height:100%;
+    display:inline-block;
+    background:url("../../images/stuspace/small_banner_bg.png") no-repeat 0 0;
+    font-family: 'Microsoft YaHei', arial, SimSun, sans-serif, tahoma;
+}
+
+.parent_banner a b{
+    width:100%;
+    height:100%;
+    display:inline-block;
+    background:url("../../images/stuspace/parent_banner_bg.png") no-repeat 0 0;
+    font-family: 'Microsoft YaHei', arial, SimSun, sans-serif, tahoma;
+}
+
+.small_banner .small01 b{
+	background:url("../../images/stuspace/small_banner_bg.png") no-repeat 0 0;
+    background-position: 0 -112px;
+}
+.small_banner .small01 b:hover,
+.small_banner .small01 .active{
+	background:url("../../images/stuspace/small_banner_bg.png") no-repeat 0 0;
+    background-position: 0 0px;
+}
+.small_banner a.small02 b{
+    background-position:-106px 0;
+}
+.small_banner a.small02 b:hover,
+.small_banner a.small02 .active{
+    background-position:-105px -113px;
+}
+.small_banner a.small03 b{
+    background-position:-212px 0;
+}
+.small_banner a.small03 b:hover,
+.small_banner a.small03 .active{
+    background-position:-213px -113px;
+}
+.small_banner a.small04 b{
+    background-position:-318px 0;
+}
+.small_banner a.small04 b:hover,
+.small_banner a.small04 .active{
+    background-position:-320px -113px;
+}
+.small_banner a.small05 b{
+    background-position:-424px 0;
+}
+.small_banner a.small05 b:hover,
+.small_banner a.small05 .active{
+    background-position:-424px -113px;
+}
+.small_banner_list a:hover{
+    text-decoration:none;
+    color:#333;
+}
+
+.upload{
+    *height: 422px;
+    padding: 0;
+}
+.upload-box {
+    padding: 20px 0;
+    width: 235px;
+    overflow: hidden;
+}
+.upload-box img{
+    width: 64px;
+    height: 64px;
+    padding-right:10px;
+}
+.book-tit{
+    display: block;
+    padding-top: 15px;
+    width: 160px;
+    font-size: 14px;
+    font-weight: bold;
+    color: #666;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.upload-box span{
+    display: block;
+    line-height: 21px;
+    font-size: 12px;
+    color: #aaa;
+}
+.upload-btn{
+    margin-top: 5px;
+    display: inline-block;
+    width: 42px;
+    height: 22px;
+    line-height: 22px;
+    color: #fff;
+    font-size: 12px;
+    font-weight: bold;
+    text-align: center;
+    background: url("../../images/stuspace/btn_download.png") no-repeat 0 0;
+}
+.upload-btn em{
+    color: #fff;
+}
+.upload-btn:hover{
+    background: url("../../images/stuspace/btn_download.png") no-repeat 0 -22px;
+    color: #fff;
+    text-decoration: none;
+}
+.upload-btn em:hover{
+    text-decoration: none;
+}
+.mr10{
+    margin-right: 25px;
+}
+.reading-bd li{
+    padding:0 15px;
+    width: 486px;
+    border-bottom: 1px solid #f2ede2;
+}
+.mr15{
+    margin-right: 15px;
+}
+.upload-box .book-tit{
+    padding-top: 10px;
+}
+/* -------------------main end----------------------- */
+
+
+/*beside---------------------wy*/
+.beside{
+    width: 219px;
+    /*background: #66A7FF url("../../images/stuspace/beside.jpg") no-repeat top left; 2017/1/9*/
+    min-height: 2000px;
+}
+.user-info{
+    position: relative;
+    margin: 16px auto 0;
+    width: 108px;
+    z-index: 1;
+    text-align: center;
+}
+.user-info>a{
+    position: relative;
+    display: block;
+    width: 108px;
+    height: 108px;
+    background: url("../../images/stuspace/user_head.png") no-repeat 0 0;
+    z-index: 3;
+}
+.user-info>a em{
+    color: #fff;
+    font-size: 14px;
+    line-height: 108px;
+    text-align: center;
+    display: none;
+}
+.user-info>a:hover{
+    background-position: 0 -108px;
+	text-decoration: none;
+}
+.user-info>a:hover em{
+	text-decoration: none;
+}
+.user-info>a:hover em{
+    display: block;
+}
+.user-info img.user-head{
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    width: 108px;
+    height: 108px;
+    z-index: 2;
+}
+.user-info strong{
+    margin-top: 8px;
+    display: block;
+    text-align: center;
+    font-size: 18px;
+    color: #fff;
+    font-weight: normal;
+}
+.user-info strong>a,
+.user-info strong em{
+    display: inline-block;
+    *display: inline;
+    height: 20px;
+    line-height: 20px;
+    zoom: 1;
+    vertical-align: top;
+}
+.user-info strong em{
+	color: #fff;
+}
+.user-info strong em:hover{
+	text-decoration: none;
+}
+.user-info strong em a{
+    color: #fff;
+}
+.user-info strong em a:hover{
+    text-decoration: none;
+}
+.user-info strong>a{
+    margin-left: 5px;
+    width: 20px;
+    background: url("../../images/stuspace/beside_icon.png") no-repeat -10px -7px;
+    opacity: .8;
+    filter: alpha(opacity=80);
+    -moz-opacity: .8;
+}
+.user-info strong>a:hover{
+    background: url("../../images/stuspace/beside_icon.png") no-repeat -10px -7px;
+    opacity: 1;
+    filter: alpha(opacity=100);
+    -moz-opacity: 1;
+    text-decoration: none;
+}
+
+.user-fans{
+    margin: 0 auto;
+    padding: 25px 5px 0;
+    width: 189px;
+    height: 46px;
+    background: url("../../images/stuspace/usre_fans.png") no-repeat;
+}
+.user-fans ul li{
+    width: 63px;
+    text-align: center;
+}
+.user-fans ul li a:hover{
+	text-decoration: none;
+}
+.user-fans ul li span em,
+.user-fans ul li span{
+    display: block;
+    color: #555;
+    font-size: 12px;
+}
+.user-fans ul li em:hover{
+	text-decoration: none;
+}
+.user-fans ul li>a>em{
+    position: relative;
+    font-size: 14px;
+    color: #fd7e02;
+}
+.user-fans ul li strong{
+    position: absolute;
+    left: 96%;
+    top: -8px;
+    padding-right: 6px;
+    height: 16px;
+    background: url("../../images/stuspace/user_tip.png") no-repeat right top;
+    display: none;
+}
+.user-fans ul li strong em{
+	display:inline-block;
+    padding-left: 6px;
+    height: 16px;
+    background: #e8f0fb url("../../images/stuspace/user_tip.png") no-repeat left top;
+    font-size: 12px;
+    line-height: 18px;
+    color: #fff;
+}
+
+.user-cla-sch{
+    margin-top: 8px;
+    border-bottom: 1px solid #86baff;
+    font-size: 16px;
+    height: 110px;
+}
+.user-cla-sch p{
+    padding-bottom: 0;
+	*padding-bottom: 10px;
+	border-bottom: 2px solid #4e8de3;
+}
+.user-cla-sch a{
+    margin: 0 auto 10px;
+    display: block;
+    width: 192px;
+    height: 44px;
+    background: url("../../images/stuspace/user_btn.png") no-repeat 0 0;
+    text-align: center;
+    line-height: 44px;
+    color: #fff;
+}
+.user-cla-sch a:hover{
+    background-position: 0 -44px;
+    color: #fff;
+    text-decoration: none;
+}
+.user-cla-sch a strong{
+    padding-left: 25px;
+    display: inline-block;
+    *display: inline;
+    zoom: 1;
+    height: 44px;
+    background: url("../../images/stuspace/beside_icon.png") no-repeat;
+    font-weight: bold;
+}
+.user-cla-sch a.user-cla strong{
+    background-position: -10px -113px;
+}
+.user-cla-sch a.user-sch strong{
+    background-position: -9px -166px;
+}
+/*nav---------------------wy*/
+.sup-nav{
+    padding-top: 10px;
+    margin-bottom: 8px;
+    
+}
+.sup-nav li a{
+    margin-bottom: 1px;
+    padding-left: 63px;
+    display: block;
+    height: 38px;
+    background: #66a7ff url("../../images/stuspace/beside_icon.png") no-repeat;
+    border-left: 3px solid #66a7ff;
+    line-height: 38px;
+    font-size: 14px;
+    color: #fff;
+}
+.sup-nav li.active a,
+.sup-nav li a:hover{
+    background: #4381d7 url("../../images/stuspace/beside_icon.png") no-repeat;
+    border-left: 3px solid #ffc445;
+	color: #fff;
+}
+.sup-nav li.active a{
+    cursor: default;
+}
+.sup-nav li.new-trend a{
+    background-position: 23px -239px;
+}
+.sup-nav li.new-msg a{
+    background-position: 23px -277px;
+}
+.sup-nav li a span{
+    position: relative;
+	display: inline-block;
+	*display: inline;
+	zoom: 1;
+	line-height: 15px;
+	text-align: center;
+}
+.sup-nav li a span>em{
+    position: absolute;
+    right: -10px;
+    top: -3px;
+    width: 7px;
+    height: 7px;
+    background: url("../../images/stuspace/beside_icon.png") no-repeat -10px -69px;
+}
+.sup-nav li strong{
+    position: absolute;
+    left: 99%;
+    top: -8px;
+    padding-right: 6px;
+    height: 16px;
+    background: url("../../images/stuspace/user_tip.png") no-repeat right top;
+}
+.sup-nav li strong em{
+    padding-left: 6px;
+    display: inline-block;
+    height: 16px;
+    background: #66a7ff url("../../images/stuspace/user_tip.png") no-repeat left top;
+    font-size: 12px;
+    line-height: 18px;
+    color: #fff;
+}
+.sup-nav li:hover strong em,
+.sup-nav li.active strong em{
+    background: #4381d7 url("../../images/stuspace/user_tip.png") no-repeat left top;
+}
+
+
+.sub-nav dt{
+    margin: 0 18px;
+    height: 40px;
+    border-bottom: 1px solid #86baff;
+    line-height: 40px;
+    font-size: 16px;
+    color: #fff;
+}
+.sub-nav dt a{
+    padding-left: 10px;
+    display: block;
+    height: 39px;
+    background: url("../../images/stuspace/beside_icon.png") no-repeat;
+    border-bottom: 1px solid #4984d6;
+    line-height: 39px;
+    color: #fff;
+    font-weight: bold;
+}
+.sub-nav dt a.dir-down{
+     background-position: right -316px;
+}
+.sub-nav dt a.dir-right{
+    background-position: right -605px;
+}
+.sub-nav dd{
+    padding-top: 8px;
+    margin-bottom: 10px;
+    zoom: 1;
+}
+.sub-nav dd>ul li{
+    margin-top: 1px;
+    padding: 0 18px 0 15px;
+    border-left: 3px solid #66A7FF;
+    background: #66a7ff;
+}
+.sub-nav dd>ul li:hover,
+.sub-nav dd>ul li.active{
+    padding: 0 18px 0 15px;
+    border-left: 3px solid #ffc445;
+    background: #4381d7;
+}
+.sub-nav dd>ul li.active a{
+    cursor: default;
+}
+.sub-nav dd>ul li a{
+    padding-left: 50px;
+    display: block;
+    height: 38px;
+    background: url("../../images/stuspace/bes_ic.png") no-repeat;
+    line-height: 38px;
+    font-size: 14px;
+    color: #fff;
+}
+.sub-nav dd>ul li a:hover{
+	color: #fff;
+}
+.sub-nav dd>ul li.stu-wdxx a{
+    background-position: 14px 7px;
+}
+.sub-nav dd>ul li.stu-wdbj  a{
+    background-position: 14px -30px;
+}
+.sub-nav dd>ul li.stu_wdwk a{
+    background-position: 14px -72px;
+}
+.sub-nav dd>ul li.stu_bjzy a{
+    background-position: 14px -114px;
+}
+.sub-nav dd>ul li.stu_bjgx a{
+    background-position: 14px -156px;
+}
+.sub-nav dd>ul li.stu_bjlb a{
+    background-position: 14px -197px;
+}
+.sub-nav dd>ul li.stu_xnsys a{
+    background-position: 14px -240px;
+}
+.sub-nav dd>ul li.stu_zxtw a{
+    background-position: 14px -280px;
+}
+.sub-nav dd>ul li.stu_zxtp a{
+    background-position: 14px -324px;
+}
+.sub-nav dd>ul li.stu_hzxx a{
+    background-position: 14px -364px;
+}
+.sub-nav dd>ul li.stu_xqqz a{
+    background-position: 14px -407px;
+}
+.sub-nav dd>ul li.stu_ss a{
+    background-position: 14px -448px;
+}
+.sub-nav dd>ul li.stu_rz a{
+    background-position: 14px -492px;
+}
+.sub-nav dd>ul li.stu_hy a{
+    background-position: 14px -528px;
+}
+.sub-nav dd>ul li.stu_xc a{
+    background-position: 14px -575px;
+}
+.sub-nav dd>ul li.stu_hzdpy a{
+    background-position: 14px -670px;
+}
+.sub-nav dd>ul li.stu_xxtz a{
+    background-position: 14px -708px;
+}
+.sub-nav dd>ul li.stu_xxyjx a{
+    background-position: 14px -748px;
+}
+.sub-nav dd>ul li.stu_zxdy a{
+    background-position: 16px -789px;
+}
+.acts_new{
+	margin-left: 10px;
+}
+.acts_new a{
+	float: left;
+}
+
+.acts_new a i{
+	display: inline-block;
+	background: url(../../images/stuspace/small_ic.png) no-repeat;
+	height: 24px;		
+	filter:alpha(opacity=80); /*IE滤镜，透明度50%*/
+	-moz-opacity:0.8; /*Firefox私有，透明度50%*/
+	opacity:0.8;/*其他，透明度50%*/
+}
+.acts_new a i.face_new{
+	background-position: 0 0;
+	width: 22px;
+}
+.acts_new a i.at_new{
+	background-position:-31px 0;
+	width: 23px;	
+}
+.acts_new a i.image_new{
+	background-position:-64px 0;
+	width: 24px;
+}
+.acts_new a i.video_new{
+	background-position:-98px 0;	
+	width: 20px;
+}
+.acts_new a i.file_new{
+	background-position:-132px 0;	
+	width: 17px;
+}
+.acts_new a i.topic_new{
+	background-position:-160px 0;	
+	width: 22px;
+}
+.acts_new a i.MC_new{
+	background-position:-192px 0;	
+}
+.acts_new a:hover i{
+	filter:alpha(opacity=100); /*IE滤镜，透明度50%*/
+	-moz-opacity:1; /*Firefox私有，透明度50%*/
+	opacity:1;/*其他，透明度50%*/
+}
+
+
+
+
+
+
+
+
+
+
+
+/*.sub-nav dd>ul li.stu-tz a{
+    background-position: 7px -408px;
+}
+.sub-nav dd>ul li.stu-wk a{
+    background-position: 7px -446px;
+}
+.sub-nav dd>ul li.stu-lb a{
+    background-position: 7px -484px;
+}
+.sub-nav dd>ul li.stu-gx a{
+    background-position: 7px -520px;
+}
+.sub-nav dd>ul li.stu-zy a{
+    background-position: 7px -557px;
+}
+.sub-nav dd>ul li.stu-tw a{
+    background-position: 7px -657px;
+}
+.sub-nav dd>ul li.stu-tp a{
+    background-position: 7px -695px;
+}
+.sub-nav dd>ul li.stu-xx a{
+    background-position: 7px -733px;
+}
+.sub-nav dd>ul li.stu-tsg a{
+    background-position: 7px -769px;
+}
+.sub-nav dd>ul li.stu-rz a{
+    background-position: 7px -806px;
+}
+.sub-nav dd>ul li.stu-xc a{
+    background-position: 7px -843px;
+}
+.sub-nav dd>ul li.stu-hy a{
+    background-position: 7px -879px;
+}*/
+
+
+/*right---------------------wy*/
+.rgt-box{
+    margin-left: -2px;
+    padding-right: 1px;
+    width: 221px;
+}
+.right-mod{
+    margin-bottom: 1px;
+    padding-bottom: 13px;
+    border-bottom: 1px solid #dae6f7;
+}
+.stu-rgt-tit{
+    padding: 0 13px;
+    height: 43px;
+    background: url("../../images/stuspace/stu_tit.png") no-repeat;
+    line-height: 43px;
+}
+.stu-rgt-tit strong{
+    color: #666;
+    font-weight: bold;
+    font-size: 14px;
+}
+.stu-rgt-tit a{
+    padding-left: 18px;
+    margin-top: 9px;
+    height: 20px;
+    background: url("../../images/stuspace/sign_icon.png") no-repeat 0 -51px;
+    font-size: 12px;
+    color: #666;
+    line-height: 20px;
+}
+.stu-rgt-tit a:hover{
+    background: url("../../images/stuspace/sign_icon.png") no-repeat 0 -263px;
+    color: #2593f0;
+}
+.space-mod .space-con{
+    margin:  0 auto;
+    width: 204px;
+    height: 12px;
+    background: url("../../images/stuspace/space_bg.png") no-repeat 0 0;
+}
+.space-mod .space-con span{
+    display: inline-block;
+    *display: inline;
+    zoom: 1;
+    height: 12px;
+    background: url("../../images/stuspace/space_bg.png") no-repeat right -13px;
+    overflow: hidden;
+}
+.space-mod .space-con span em{
+    padding-left: 6px;
+    display: inline-block;
+    *display: inline;
+    zoom: 1;
+    height: 12px;
+    background: #f1f7ff url("../../images/stuspace/space_bg.png") no-repeat 0 -13px;
+}
+.space-mod ul{
+    margin: 10px 10px 0;
+}
+.space-mod ul li{
+    color: #666;
+    width: 99px;
+    font-size: 12px;
+    text-align: center;
+    line-height: 22px;
+}
+.space-mod ul li:first-child{
+    border-right: 1px solid #e7e7e7;
+}
+.space-mod ul li em{
+    display: block;
+    color: #fd7e02;
+}
+.space-mod ul li em:hover{
+    color: #fd7e02;
+    text-decoration: none;
+}
+.rgt-box .sign-in strong{
+    margin: 0 20px 0 0;
+    width: 48px;
+    text-align: center;
+    font-size: 14px;
+    color: #ffa347;
+    line-height: 17px;
+}
+.rgt-box .sign-in strong em{
+    font-size: 12px;
+}
+.rgt-box .sign-in em:hover{
+	text-decoration: none;
+}
+
+.rgt-box .sign-in a{
+    display: block;
+}
+.rgt-box .sign-in em{
+    display: block;
+}
+.rgt-box .sign-in a:hover,
+.rgt-box .sign-in em:hover{
+    text-decoration: none;
+}
+
+.rgt-box .sign-in span em{
+    font-size: 14px;
+	color: #fff;
+}
+
+.search-mod{
+    position: relative;
+    margin: 0 auto;
+    width: 197px;
+    height: 30px;
+    background: url("../../images/stuspace/sea_bg.png") no-repeat;
+    z-index: 1;
+    overflow: hidden;
+}
+.search-mod input{
+    position: absolute;
+    left: 10px;
+    top: 0;
+    width: 135px;
+    height: 30px;
+    border: none;
+    background: url("../../images/stuspace/opacity.png");
+    line-height: 30px;
+    font-size: 12px;
+    color: #666;
+    z-index: 3;
+}
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+    .search-mod input{line-height: normal;}
+}
+.search-mod a{
+    margin: 1px 1px 0 0;
+    width: 38px;
+    height: 28px;
+    background: #ffa347 url("../../images/stuspace/sign_icon.png") no-repeat right 0;
+    text-indent: -9999em;
+}
+.search-mod a:hover{
+    background: #ffad5b url("../../images/stuspace/sign_icon.png") no-repeat right -219px;
+}
+.search-mod label{
+    position: absolute;
+    left: 10px;
+    line-height: 30px;
+    font-size: 12px;
+    color: #aaa;
+}
+
+/*head---------------------wy*/
+.head-radius{
+    position: relative;
+    display: block;
+    width: 55px;
+    height: 55px;
+    z-index: 1;
+}
+.head-radius span{
+    position: relative;
+    display: block;
+    width: 55px;
+    height: 55px;
+    background: url("../../images/stuspace/rgt_head_bg.png") no-repeat;
+    z-index: 3;
+    text-align: center;
+    cursor: pointer;
+}
+.head-radius span em{
+    padding-left: 13px;
+    background: url("../../images/stuspace/sign_icon.png") no-repeat 0 -75px;
+    line-height: 55px;
+    font-size: 14px;
+    font-weight: bold;
+    color: #fff;
+    display: none;
+    cursor: pointer;
+}
+/*.head-radius:hover span{
+    background-position: 0 -55px;
+}
+.head-radius:hover span em{
+    display: inline-block;
+    *display: inline;
+    zoom: 1;
+}*/
+.head-radius img{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 55px;
+    height: 55px;
+    z-index: 2;
+}
+/*head---------------------wy*/
+.my-classmate{
+    zoom: 1;
+}
+.my-classmate li{
+    margin: 7px 0 0 15px;
+    width: 55px;
+}
+.my-classmate li strong{
+    display: block;
+    text-align: center;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    font-size: 14px;
+    font-weight: bold;
+    line-height: 22px;
+}
+.my-classmate li strong a{
+    color: #666;
+}
+.my-classmate li strong a:hover{
+    color: #2593f0;
+    text-decoration: none;
+}
+
+.my-teacher .head-radius:hover span{
+    background-position: 0 0;
+}
+.my-teacher{
+    padding: 0 15px;
+    color: #666;
+    font-size: 12px;
+}
+.my-teacher dt{
+    margin: 10px 0;
+}
+.my-teacher dt strong{
+    padding-top: 5px;
+    margin-left: 65px;
+    display: block;
+    line-height: 22px;
+}
+.my-teacher dt strong a{
+    font-weight: bold;
+    font-size: 14px;
+    color: #666;
+}
+.my-teacher dt strong a:hover{
+    color: #2593f0;
+    text-decoration: none;
+}
+.my-teacher dt strong span{
+    display: block;
+    font-weight: normal;
+}
+.my-teacher dd{
+    word-break: break-all;
+}
+.my-teacher dd p{
+    line-height: 20px;
+}
+.my-teacher dd p em{
+    margin: 0 5px;
+    display: inline-block;
+    *display: inline;
+    zoom: 1;
+    vertical-align: top;
+    width: 10px;
+    height: 6px;
+    background: url("../../images/stuspace/sign_icon.png") no-repeat;
+}
+.my-teacher dd p em.pre{
+    background-position: 0 -172px;
+}
+.my-teacher dd p em.next{
+    background-position: 0 -137px;
+}
+
+
+.last-visit{
+    padding-left: 27px;
+    color: #666;
+    font-size: 12px;
+    line-height: 24px;
+}
+.last-visit span{
+    display: block;
+}
+.last-visit a{
+    font-weight: bold;
+    font-family: arial;
+    color: #fd7e02;
+}
+/*right----------------------------*/
+.rgt-box .sign-in{
+	position: relative;
+	z-index: 2;
+}
+.rgt-box .sign-in-h{
+	border: none;
+}
+.rgt-box .sign-box{
+	width: 175px;
+}
+.rgt-box .sign-wrap{
+	left: 6px;
+	top: 61px;
+}
+.rgt-box .arrow-y{
+	left: 35px;
+}
+.rgt-box .classmate_list{
+	margin-left: 0;
+}
+.rgt-box .my-classmate li.fl{
+	margin: 7px 0 0 15px;
+	width: 55px;
+	text-align: center;
+}
+.rgt-box .my-classmate img{
+	width: 55px;
+	height: 55px;
+}
+.rgt-box .head-radius span em{
+	color: #fff;
+}
+.rgt-box .myTeacher_list dl dt img{
+	width: 55px;
+	height: 55px;
+}
+.rgt-box .myTeacher_list dl dd{
+	width: auto;
+}
+.sup-nav a:hover,
+.sub-nav a:hover{
+	text-decoration: none;
+}
+
+
+#col1.beside{
+	width: 219px;
+}
+
+/*150425*/
+.stu-mid-con .send_weibo .input{
+	margin: 0 auto;
+	width: 520px;
+	height: 119px;
+	background: url(../../images/stuspace/send.png) no-repeat 0 0;
+}
+.stu-mid-con .input_before{
+	position: relative;
+	top: 8px;
+	margin: 0 7px;
+	width: 508px;
+	height: 80px;
+	background: url(../../images/stuspace/textarea.png) no-repeat 0 0;
+}
+.stu-mid-con .input_before textarea {
+	position: absolute;
+	top: 16px;
+	left: 15px;
+	border: 0;
+	resize: none;
+	padding: 0 5px;
+	width: 460px;
+	height: 45px;
+	font-size: 14px;
+	overflow: auto;
+	line-height: 23px;
+	color: #999;
+}
+.stu-mid-con .fd-i-title_for_student{
+	position: absolute;
+	left: 20px;
+	top: 26px;
+	width: 235px;
+	height: 16px;
+	background: url(../../images/stuspace/marked.png) no-repeat;
+}
+.stu-mid-con .input_tips{
+	box-shadow: none;
+}
+.stu-mid-con .action_for_student{
+	margin-top: 0;
+}
+
+.stu-mid-con .btn-grey-white{
+	display: inline-block;
+	background: url(../../images/stuspace/btn.png) no-repeat 0 -69px;
+	width: 82px;
+	height: 28px;
+	color: #fff;
+	font-size: 14px;
+	font-weight: bold;
+	text-align: center;
+	line-height: 28px;
+}
+.stu-mid-con .btn-grey-white span{
+	color: #fff;
+}
+.stu-mid-con .send_weibo .title1{
+    position: absolute;
+    right: 24px;
+    top: 48px;
+	overflow: auto;
+	border-bottom: none;
+	z-index: 11;
+    color: #aaa;
+}
+.stu-mid-con .cy_mr_cont{
+	border-right: none;
+}
+.stu-mid-con .num_for_student {
+	position: absolute;
+	top: 100px;
+	right: 30px;
+	z-index: 11;
+}
+
+.stu-mid-con .yun_face {
+	background: url(../../images/stuspace/small_ic.png) no-repeat 8px 0;
+	width: 22px;
+	height: 22px;
+	float: left;
+	margin: 3px 0 0 0;
+	padding-left: 8px;
+    overflow: hidden;
+}
+.stu-mid-con .acts .face-block{
+/*	margin-right: 0;*/
+    overflow: hidden;
+}
+.stu-mid-con .acts .image-block .image {
+	padding-left: 8px;
+	background: url(../../images/stuspace/small_ic.png) no-repeat -24px 0;
+	width: 24px;
+	height: 21px;
+	_vertical-align: 1px;
+}
+/* .stu-mid-con .send_weibo .acts .at-block,
+.stu-mid-con .send_weibo .acts .topic-block{
+	display: none;
+} */
+.stu-mid-con .send_weibo .input .release{
+	margin: 4px 8px 0 0;
+}
+
+.stu-mid-con .feed_list .num{
+    color: #aaa;
+}
+.stu-mid-con .feed_list dt.face{
+	text-align: center;
+    width: 70px;
+}
+.stu-mid-con .feed_list .face span {
+	position: absolute;
+	left: 0;
+	top: 0;
+	z-index: 2;
+	background: url(../../images/stuspace/small_ic.png) no-repeat 0 -190px;
+	display: inline-block;
+	width: 54px;
+	height: 54px;
+	overflow: hidden;
+}
+.stu-mid-con .feed_list .content{
+	position: relative;
+	width: auto;
+	margin-left: 85px;
+}
+.stu-mid-con .feed_list .contents{
+	display:block;
+	border: 1px solid rgb(244,239,227);
+	background: #fffcf5;
+	border-radius: 5px;
+	padding: 10px;
+	min-height: 45px;
+}
+.stu-mid-con .feed_list .face>a{
+    position: relative;
+	display: block;
+    margin: 0 auto;
+	width: 54px;
+	height: 54px;
+}
+.stu-mid-con .feed_list .face img{
+	width: 54px;
+	height: 54px;
+}
+.stu-mid-con .feed_lists{
+	padding-top: 20px;
+}
+.stu-mid-con .face em a{
+	font-size: 14px;
+	font-weight: bold;
+    white-space: nowrap;
+	position: static;
+}
+.stu-mid-con .tran-box{
+	display: block;
+	position: absolute;
+	left: -8px;
+	top: 20px;
+	background: url(../../images/stuspace/speak_p.png) no-repeat 0 0;
+	width: 11px;
+	height: 18px;
+}
+.stu-mid-con .stu-praise,
+.stu-mid-con .stu-transmit,
+.stu-mid-con .stu-reply{
+	display: inline-block;
+	background: url(../../images/stuspace/forward_ic.png) no-repeat;
+	height: 20px;
+	color: #ababab;
+	font-size: 13px;
+	line-height: 20px;
+	padding-left: 22px;
+}
+.feed_list .content p.info a:hover{
+    text-decoration: underline;
+}
+.stu-mid-con .feed_list{
+	border-bottom: none;
+    color: #f33939;
+}
+.stu-mid-con .stu-praise{
+	background-position: 0 0;
+}
+.stu-mid-con .stu-transmit{
+	background-position: 0 -36px;
+}
+.stu-mid-con .stu-reply{
+	background-position: 0 -73px;
+}
+.stu-mid-con .feed_list .info a:link{
+	color: #ababab;
+}
+.stu-mid-con .cy_mr_cont{
+	border-right: none;
+}
+.cy_mr.stu-mid-con{
+	margin-left:0;
+}
+#page-wrap .stu-con{
+	margin-top: 50px;
+}
+
+
+/*150426*/
+.stu-mid-con .send_weibo .talk{
+    float: left;
+    width: 300px;
+}
+.voice_mic{
+    width: 18px;
+    float: left;
+    margin-top: 1px;
+    margin-top: -8px;
+}
+/*@media screen and (-webkit-min-device-pixel-ratio:0) {
+    .voice_mic{margin-top: 6px;}
+}*/
+.content_Img{
+    display: inline-block;
+    *display: inline;
+    zoom: 1;
+    vertical-align: middle;
+}
+.choose-user .user-list li .content{
+    width: auto;
+    font-size: medium;
+}
+
+/*150812*/
+.voice_b{
+	width: auto!important;
+}
+.topic-block .content_Img{
+	line-height: 22px;
+}
+.stu-mid-con .feed_list .contents{
+	font-size: 14px;
+	color: #666;
+}
+
+
+.reading-info h3{
+    font-size: 16px;
+    color: #666;
+    font-weight: bold;
+}
+.reader-des{
+    display: inline-block;
+    padding-top: 5px;
+    width: 400px;
+    font-size: 14px;
+    color: #666;
+    line-height: 17px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.reader-des a{
+	color: #2593f0;
+	font-weight: bold;
+}
+.reader-time{
+	padding-top: 5px;
+	font-size: 12px;
+	color: #666;
+}
+.reading-info{
+    width: 400px;
+}
+.reading-info a{
+    display: inline-block;
+	width: 170px;
+}
+
+.line-bg{
+	display: inline-block;
+	background: url(../../images/stuspace/line_bg.png) no-repeat right center;
+	margin-right: 5px;
+	padding-left: 10px;
+	width: 34px;
+	height: 17px;
+	line-height: 17px;
+	text-align: center;
+	font-size: 12px;
+	color: #fff;
+}
+.cy_mr_cont_l_friend{
+	margin-left: 5px;
+}
+.mod-feed-tab .inner-feed-nav li a i{
+	display: none;
+	position: absolute;
+	left: 50%;
+	bottom: -4px;
+	margin-left: -6px;
+	background: url(../../images/stuspace/small_ic.png) no-repeat -238px 0;
+	width: 12px;
+	height: 6px;
+}
+/*add*/
+.stu-mid-con .feed_list .contents .single_sound{
+    width: 400px;
+}
+.stu-mid-con .feed_list .contents .progress-bar-border{
+    width: 369px
+}
+.stu-mid-con .feed_list .contents .initial-progress-bar{
+    width: 310px;
+}
+.stu-mid-con .feed_list .contents .progress-bar-border span{
+    left: 332px;
+}
+/*20170413*/
+.clearfix:after {
+    content:"";
+    display:block;
+    clear:both;
+    overflow:hidden;
+    zoom:1;
+}
+.right-box ul{
+    display: inline-block;
+}
+.right-box ul li{
+    width: 50px;
+    display: inline-block;
+    float: left;
+    margin:0 5px;
+}

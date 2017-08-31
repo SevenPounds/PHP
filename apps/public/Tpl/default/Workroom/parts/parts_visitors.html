@@ -1,0 +1,60 @@
+<h3 class="h3_green">最近访问</h3>
+<php>if(!empty($visitors)):</php>
+<div class="cy_mr_fw">
+	<div class="cy_mr_fw_top"></div>
+		<div class="cy_mr_fw_cont who_watch">
+			<php>if(count($visitors) == 0):</php>
+				<img style="margin-left:20px;" alt="最近没有人来过哦" src="__APP__/images/none_02.png">
+			<php>endif;</php>
+			<ul class="clearfix">
+				<volist name="visitors" id="visitor" offset='0' length='3'>
+					<li class="fl visitors">
+						<a href="{:U('public/Workroom/index',array('uid'=>$visitor['user_info']['uid']))}">
+							<img src="{$visitor['user_info']['avatar_small']}" uid="{$visitor['vuid']}" event-node="face_card" />
+						</a>
+						<a href="{:U('public/Workroom/index',array('uid'=>$visitor['user_info']['uid']))}" uid="{$visitor['vuid']}" event-node="face_card" title="{$visitor['user_info']['uname']}">
+							<span style="width:55px;top:36px;">{$visitor['user_info']['uname']|getShort=3,'...'}</span>
+						</a>
+						<a style="POSITION: absolute;left:0;width:58px;" href="{:U('public/Workroom/index',array('uid'=>$visitor['user_info']['uid']))}" uid="{$visitor['vuid']}" event-node="face_card" title="{$visitor['user_info']['uname']}">
+							<php>
+								$y = date("Y",time());
+								$m = date("m",time());
+								$d = date("d",time());
+								$today = strtotime("$y-$m-$d");
+								if($visitor["vtime"] < $today){
+									echo date("m月d日",$visitor["vtime"]);
+								}else{
+									echo date("H:i",$visitor["vtime"]);
+								}
+							</php>
+						</a>
+						<div class="clear"></div>
+					</li>
+  				</volist>
+			</ul>
+			<php>if(count($visitors) > 3):</php>
+				<div class="hr_line clearfix">
+					<img src="__APP__/images/circle.png" class="fl">
+					<img src="__APP__/images/circle.png" class="fr">
+				</div>
+			<php>endif;</php>
+			<ul class="clearfix">
+				<volist name="visitors" id="visitor" offset='3' length='3'>
+					<li class="fl visitors">
+						<a href="{:U('public/Workroom/index',array('uid'=>$visitor['user_info']['uid']))}">
+							<img src="{$visitor['user_info']['avatar_small']}" uid="{$visitor['vuid']}" event-node="face_card" />
+						</a>
+						<a href="{:U('public/Workroom/index',array('uid'=>$visitor['user_info']['uid']))}" uid="{$visitor['vuid']}" event-node="face_card" title="{$visitor['user_info']['uname']}">
+							<span style="width:55px;top:36px;">{$visitor['user_info']['uname']|getShort=3,'...'}</span>
+						</a>
+						<a style="POSITION: absolute;left:0;width:58px;" href="{:U('public/Workroom/index',array('uid'=>$visitor['user_info']['uid']))}" uid="{$visitor['vuid']}" event-node="face_card" title="{$visitor['user_info']['uname']}">
+							<php>echo date("m月d日",$visitor["vtime"]);</php>
+						</a>
+						<div class="clear"></div>
+					</li>
+      			</volist>
+       		</ul>
+		</div>
+	<div class="cy_mr_fw_bot"></div>
+</div>
+<php>endif;</php>

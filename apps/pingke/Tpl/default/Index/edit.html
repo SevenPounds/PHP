@@ -1,0 +1,173 @@
+<include file="__THEME__/header" />
+<include file="header" />
+<link rel="stylesheet" type="text/css" href="__THEME__/js/uploadify/uploadify.css" />
+<script type="text/javascript" src="__THEME__/js/uploadify/jquery.uploadify.min.js"></script>
+<div id="page-wrap">
+	<div id="main-wrap">
+		<div class="crumbs">
+			<ul>
+				<li class="pre_cen"><a href="{:U('public/Index/index')}">个人空间</a></li>
+				<li>></li>
+				<li><a href="{:U('pingke/Index/index')}">网上评课</a></li>
+				<li>></li>
+				<li>编辑评课</li>
+			</ul>
+			<div class="clear"></div>
+		</div>
+		<div class="con_box">
+			<div class="left_box">
+				<include file="__THEME__/public_left" />
+			</div>
+			<div class="right_box">
+                <div class="online_title">
+                    <div class="left"> <span><img src="__THEME__/app_icon/app_wspk.png" /></span> <span class="pl10 font3"><b>编辑评课</b></span> </div>
+                </div>
+                <div>
+                    <div class="pk_name">
+                        <p class="font2">评课名称:</p>
+                        <p class="style8 pt5"><input type="text" value="{$data.title}" id="res_title"/></p>
+                    </div>
+                    <div class="pl10 left">
+                        <p class="font2">上课老师:</p>
+                        <p class="style9 pt5"><input type="text" value="{$data.teacher}" id="teacher_name"/></p>
+                    </div>
+                    <div class="clear"></div>
+                </div>
+                <div class="an_line pt15 pl15">
+                    <p class="font2">评课介绍：</p>
+                    <p class="style7 pt5"><textarea id="res_des">{$data.description}</textarea></p>
+                </div>
+                {:W('UploadAttachFile',array('uploadType'=>'video','attachIds'=>$data['video_id'],'cloudsave'=>1,'uploader'=>U('widget/UploadAttachFile/cloudsave'),'total'=>1,'message'=>'<span>选择视频文件</span><span>(*.wmv,*.avi,*.asf)</span>','fileSizeLimit'=>'1024MB'))}
+
+                <div class="clear"></div>
+
+                <php>if($data['accessType']==1):</php>
+                {:W('UserSelect',array('userids'=>$userids))}
+                <php>endif;</php>
+
+
+                <div class="publish" style="display: none;">
+                    <span>发布到：</span>
+                    <p class="left pr20 pl5"><span><input type="checkbox" name="to_space" <if condition="$data['to_space']">checked="checked"</if> /></span><span>我的工作室</span></p>
+                    <if condition="!empty($msGroups)">
+                        <volist name="msGroups" id="val">
+                            <p class="left pr20 pl5"><span><input type="checkbox" name="gids" value="{$val['gid']}" <if condition="in_array($val['gid'],$gids)">checked="checked"</if>/></span><span title="{$val['group_name']}">{$val['group_name']|mStr=###,10}</span></p>
+                        </volist>
+                    </if>
+                    <div class="clear"></div>
+                </div>
+                <div class="clear"></div>
+                <div class="cr_btn">
+                    <input type="hidden" id="res_id" value="{$data.id}" />
+                    <input type="hidden" id="old_member" value="{$userids}" />
+                    <input type="hidden" id="accessType" value="{$data.accessType}" />
+                    <input id="btn" type="button" value="保存" class="create_btnnor" onMouseover="this.className='create_btnhov'" onMouseOut="this.className='create_btnnor'">
+                    <input type="button" id="cancel_edit" value="取消" class="canclebtn_nor" onMouseover="this.className='canclebtn_hov'" onMouseOut="this.className='canclebtn_nor'">
+                </div>
+			</div>
+			<div class="clear"></div>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+/**
+ * 验证form数据
+ */
+function validate(){
+	if($.trim($("#res_title").val())==""){
+		ui.error("评课名称不能为空");
+		return false;
+	}
+	if(!judgeLength(jQuery("#res_title"),20)){
+		ui.error("评课名称字数不能超过20个!");
+		return false;
+	}
+	if(!judgeLength(jQuery("#res_des"),100)){
+		ui.error("评课简介字数不能超过100个!");
+		return false;
+	}
+	if(jQuery("#teacher_name").val() == ""){
+		ui.error("上课老师不能为空");
+		return false;
+	}
+    var attachIds = $("#attach_ids");
+    if (!attachIds || $("#attach_ids").length<=0 || !(attachIds.val().replace(/\|/g, ''))) {
+        ui.error("还未上传评课视频!");
+        return false;
+    }
+
+    if (parseInt(jQuery('#accessType').val()) == 1) {
+        var userIds = $("#user_ids");
+        if (!userIds || !(userIds.val().replace(/\|/g, ''))) {
+            ui.error("还未选择研讨人员!");
+            return false;
+        }
+    }
+	return true;
+}
+/**
+ * 保存数据
+ */
+function savedata(){
+	if(!validate()){
+		return ;
+	}
+	
+	var data = {};
+	data['res_id'] = $("#res_id").val();
+	data['res_title'] = $.trim($("#res_title").val());
+	data['teacher_name'] = $.trim($("#teacher_name").val());
+	data['res_des'] = $.trim($("#res_des").val());
+	data['video_id'] = $("#attach_ids").val();
+	data['userids'] = $("#user_ids").val();
+	data['accessType'] = jQuery('#accessType').val(); //权限类型
+
+    $('input[name="to_space"]:checked').each(function(i){
+        var _obj = $(this);
+        data['to_space'] = 1;
+    });
+    var _gids = [];
+    $('input[name="gids"]:checked').each(function(i){
+        _gids[i] = $(this).val();
+    });
+    data['gids'] = _gids;
+	$.ajax({
+		type:"POST",
+		dataType:'json',
+		url:"index.php?app=pingke&mod=Index&act=updateInfo",
+		data:data,
+		success:function(msg){
+			if(msg.status==1){
+				ui.success("更新成功！");
+				setTimeout(function(){
+					window.location.href="index.php?app=pingke&mod=Index&act=show&id="+data['res_id'];
+				},1500);
+			}else{
+				ui.error("更新失败！");
+			}
+		}
+	
+	})
+}
+/**
+ * 判断标题和简介字数是否超过限制
+ */
+function judgeLength($obj,limit){
+	var str = $.trim($obj.val());
+	
+	if(str.length>limit){
+		return false;
+	}
+	return true;
+}
+$(function(){
+	$("#btn").click(savedata);
+	
+	$("#cancel_edit").click(function(){
+		
+		var id = $("#res_id").val();
+		window.location.href="index.php?app=pingke&mod=Index&act=show&id="+id;
+    });
+})
+</script>
+<include file="__THEME__/public_footer" />

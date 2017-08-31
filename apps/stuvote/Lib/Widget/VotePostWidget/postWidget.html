@@ -1,0 +1,72 @@
+<if condition="$status !=0 && !$isVisitor">	
+	<div class="book_txt">
+		<div model-node="mini_editor">
+			<textarea id="post_content"></textarea>
+		</div>
+		<input type="hidden" id="hidden_id" value="{$rid}"/>
+		<div class="book_btn3 acts">
+			
+	    	<a class="face-block" href="javascript:;" event-node="comment_insert_face"><i class="face"></i>表情</a>
+			
+			<!-- <span class="pl15">
+				<a href="#"><img src="__APP__/images/mic_btn.jpg" /></a>
+			</span>  -->
+			<!-- <span class="pl10 black3">点击麦克风开始说话</span>  -->
+			<!--
+			<a class="file-block" href="javascript:;"><i class="file"></i>附件
+				<form style='display:inline;padding:0;margin:0;border:0;outline:none;' >
+					<input type="file" name="attach" inputname="attach" onchange="core.plugInit('uploadFile',this,'','file');" urlquery="" limit="0" event-node="uploadinput">
+				</form>
+				 <input type="button" value="添加附件" class="gray_btn2" onMouseover="this.className='gray_btn2hov'" onMouseOut="this.className='gray_btn2'"> 
+			</a>
+		-->
+			<p class="right">
+				<input type="button"  value="发表" class="green_btn3" onclick='addComment();'
+					onMouseover="this.className='green_btn3hov'"
+					onMouseOut="this.className='green_btn3'">
+			</p>
+		</div>
+		<div class="clear"></div>
+		<div model-node="faceDiv"></div> 
+	</div>
+</if>
+<script>
+var row_id= '{$rid}';
+var mid= "{$GLOBALS['ts']['uid']}";
+var delComment = function(comment_id){
+    var doDelPost=function(){
+        $.post(U('widget/Comment/delcomment'),{comment_id:comment_id},function(msg){
+            //什么也不做吧
+            ui.success('删除成功');
+            removeCommentPost(comment_id);
+            $('.comment_'+comment_id).remove();
+            $('.online_infor .comment_count').html(parseInt($('.online_infor .comment_count').text())-1);
+        });
+    }
+    ui.confirmBox('提示', '确定删除？', doDelPost);
+};
+var addComment = function(){
+	//字数截取
+	wordLimit($("#post_content"),140);
+	content= jQuery.trim($('#post_content').val());
+	$.post(U('widget/Comment/addcomment'),{
+		app_name:'stuvote',
+		table_name:'stuvote',
+		app_uid:mid,
+		row_id:row_id,
+		content:content
+		},function(msg){
+			if(msg.status == "0"){
+				ui.error(msg.data);
+			}else{
+                $.post(U('vote/Index/sendMsg'),{vote_id: row_id,content:content},function(){});
+				if(typeof getPostByAjax != undefined)
+					getPostByAjax(1);
+				//重置
+				$('#post_content').val('');
+				$('.online_infor .comment_count').html(parseInt($('.online_infor .comment_count').text())+1);
+			}
+		},'json');
+};
+</script>
+

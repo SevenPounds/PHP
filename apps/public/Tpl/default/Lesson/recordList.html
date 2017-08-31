@@ -1,0 +1,56 @@
+<div class="les_video_con clearfix">
+	<if condition="$record eq null">
+		<if condition="$type eq create">
+			<img src="__APP__/images/mr_kkjl.png" />
+		<else />
+			<img src="__APP__/images/mr_tkjl.png" />
+		</if>
+	</if>
+	<volist name="record" id="val">
+	<dl class="fl">
+		<dt onclick="preview({$val['record_id']},{$val['has_record']})">
+			<img src="{$val['cover_url']}" /><span>&nbsp;</span><label>{$val['end_time']}</label>
+			<font></font> <a href="javascript:void(0)">&nbsp;</a>
+		</dt>
+		<dd>
+			<h3>
+				<a href="javascript:void(0);" onclick="preview({$val['record_id']},{$val['has_record']})" title="{$val['name']}">
+				{$val['name']|getShort=12,'...'}
+				</a>
+			</h3>
+			<div class="les_star">
+				<php> $score=$val['score']/20; if(strlen($score)>3){
+					$score=substr($score,0,3); } </php>
+					{$val['score']|getStars}<font>{$score}</font>
+			</div>
+			<div class="les_comment clearfix">
+				<span class="fl"><font>{$val['attend_count']}</font>人参加</span> <span
+					class="fl"><font>{$val['c_count']}</font>人评论</span>
+			</div>
+		</dd>
+	</dl>
+	</volist>
+</div>
+<div class="page mt15">
+	{$paging}
+</div>
+<input type="hidden" value="{$pre_url}" id="pre_url">
+<script>
+/**
+ * 跳转资源预览页面
+ */
+function preview(id,state){
+	if(state==0){
+		pop.alert('录播视频生成中');
+	}else if(state==1){
+		if(id!=0&&id!='0'){
+			var pre_url=$('#pre_url').val();
+			window.open(pre_url+"/index.php?m=Home&c=Record&a=preview&id="+id);	
+		}else{
+			pop.alert('该直播课没有录播视频');
+		}
+	}else{
+		pop.alert('该直播课没有录播视频');
+	}
+}
+</script>

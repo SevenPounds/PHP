@@ -1,0 +1,61 @@
+<include file="../Public/_header"/>
+<link rel="stylesheet" href="__APP__/css/poll.css" type="text/css" />
+<link href="__PUBLIC__/js/pagination/pagination.css" rel="stylesheet" type="text/css" />
+<style type="text/css">
+.wrap {
+	width: 1000px;
+	margin: 0 auto;
+	_margin-top: -42px;
+}
+</style>
+<div id="main-wrap" class="wrapper">
+	<!-- <div class="crumbs">
+		<ul>
+			<li class="pre_cen"><a href="index.php?app=public&mod=Workroom&act=index&uid={$uid}">个人空间</a></li>
+			<li><a href="">></a></li>
+			<li><a href="index.php?app=vote&mod=Index&act=index">在线投票</a></li>
+			<li><a href="">></a></li>
+			<li>发起投票</li>
+		</ul>
+		<div class="clear"></div>
+	</div> -->
+	<div class="con_box">
+		<div class="left_box">
+		<div id="st-index-grid" class="content clearfix stu-con">
+			<include file="__THEME__/public_left"/>
+			</div>
+			</div>
+		</div>
+		
+		
+        <div class="right_box">
+            <div class="online_title">
+                <div class="left"> <!-- <span><img src="__APP__/images/icon_jy.gif" /></span> --> 
+                
+                 <php>$is_Researcher=Model('CyUser')->hasRole(UserRoleTypeModel::RESAERCHER,$GLOBALS['ts']['cyuserdata']['user']['cyuid']);
+        		if(!$is_Researcher){</php>
+						<!-- <span><img src="__APP__/images/icon_jy.gif" /></span>  -->
+						<span><div style="width:32px;height:24px;line-height:24px;" class="app_icon_class_wldy"></div></span>
+				<php>}else{</php>
+						<span><div style="width:32px;height:24px;line-height:24px;" class="app_icon_class_wldy_jyy"></div></span>
+				<php>}</php> 
+				
+                <span class="pl10 font3"><b>在线投票</b></span> </div>
+            </div>	
+             {:W('VoteAdd',array('inner'=>true,'tpl'=>'VoteAdd'))}
+	    </div>
+        <div class="clear"></div>
+	</div>	
+</div>
+<include file="__THEME__/public_footer" />
+
+<script>
+//检测月份选项变动
+$('#month').change(function() {
+	day();
+});
+//检测年份选项变动
+$('#year').change(function() {
+	day();
+});
+</script>

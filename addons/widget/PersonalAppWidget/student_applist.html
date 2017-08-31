@@ -1,0 +1,41 @@
+    <!-- <ul class="sup-nav">
+	   	  <li class="new-trend <if condition="strtolower(APP_NAME) == 'public' && strtolower(MODULE_NAME) == 'index' && strtolower(ACTION_NAME) eq 'index'">active</if>">
+              <a class="app_icon_class_zxdt"   href="{:U('public/Index/index',array('type'=>'following'))}"><em>&nbsp;</em>最新动态</a>
+      	  </li>		      	  
+		  <li class="new-msg <if condition="(strtolower(APP_NAME) == 'public' && strtolower(MODULE_NAME) == 'comment') OR (strtolower(APP_NAME) == 'public' && strtolower(MODULE_NAME) == 'message')  OR (strtolower(APP_NAME) == 'public' && strtolower(MODULE_NAME) == 'mention')">active</if>">
+	      	  <a class="app_icon_class_xxtx"   href="{:U('public/Mention/index')}" ><em>&nbsp;</em>消息提醒
+    	 	  <span id="new_information_count" ></span>
+    	 	  </a>
+      	  </li>
+    </ul> -->
+<style>
+.tea-nav a{
+  text-decoration: none;
+}
+.beside{
+  width: 219px;
+  background: none;
+  min-height: 200px;
+}
+#msgroup_list a{
+  background:none;
+  color:rgb(9, 88, 150);
+  font-size:12px;
+}
+</style>
+<div class="beside fl">    
+ <dl class="tea-nav" id="tea">
+ 	<dt style='color:#333333;border:none;background:url(__THEME__/image/zxdt.png) no-repeat left center;margin:10px 40px 0 40px;padding-left:30px;height:35px;line-height:35px;'><a href="{:U('public/Index/index')}" style='padding-left:0;height:none;line-height:none;background:none;border:none;'>最新动态</a></dt>
+	<dt style='color:#333333;border:none;background:url(__THEME__/image/xxtx.png) no-repeat left center;margin:0 40px 10px 40px;padding-left:30px;height:35px;line-height:35px;'><a href="{:U('public/Mention/index')}" style='padding-left:0;height:none;line-height:none;background:none;border:none;'>消息提醒</a></dt>
+    <dt><a href="javascript:void(0)" class="dir-right" event-node='up_down' event-args='id=community&from=student'>空间应用</a></dt>
+    <dd id="community">
+        <ul>
+          <volist name="app_space" id="li" key="k">
+		         <li class="{$li['class_t']}">
+		        	<a href="{$li['url']}" <?php if($li['target']){echo 'target="_blank"';}?>>{$li['appname']}</a>
+		      </li>
+    	</volist>
+    	</ul>
+	</dd>
+</dl>
+</div>

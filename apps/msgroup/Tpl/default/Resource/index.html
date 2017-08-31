@@ -1,0 +1,180 @@
+<include file="../Public/header" />
+<link rel="stylesheet" type="text/css" href="__THEME__/js/uploadify/uploadify.css" />
+<link rel="stylesheet" type="text/css" href="__THEME__/css/pop_upload.css" />
+<script type="text/javascript" src="__THEME__/js/uploadify/jquery.uploadify.min.js"></script>
+
+<script type="text/javascript">
+var Resource = Resource || {};
+Resource.gid = '<php>echo $gid;</php>';//工作室id
+Resource.restype = "";
+Resource.keywords = "";
+Resource.curpage = jQuery("#cur_page").val();//记录当前的页码
+Resource.ids = [];//记录多个删除的id数组
+Resource.requestData = function(page){
+	var _this=this;
+	$.ajax({
+		type: "POST",
+		url: U('msgroup/Resource/getResList'),
+		data:{"gid":_this.gid,"sort":_this.sort,"restype":_this.restype,"keywords":_this.keywords,"p":page},
+		success:function(msg){
+			jQuery("#content_holder").html("").html(msg);	
+		},
+		error:function(msg){
+			ui.error(msg);
+		}
+	});
+}
+Resource.del = function(id){
+	var _this = this;
+	ui.confirmBox("删除资源", "确认删除？", function(){
+		$.ajax({
+			type: "POST",
+			url: U('msgroup/Resource/delMSGroupRes'),
+			data: {"gid":_this.gid,"resids":id},
+			dataType: "json",
+			success:function(msg){
+				if(msg.status == 1){
+					ui.success("删除成功！");
+					_this.requestData(_this.curpage);
+				} else{
+					ui.error("删除失败！");	
+				}
+			},
+			error:function(msg){
+				ui.error("删除失败！");	
+			}
+		});
+	});
+}
+//弹出编辑窗口
+Resource.ShowUpdateResWin = function(rid,gid){
+		var url = U("msgroup/Resource/showUpdate")+'&rid='+rid+'&gid='+gid;
+		url = encodeURI(url);
+		ui.box.load(url, "编辑资源");
+}
+Resource.clearUpdateResWin=function(){
+	    ui.box.close();
+}
+//编辑提交
+Resource.edit = function(id){
+	    var title = jQuery("#txt_title").val();
+        if(!($.trim(title))){
+            ui.error('资源标题不能为空！');
+            return false;
+        }
+	    var restype = jQuery("#update_type").val();
+	    var descri =jQuery("#txl_describe").val();
+	    var _this=this;
+	    $.ajax({
+			type: "POST",
+			url: U('msgroup/Resource/editMSGroupRes'),
+			data: {"gid":_this.gid,"rid":id,"title":title,"type":restype,"description":descri},
+			success:function(msg){
+				var result = eval('('+msg+')');
+				if(result.status == 1){
+					ui.success("更新成功");
+					ui.box.close();
+					_this.requestData(_this.curpage);
+				} else{
+					ui.error(result.msg);	
+				}
+			},
+			error:function(msg){
+				ui.error("更新失败");	
+			}
+		});
+}
+//多个删除
+Resource.MulTiDel = function(){
+	var _this = this;
+	Resource.ids.length = 0;//清空数组
+	jQuery("#restable td input").each(function(){
+		if(this.checked){
+			Resource.ids.push(this.value);
+		}
+	});
+	if(Resource.ids.length <=0){
+		ui.error("未选择任何资源");
+		return;
+	}
+	ui.confirmBox("删除资源", "确认删除？", function(){
+		$.ajax({
+			type: "POST",
+			url: U('msgroup/Resource/delMSGroupRes'),
+			data: {"gid":_this.gid,"resids":Resource.ids},
+			dataType: "json",
+			success:function(msg){
+				if(msg.status == 1){
+					ui.success("删除成功！");
+					_this.requestData(_this.curpage);
+				} else{
+					ui.error("删除失败！");	
+				}
+			},
+			error:function(msg){
+				ui.error("删除失败！");	
+			}
+		});
+	});
+}
+jQuery(document).ready(function(){
+	Resource.requestData(1);//列表初始化
+	jQuery("#searchbtn").click(function(){
+		Resource.restype = jQuery("#restype").val();
+		Resource.keywords = jQuery.trim(jQuery("#res_title").val());
+		Resource.keywords == "请根据关键字、描述等查询" && (Resource.keywords = "");
+		Resource.requestData();
+	});
+	$('#sel_all_up').live('click',function(){
+		$('input[name=res_list]').attr('checked', this.checked);
+		$("#sel_all_down").attr('checked',this.checked);
+	});
+	$('#sel_all_down').live('click',function(){
+		$('input[name=res_list]').attr('checked', this.checked); 
+		$("#sel_all_up").attr('checked',this.checked);
+	});
+});
+uploadres = function(restype){
+	ui.box.load(U('reslib/Index/showUpload') +"&refresh=true&restype=0100,0600,0300&msgid={$gid}",'上传资源');
+}
+</script>
+<div class="posbox">&nbsp;&nbsp;您现在的位置：<a href="{:U('msgroup/Index/index', array('gid' => $gid))}" class="blue">{$msgroup_data.group_name}</a>&gt;<a <if condition="$level eq 3">href="{:U('msgroup/Config/index', array('gid' => $gid))}"<else />href="{:U('msgroup/Resource/index', array('gid' => $gid))}"</if> class="blue">工作室维护</a>&gt;&nbsp;<a class="blue" href="{:U('msgroup/Resource/index', array('gid' => $gid))}">教学资源管理</a></div>     
+<div class="wy_box" style="width:1000px; overflow:hidden;">
+	{:W('LeftMenu', array('gid' => $gid, 'level' => $level))}
+	<div class="right">
+		<div class="teaWS_rgt">
+			<input type="button" value="上传资源" class="announce_create" onclick="javascript:uploadres()">
+			<div class="teaWSR_tit"><h3>教学资源管理</h3></div>
+		</div>
+		
+		<div class="dy_input">
+		    <div class="dy_inputsrk" style="width:110px;">
+				<span style="line-height:35px;margin-left:30px;font-size:16px;">资源类型:</span>
+		    </div>
+			<div class="dy_btn" style="width:98px;">
+				<select id="restype" style="width:98px;height:30px;line-height:24px;padding:3px 0;margin:0;">
+			       <option value="">全部</option>
+			       <option value="0100">教学设计</option>
+			       <option value="0600">教学课件</option>
+			       <option value="0300">媒体素材</option>
+		        </select>
+			</div>
+		    <div class="dy_inputsrk" style="display:none;">
+				<span style="line-height:35px;margin-left:30px;font-size:16px;">资源标题:</span>
+			</div>
+			<div class="dy_inputsrk" style="width:170px;margin-left:20px;">
+				<div class="srk_left"></div>
+				<div class="srk_cen">
+					<input type="text" value="请根据关键字、描述等查询" id="res_title" onkeydown="" onfocus="this.value=''"/>
+				</div>
+				<div class="srk_right"></div>
+			</div>
+			<input type="button" value="搜索" class="announce_create" id="searchbtn">
+		</div>
+		<div class="teaWSR_con" id="content_holder">
+		     
+	    </div>
+	</div>
+	<div class="clear"></div>
+</div>
+<include file="__THEME__/public_footer" />

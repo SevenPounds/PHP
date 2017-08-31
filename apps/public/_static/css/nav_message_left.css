@@ -1,0 +1,84 @@
+.slide_ul{
+	width:190px;
+}
+.slide_ul li{
+	height:46px;
+	line-height:46px;
+	margin-bottom:2px;
+	background:#f0f0f0;
+	position:relative;
+    font-size: 16px;
+    cursor: pointer;
+	overflow: hidden;
+}
+.slide_ul li>a{
+	display:block;
+	position:absolute;
+	left:0px;
+	top:0px;
+	height:100%;
+    background: #5089d5;
+	width:2px;
+	z-index:0;
+	overflow:hidden;
+	white-space:nowrap;
+	color:#5089d5;
+}
+.slide_ul li>b span,.slide_ul li>a span{
+	margin-left:60px;
+}
+.slide_ul li>b span{
+	color:#5089d5;
+	font-weight:normal;
+}
+.slide_ul li>a{
+	display:block;
+}
+.slide_ul li.active{
+	background: #5089d5;
+}
+.slide_ul li.active a{
+    background: url("../images/arr.png") no-repeat 175px center #5089d5;
+}
+.slide_ul li a{
+	color:#fff;
+}
+.slide_ul li a:hover{
+	text-decoration:none;
+}
+.slide_ul li.active a{
+	color:#fff !important;
+	width:100% !important;
+}
+.mt15{
+    margin-top: 15px;
+}
+
+/*-------------评论tab切换-------------*/
+.mod-feed-tab {
+	margin-bottom: 25px;
+}
+.mod-feed-tab .mod_feed_sta li{
+    border-left:1px solid #ccc;
+    height: 16px;
+    line-height: 16px;
+    padding: 0 15px;
+    font-size: 14px;
+}
+.mod-feed-tab .mod_feed_sta li:first-child{
+    border-left: none;
+}
+.mod-feed-tab .mod_feed_sta li a,
+.mod-feed-tab .mod_feed_sta li a:hover{
+    padding: 0;
+    line-height:16px;
+    color:#727272;
+}
+.mod-feed-tab .mod_feed_sta li a:hover{
+    color:#5089D5;
+}
+.mod-feed-tab .mod_feed_sta li.current a{
+    border-bottom: 0;
+    color:#5089D5;
+}
+/*-------------end-------------*/

@@ -1,0 +1,48 @@
+
+		<div class="c_left">
+			<span class="title2"><b>活跃班级榜</b></span>
+			<span class="right green font1 pr15 pt4" style="display:none;"><a href="#">如何上榜?</a></span>
+			<div class="clear"></div>
+		    		<!-- <volist name="activeschool" id="vo">
+                   		<include file="_classlist"/>
+                    </volist>   -->  
+                    <div id="activeschool">
+                    </div>
+            <div class="clear"></div>
+			<span class="title2 mt10"><b>新星班级榜</b></span>
+			<span class="right green font1 pr15 mt14" style="display:none;"><a href="#">如何上榜?</a></span>
+			<div class="clear"></div>
+			 		<!-- <volist name="newschool" id="vo">
+                   		<include file="_classlist"/>
+                    </volist>  -->
+                    <div id="newschool">
+                    </div>
+             <div class="clear"></div> 
+		</div>
+		<div class="c_right">
+		 {:W('RecommandPerson', array('title'=>'明星教师','roleid'=>'9'))} 
+ 		 {:W('RecommandPerson', array('title'=>'明星学生','roleid'=>'8'))} 
+		 {:W('RecommandPerson', array('title'=>'明星家长','roleid'=>'10'))}
+		</div>
+		<script>
+		$(function(){
+			var appname='class';
+			var t = Math.random();
+			if($('#activeschool').length > 0) {
+				$('#activeschool').after('<div class="loading" id="activeschool_loadMore">'+L('PUBLIC_LOADING')+'<img src="'+THEME_URL+'/image/load.gif" class="load"></div>');
+			}
+			if($('#newschool').length > 0) {
+				$('#newschool').after('<div class="loading" id="newschool_loadMore">'+L('PUBLIC_LOADING')+'<img src="'+THEME_URL+'/image/load.gif" class="load"></div>');
+			}
+			 $.post(U('widget/Content/loadSchool'), {widget_appname:appname,t:t }, function(content) {
+				 if(content.status==1){
+					 jQuery('#activeschool').html(content.activeshtml);	
+					 jQuery('#newschool').html(content.newshtml);
+				 }
+				 $('#activeschool_loadMore').remove();
+				 $('#newschool_loadMore').remove();
+				 M($('#activeschool')[0]);
+				 M($('#newschool')[0]);
+			}, 'json');	
+		});
+		</script>

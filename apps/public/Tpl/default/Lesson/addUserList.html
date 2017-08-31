@@ -1,0 +1,75 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta charset="utf-8" />
+<title>公开课</title>
+    <link rel="stylesheet" type="text/css" href="__APP__/css/lesson_base.css"></link>
+    <link rel="stylesheet" type="text/css" href="__APP__/css/lesson_common.css"></link>
+    <link rel="stylesheet" type="text/css" href="__APP__/css/lesson.css"></link>
+    <link rel="stylesheet" type="text/css" href="__APP__/css/c_pop.css"></link>
+    <!-- 加载截取图片的插件 -->
+  	<link rel="stylesheet" type="text/css" href="__APP__/js/Utils/jcrop/css/jquery.Jcrop.css" ></link>
+  	<!-- 上传插件 -->
+    <link rel="stylesheet" type="text/css" href="__APP__/js/Utils/uploadify/uploadify.css" rel="stylesheet" ></link>
+  	
+  	<script type="text/javascript" src="__APP__/js/Utils/jQuery/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript" src="__APP__/js/Utils/My97DatePicker/WdatePicker.js"></script>
+
+	<script type="text/javascript" src="__APP__/js/Utils/jQuery/jquery.browser.js"></script>
+	<script type="text/javascript" src="__APP__/js/add.js" ></script>
+	<script type="text/javascript" src="__APP__/js/Utils/jcrop/js/jquery.Jcrop.js" ></script>
+    
+	<script type="text/javascript" src="__APP__/js/Utils/uploadify/jquery.uploadify.js?ver=<?php echo rand(0,9999);?>"></script>
+    
+    <!-- 表单验证插件 -->
+    <script type="text/javascript" src="__APP__/js/Utils/validate/js/jquery.validate.js" ></script>
+    <script type="text/javascript" src="__APP__/js/Utils/validate/js/messages_cn.js" ></script>
+    <script type="text/javascript" src="__APP__/js/Utils/validate/js/additional-methods.js" ></script>
+    <script type="text/javascript" src="__APP__/js/Utils/validate/js/jquery.metadata.js" ></script>
+   
+   <!-- 加载弹出层样式 -->
+    <script type="text/javascript" src="__APP__/js/Utils/artDialog/js/dialog-plus.js"></script>
+	<script type="text/javascript" src="__APP__/js/Utils/artDialog/js/pop.js"></script>
+	
+	<script type="text/javascript" src="__APP__/js/Utils/jQuery/jquery.json.js"></script>
+	<script type="text/javascript" src="__APP__/js/Utils/jQuery/jquery.placeholder.js"></script>
+	
+	<!-- 选择好友插件 -->
+    <link rel="stylesheet" type="text/css" href="__APP__/js/Utils/select/css/multi-select.css"></link>
+    <script type="text/javascript" src="__APP__/js/Utils/select/js/jquery.multi-select.js"></script>
+	<script type="text/javascript" src="__APP__/js/Utils/jQuery/jquery.quicksearch.js"></script>
+</head>
+<body>
+	<input type="hidden" name="addUser" id="addUser" value="1"/>
+	<input type="hidden" class="pop_kk_txt02" id="members" name="members" value="{$live['listener_count']-$len}"/>           
+    <input type="hidden" name="ids" id="ids"/>
+     <!-- 新增弹出层 -->
+		  <div class="pop_kkF" id="pop_22" style="z-index: 1000;">
+		  	<div class="clearfix pop_kkF_con" style="">
+		   		 <div class="row" style="">
+				    <div class="col-md-7">
+				   		 <!-- 好友选择框开始 -->
+					      <select id='custom-headers' multiple='multiple'>
+							 <optgroup label="未分组好友">
+							 	<volist name="users" id="val">
+									<option value="{$val['fid']}" title="{$val['fname']}">{$val['fname']}</option>
+								</volist>
+								<volist name="addusers" id="val">
+									<option value="{$val['fid']}" title="{$val['fname']}" selected="selected" disabled="disabled">{$val['fname']}</option>
+								</volist>
+							 </optgroup>							
+						</select>
+						<!-- 好友选择框结束 -->
+				    </div>
+				  </div>
+		    	</div>
+        		<div class="pop_kk_btn">
+		        	<input type="button" name="" value="确定" class="pop_kk_sure" onclick="closeUserPop2({$live['id']})"/>
+		        	<input type="button" name="" value="取消" class="pop_kk_cancle" onclick="closePopUser2()" />
+		        </div>
+    	  </div>
+    	<!--  -->
+	<div class="mask" id="maskDiv2" style="display: none; z-index: 999;"></div>
+</body>
+</html>

@@ -1,0 +1,21 @@
+<include file="../Public/header" />
+<script type="text/javascript" src='__APP__/js/MSGroupPhoto.js' ></script>
+
+<div class="posbox">&nbsp;&nbsp;您现在的位置：<a href="{:U('msgroup/Index/index', array('gid' => $gid))}" class="blue">{$msgroup_data.group_name}</a>&gt;<a <if condition="$level eq 3">href="{:U('msgroup/Config/index', array('gid' => $gid))}"<else />href="{:U('msgroup/Resource/index', array('gid' => $gid))}"</if> class="blue">工作室维护</a>&gt;&nbsp;<a class="blue" href="{:U('msgroup/Photo/index', array('gid' => $gid))}">荣誉信息管理</a></div>
+<div class="wy_box" style="width:1000px; overflow:hidden;">
+	{:W('LeftMenu', array('gid' => $gid, 'level' => $level))}
+	<div class="right">
+		<form  action= "{:U('msgroup/Photo/uploadReputationPhoto',array('gid'=>$gid))}" method='post' enctype="multipart/form-data">
+		<input type='hidden' id='msgid' name='msgid' value="{$gid}" />
+		<input type='hidden' id='filesize' name='filesize' value="" />
+		选择文件 ：<input type='file' name='Filedata' id='                             '/>
+		标题 ：<input type='text' id='title' name='title' />
+		</textarea>
+		<input type="submit" value="上传"/>
+		</form>
+	</div>
+	<div class="clear"></div>
+</div>
+<include file="__THEME__/public_footer" />
+
+

@@ -1,0 +1,69 @@
+<div class="hot_resource">
+	<div class="title">
+		<p class="left">热门资源</p>
+		<p class="right more">
+			<a onclick="pageLeft();" href="javascript:void(0);">
+				<img id="hot_left" src="__THEME__/images/space_change_03.png">
+			</a>
+			<a onclick="pageRight();" href="javascript:void(0);">
+				<img id="hot_right" src="__THEME__/images/space_change_02.png">
+			</a>
+		</p>
+		<div class="clear"></div>
+	</div>
+	<ul>
+		<volist name="list" id="item" key="index">
+			<li class="clearfix hot-resource" style="<?php if($index > 5){echo 'display:none;';}?>">
+				<img src="__THEME__/images/{:getShortImg(strtolower($item->general->extension))}" alt="资源缩略图">
+				<a href="{:C('YUNRES')}index.php?m=Search&c=Resource&a=preview&resId={$item:general:id}" target="_blank" title="{$item:general:title}" class="blue">{$item:general:title|mStr=###,9}</a>
+			</li>
+		</volist>
+	</ul>
+</div>
+<script type="text/javascript">
+var total = "<?php echo count($list)/5;?>";
+var curPage = 1;
+function pageLeft(){
+	if(curPage > 1){
+		curPage--;
+		var start = (curPage - 1)*5;
+		var end = curPage * 5;
+		$(".hot-resource").hide();
+		var i = 0;
+		$(".hot-resource").each(function(){
+			if(i >= start && i < end){
+				$(this).show();
+			}
+			i++;
+		});
+		if(curPage == 1){
+			$("#hot_left").attr("src","./addons/theme/stv1/_static/images/space_change_03.png");
+		}
+		if(curPage < total){
+			$("#hot_right").attr("src","./addons/theme/stv1/_static/images/space_change_02.png");
+		}
+	}
+};
+
+function pageRight(){
+	if(curPage < total){
+		curPage++;
+		var start = (curPage - 1)*5;
+		var end = curPage * 5;
+		$(".hot-resource").hide();
+		var i = 0;
+		$(".hot-resource").each(function(){
+			if(i >= start && i < end){
+				$(this).show();
+			}
+			i++;
+		});
+		if(curPage == total){
+			$("#hot_right").attr("src","./addons/theme/stv1/_static/images/space_change_04.png");
+		}
+		if(curPage > 1){
+			$("#hot_left").attr("src","./addons/theme/stv1/_static/images/space_change_01.png");
+		}
+	}
+};
+</script>

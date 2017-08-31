@@ -1,0 +1,47 @@
+ <dl class="name clearfix">
+   	<dt><a href="{$org.spaceurl}" target="_blank"><img src="{$org['id']|getCampuseAvatar=###,$org['type'],'avatar_small'}" /></a></dt>
+       <dd>
+           <p><a href="{$org.spaceurl}" target="_blank" style="color:green;">{$org.name}</a>
+           </p>
+        	<php>if(CheckPermission('core_normal','read_data')){</php>
+          <div class="grade">&nbsp;{:getOrgnizationArea($org)}</div>
+          <php>}</php>
+           <div>
+               <ul class="userdata clearfix">
+               	   <li>
+                   <php>if($org['type']==1){</php>
+                   <a href="{$org.spaceurl}" target="_blank" style="color:green;">班级</a>
+                   {$org.ccount|default = 0}
+                   <php>}else if($org['type']==2){</php>
+                   <a href="{$org.spaceurl}" target="_blank" style="color:green;">家长</a>
+                   {$org.pcount|default = 0}
+                   <php>}</php>
+                   </li>
+                   <li class="vline">|</li>
+                   <li><a href="{$org.spaceurl}" target="_blank" style="color:green;">教师</a> {$org.tcount|default = 0}</li>
+                   <li class="vline">|</li>
+                   <li><a href="{$org.spaceurl}" target="_blank" style="color:green;">学生</a> {$org.scount|default = 0}</li>
+                   <li class="vline">|</li>
+                   <li><a href="{$org.spaceurl}" target="_blank" style="color:green;">粉丝</a> <a style="color: #666;"><span class="follower_{$vo['id']}">{$org.follower|default = 0}</span></a></li>
+               </ul>
+           </div>
+           <p class="address" ></p>
+       </dd>
+   </dl>
+<dl class="info clearfix">
+  <php>if(CheckPermission('core_normal','read_data')){</php>
+   		<neq name='org.intro' value=''>
+        <dd class="tag"><span>简介：</span>
+         <div class="tag-inner">{$org['intro']|getShort=60,'...'}</div>
+        </dd>   
+    </neq>
+<php>}</php>
+</dl>
+<dl class="links">
+       <div class="right">
+{:W('FollowBtn', array('fid'=>$org['id'], 'uname'=>$org['name'], 'follow_state'=>$follow_state[$org['id']], 'type'=>'campus','ftype'=>$org['type']))}
+       </div>
+</dl>
+<script>
+	M(document.getElementById('face_card'));
+</script>

@@ -1,0 +1,179 @@
+<include file="__THEME__/public_header" />
+<link rel="stylesheet" href="__THEME__/css/base.css">
+<link rel="stylesheet" href="__THEME__/css/common.css">
+<link rel="stylesheet" href="__ROOT__/apps/public/_static/css/person_center.css">
+<link href="__APP__/fonts.css" rel="stylesheet" type="text/css" />
+<link href="__APP__/per_zone.css" rel="stylesheet" type="text/css" />
+<link href="__APP__/css/library.css" rel="stylesheet" type="text/css" />
+<link href="__APP__/css/style_library.css" rel="stylesheet" type="text/css" />
+<div id="page-wrap">
+	<div id="feedback" class="feedback-fixed">
+		<a href="{:U('public/Index/feedback')}" target="_blank">{:L('PUBLIC_FEEDBACK')}</a>
+	</div>
+	<div id="main-wrap">
+		<div id="st-index-grid" class="st-grid content-bg">
+			<!--左边 -->
+			<include file="__THEME__/public_left" />
+			<div class="st-section"
+				style="border-left: 1px solid #e1e1e1; height: 1600px; line-height: 26px;">
+				<div class="container">
+					<input type="hidden" id="RS_SITE_URL" value="{:C('RS_SITE_URL')}"/>
+						<div class="kright">
+						<div class="kright_part1 mt10">
+							<volist name="mods" id="m" key="y">
+								<if condition="$y eq 1">
+									<div class="hd">
+										<div class="fl tag  ft18 col3 pl20">{$m['title']}</div>
+										<a onclick="openLibrary(this);" href="javascript:void(0);" url="{$m['url']}" class="fr more">更多</a>
+									</div>
+								</if>
+							</volist>
+							<div class="clear"></div>
+							<ul class="kright_part1_list fixed">
+								<volist name="librarys" id="library">
+									<li>
+										<div class="pic">
+											<a onclick="openLibrary(this);" title="{$library['title']}" href="javascript:void(0);" url="{$library['url']}"><img src="__APP__/images/{$library['img']}" width="108" height="144"  /></a>
+										</div>
+											<php>
+												$title=$library['title'];
+												if(strlen($title)>56){
+													$title=substr($title,0,46)."...";
+												}
+											</php>
+										<div class="txt">
+											<p>
+												<a onclick="openLibrary(this);" title="{$library['title']}" href="javascript:void(0);" url="{$library['url']}" class="col3 pt5 show">{$title}</a>
+											</p>			
+											<p>
+												<a title="作者：{$library['author']}" href="javascript:void(0);" class="col9 show">作者：{$library['author']}</a>
+											</p>
+										</div>
+									</li>
+								</volist>
+							</ul>
+						</div>
+						<!--第二栏-->
+						<div class="kright_part2 mt20">
+							<div class="fl left">
+							<volist name="mods" id="m" key="y">
+								<if condition="$y eq 2">
+									<div class="hd">
+										<div class="fl tag  ft18 col3 pl20">{$m['title']}</div>
+										<a onclick="openLibrary(this);" href="javascript:void(0);" url="{$m['url']}" class="fr more">更多</a>
+									</div>
+								</if>
+							</volist>
+								<div class="clear"></div>
+								<ul class="fixed">
+									<volist name="refBooks" id="book">
+										<li>
+										<div class="pic">
+											<a onclick="openLibrary(this);" title="{$book['title']}" href="javascript:void(0);" url="{$book['url']}"><img src="__APP__/images/{$book['img']}" width="120" height="160"/></a>
+										</div>
+										<div class="txt">
+											<p>
+												<a onclick="openLibrary(this);" title="{$book['title']}" href="javascript:void(0);" url="{$book['url']}" class="col3 pt5 show">{$book['title']}</a>
+											</p>
+											<p>
+												<a title="作者：{$book['author']}" href="javascript:void(0);" class="col9 show">作者：{$book['author']}</a>
+											</p>
+										</div>
+									</li>
+									</volist>
+								</ul>
+							</div>
+							<div class="fr right">
+							<volist name="mods" id="m" key="y">
+								<if condition="$y eq 3">
+									<div class="hd">
+										<div class="fl tag  ft18 col3 pl20">{$m['title']}</div>
+										<a onclick="openLibrary(this);" href="javascript:void(0);" url="{$m['url']}" class="fr more">更多</a>
+									</div>
+								</if>
+							</volist>
+								<div class="clear"></div>
+								<div class="bd">
+									<volist name="news" id="new" key="y">
+										<a onclick="openLibrary(this);" href="javascript:void(0);" title="{$new['title']}" url="{$new['url']}"><img src="__APP__/images/{$new['img']}" /></a> 
+									</volist>
+								</div>
+							</div>
+							<div class="clear"></div>
+						</div>
+						<if condition="($roleName eq teacher) OR ($roleName eq instructor)">
+						<!--第三栏-->
+						<div class="kright_part3 mt20">
+							<volist name="topics" id="topic" key="y">
+								<a onclick="openLibrary(this);" href="javascript:void(0);" title="{$topic['title']}" url="{$topic['url']}"><img src="__APP__/images/{$topic['img']}" /></a> 
+							</volist>
+						</div>
+						</if>
+						<!--第四栏-->
+						<div class="kright_part4 mt20">
+							<volist name="mods" id="m" key="y">
+								<if condition="$y eq 4">
+									<div class="hd">
+										<div class="fl tag  ft18 col3 pl20">{$m['title']}</div>
+										<a onclick="openLibrary(this);" href="javascript:void(0);" url="{$m['url']}" class="fr more">更多</a>
+									</div>
+								</if>
+							</volist>
+							<div class="clear"></div>
+							<ul class="kright_part4_list fixed">
+							<volist name="pics" id="pic" key="y">
+								<li>
+									<div class="pic">
+										<a onclick="openLibrary(this);" title="{$pic['title']}" href="javascript:void(0);" url="{$pic['url']}"><img src="__APP__/images/{$pic['img']}" width="153" height="108"/></a>
+									</div>
+									<div class="txt">
+										<p>
+											<a onclick="openLibrary(this);" title="{$pic['title']}" href="javascript:void(0);" url="{$pic['url']}" class="col6 pt5 show">{$pic['title']}</a>
+										</p>
+									</div>
+								</li>
+							</volist>
+							</ul>
+						</div>
+					</div>				
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<include file="__THEME__/public_footer" />
+<script type="text/javascript">
+	function openLibrary(obj){
+		var url=$(obj).attr('url');
+		if(url.length>0){
+			var RS_SITE_URL=$('#RS_SITE_URL').val();
+			url=url.replace(/&/gm, "@");
+			url=URLEncode(url);
+			window.open(RS_SITE_URL+'/index.php?app=changyan&mod=Index&act=loginApabi&url='+url); 
+		}
+	}
+	function URLEncode (clearString) {
+		var output = '';
+	  	var x = 0;
+		clearString = clearString.toString();
+		var regex = /(^[a-zA-Z0-9-_.]*)/;
+		while (x < clearString.length) {
+			var match = regex.exec(clearString.substr(x));
+			if (match != null && match.length > 1 && match[1] != '') {
+		    	output += match[1];
+		        x += match[1].length;
+	     	}else{
+		    	if (clearString.substr(x, 1) == ' ') {
+		         output += '+';
+		    	}
+		        else{
+		        	var charCode = clearString.charCodeAt(x);
+		        	var hexVal = charCode.toString(16);
+		         	output += '%' + ( hexVal.length < 2 ? '0' : '' ) + hexVal.toUpperCase();
+		       }
+		       x++;
+		     }
+		}
+		   return output;
+	}
+</script>

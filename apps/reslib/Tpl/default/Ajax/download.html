@@ -1,0 +1,119 @@
+					<div class="online_tabbox">
+						<div class="online_tab" id="online_tab">
+							<ul id="changekind">
+								<li id="xttj" <if condition="$operation ==1"> class="present"<else /> class="normal" </if>><a href="javascript:void(0)" onclick="javascript:MyResLib.changeNav(this,1, 1);">系统推荐</a></li>
+								<li id="hytj" <if condition="$operation ==2"> class="present"<else /> class="normal" </if>><a href="javascript:void(0)" onclick="javascript:MyResLib.changeNav(this,1, 2);">好友推荐</a></li>
+								<li id="wdsc" <if condition="$operation ==3"> class="present"<else /> class="normal" </if>><a href="javascript:void(0)" onclick="javascript:MyResLib.changeNav(this,1, 3);">我的收藏</a></li>
+								<li id="wdxz" <if condition="$operation ==4"> class="present"<else /> class="normal" </if>><a href="javascript:void(0)" onclick="javascript:MyResLib.changeNav(this,1, 4);">我的下载</a></li>
+							</ul>
+						</div>
+						<div class="dy_input2">
+							<div class="dy_inputsrk">
+								<div class="srk_left"></div>
+								<div class="srk_cen">
+									<input type="text" id="txf_search" value="" onkeypress="javascript:MyResLib.enterPress(event)" onfocus="this.select()"/>
+								</div>
+								<div class="srk_right"></div>
+							</div>
+								<div class="dy_btn">
+									<input type="button" value="搜索" class="dy_btnnor" onclick="javascript:MyResLib.refresh();" onMouseover="this.className='dy_btnhov'" onMouseOut="this.className='dy_btnnor'">
+								</div>
+						</div> 
+					</div>
+					<div class="res_div">
+					<table cellpadding="0" cellspacing="0" border="0" class="online_table3">
+					<tr class="online_tabletop">
+						<if condition="($operation neq 1) AND ($operation neq 2) AND ($results)">
+						<th width="4%" class="pl5"><input type="checkbox" id="select_all"/></th>
+						<th width="1%"><img src="__APP__/images/th_line.jpg" /></th></if>
+						<th width="14%">资源名称</th>
+						<th width="1%"><img src="__APP__/images/th_line.jpg" /></th>
+						<th width="5%">作者</th>
+						<th width="1%"><img src="__APP__/images/th_line.jpg" /></th>
+						<th width="4%">格式</th>
+						<th width="1%"><img src="__APP__/images/th_line.jpg" /></th>
+						<th width="13%">
+							<div class="left pl35" style="line-height:26px;">时间</div>
+							<div class="left pl5">
+								<p class="pt4">
+									<a href="javascript:void(0);" onclick="MyResLib.sort(1)">
+										<if condition="$sort == 'uploaddown'">
+											<img src="__APP__/images/time_down.gif" id="sort_type1" sort_type="uploadup"/>
+											<elseif condition="$sort == 'uploadup'" /><img src="__APP__/images/time_up.gif" id="sort_type1" sort_type="uploaddown"/>
+											<else /><img src="__APP__/images/time_dis.gif" id="sort_type1" sort_type="uploaddown"/>
+										</if>
+									</a>
+								</p>
+							</div> 
+						</th>
+						<th width="1%"><img src="__APP__/images/th_line.jpg" /></th>
+						<th width="8%">
+							<div class="left pl20" style="line-height:26px;">下载量</div>
+							<div class="left pl5">
+								<p class="pt4">
+									<a href="javascript:void(0);" onclick="MyResLib.sort(2)">
+										<if condition="$sort == 'downloadtimedown'">
+											<img src="__APP__/images/time_down.gif" id="sort_type2" sort_type="downloadtimeup"/>
+											<elseif condition="$sort == 'downloadtimeup'" /><img src="__APP__/images/time_up.gif" id="sort_type2" sort_type="downloadtimedown"/>
+											<else /><img src="__APP__/images/time_dis.gif" id="sort_type2" sort_type="downloadtimedown"/>
+										</if>
+									</a>
+								</p>
+							</div> 
+						</th>
+						<th width="1%"><img src="__APP__/images/th_line.jpg" /></th>
+						<th width="8%">
+							<div class="left pl20" style="line-height:26px;">评分</div>
+							<div class="left pl5">
+								<p class="pt4">
+									<a href="javascript:void(0);" onclick="MyResLib.sort(3)">
+										<if condition="$sort == 'praiseratedown'">
+											<img src="__APP__/images/time_down.gif" id="sort_type3" sort_type="praiserateup"/>
+											<elseif condition="$sort == 'praiserateup'" /><img src="__APP__/images/time_up.gif" id="sort_type3" sort_type="praiseratedown"/>
+											<else /><img src="__APP__/images/time_dis.gif" id="sort_type3" sort_type="praiseratedown"/>
+										</if>
+									</a>
+								</p>
+							</div> 
+						</th>
+						<th width="1%"><img src="__APP__/images/th_line.jpg" /></th>
+						<th width="7%">操作</th> 
+					</tr>
+					<volist name="results" id="vo">
+						<tr <if condition="$i%2 neq 0">style="background:#fff"<else />style="background:#f6f6f6"</if>>
+							<if condition="($operation neq 1) AND ($operation neq 2)">
+								<td align="center" class="pl5"><if condition="($vo.audit_status eq 0) OR ($operation eq 3) OR ($operation eq 4)"><input type="checkbox" value="{$vo.rid}" name="res_list"/></if></td>
+								<td></td> 
+							</if>
+							<td align="left" style="padding-left:10px;" class="blue"><a href="{:C('RS_SITE_URL')}/index.php?app={:C('RESLIB_VIEW_APP')}&mod=RedirectServer&act=dealReslib&id={$vo.rid}" target="_blank" title="{$vo.title}">{$vo.title|mStr=10}</a></td>
+							<td></td>
+							<td align="center">{$vo.creator|getUserURL=login,$vo['source']}</td>
+							<td></td>
+							<td align="center">{$vo.type2|getNameByCode}</td>
+							<td></td>
+							<td align="center">{$vo.dateline|date="Y-m-d H:i:s",###}</td>
+							<td></td>
+							<td align="center" >{$vo.downloadtimes}</td>
+							<td></td>
+							<td align="center">{$vo.score}</td>
+							<td></td>
+							<td align="center">
+								<if condition="$operation eq 5">
+									<a href="javascript:void(0)" onclick="MyResLib.ShowUpdateResWin('{$vo.title}','{$vo.restype}','{$vo.description}','{$vo.rid}')"><span class="blue">属性</span></a>
+								</if>
+								<a href="{:U('reslib/Ajax/downloadResource')}&rid={$vo.rid}&filename={$vo.title}.{$vo.suffix}"><span class="blue">下载</span></a>
+							</td>
+						</tr>
+					</volist>
+				</table>
+				<div class="online_tablebot">
+					<div class="online_tablebot_span" id="delete_res">
+							<a  href="javascript:void(0);"><img src="__APP__/images/delete.gif" />
+							<span class="pl8">删除</span></a>
+						</div>
+					<div class="page">
+						{$page}
+					</div>
+				</div>
+				</div>
+<script type="text/javascript" src="__APP__/reslib_delete.js"></script>

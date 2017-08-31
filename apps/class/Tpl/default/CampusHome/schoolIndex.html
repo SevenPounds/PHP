@@ -1,0 +1,85 @@
+
+		<include file="_top" />
+		
+		<div class="s_right">
+			<!--<div class="sr_banner"></div>  -->
+			<dl class="xxgg">
+				<div class="title4">
+					<span class="left pl20"><b>学校公告</b></span>
+					<span class="more2"><a href="{:U('class/CampusHome/indexNotice',array('cid'=>$cid,'flag'=>1))}"><span class="green">更多</span></a></span>
+					<div class="clear"></div>
+				</div>
+				<dd class="sr_line"></dd>
+				<ul>
+				<volist name="list" id="list">
+					<li><span class="left"><a href="{:U('class/CampusHome/detailNotice',array('cid'=>$cid,'id'=>$list['id']))}">{$list.title}</a></span><span class="time right font1"><php>echo(date('Y-n-d',$list['ctime']));</php></span><div class="clear"></div></li>
+				</volist>
+					<div class="clear"></div>
+				</ul>
+			</dl>
+			<div class="bjyd">
+				<div class="title4">
+					<span class="left pl20">
+						<b>班级园地</b>
+						<font class="font1 pl10">共有<font class="green">{$org.ccount|default=0}</font>个班级</font>
+						</span>
+					<span class="more2"><a href="{:U('class/CampusHome/class_garden',array('cid'=>$cid))}"><span class="green">更多</span></a></span>
+					<div class="clear"></div>
+				</div>
+				<div class="clear"></div>
+				<volist name="classes" id="vo" offset="0" length="8">
+				<dl class="bjyd_box">
+					<div class="c_boxleft"></div>
+					<div class="c_boxcen">
+						<a href="{:U('class/ClassHome/index',array('cid'=>$vo['id']))}" event-node="face_card" show="no" orgType="{$vo['type']}" cid="{$vo['id']}"><img src="{$vo['id']|getCampuseAvatar=###,$vo['type'],'avatar_big'}" /></a>
+						<p class="c_name green"><a href="{:U('class/ClassHome/index',array('cid'=>$vo['id']))}" title="{$vo.name}" event-node="face_card" show="no" orgType="{$vo['type']}" cid="{$vo['id']}">{$vo.name}</a></p>
+						<p class="c_foucs">
+							<!--<input type="button" value="" class="c_foucsnor"  onmouseover="this.className='c_foucshov'" onmouseout="this.className='c_foucsnor'" />-->
+							<!-- <input type="button" value="" class="c_foucspre" /> -->
+							{:W('FollowBtn', array('fid'=>$vo['id'], 'uname'=>$vo['name'], 'follow_state'=>$orgnization_follow_state[$vo['id']], 'type'=>'campus','ftype'=>$vo['type']))} 
+						</p>
+						{:getInfoBoxHtml($vo)}
+					</div>
+					<div class="c_boxright"></div>
+					<div class="clear"></div>
+				</dl>
+				</volist>
+				
+				<div class="clear"></div>
+			</div>
+			<div class="szll">
+				<div class="title4">
+					<span class="left pl20">
+						<b>师资力量</b>
+						<font class="font1 pl10">共有<font class="green">{$org.tcount|default=0}</font>个老师</font>
+						</span>
+					<span class="more2"><a href="{:U('class/CampusHome/school_faculty',array('cid'=>$cid))}"><span class="green">更多</span></a></span>
+					<div class="clear"></div>
+				</div>
+				<div class="sr_line"></div>
+				<div class="clear"></div>
+				<dl>
+				<volist name="teachers" id="vo" offset="0" length="8">
+					<dt>
+						<div class="left"><a <if condition="$vo['is_synchronous'] eq 1"> href="{:U('public/Profile/index',array('uid'=>$vo['uid']))}" event-node="face_card" show="no" uid={$vo['uid']} </if>><img src="{$vo.avatar_middle}" style="width:74px;height:74px;"/></a></div>
+						<div class="left" style="margin-left:10px">
+							<p class="green pt10" style="width:55px;white-space:nowrap;height:22px;line-height:22px; text-overflow:ellipsis;overflow:hidden"><a <if condition="$vo['is_synchronous'] eq 1"> href="{:U('public/Profile/index',array('uid'=>$vo['uid']))}"  event-node="face_card" show="no" uid={$vo['uid']} </if>>{$vo.uname}</a></p>
+							<p class="black pt5">{$vo.rolename.9}</p>
+							<p  class="c_foucs2">
+							<if condition="$vo['is_synchronous'] eq 1">
+							{:W('FollowBtn', array('fid'=>$vo['uid'], 'uname'=>$vo['uname'], 'follow_state'=>$vo['follow_state'], 'refer'=>'following_right'))}
+							</if>
+							<!-- <input type="button" value="" class="c_foucsnor"  onmouseover="this.className='c_foucshov'" onmouseout="this.className='c_foucsnor'" /> --><!--<input type="button" value="" class="c_foucspre" />-->
+							</p>
+						</div>
+						<div class="clear"></div>
+					</dt>
+					
+				</volist>
+				
+				</dl>			
+			</div>
+		</div>
+		<div class="clear"></div>
+	</div>
+<include file="__THEME__/public_footer" />

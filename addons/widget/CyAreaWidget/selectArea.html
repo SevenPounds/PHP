@@ -1,0 +1,107 @@
+<select style="float:left;margin:0 10px 0 0;" name="province" id="province" onchange="changeArea(this)" <php>if($disable){ </php> disabled="disabled" <php>} </php>></select>
+<select style="float:left;margin:0 10px 0 0;" name="city" id="city" onchange="changeArea(this)" <php>if($disable){ </php> disabled="disabled" <php>} </php>></select>
+<select style="float:left;margin:0 10px 0 0;" name="area" id="area" onchange="changeArea(this)" <php>if($disable){ </php> disabled="disabled" <php>} </php>></select>
+
+<script type="text/javascript">
+var json = eval({$list});			// 地区JSON数据
+var selected = '{$selected}';		// 默认选中的地区
+
+
+// 地区初始化
+var init = function() {
+	selected = selected == '' ? $('#current').val() : selected;
+	var arrSelect = selected.split(',');
+
+	// 获取树形结构的子树
+	var option1 = '<option value="0">请选择</option>';
+	var option2 = '<option value="0">请选择</option>';
+	var option3 = '<option value="0">请选择</option>';
+	$.each(json['province'], function(i, n) {
+		var selected1 = (n.code == arrSelect[0]) ? 'selected="selected"' : '';
+		option1 += '<option value="' + n.code + '" ' + selected1 + '>' + n.name + '</option>'
+	});
+	
+	if(json['city'] !== null && typeof(json['city']) != 'undefined') {
+		$.each(json['city'], function(ii, nn) {
+			var selected2 = (nn.code == arrSelect[1]) ? 'selected="selected"' : '';
+			option2 += '<option value="' + nn.code + '" ' + selected2 + '>' + nn.name + '</option>';
+		});
+	}
+	
+	if(json['district'] !== null && typeof(json['district']) != 'undefined') {
+		$.each(json['district'], function(iii, nnn) {
+			var selected3 = (nnn.code == arrSelect[2]) ? 'selected="selected"' : '';
+			option3 += '<option value="' + nnn.code + '" ' + selected3 + '>' + nnn.name + '</option>';
+		});
+	}
+	
+	$('#province').append(option1);
+	$('#city').append(option2);
+	$('#area').append(option3);
+};
+// 改变地区方法
+var changeArea = function(obj) {
+	var areaChild =new  Array();
+	var id = $(obj).attr('id');
+	var val = $(obj).val();
+	areaChild = getArea(val);
+	
+	switch(id) {
+		case 'province':
+			if(areaChild !== null) {
+				if(val == 0) {
+					$('#city').html('<option value="0">请选择</option>');
+					$('#area').html('<option value="0">请选择</option>');
+					break;
+				}
+				var select = '<option value="0">请选择</option>';
+				$.each(areaChild, function(i, n) {
+					select += '<option value="' + n.code + '">' + n.name + '</option>';
+				});
+				$('#city').html(select);
+				$('#area').html('<option value="0">请选择</option>');
+			}
+ 			break;
+		case 'city':
+			if(areaChild !== null) {
+				if(val == 0) {
+					$('#area').html('<option value="0">请选择</option>');
+					break;
+				}
+				var select = '<option value="0">请选择</option>';
+				$.each(areaChild, function(i, n) {
+					select += '<option value="' + n.code + '">' + n.name + '</option>';
+				});
+				$('#area').html(select);
+			}
+			break;
+	}
+} 
+
+/**
+ * 地区信息请求
+ */
+var getArea = function(areaCode){
+	var areaChild =new  Array();
+	$.ajax({
+		url:U('widget/CyArea/area'),
+		type:'POST',
+		dataType:'JSON',
+		data:{areaCode:areaCode},
+		async:false,
+		success:function(res){
+			if(res.status==1){
+				 areaChild = res.data;
+			}else{
+				 areaChild = null;
+			}
+		},
+		error:function(){
+			
+		}
+	});
+	return areaChild;
+};
+
+init();
+</script>

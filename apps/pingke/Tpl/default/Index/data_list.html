@@ -1,0 +1,37 @@
+<table cellpadding="0" cellspacing="0" border="0" class="online_table3">
+<tr class="online_tabletop">
+	<th width="8%">状态</th>
+	<th width="1%"><img src="__APP__/images/th_line.jpg" /></th>
+	<th width="44%">评课名称</th>
+	<th width="1%"><img src="__APP__/images/th_line.jpg" /></th>
+	<th width="10%">发起人</th>
+	<th width="1%"><img src="__APP__/images/th_line.jpg" /></th>
+	<th width="10%">参与人数</th>
+	<th width="1%"><img src="__APP__/images/th_line.jpg" /></th>
+	<th width="10%">讨论次数</th>
+	<th width="1%"><img src="__APP__/images/th_line.jpg" /></th>
+	<th width="13%">发起时间</th> 
+</tr>
+<volist name="pingkeList" id="pingke" key="k">
+<tr style="background:#fff">
+	<td align="center" <php>if($pingke['status']==1):</php> class="blue" <php>else:</php> class="black1" <php>endif;</php>>
+	<php>if($pingke['status']==1):</php>
+	进行中
+	<php>else:</php>
+	已结束
+	<php>endif;</php>
+	</td>
+	<td></td>
+	<td class="blue"><a href="{:U('/Index/show',array('id'=>$pingke['id']))}">{$pingke.title}</a></td>
+	<td></td>
+	<td align="center"><a href="{:U('public/Profile/index',array('uid'=>$pingke['uid']))}">{$pingke.uid|getUserName=###}</a></td>
+	<td></td>
+	<td align="center">{$pingke.member_count}</td>
+	<td></td>
+	<td align="center">{$pingke.discuss_count}</td>
+	<td></td>
+	<td align="center">{$pingke.createtime|date="Y/m/d",###}</td>
+</tr>
+</volist>
+</table>
+{$page}

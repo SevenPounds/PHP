@@ -1,0 +1,496 @@
+<include file="../Public/header" />
+<script>
+	function getMsgroupMembers(page,gid){
+		jQuery.ajax({
+			type: "POST",
+			url:U('msgroup/Index/getMsGroupMembers'),
+			dataType:'json',
+			data:{gid:gid,p:page,t:Math.random()},
+			success:function(res){
+				if(res.status == 1){
+					jQuery("#msgoupmembers").html(res.data);
+				}
+			},
+			error:function(){
+
+			}
+		});
+	}
+
+	function doFollowMsGroup(gid){
+		jQuery.ajax({
+			type:"POST",
+			url:U('public/Follow/doFollow'),
+			dataType:'json',
+			data:{ftype:3,fid:gid},
+			success:function(res){
+				if(res.status){
+					ui.success('关注成功');
+					jQuery("#msgroup_followbtn_div").removeClass("ms_btn");
+					jQuery("#msgroup_followbtn_div").addClass("ms_btndis");
+					var html = " <a href='javascript:void(0);'  onclick='unFollowMsGroup("+gid+");'>已关注该工作室</a>";
+					jQuery("#msgroup_followbtn_div").html(html);
+					var followcount = jQuery(".id_infor p:eq(2) span").html();
+					jQuery(".id_infor p:eq(2) span").html(parseInt(followcount)+1);
+					}else{
+					ui.success(res.info);
+				}
+			},
+			error:function(){
+
+			}
+		});
+	}
+
+	function unFollowMsGroup(gid){
+		jQuery.ajax({
+			type:"POST",
+			url:U('public/Follow/unFollow'),
+			dataType:'json',
+			data:{ftype:3,fid:gid},
+			success:function(res){
+				if(res.status){
+					ui.success('取消关注成功');
+					jQuery("#msgroup_followbtn_div").removeClass("ms_btndis");
+					jQuery("#msgroup_followbtn_div").addClass("ms_btn");
+					var html = " <a href='javascript:void(0);'  onclick='doFollowMsGroup("+gid+");'>关注该工作室</a>";
+					jQuery("#msgroup_followbtn_div").html(html);
+					var followcount = jQuery(".id_infor p:eq(2) span").html();
+					jQuery(".id_infor p:eq(2) span").html(parseInt(followcount)-1);
+					}else{
+					ui.success(res.info);
+				}
+			},
+			error:function(){
+
+			}
+		});
+	}
+
+
+	jQuery(function(){
+		var gid = "<php> echo $gid;</php>";
+		getMsgroupMembers(1,gid);
+	})
+
+
+</script>
+<div class="posbox">&nbsp;&nbsp;您现在的位置：<a href="{:U('msgroup/Index/index', array('gid' => $gid))}" class="blue">{$msgroup_data.group_name}</a>&gt;<a href="{:U('msgroup/Index/index', array('gid' => $gid))}" class="blue"><span class="sgray">首页</span></a></div>
+<div class="wy_box" style="width:1000px; overflow:hidden;">
+	<div class="left studio_box01">
+		<div class="studio_id">
+			<div class="id_top"></div>
+			<div class="id_box">
+				<div class="id_pic"><img height="125px" width="125px" src="{$msgroup_data['image']['avatar_big']}" /></div>
+				<div class="id_infor">
+					<p class="name" title="{$msgroup_data.group_name}">{$msgroup_data.group_name|mStr=###,4}</p>
+					<p>成员数：<span class="orange">{$msgroup_data['member_count']}</span></p>
+					<p>粉丝数：<span class="orange">{$msgroup_data['follower_count']}</span></p>
+					<p>访问量：<span class="orange">{$msgroup_data['visitor_count']}</span></p>
+				</div>
+				<div class="clear"></div>
+				<if condition="$mid gt 0">
+					<if condition="$level eq 0">
+					<div id="msgroup_followbtn_div" <php>if($follow_state): </php>class="ms_btndis"  <php>else: </php> class="ms_btn"  <php>endif;</php> >
+						<php>if($follow_state):</php>
+						<a href="javascript:void(0);"  onclick="unFollowMsGroup({$gid});">已关注该工作室</a>
+						<php>else: </php>
+						<a href="javascript:void(0);" onclick="doFollowMsGroup({$gid});">关注该工作室</a>
+						<php>endif;</php>
+					</div>
+					</if>
+				<else />
+				    <div class="ms_btn">  
+				    <a href="javascript:void(0);" onclick="showLogin();">关注该工作室</a>  
+				    </div>
+				</if>
+			</div>
+		</div>
+
+		<div class="studio_infor">
+			<div id="msgoupmembers">
+
+			</div>
+
+			<div>
+				<div class="studio_title02">
+					<span><img src="__APP__/images/icon_message.gif" /></span>
+					<span>最新动态</span>
+				</div>
+				<div class="news_group">
+					<volist name="lastFeeds" id="feed">
+					<li>
+					<div class="news_box">
+						<div class="head_pic">
+							<img src="{$feed['user']['avatar_small']}" />
+						</div>
+						<div class="news_con">
+							<p><strong>{$feed['user']['uname']}</strong></p>
+							<p class="font1 pt4">{$feed['feed_content']}</p>
+						</div>
+						<div class="clear"></div>
+					</div>
+					</li>
+					</volist>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<div class="studio_box02 left">
+		<div class="teaWS_rgt">
+			<div>
+				<div class="left" style="width:350px;">
+					<div class="teaWSR_tit">
+						<h3 class="left">通知公告</h3>
+						<div class="right pt7"><a href="{:U('msgroup/Index/announcelist',array('gid'=>$gid))}"><img src="__APP__/images/more_btn.gif" /></a></div>
+						<div class="clear"></div>
+					</div>
+					<div class="studio_line">
+						<dl class="kgdt_25">
+							<dd class="pt10">
+							<ul class="pl5 pr10">
+								<volist name="Notice" id="vo">
+								<li><a href="{:U('/Index/announceDetail',array('gid'=>$gid,'announce_id'=>$vo['id']))}" title="{$vo['title']}">{$vo['title']|mStr=###,15}</a><span>{$vo['ctime']|date="y-m-d",###}</span></li>  
+								</volist>
+							</ul>
+							</dd>
+						</dl>
+					</div>
+				</div>
+				<div class="left ml10" style="width:350px;">
+					<div class="teaWSR_tit">
+						<h3 class="left">教学资源</h3>
+						<div class="clear"></div>
+					</div>
+					<div class="studio_line">
+						<dl class="kgdt_25">
+							<div class="ms_tab">
+								<div class="ms_left">
+									<ul id="tearestab">
+										<li  class="current" onclick="changeResTab(this,'0100')"><a style="cursor:pointer;">教学设计</a></li>
+										<li onclick="changeResTab(this,'0600')"><a style="cursor:pointer;">教学课件</a></li>
+										<li onclick="changeResTab(this,'0300')"><a style="cursor:pointer;">媒体素材</a></li>
+									</ul>
+								</div>
+								<div class="right pr10"><a href="{:U('msgroup/Index/teachingresource', array('gid' => $gid))}"><img src="__APP__/images/more_btn.gif" /></a></div>
+							</div>
+							<div class="clear"></div>
+							<dd>
+							<ul class="pl5 pr10" id="res_0100">
+								<volist name="TeaDesign" id="vo">
+								<li><a href="{:Ures('//',array('id'=>$vo['rid']))}" title="{$vo['title']}">{$vo['title']|mStr=###,15}</a><span>{$vo['dateline']|date="y-m-d",###}</span></li>
+								</volist>
+							</ul>
+							<ul class="pl5 pr10" id="res_0600" style="display:none;">
+								<volist name="TeaWare" id="vo">
+								<li><a href="{:Ures('//',array('id'=>$vo['rid']))}" title="{$vo['title']}">{$vo['title']|mStr=###,15}</a><span>{$vo['dateline']|date="y-m-d",###}</span></li>
+								</volist>
+							</ul>
+							<ul class="pl5 pr10" id="res_0300" style="display:none;">
+								<volist name="TeaMea" id="vo">
+								<li><a href="{:Ures('//',array('id'=>$vo['rid']))}" title="{$vo['title']}">{$vo['title']|mStr=###,15}</a><span>{$vo['dateline']|date="y-m-d",###}</span></li>
+								</volist>
+							</ul>
+							</dd>
+						</dl>
+					</div>
+				</div>
+				<div class="clear"></div>
+			</div>
+			<div class="pt10">
+				<div class="title_orange">
+					<h3 class="left">课题研究</h3>
+					<div class="clear"></div>
+				</div>
+				<div class="studio_line">
+					<div class="left">
+						<div class="studio_name">
+							<p class="orange left">工作动态</p>
+							<p class="right"><a href="{:U('msgroup/Index/affairlist',array('gid'=>$gid))}"><img src="__APP__/images/more_btn.gif" /></a></p>
+							<div class="clear"></div>
+						</div>
+						<ul class="xw_box02" style="border-right:1px dashed #d5d5d5;">
+							<volist name="Dynamic_work" id="vo">
+							<li><p class="left"><span class="black1 pr10">•</span><a href="{:U('/Index/announceDetail',array('gid'=>$gid,'announce_id'=>$vo['id']))}" title="{$vo['title']}">{$vo['title']|mStr=###,15}</a><p><p class="time  right">{$vo['ctime']|date="y-m-d",###}</p><div class="clear"></div></li>
+							</volist>
+						</ul>
+					</div>
+					<div class="right">
+						<div class="studio_name">
+							<p class="orange left">研究成果</p>
+							<p class="right"><a href="{:U('msgroup/Index/achievementlist',array('gid'=>$gid))}"><img src="__APP__/images/more_btn.gif" /></a></p>
+							<div class="clear"></div>
+						</div>
+						<ul class="xw_box02">
+							<volist name="Research_findings" id="vo">
+							<li><p class="left"><span class="black1 pr10">•</span><a href="{:U('/Index/announceDetail',array('gid'=>$gid,'announce_id'=>$vo['id']))}" title="{$vo['title']}">{$vo['title']|mStr=###,15}</a><p><p class="time  right">{$vo['ctime']|date="y-m-d",###}</p><div class="clear"></div></li>
+							</volist>
+						</ul>
+					</div>
+					<div class="clear"></div>
+				</div>
+			</div>
+			<div class="pt10">
+				<div class="title_green">
+					<h3 class="left">教学研讨</h3>
+					<div class="clear"></div>
+				</div>
+				<div class="studio_line">
+				    <php>if(strtolower(C('PRODUCT_CODE'))=='anhui'):</php>
+		            <php>else:</php>
+			             <div class="left">
+							<div class="studio_name">
+								<p class="green_ms left">教学论文</p>
+								<p class="right"><a href="{:U('msgroup/Index/essaylist',array('gid'=>$gid))}"><img src="__APP__/images/more_btn.gif" /></a></p>
+								<div class="clear"></div>
+							</div>
+							<ul class="xw_box02" style="border-right:1px dashed #d5d5d5;">
+								<volist name="Teaching_paper" id="vo">
+								<li><p class="left"><span class="black1 pr10">•</span><a href="{:U('/Index/announceDetail',array('gid'=>$gid,'announce_id'=>$vo['id']))}" title="{$vo['title']}">{$vo['title']|mStr=###,15}</a><p><p class="time  right">{$vo['ctime']|date="y-m-d",###}</p><div class="clear"></div></li>
+								</volist>
+							</ul>
+						</div>
+						<div class="right">
+							<div class="studio_name">
+								<p class="green_ms left">教学日志</p>
+								<p class="right"><a href="{:U('msgroup/Index/journallist',array('gid'=>$gid))}"><img src="__APP__/images/more_btn.gif" /></a></p>
+								<div class="clear"></div>
+							</div>
+							<ul class="xw_box02">
+								<volist name="Teaching_journal" id="vo">
+								<li><p class="left"><span class="black1 pr10">•</span><a href="{:U('/Index/announceDetail',array('gid'=>$gid,'announce_id'=>$vo['id']))}" title="{$vo['title']}">{$vo['title']|mStr=###,15}</a><p><p class="time  right">{$vo['ctime']|date="y-m-d",###}</p><div class="clear"></div></li>
+								</volist>
+							</ul>
+						</div>
+						<div class="clear"></div>    
+		            <php>endif;</php>
+					
+					<div class="left pt10">
+						<div class="studio_name">
+							<p class="green_ms left">主题讨论</p>
+							<p class="right"><a href="{:U('msgroup/Index/researchlist',array('gid'=>$gid))}"><img src="__APP__/images/more_btn.gif" /></a></p>
+							<div class="clear"></div>
+						</div>
+						<ul class="xw_box02" style="border-right:1px dashed #d5d5d5;">
+							<volist name="Research" id="vo">
+							<li><p class="left"><span class="black1 pr10">•</span><a href="{:U('research/Index/show',array('id'=>$vo['id']))}" title="{$vo['title']}">{$vo['title']|mStr=###,15}</a><p><p class="time  right">{$vo['createtime']|date="y-m-d",###}</p><div class="clear"></div></li>
+							</volist>	
+						</ul>
+					</div>
+					<div class="right pt10">
+						<div class="studio_name">
+							<p class="green_ms left">在线答疑</p>
+							<p class="right"><a href="{:U('msgroup/Index/onlinelist',array('gid'=>$gid))}"><img src="__APP__/images/more_btn.gif" /></a></p>
+							<div class="clear"></div>
+						</div>
+						<ul class="xw_box02">
+							<volist name="Onlineanswer" id="vo">
+							<li><p class="left"><span class="black1 pr10">•</span><a href="{:U('onlineanswer/Index/detail',array('qid'=>$vo['qid']))}" title="{$vo['title']}">{$vo['title']|mStr=###,15}</a><p><p class="time  right">{$vo['ctime']|date="y-m-d",###}</p><div class="clear"></div></li>
+							</volist>	
+						</ul>
+					</div>
+					<div class="clear"></div>
+					<div class="left pt10">
+						<div class="studio_name">
+							<p class="green_ms left">网上评课</p>
+							<p class="right"><a href="{:U('msgroup/Index/pingkelist',array('gid'=>$gid))}"><img src="__APP__/images/more_btn.gif" /></a></p>
+							<div class="clear"></div>
+						</div>
+						<ul class="xw_box02" style="border-right:1px dashed #d5d5d5;">
+							<volist name="Pingke" id="vo">
+							<li><p class="left"><span class="black1 pr10">•</span><a href="{:U('pingke/Index/show',array('id'=>$vo['id']))}" title="{$vo['title']}">{$vo['title']|mStr=###,15}</a><p><p class="time  right">{$vo['createtime']|date="y-m-d",###}</p><div class="clear"></div></li>
+							</volist>	
+						</ul>
+					</div>
+					<div class="right pt10">
+						<div class="studio_name">
+							<p class="green_ms left">网络调研</p>
+							<p class="right"><a href="{:U('msgroup/Index/votelist',array('gid'=>$gid))}"><img src="__APP__/images/more_btn.gif" /></a></p>
+							<div class="clear"></div>
+						</div>
+						<ul class="xw_box02">
+							<volist name="Vote" id="vo">
+							<li><p class="left"><span class="black1 pr10">•</span><a href="{:U('vote/Index/detail',array('id'=>$vo['id']))}" title="{$vo['title']}">{$vo['title']|mStr=###,15}</a><p><p class="time  right">{$vo['cTime']|date="y-m-d",###}</p><div class="clear"></div></li>
+							</volist>	
+						</ul>
+					</div>
+					<div class="clear"></div>
+				</div>
+			</div>
+			<div class="pt10">
+				<div class="title_red">
+					<a name="photo_anchor" id="photo_anchor"><h3 class="left">荣誉室</h3></a>
+					<div class="clear"></div>
+				</div>
+				<div class="studio_line">
+					<p  class="to_left"><button id="upphoto" class="ph_updis" onmouseover="this.className='ph_uphov'" onmouseout="this.className='ph_upnor'" style="cursor:pointer"></button></p>
+					<div class="jz">
+						<ul class="msgroupphoto">
+							<volist name="photo" id="vo">
+							<li>
+							<a href="{:U('msgroup/Index/photoPreview', array('gid' => $gid, 'pid' => $vo['id']))}">
+								<p><img src="{:getImageUrl($vo['savepath'],100,100)}" /></p>
+								<p>{$vo['photo_name']|mStr=###,8}</p>
+							</a>
+							</li>
+							</volist>
+						</ul>
+					</div>
+					<p  class="to_left"><button id="downphoto" class="ph_downnor" onmouseover="this.className='ph_downhov'" onmouseout="this.className='ph_downnor'" style="cursor:pointer"></button></p>
+					<div class="clear"></div>
+				</div>
+			</div>	
+		</div>
+		<div class="clear"></div>
+	</div>
+</div>
+</div>
+</div>
+<script>
+	function changeRoleMenu(obj)
+	{
+		jQuery("#followMenu li").each(function(){
+			jQuery(this).removeClass('current') ;	
+		}); 
+		jQuery("#following_list").css('display','none') ;
+		jQuery("#follower_list").css('display','none') ;
+		jQuery('#'+obj.id).addClass('current');
+		jQuery('#'+obj.id+'st').css('display','block');
+	}
+</script>
+<script type="text/javascript">
+
+	//荣誉室起点
+var start=0;
+var gid={$_GET['gid']};
+
+//初始化 置灰上翻按钮 且根据相册总数判断是否置灰下翻按钮
+$(document).ready(function(){
+			$("#upphoto").attr("disabled",true);
+			if({$photoCount}<=4){
+			$("#upphoto").css('display','none');
+			$("#downphoto").css('display','none');	
+			}
+			})
+
+var isLoading = false;
+$("#upphoto").click(function(){ 
+			if(!isLoading){
+			isLoading = true;
+
+			//相册起点计数
+			--start;
+			//自身约束
+			if(start<1){
+			$("#upphoto").attr("disabled",true);
+			$("#upphoto").removeClass();
+			$("#upphoto").addClass("ph_updis")
+			}
+			//下翻按钮恢复可点     样式调整
+			$("#downphoto").attr("disabled",false);
+			$("#downphoto").removeClass();
+			$("#downphoto").addClass("ph_downnor")
+
+			var t = Math.random();
+
+			$.ajax({
+type: "POST",
+url:U('msgroup/Ajax/getphoto'),
+data:{start:start,gid:gid,type:0,t:t},
+datatype:'text',
+success: function (data) {
+//解析数组
+data = eval('('+data+')');
+//动画隐藏  回调删除
+$(".msgroupphoto li:last").hide(140,function(){jQuery(".msgroupphoto li:last").remove()});
+
+//插入作为作为第一个子元素
+$(".msgroupphoto").prepend("<li style='display:none'><a href='"+data.url+"'><p><img src='"+data.savepath+"' /></p></a><p>"+data.photo_name+"</p></a></li>");	
+setTimeout(function(){
+	$(".msgroupphoto li:first").show(140);
+	isLoading = false;
+	},140);
+},
+error: function (msg) {
+isLoading = false;
+}
+});
+}
+
+})
+
+
+$("#downphoto").click(function(){
+			if(!isLoading){
+			isLoading = true;
+			//相册起点计数
+			++start;
+			//自身约束
+			if({$photoCount}==start+4){
+			$("#downphoto").attr("disabled",true);
+			$("#downphoto").removeClass();
+			$("#downphoto").addClass("ph_downdis")
+			}
+			//上翻按钮恢复可点     样式调整
+			$("#upphoto").attr("disabled",false);
+			$("#upphoto").css('display','block');
+			$("#upphoto").removeClass();
+			$("#upphoto").addClass("ph_upnor")
+
+			var t = Math.random();
+			$.ajax({
+type: "POST",
+url:U('msgroup/Ajax/getphoto'),
+data:{start:start,gid:gid,type:1,t:t},
+datatype:'text',
+success: function (data) {
+//解析数组
+data = eval('('+data+')');
+
+//动画隐藏  回调删除
+$(".msgroupphoto li:first").hide(140,function(){jQuery(".msgroupphoto li:first").remove()});
+//插入作为作为最后一个子元素
+$(".msgroupphoto").append("<li style='display:none'><a href='"+data.url+"'><p><img src='"+data.savepath+"' /></p></a><p>"+data.photo_name+"</p></a></li>");	     
+setTimeout(function(){
+	$(".msgroupphoto li:last").show(140);
+	isLoading = false;
+	},140);
+},
+error: function (msg) {
+isLoading = false;
+}
+});
+}
+})
+function changeResTab(obj,type){
+	jQuery("#tearestab li").each(function(){
+				jQuery(this).removeClass("current");
+				});
+	jQuery(obj).addClass("current");
+	switch(type){
+		case  '0100':
+			jQuery("#res_0100").css("display","block");
+			jQuery("#res_0600").css("display","none");
+			jQuery("#res_0300").css("display","none");
+			break;
+		case  '0600':
+			jQuery("#res_0100").css("display","none");
+			jQuery("#res_0600").css("display","block");
+			jQuery("#res_0300").css("display","none");
+			break;
+		case  '0300':
+			jQuery("#res_0100").css("display","none");
+			jQuery("#res_0600").css("display","none");
+			jQuery("#res_0300").css("display","block");
+			break;
+	}
+}
+//未登录状态弹出登陆框
+function showLogin(){
+	jQuery('#login_popup').trigger("click");
+}
+</script>
+<include file="__THEME__/public_footer" />
+<include file="__THEME__/login_pop" />

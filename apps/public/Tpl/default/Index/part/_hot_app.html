@@ -1,0 +1,49 @@
+<volist id='app_list' name='app_list' key='key'>
+ <div  class="cy_model_easy clearfix <php>if($key==1) echo 'current';</php>"	id='hot_{$key}' onmouseover="changeHotmoserover(this)"><php>
+	$hot_count=$app_list['discuss_count']>0?$app_list['discuss_count']:0;
+	if($hot_count>10000){ $hot_count = '999+'; }</php>
+	<span class="fl" title="{$app_list['discuss_count']|default=0}">{$hot_count}</span>
+	<div class="cy_model_fbNr fl">
+		<p class="cy_model_fbTit clearfix">
+			<a target="_blank" href="{$app_list['source_url']}" class="fl">{$app_list['title']|getShort=###,20,'...'}</a>
+			<span class="fr">作者：<a  target="_blank" 
+				href="{:U('public/Profile/index',array('uid'=>$app_list['hotUser']['uid']))}"
+				class="name" event-node="face_card" uid="{$app_list['hotUser']['uid']}" show="no">{$app_list['hotUser']['uname']|getShort=###,3,'...'}</a></span>
+		</p>
+		<php> if($key==1){</php>
+		<div id='hot_{$key}_content1' class="cy_model_fbTxt font_limit" style="display: none">{$app_list['content']|html_entity_decode=###}</div>
+		<div id="hot_{$key}_content2" class="cy_model_fbTxt font_limit" style="">{$app_list['content']|html_entity_decode=###}</div>
+		<php>} else {</php>
+		<div id='hot_{$key}_content1' class="cy_model_fbTxt font_limit" >{$app_list['content']}</div>
+		<div id="hot_{$key}_content2" class="cy_model_fbTxt font_limit" style="display: none">{$app_list['content']}</div>
+		<php>}</php>
+		<php> if(!empty($app_list['commentUser'])){</php>
+		<php> if($key!=1){</php>
+		<div class="cy_model_repeat" style="display: none">
+			<php>} else {</php>
+			<div class="cy_model_repeat">
+				<php>}</php>
+				<span class="trend_triangle"></span>
+				<div class="cy_model_reptCon clearfix">
+				<php>	$coment_count=$app_list['comment_count']>0?$app_list['comment_count']:0;
+						if($coment_count>10000){ $coment_count = '999+'; }</php>
+					<span class="fl" title="{$coment_count}">{$coment_count}</span>
+					<p class="fl font_limit">
+						<strong><a  target="_blank" 
+							href="{:U('public/Profile/index',array('uid'=>$app_list['commentUser']['uid']))}"
+							class="name" event-node="face_card" uid="{$app_list['commentUser']['uid']}" show="no">{$app_list['commentUser']['uname']|getShort=###,3,'...'}</a>的回复：</strong>
+						{$app_list['comment_content']}
+					</p>
+				</div>
+			</div>
+			<php> }</php>
+		</div>
+	</div>
+</div> 
+</volist>
+<php>if(count($app_list) == 0):</php>
+    <div  class="cy_model_easy clearfix">
+              <div style="width: 98px; margin: auto;">暂时没有数据</div>
+    </div>
+<php>endif;</php>
+<a href="{$more_url}" class="cy_model_more fr" target="_blank">更多>></a>

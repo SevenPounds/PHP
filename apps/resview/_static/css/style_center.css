@@ -1,0 +1,252 @@
+@charset "utf-8";
+/*--------------------------center_index-------------------------*/
+/*------box------*/
+
+
+
+@media all and (min-width:0px){ .res_tit p b {padding:1px 6px 0;line-height:22px;} }
+
+
+
+
+.main_pre{
+	margin-top:5px;
+    border:1px solid #dde9ef;
+    background:url(../image/main_prebg.jpg) repeat-y;
+}/*--20130418---Edit--*/
+
+
+.pre_left{
+	width:740px;
+    float:left;
+    padding:10px 6px 0;
+    display:inline;
+}/*--20130418---Edit--*/
+
+
+.pre_left .pre_tit{
+	padding:4px 5px;
+}
+
+.pre_left .pre_tit img{
+	width:16px;
+	height:16px;
+	/*float:left;*/
+	padding-top:5px;
+
+}
+
+.pre_left .pre_tit b{
+	font-size:24px;
+	padding:0 4px 0 8px;
+	color:#333;
+}
+
+.pre_box{
+	border:1px solid #c9dbe4;
+	background:#FFF;
+	margin-top:14px;
+}
+
+.pre_box .pre_tit{
+	background:#f2f2f2;
+	height:25px;
+}
+
+.pre_box .pre_tit input{
+	vertical-align:bottom;
+	border:none;
+	position:relative;
+	margin:2px;
+}
+
+
+
+.pre_box .pre_font{
+	padding:1px;
+	width:738px;
+	text-align:center;
+	min-height:64px;
+	_height:64px;
+    margin-top:2px;
+    margin-bottom:2px;
+}
+
+.pre_block{
+	padding:10px 0;
+	height:34px;
+}
+
+.pre_comments{
+	width:260px;
+	float:left;
+    
+}
+.jiathis_style_24x24{
+	margin-left: -190px;
+margin-top: -80px;
+	
+	
+}
+
+.pre_comments p{
+	width:70px;
+	float:left;
+	padding:5px;
+	height:24px;
+	line-height:24px;
+}
+
+.pre_comments p img{
+	width:24px;
+	height:24px;
+	float:left;
+	padding-right:2px;
+}
+
+.pre_btn{
+	/*width:357px;*/
+    width:273px;
+	float:right;
+}
+
+.pre_btn input{
+	vertical-align:bottom;
+	border:none;
+	position:relative;
+	float:left;
+	margin-left:10px;
+	display:inline;
+}
+
+.pre_reproduced{
+	background:url(../image/pre_reproduced.jpg) left top no-repeat;
+	width:164px;
+	height:34px;
+	cursor:pointer;	
+}
+
+.pre_reproduced2{
+	background:url(../image/pre_reproduced.jpg) left bottom no-repeat;
+	width:164px;
+	height:34px;
+	cursor:pointer;	
+}
+
+.pre_collect{
+	background:url(../image/pre_collect.jpg) left top no-repeat;
+	width:74px;
+	height:34px;
+	cursor:pointer;	
+}
+
+.pre_collect2{
+	background:url(../image/pre_collect.jpg) left bottom no-repeat;
+	width:74px;
+	height:34px;
+	cursor:pointer;	
+}
+
+.pre_download{
+	background:url(../image/pre_download.jpg) left top no-repeat;
+	width:119px;
+	height:34px;
+	cursor:pointer;	
+}
+
+.pre_download2{
+	background:url(../image/pre_download.jpg) left bottom no-repeat;
+	width:119px;
+	height:34px;
+	cursor:pointer;	
+}
+
+.pre_save{
+	background:url(../image/pre_save.jpg) left top no-repeat;
+	width:134px;
+	height:34px;
+	cursor:pointer;	
+}/*--2013-04-12---Edit--*/
+
+.pre_save2{
+	background:url(../image/pre_save.jpg) left bottom no-repeat;
+	width:134px;
+	height:34px;
+	cursor:pointer;	
+}/*--2013-04-12---Edit--*/
+
+.pre_collect3{
+	background:url(../image/pre_collect2.jpg) left top no-repeat;
+	width:134px;
+	height:34px;
+	cursor:pointer;	
+}/*--2013-04-12---Edit--*/
+
+.pre_collect4{
+	background:url(../image/pre_collect2.jpg) left bottom no-repeat;
+	width:134px;
+	height:34px;
+	cursor:pointer;	
+}/*--2013-04-12---Edit--*/
+
+.pre_right{
+	width:232px;
+	float:right;
+	padding:10px 8px 10px 0;
+	display:inline;
+}
+
+.upload_btn{
+	width:190px;
+	padding-left:8px;
+	padding-top:15px;
+}
+
+.upload_btn input{
+	vertical-align:bottom;
+	border:none;
+	position:relative;
+}
+
+.pre_upload{
+	background:url(../image/pre_upload.jpg) left top no-repeat;
+	width:190px;
+	height:38px;
+	cursor:pointer;	
+}
+
+.pre_upload2{
+	background:url(../image/pre_upload.jpg) left bottom no-repeat;
+	width:190px;
+	height:38px;
+	cursor:pointer;	
+}
+
+.pre_tip{
+	height:160px;
+	padding:25px 0 20px 6px;
+	font-size:13px;
+	line-height:32px;
+}
+
+.pre_tip b{
+	font-size:18px;
+	padding:5px 0;
+}
+
+
+
+
+
+/*--------------------------------20130903---end----------------------------------*/
+
+/*--------------------------------20130904---公告start----------------------------------*/
+.item-announcement{}
+.item-announcement img{max-width:920px;overflow:hidden;}
+.item-announcement .hd{color: #535353;font-family: Microsoft YaHei;font-size: 22px;font-weight: 300;padding: 5px 0 10px;}
+.item-announcement .mod-announcement{background: none repeat scroll 0 0 #fff;font-size: 14px;padding: 20px;line-height:23px}
+.item-announcement .mod-announcement h4{background:#F1F1F1;border-bottom:1px dashed #DDDDDD;font-weight:700;margin: 0 0 15px;padding: 10px 0;
+    text-align: center;}
+.item-announcement .mod-announcement h4 span{display:block;font-size:12px;font-weight:300;color: #999;padding:0 0 0 10px;}
+.boxShadow{background:#fff;box-shadow:0 0 5px #CCCCCC;-moz-box-shadow:0 0 5px #CCCCCC;-khtml-box-shadow:0 0 5px #CCCCCC;}
+/*--------------------------------20130904---公告----------------------------------*/

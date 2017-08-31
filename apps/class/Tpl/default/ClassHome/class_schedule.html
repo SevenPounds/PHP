@@ -1,0 +1,278 @@
+<include file="__THEME__/public_header" />
+<link href="__APP__/css/fonts.css" rel="stylesheet" type="text/css" />
+<link href="__APP__/css/main.css" rel="stylesheet" type="text/css" />
+<div class="cloud">
+	<include file="__THEME__/public_class_menu" />
+	<include file="../Public/_class_top" />
+	<div class="ccrumbs">
+		<ul>
+			<li class="pre_cen"><a
+				href="{:U('class/ClassHome/index',array('cid'=>$_GET['cid']))}">班级主页</a></li>
+			<li><a>></a></li>
+			<li><a >班级管理</a></li>
+			<li><a>></a></li>
+			<li>设置课表</li>
+		</ul>
+		<div class="clear"></div>
+	</div>
+	<div class="class_bg">
+		<include file='../Public/_tabs' />
+		<div class="class_right">
+			<div class="title5"><b>设置课表</b></div>
+			<div class="line1"></div>
+			<div class="kcb_top">课程表内容，可以直接输入编辑</div>
+			<table cellpadding="0" cellspacing="0" class="kcb_table">
+				<tr>
+					<th width="9%">节次</th>
+					<th width="13%" class="tmonday">星期一</th>
+					<th width="13%" class="ttuesday">星期二</th>
+					<th width="13%" class="twednesday">星期三</th>
+					<th width="13%" class="tthursday">星期四</th>
+					<th width="13%" class="tfriday">星期五</th>
+					<th width="13%" class="tsaturday">星期六</th>
+					<th width="13%" class="tsunday">星期日</th>
+				</tr>
+			</table>
+			<table cellpadding="0" cellspacing="0" class="kcb_table2">
+				<tr>
+					<td width="9%" class="festival" style="background:#fff8e8;">一</td>
+					<td width="13%"><input type="text" class="monday" value="{$sch['monday'][0]}"/></td>
+					<td width="13%"><input type="text" class="tuesday" value="{$sch['tuesday'][0]}"/></td>
+					<td width="13%"><input type="text" class="wednesday" value="{$sch['wednesday'][0]}"/></td>
+					<td width="13%"><input type="text" class="thursday" value="{$sch['thursday'][0]}"/></td>
+					<td width="13%"><input type="text" class="friday" value="{$sch['friday'][0]}"/></td>
+					<td width="13%"><input type="text" class="saturday" value="{$sch['saturday'][0]}"/></td>
+					<td width="13%"><input type="text" class="sunday" value="{$sch['sunday'][0]}"/></td>
+				</tr>
+				<tr>
+					<td width="9%" class="festival" style="background:#fff8e8;">二</td>
+					<td width="13%"><input type="text" class="monday" value="{$sch['monday'][1]}"/></td>
+					<td width="13%"><input type="text" class="tuesday" value="{$sch['tuesday'][1]}"/></td>
+					<td width="13%"><input type="text" class="wednesday" value="{$sch['wednesday'][1]}"/></td>
+					<td width="13%"><input type="text" class="thursday" value="{$sch['thursday'][1]}"/></td>
+					<td width="13%"><input type="text" class="friday" value="{$sch['friday'][1]}"/></td>
+					<td width="13%"><input type="text" class="saturday" value="{$sch['saturday'][1]}"/></td>
+					<td width="13%"><input type="text" class="sunday" value="{$sch['sunday'][1]}"/></td>
+				</tr>
+				<tr>
+					<td width="9%" class="festival" style="background:#fff8e8;">三</td>
+				<td width="13%"><input type="text" class="monday" value="{$sch['monday'][2]}"/></td>
+					<td width="13%"><input type="text" class="tuesday" value="{$sch['tuesday'][2]}"/></td>
+					<td width="13%"><input type="text" class="wednesday" value="{$sch['wednesday'][2]}"/></td>
+					<td width="13%"><input type="text" class="thursday" value="{$sch['thursday'][2]}"/></td>
+					<td width="13%"><input type="text" class="friday" value="{$sch['friday'][2]}"/></td>
+					<td width="13%"><input type="text" class="saturday" value="{$sch['saturday'][2]}"/></td>
+					<td width="13%"><input type="text" class="sunday" value="{$sch['sunday'][2]}"/></td>
+				</tr>
+				<tr>
+					<td width="9%" class="festival" style="background:#fff8e8;">四</td>
+					<td width="13%"><input type="text" class="monday" value="{$sch['monday'][3]}"/></td>
+					<td width="13%"><input type="text" class="tuesday" value="{$sch['tuesday'][3]}"/></td>
+					<td width="13%"><input type="text" class="wednesday" value="{$sch['wednesday'][3]}"/></td>
+					<td width="13%"><input type="text" class="thursday" value="{$sch['thursday'][3]}"/></td>
+					<td width="13%"><input type="text" class="friday" value="{$sch['friday'][3]}"/></td>
+					<td width="13%"><input type="text" class="saturday" value="{$sch['saturday'][3]}"/></td>
+					<td width="13%"><input type="text" class="sunday" value="{$sch['sunday'][3]}"/></td>
+				</tr>
+				<tr>
+					<td width="9%" class="festival" style="background:#fff8e8;">午休</td>
+					<td width="13%"><input type="text" class="monday" value="{$sch['monday'][4]}"/></td>
+					<td width="13%"><input type="text" class="tuesday" value="{$sch['tuesday'][4]}"/></td>
+					<td width="13%"><input type="text" class="wednesday" value="{$sch['wednesday'][4]}"/></td>
+					<td width="13%"><input type="text" class="thursday" value="{$sch['thursday'][4]}"/></td>
+					<td width="13%"><input type="text" class="friday" value="{$sch['friday'][4]}"/></td>
+					<td width="13%"><input type="text" class="saturday" value="{$sch['saturday'][4]}"/></td>
+					<td width="13%"><input type="text" class="sunday" value="{$sch['sunday'][4]}"/></td>
+				</tr>
+				<tr>
+					<td width="9%" class="festival" style="background:#fff8e8;">五</td>
+					<td width="13%"><input type="text" class="monday" value="{$sch['monday'][5]}"/></td>
+					<td width="13%"><input type="text" class="tuesday" value="{$sch['tuesday'][5]}"/></td>
+					<td width="13%"><input type="text" class="wednesday" value="{$sch['wednesday'][5]}"/></td>
+					<td width="13%"><input type="text" class="thursday" value="{$sch['thursday'][5]}"/></td>
+					<td width="13%"><input type="text" class="friday" value="{$sch['friday'][5]}"/></td>
+					<td width="13%"><input type="text" class="saturday" value="{$sch['saturday'][5]}"/></td>
+					<td width="13%"><input type="text" class="sunday" value="{$sch['sunday'][5]}"/></td>
+				</tr>
+				<tr>
+					<td width="9%" class="festival" style="background:#fff8e8;">六</td>
+					<td width="13%"><input type="text" class="monday" value="{$sch['monday'][6]}"/></td>
+					<td width="13%"><input type="text" class="tuesday" value="{$sch['tuesday'][6]}"/></td>
+					<td width="13%"><input type="text" class="wednesday" value="{$sch['wednesday'][6]}"/></td>
+					<td width="13%"><input type="text" class="thursday" value="{$sch['thursday'][6]}"/></td>
+					<td width="13%"><input type="text" class="friday" value="{$sch['friday'][6]}"/></td>
+					<td width="13%"><input type="text" class="saturday" value="{$sch['saturday'][6]}"/></td>
+					<td width="13%"><input type="text" class="sunday" value="{$sch['sunday'][6]}"/></td>
+				</tr>
+				<tr>
+					<td width="9%" class="festival" style="background:#fff8e8;">七</td>
+					<td width="13%"><input type="text" class="monday" value="{$sch['monday'][7]}"/></td>
+					<td width="13%"><input type="text" class="tuesday" value="{$sch['tuesday'][7]}"/></td>
+					<td width="13%"><input type="text" class="wednesday" value="{$sch['wednesday'][7]}"/></td>
+					<td width="13%"><input type="text" class="thursday" value="{$sch['thursday'][7]}"/></td>
+					<td width="13%"><input type="text" class="friday" value="{$sch['friday'][7]}"/></td>
+					<td width="13%"><input type="text" class="saturday" value="{$sch['saturday'][7]}"/></td>
+					<td width="13%"><input type="text" class="sunday" value="{$sch['sunday'][7]}"/></td>
+				</tr>
+				<tr>
+					<td width="9%" class="festival" style="background:#fff8e8;">八</td>
+					<td width="13%"><input type="text" class="monday" value="{$sch['monday'][8]}"/></td>
+					<td width="13%"><input type="text" class="tuesday" value="{$sch['tuesday'][8]}"/></td>
+					<td width="13%"><input type="text" class="wednesday" value="{$sch['wednesday'][8]}"/></td>
+					<td width="13%"><input type="text" class="thursday" value="{$sch['thursday'][8]}"/></td>
+					<td width="13%"><input type="text" class="friday" value="{$sch['friday'][8]}"/></td>
+					<td width="13%"><input type="text" class="saturday" value="{$sch['saturday'][8]}"/></td>
+					<td width="13%"><input type="text" class="sunday" value="{$sch['sunday'][8]}"/></td>
+				</tr>
+			</table>
+			<div class="class_btn">
+				<input type="button" value="保存" class="save_btnnor"  onmouseover="this.className='save_btnhov'" onmouseout="this.className='save_btnnor'" onclick="SaveSchedule();"/>	
+			</div>
+		</div>
+		<div class="clear"></div>
+		
+		<script>
+			function SaveSchedule() {
+				var cid='<php> echo $_GET['cid']</php>';
+				var id='<php> echo $sch_id</php>';
+				//课表信息
+				var schinfo={};
+				var monday=[];
+				var tuesday=[];
+				var wednesday=[];
+				var thursday=[];
+				var friday=[];
+				var saturday=[];
+				var sunday=[];
+				for(i=0;i<9;i++)
+				{
+					monday[i]= $.trim($(".monday").eq(i).val());
+					tuesday[i]=$.trim($(".tuesday").eq(i).val());
+					wednesday[i]=$.trim($(".wednesday").eq(i).val());
+					thursday[i]=$.trim($(".thursday").eq(i).val());
+					friday[i]=$.trim($(".friday").eq(i).val());
+					saturday[i]=$.trim($(".saturday").eq(i).val());
+					sunday[i]=$.trim($(".sunday").eq(i).val());
+				}
+				schinfo['monday']= monday;
+				schinfo['tuesday'] = tuesday;
+				schinfo['wednesday'] = wednesday;
+				schinfo['thursday'] = thursday;
+				schinfo['friday'] = friday;
+				schinfo['saturday'] = saturday;
+				schinfo['sunday'] = sunday;
+				$.post(U('class/Ajax/doSaveSchedule'),{schinfo:schinfo,cid:cid,id:id},function(content){ui.success(content)});
+			}
+			
+			$(document).ready(function(){
+				  $("input:text").mouseover(function(){
+					 
+					  $(this).parent().css("background-color","#eeeeee");
+				  });
+				  $("input:text").mousedown(function(){
+				  $(this).parent().css("background-color","#eeeeee");
+				  $(this).focus();
+				  });
+				  
+				  $("input:text").mouseleave(function(){
+					  $(this).parent().css("background-color","transparent");
+					  });
+				  
+				  
+				  $(".festival").mouseover(function(){
+					  $(this).parent().css("background-color","#eeeeee")
+				  });
+				  $(".festival").mouseleave(function(){
+					  $(this).parent().css("background-color","transparent")
+				  });
+				
+  				  $(".tmonday").mouseover(function(){
+  					$(".monday").each(function(){
+  						$(this).css("background-color","#eeeeee")
+  					})	
+  				  });
+  				 $(".tmonday").mouseleave(function(){
+   					$(".monday").each(function(){
+   						$(this).css("background-color","transparent")
+   					})	
+   				  });
+  				 
+  				 $(".ttuesday").mouseover(function(){
+   					$(".tuesday").each(function(){
+   						$(this).css("background-color","#eeeeee")
+   					})	
+   				  });
+   				 $(".ttuesday").mouseleave(function(){
+    					$(".tuesday").each(function(){
+    						$(this).css("background-color","transparent")
+    					})	
+    				  });
+   				 
+   				 $(".twednesday").mouseover(function(){
+   					$(".wednesday").each(function(){
+   						$(this).css("background-color","#eeeeee")
+   					})	
+   				  });
+   				 $(".twednesday").mouseleave(function(){
+    					$(".wednesday").each(function(){
+    						$(this).css("background-color","transparent")
+    					})	
+    				  });
+   				 
+   				 $(".tthursday").mouseover(function(){
+   					$(".thursday").each(function(){
+   						$(this).css("background-color","#eeeeee")
+   					})	
+   				  });
+   				 $(".tthursday").mouseleave(function(){
+    					$(".thursday").each(function(){
+    						$(this).css("background-color","transparent")
+    					})	
+    				  });
+   				 
+   				 $(".tfriday").mouseover(function(){
+   					$(".friday").each(function(){
+   						$(this).css("background-color","#eeeeee")
+   					})	
+   				  });
+   				 $(".tfriday").mouseleave(function(){
+    					$(".friday").each(function(){
+    						$(this).css("background-color","transparent")
+    					})	
+    				  });
+   				 
+   				 $(".tsaturday").mouseover(function(){
+   					$(".saturday").each(function(){
+   						$(this).css("background-color","#eeeeee")
+   					})	
+   				  });
+   				 $(".tsaturday").mouseleave(function(){
+    					$(".saturday").each(function(){
+    						$(this).css("background-color","transparent")
+    					})	
+    				  });
+  				
+   				 $(".tsunday").mouseover(function(){
+   					$(".sunday").each(function(){
+   						$(this).css("background-color","#eeeeee")
+   					})	
+   				  });
+   				 $(".tsunday").mouseleave(function(){
+    					$(".sunday").each(function(){
+    						$(this).css("background-color","transparent")
+    					})	
+    				  });
+				  
+				
+
+				  
+				  
+				  
+				  
+				});
+
+		</script>
+		<div class="clear"></div>
+	</div>
+	<include file="__THEME__/public_footer" />
+	</div>

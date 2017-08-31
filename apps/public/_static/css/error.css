@@ -1,0 +1,45 @@
+html,
+body,
+.error_bg{
+    height: 100%;
+}
+.error_bg{
+    background: url(../images/error.png) no-repeat center center #fff;
+}
+.container{
+    width: 1000px;
+    margin: 0 auto;
+    position: relative;
+    height: 100%;
+}
+.des{
+    position: absolute;
+    right: 90px;
+    top:50%;
+    margin-top: -135px;
+    text-align: right;
+}
+.des p{
+    padding-top: 10px;
+    font-size: 18px;
+    color: #b6b6b6;
+    line-height: 30px;
+}
+.des p.color{
+    color: #266ccb;
+    font-size: 24px;
+}
+.return{
+    display: inline-block;
+    margin-top: 20px;
+    background: url(../images/error_btn.png) no-repeat 0 0;
+    width: 164px;
+    height: 41px;
+    line-height: 41px;
+    text-align: center;
+    font-size: 18px;
+    color: #fff;
+}
+.return:hover{
+    background: url(../images/error_btn.png) no-repeat 0 -70px;
+}

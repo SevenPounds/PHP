@@ -1,0 +1,35 @@
+<div class="studio_title01">
+							<span class="pt4"><img src="__APP__/images/icon_people.gif" /></span>
+							<span>工作室成员</span>
+							<div class="change">
+								<p class="stone_left">
+								<a href="javascript:void(0);" <php>if($pre_page):</php> onclick="getMsgroupMembers({$page-1},{$gid});" <php>endif;</php>>
+								<img  <php>if($pre_page):</php>  src="__APP__/images/change_left_pre.gif"    <php>else:</php> src="__APP__/images/change_left_nor.gif"  <php>endif;</php> /></a><!--<img src="__APP__/images/change_left_pre.gif" />-->
+								</p>
+								<p class="stone_right"><!--<a href="#"><img src="__APP__/images/change_right_nor.gif" /></a>-->
+								<a href="javascript:void(0);" <php>if($next_page):</php> onclick="getMsgroupMembers({$page+1},{$gid});" <php>endif;</php> >
+								<img <php>if($next_page):</php> src="__APP__/images/change_right_pre.gif" <php>else:</php> src="__APP__/images/change_right_nor.gif"  <php>endif;</php> /></a>
+								</p>
+							</div>
+						</div>
+						<div class="studio_namegroup01">
+							<div class="studio_leader">
+								<p class="leader_pic"><a href="{:U('public/Profile/index',array('uid'=>$creator['uid']))}"><img style="height:80px;width:80px;" src="{$creator['avatar']['avatar_middle']}" uid="{$creator['uid']}" event-node="face_card"/></a></p>
+								<div class="leader_infor">
+									<p class="pt15"><a href="{:U('public/Profile/index',array('uid'=>$creator['uid']))}"><img src="__APP__/images/flag.gif" /><span class="font16 black3" title="{$creator['uname']}">{$creator['uname']|getShort=4,'...'}</span>&nbsp;<span class="font14 black2">(带头人)</span></a></p>
+									<p class="pt10" style="color:#535353;">{$creator['role_name']}&nbsp;&nbsp;{$creator['grade']}&nbsp;&nbsp;{$creator['subject']}</p>
+							    </div>
+								<div class="clear"></div>
+							</div> 
+							<ul>
+								<volist name="data" id="vo">
+								<li>
+									<a href="{$user_info[$vo['uid']]['space_url']}">
+										<p><img src="{$user_info[$vo['uid']]['avatar_small']}" uid="{$vo['uid']}" event-node="face_card" /><!-- <img src="__APP__/images/pic_teacher.jpg" /> --></p>
+										<p>{$user_info[$vo['uid']]['uname']|getShort=4}</p>
+									</a>
+								</li>
+								</volist>
+							</ul>
+							<div class="clear"></div>
+						</div>

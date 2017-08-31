@@ -1,0 +1,32 @@
+<link href="__APP__/css/main.css"  rel="stylesheet" type="text/css" />
+<link href="__APP__/css/font.css" rel="stylesheet" type="text/css" />
+
+<div class="pop_box2">
+	<div class="pop_head">
+		<div class="left pl15">审核不通过</div>
+		<div class="pop_close" onMouseover="this.className='pop_closehov'" onMouseOut="this.className='pop_close'" onclick='ResourceSelector.AuditCancle();'></div>
+	</div>
+	<div class="pop_con">
+		<div class="pe_line1">
+			<p>驳回理由：</p>
+			<ul>
+				<li><span><input type="radio" name="cause1" value="资源内容不完整"/></span><span class="pl3">资源内容不完整</span></li>
+				<li><span class="pl30"><input type="radio" name="cause1" value="资源内容与主题不符"/></span><span class="pl3">资源内容与主题不符</span></li>
+				<li><span><input type="radio" name="cause1" value="资源含违法内容"/></span><span class="pl3">资源含违法内容</span></li>
+				<li><span class="pl30"><input type="radio" name="cause1" value="资源涉及版权"/></span><span class="pl3">资源涉及版权</span></li>
+				<li><span><input type="radio" name="cause1" value="资源文件无法打开"/></span><span class="pl3">资源文件无法打开</span></li>
+				<li><span class="pl30"><input type="radio" name="cause1" value="资源质量太差"/></span><span class="pl3">资源质量太差</span></li>
+				<li><span><input type="radio" name="cause1" value="资源含有敏感不文明字样"/></span><span class="pl3">资源含有敏感不文明字样</span></li>
+				<li><span class="pl30"><input type="radio" name="cause1" value="其他"/></span><span class="pl3">其他</span></li>
+			</ul>
+			<div class="clear"></div>
+		</div>
+		<div class="rp_txt">
+			<textarea id="cause2"></textarea>
+		</div>
+		<div class="pop_btn2">
+			<input type="button" value="确定" class="blue5_btn" onMouseover="this.className='blue5_btnhov'" onMouseOut="this.className='blue5_btn'" onclick='ResourceSelector.AuditUnPass(this,{$type});'>
+			<input type="button" value="取消" class="blue4_btn" onMouseover="this.className='blue4_btnhov'" onMouseOut="this.className='blue4_btn'" onclick='ResourceSelector.AuditCancle();'>
+		</div>
+	</div>
+</div>

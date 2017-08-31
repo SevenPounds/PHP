@@ -1,0 +1,145 @@
+<script src="__APP__/js/flexpaper/flexpaper_flash.js" type="text/javascript"></script>
+<script src="__APP__/js/jquery.media.js" type="text/javascript"></script>
+<script src="__APP__/js/flowplayer/flowplayer-3.2.11.min.js" type="text/javascript"></script>
+<script type="text/javascript" src="__APP__/js/flexpaper/swfobject.js"></script> 
+<IE:clientCaps ID="oClientCaps" style="behavior:url(#default#clientcaps)"/>
+<div class="pre_font" id="preview" style="padding:0;min-height:400px;width:736px;margin-left:auto;margin-right:auto;"></div>
+<div class="pre_font" id="no_preview" style="width:736px;height:530px;display:none;margin-left:auto;margin-right:auto;">
+  		<img alt="预览图片" src="__APP__/images/no_preview.jpg" style="width:736px;height:530px;"/>
+</div>
+<script type="text/javascript" src="__APP__/js/resview.js"></script>
+<script type="text/javascript">
+	//alert("{$resourceInfo:general:id}");
+	var popup_recombox = function(){
+  		ui.box.load(U('resview/Index/recommendtofriends'),'推荐给好友');
+  		$(".hd").css({'background':'#73BFEE','color':'white'});
+  		/*$(".hd").css("background","#73bfee");
+  		$(".hd").css("color","#fff");
+  		$(".ico-close").addClass("ico-tmp");
+  		$(".ico-tmp").removeClass("ico-close").addClass("pop_close");
+  		$(".ico-tmp").hover(function(){
+  			$(".ico-tmp").removeClass("pop_close").addClass("pop_closehov");
+  		},
+  		function(){
+  			$(".ico-tmp").removeClass("pop_closehov").addClass("pop_close");
+  		})*/
+  	}
+	
+	//展开好友列表 by zhaoliang
+	var expandlist = function(obj,gid){
+		$li =$(obj).parent().children(".friendlist");
+		$hidden = $(obj).parent().children(".hasclicked");
+		var hasclicked = $hidden.val();
+		if(hasclicked == "1"){
+			if($li.css("display")=="none"){
+				$li.css("display","block");
+				$(obj).css("background","url(apps/resview/_static/image/ep_down.gif) no-repeat");
+			}
+			else{
+				$li.css("display","none");
+				$(obj).css("background","url(apps/resview/_static/image/ep_up.gif) no-repeat");
+			}
+		}
+		else{
+			$.get("index.php?app=resview&mod=Ajax&act=getFriendlist&gid=" + gid,function(data){
+				$li.html(data);
+				//判断是否已选择
+				var hiddenid = $("#hiddenselfriendsid").val();
+				var selfriends = hiddenid.split(" ");
+				for(i=0;i<selfriends.length;i++){
+					$("#choose_"+selfriends[i]).css("display","inline");
+				}
+			})
+			$hidden.val("1");
+			$(obj).css("background","url(apps/resview/_static/image/ep_down.gif) no-repeat");
+		}
+	}
+	
+	//推荐资源给好友---添加推荐好友 by zhaoliang
+	var insertUser = function(uid,username,avastar){
+		//判断username是否已被添加
+		var hidden = $("#hiddenselfriends").val();
+		var hiddenid = $("#hiddenselfriendsid").val();
+		var selfriends = hidden.split(" ");
+		for(i=0;i<selfriends.length;i++){
+			if(selfriends[i] == username){
+				return;
+			}
+		}
+		hidden = hidden + " " + username;
+		hiddenid = hiddenid + " " + uid;
+		
+		$("#hiddenselfriends").val(hidden);
+		$("#hiddenselfriendsid").val(hiddenid);
+		var userhtml = '<li style="margin-left:5px;line-height:20px;"><a style="float:right;margin-right:20px;" href="javascript:void(0);" onclick=\'deluser(this,"' + uid + '","' + username +'")\'><img src="__APP__/image/ep_delete.gif" width="15"></a><a class="friendli" href="javascript:void(0);"><img style="margin-right:5px;" width="15" alt="' + username + '" src="' + avastar + '">' + username + '</a></li>';
+		$("#selectedfriendlist").append(userhtml);
+		$("#choose_"+uid).css("display","inline");
+	}
+	
+	//推荐资源给好友---删除已添加的好友 by zhaoliang
+	var deluser = function(obj,uid,username){
+		var hidden = $("#hiddenselfriends").val();
+		var hiddenid = $("#hiddenselfriendsid").val();
+		var selfriends = hidden.split(" ");
+		var selfriendsid = hiddenid.split(" ");
+		hidden = "";
+		hiddenid = "";
+		for(i=0;i<selfriends.length;i++){
+			if(selfriendsid[i] != uid){
+				hidden = hidden + selfriends[i] + " ";
+				hiddenid = hiddenid + selfriendsid[i] + " ";
+			}
+		}
+		$("#hiddenselfriends").val(hidden);
+		$("#hiddenselfriendsid").val(hiddenid);
+		//删除节点
+		$(obj).parent().remove();
+		$("#choose_"+uid).css("display","none");
+	}
+	
+	//关闭推荐资源窗口 by zhaoliang
+	var closerec = function(){
+		ui.box.close();
+	}
+	
+	//确认推荐资源事件 by zhaoliang
+	var confirmrec = function(){
+		var hidden = $.trim($("#hiddenselfriendsid").val());
+		var selfriends = hidden.split(" ");
+		if(hidden == ""){
+			alert("请先选择好友！");
+			return;
+		}
+		for(i=0;i<selfriends.length;i++){
+			if(selfriends[i]!=""){
+				$.post("index.php?app=public&mod=Message&act=doPost",{"to":selfriends[i],"content":"给你分享一个资源：" + window.location.href},function(data){
+					$("#recprogress").val(i+"/"+selfriends.length);
+				})
+			}
+		} 
+		$.post(U("reslib/Ajax/friendRecommend"),{"friend_uids":selfriends,"rid":resview.id},function(data){
+			if(data.status == 1){
+				//推荐资源给好友成功
+				return;
+			}else{
+				//推荐资源给好友成功
+				return;
+			}
+		},"json")
+		ui.box.close();
+		alert("资源推荐成功！");
+	}
+	
+	resview.id = "{$resourceInfo:general:id}";
+	resview.limit = "{$isUploadLimit}";
+	resview.uid = "{$cyuid}";
+	resview.appurl = "{$appurl}";
+	resview.filename = "{$realTitle}";
+	
+  	jQuery(function(){
+  		var previewurl = "{$preview_url}";
+  	  	resview.preview("{$resourceInfo:general:extension}","{$preview_url}");
+  		resview.event();
+  		resview.init("{$realTitle}");
+  })
+</script>  

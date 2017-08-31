@@ -1,0 +1,206 @@
+<style>
+/*精彩回复 141112*/
+.comment_lists .top_div{
+    padding:0;
+    background:#f3f5f7;
+    width:210px;
+	border: 1px solid #AAC9E9;
+}
+.comment_lists .top_div h3{
+    border:none;
+    border-top: 1px solid #AAC9E9;
+    border-bottom: 1px solid #AAC9E9;
+    line-height: 31px;
+    height: 31px;
+    padding: 0 0 0 10px;
+    background: #f9fafa;  
+}
+.comment_lists .top_div h3 span{
+    font-size: 16px;
+    color: #009DEE;
+}
+.comment_lists .top_div .comment_list{
+   margin: 0 7px;
+}
+.comment_lists .top_div .comment_list dd,
+.comment_lists .comment_list dd .cont em{
+    margin: 0;
+    color: #555;
+	text-decoration:  none;
+}
+.comment_lists .comment_list dd p.cont{
+    margin: 0;
+}
+.comment_lists .comment_list dd p.cont a{
+    color: #009dee;
+}
+.comment_lists .comment_list dd p.info a{
+    color: #99B2E5;  
+}
+.comment_lists .comment_list dd p.info i.vline{
+    color: #ccc;
+}
+.comment_lists .comment_list dd em span{
+    color: #aaa;
+}
+.comment_lists .top_div .comment_list dt{
+    margin: 5px 10px 0px 0;
+}
+.comment_lists .rgt_repeat textarea{
+	width:167px;
+}
+.comment_list .rgt_repeat ul{
+	display:none; 
+}
+.comment_list dd .info {
+	min-width: 165px;
+}
+.comment_list dd .info>span{
+	float:right;
+}
+.comment_lists .comment_list dd p.info i.vline{
+	margin:0px;
+}
+</style>
+
+<!--评论列表-->
+<neq name='list' value=''>
+<div class="comment_lists" style="margin-top:10px;">
+
+        <div class="top_div">
+        <php>
+        	switch($app_name){
+        		case "research":
+        			$app_name_ch = "讨论";break;
+        		case "pingke":
+        			$app_name_ch = "评课";break;
+        		case "onlineanswer":
+        			$app_name_ch = "回答";break;
+        		default:
+        			$app_name_ch = "回复";break;
+        	}
+        </php>
+        <h3><span>精彩{$app_name_ch}</span></h3>
+        <volist name='list' id='vo' key='k'>
+		<dl id="hot_comment_{$vo[$list_filed[0]]}" class="comment_list" model-node="comment_excellent_list">
+		<dt><a href="{$vo.user_info.space_url}" target="_blank" uid="{$vo['user_info']['uid']}" event-node="face_card" show="no"><img width="30" height="30" src="{$vo.user_info.avatar_middle}"></a></dt>
+		<dd>
+    <p class="cont">
+		    {$vo.user_info.space_link}
+        <volist name="vo['user_info']['groupData'][$vo['user_info']['uid']]" id="v2">
+            <img style="width:auto;height:auto;display:inline;cursor:pointer" src="{$v2['user_group_icon_url']}" title="{$v2['user_group_name']}" />&nbsp;
+        </volist>
+		    ：<em>{$vo.content}<!-- <span class="time">({$vo.ctime|friendlyDate})</span> --></em></p>
+		<p class="info right"><span>
+		 <php> $digg_count=$vo[$list_filed[3]]>999?'999+':$vo[$list_filed[3]];
+		  	   $discuss_count =$vo[$list_filed[4]]>999?'999+':$vo[$list_filed[4]];
+		  </php>
+		<if condition ="$diggArr[$vo[$list_filed[0]]] eq 1 AND isset($diggArr[$vo[$list_filed[0]]])">
+			 <span style="color:#999"><img src="__THEME__/image/zan.gif" style="padding-bottom: 3px">已赞({$digg_count})</span>
+		<else />
+			<span id='digg{$vo[$list_filed[0]]}' rel='{$vo[$list_filed[3]]}'>
+			   <a href="javascript:void(0)" onclick="addDigg({$vo[$list_filed[0]]})" >赞<if condition ="$digg_count gt 0">({$digg_count})</if></a>
+		    </span>
+		</if>
+
+   		<i class="vline">|</i>
+   		
+		<a event-node ="comment" href= "javascript:void(0)" event-args ='row_id={$vo[$list_filed[0]]}&app_uid={$vo[$list_filed[2]]}&to_comment_id={$vo[$list_filed[0]]}&to_uid={$vo[$list_filed[2]]}&app_name={$app_name}&table={$table}&canrepost=0&cancomment=1&cancomment_old=1&ajax_page=1' title="{$vo[$list_filed[4]]}">{:L('PUBLIC_STREAM_REPLY')}</a>
+	   
+	   	<php>if($app_name=='blog'){</php>
+		<i class="vline">|</i>
+		<php>
+		$isdel = 0;
+		if(($vo['uid'] == $GLOBALS['ts']['mid'] && CheckPermission('core_normal','comment_del')) || CheckPermission('core_admin','comment_del')){
+		$isdel = 1;
+		</php>
+		<a href="javascript:void(0);" event-node="comment_del" event-args="comment_id={$vo[$list_filed[0]]}" <php>if($vo['user_info']['uid'] != $GLOBALS['ts']['mid'] && CheckPermission('core_admin','comment_del')){</php>style="color:red;"<php>}</php>>{:L('PUBLIC_STREAM_COMMENT')}</a>
+		<php>}}</php>
+		<php>if($app_name!='blog'&&$vo[$list_filed[2]]==$GLOBALS['ts']['mid']){  </php>
+			<i class="vline">|</i>
+		<a  data-value ="hot_comment_{$vo[$list_filed[0]]}" href='javascript:void(0)' onclick='deleteCommentPost({$vo[$list_filed[0]]},this)'>删除</a>
+		<php>} </php> 
+    	</span>
+    	</p>
+    	
+    	<div class="clear"></div>
+		</dd>
+		<!-- 评论显示的地方 -->
+		<div model-node="comment_detail" class="rgt_repeat repeat_box" style="display:none;"></div>
+		</dl>
+	</volist>
+	</div>
+
+</div>
+</neq>
+<script type="text/javascript">
+var digglock = 0;
+var app_name='{$app_name}';
+function addDigg(id){
+	if (digglock==1){
+		return;
+	}
+	digglock = 1;
+	var data = {};
+	var url = "";
+	switch(app_name){
+		case 'research':
+			url = "index.php?app=research&mod=Index&act=addAgree";
+			data.post_id = id;
+			break;
+		case 'pingke':
+			url = "index.php?app=pingke&mod=Index&act=addAgree";
+			data.post_id = id;
+			break;
+		case 'vote':
+			url = "index.php?app=vote&mod=Ajax&act=addAgree";
+			data.post_id = id;
+			break;
+		case 'onlineanswer':
+			url = "index.php?app=onlineanswer&mod=Index&act=addAgree";
+			data.ansid = id;
+			break;
+	}
+   $.post(url, data, function(res){
+	   res = eval('('+res+')');
+       if(res.status == "200"){
+    	   ui.success('赞成功');
+	       var num = $('#digg'+id).attr('rel');
+    	   num++;
+    	   $('#digg'+id).html('<img src="__THEME__/image/zan.gif" style="padding-bottom: 3px"><span style="color:#999">已赞('+num+')</span>');
+    	   $('#agree'+id).html("<img src='__THEME__/image/zan.gif' />已赞("+num+")");
+       }else {
+	       ui.error(res.info);
+       }
+       digglock = 0;
+   });
+}
+/**
+ * 删除主题评论
+ * @return void
+ */
+var deleteCommentPost = function (post_id,obj) {
+	switch(app_name){
+	case "research":
+		delPost(post_id);break;
+	case "pingke":
+		delPost(post_id);break;
+	case "onlineanswer":
+		delAnswerbyid(post_id);break;
+	case "vote":
+		delComment(post_id);break;
+	}
+}
+
+function removeCommentPost(id){
+	if($('#hot_comment_'+id).length>0){
+		$('#hot_comment_'+id).remove();
+	}
+}
+
+$(function() {
+	var initNums = '{$initNums}';
+	atWho($("#comment_inputor"));
+    M();
+});
+</script>

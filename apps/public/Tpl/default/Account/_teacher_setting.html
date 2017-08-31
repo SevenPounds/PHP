@@ -1,0 +1,43 @@
+
+<link href="__APP__/css/xueke.css" rel='stylesheet'  type="text/css" />
+			<dd >
+			 	<div class="form-tt"> 主教学科：</div>
+              	<div class="form-row">
+              		<ul class="form_row_ul">
+              		<li >
+	              		<select class="form_row_select" name="subject">
+	              		<option value='0'>请选择学科</option>
+	              		<volist name="subjects" id="val">
+						<option value="{$val.code}" title="{$val.name}" <if condition='$val.code eq $cyuser["subject"]'>selected</if>>{$val.name}</option>
+						</volist>
+	              		</select>
+	              		<select class="form_row_select" name="grade">
+	              		<option value='0'>请选择学段</option>
+	              			<option value="03" title="小学" <?php if($cyuser["phase"] == '03'){echo 'selected';}?>>小学</option>
+	              			<option value="04" title="初中" <?php if($cyuser["phase"] == '04'){echo 'selected';}?>>初中</option>
+	              			<option value="05" title="高中" <?php if($cyuser["phase"] == '05'){echo 'selected';}?>>高中</option>
+	              		</select>
+              		</li>
+              		</ul>
+              		<div class="clear"></div>
+              	</div>
+			 </dd> 
+			 
+			    <dd>
+              	<div class="form-tt"> 职位：</div>
+              	<div class="form-row">
+              	<input  class="s-txt" type="text" name="user_position"  maxlength="25"  value="{$cyuser.position}"></input>
+              	</div>
+              </dd>
+              <dd>
+              	<div class="form-tt"> 职称：</div>
+              	<div class="form-row">
+              	<input  class="s-txt" type="text" name="user_title"  maxlength="25"  value="{$cyuser.job_title}"></input>
+              	</div>
+              </dd>
+              <dd>
+              	<div class="form-tt"> 荣誉：</div>
+              	<div class="form-row">
+              	<input  class="s-txt" type="text" name="user_honor"  maxlength="50"  value="{$cyuser.honor}"></input>
+              	</div>
+              </dd>

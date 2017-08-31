@@ -1,0 +1,71 @@
+<include file="__THEME__/public_header" />
+<link rel="stylesheet" href="__APP__/css/common.css">
+<link rel="stylesheet" href="__APP__/css/base.css">
+<link rel="stylesheet" href="__APP__/css/view.css">
+<script src="__APP__/res_index.js" type="text/javascript"></script>
+<!--wrapper-->
+<div class="wrapper">
+
+	<div class="container wy_mbx">
+		<div class="wy_mbx_con">
+			<img src="{$userInfo['avatar_small']}" /> <a
+				href="{:U('public/Workroom/index',array('uid'=>$userInfo['uid']))}">{$userInfo['uname']|getShort=7,'...'}</a>&gt;
+			<span>资源列表</span> <span style="float: right;">{$totalrecords}个资源</span>
+		</div>
+	</div>
+	<!--140806add-->
+
+	<!--main-->
+	<div class="main">
+		<div class="container">
+			<div class="main_cont clearfix">
+				<div class="iflybook">
+					<div class="document_list">
+						<table class="tab_table">
+							<!--140716-->
+							<tr>
+								<th class="text_left" width="740"><span>文件名称</span></th>
+								<th width="80"><span>大小</span></th>
+								<th width="115"><span>修改时间</span></th>
+								<th width="100"><span>二维码</span></th>
+							</tr>
+
+							<foreach name="dataInfo" item="res">
+							<tr class="folder">
+								<td class="text_left"><img
+									src="__APP__/images/{$res['extension']|getShortImg}" alt=""
+									class="file_icon" /> <span><a
+										href="index.php?app=resview&mod=Resource&act=index&id={$res['id']}&uid={$res['uid']}">{$res['resName']|getShort=35,'...'}</a></span></td>
+								<td>{$res['size']|getResSize}</td>
+								<td><font>{$res['sharetime']|strtotime|date='Y-m-d',###}</font></td>
+								<td class="resource_btnV"><img src="__APP__/images/sm.png" id="sm{$key}"
+									alt="{$resourceDetail['name']}二维码" class="resource_ewm "  />
+									<if condition="!empty($mid)">
+									<if condition="!empty($res['downloadpath'])">
+									<div id="wxsm{$key}" alt="{$resourceDetail['name']}二维码" class="wxsm" style="display: none">
+										<span></span> <img
+											src="{:U(APP_NAME.'/Index/qrcode')}&url={$res['downloadpath']}"
+											class="decoded">  <font>扫描二维码，下载文件到移动端</font>
+									</div>
+									</if>	</if>
+							</td>
+
+							</tr>
+							</foreach>
+
+						</table>
+					</div>
+					<div class="page" >{$page}</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!--main-->
+
+
+</div>
+<!--/wrapper-->
+
+<!--footer-->
+<include file="__THEME__/public_footer" />
+<!--/footer-->

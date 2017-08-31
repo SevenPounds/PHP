@@ -1,0 +1,46 @@
+ <div class="tui_jian common">
+          <div class="title">
+            <p class="left">资源推荐</p>
+            <p class="right more"><a href="index.php?app=yunpan&mod=Index&act=index">更多<img src="__APP__/image/icon_right.png"></a></p>
+            <div class="clear"></div>
+          </div>
+          <div class="tab">
+              <ul id="rescommend">
+                <li><a class="current" onclick="changeRecommendedRes('getResRecommend',this);">系统推荐</a></li>
+                <li><a onclick="changeRecommendedRes('getFriendRecommendRes',this);">好友推荐</a></li>
+                <!-- <li><a id="recommendedRes_0400" onclick="changeRecommendedRes({$cyuid},'0400');">习题</a></li>
+                <li><a id="recommendedRes_0300" onclick="changeRecommendedRes({$cyuid},'0300');">媒体素材</a></li> -->
+              </ul>
+          </div>
+          <div class="tab_cont">
+            <ul id="recommendres">
+              
+            </ul>
+          </div>
+</div>
+<script type="text/javascript">
+   function changeRecommendedRes(fun,obj){
+	   if(obj){
+		   jQuery("#rescommend a").each(function(){
+			   jQuery(this).attr("class","");
+		   });
+		   jQuery(obj).attr("class","current");
+	   }
+	   $.post(U('reslib/Ajax/'+fun),{t:new Date().getTime()}, function(res) {
+		   if(res['status']){
+			   var tmp='';
+			   var data=res['data'];
+			   var length=data.length;
+			   for(var i=0;i<length;i++){
+				   tmp+='<li><a title="'+data[i]['title']+'" href="'+Ures('//',new Array('id='+data[i]['rid']))+'" target="_blank"><span>'+data[i]['shortTitle']+'</span></a></li>';
+			   }
+			   jQuery("#recommendres").html("").html(tmp);
+		   }else{
+			   jQuery("#recommendres").html("");
+		   }
+	   },'json');
+   }
+   jQuery(document).ready(function(){
+	   changeRecommendedRes('getResRecommend');
+   });
+</script>

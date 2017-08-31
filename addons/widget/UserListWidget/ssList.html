@@ -1,0 +1,16 @@
+<p class="sslist pl10 pt5 blue2">包含关键字<span class="red">{$keywords}</span>的记录有<php>echo(count($ssList))</php>条</p>
+<ul id="sslist" class="sslist">
+	<volist name="ssList" id="user">
+		<li onclick="userList.selectUser({$user.uid},'{$user.uname}','{$user.avatar_small}')">
+			<a href="javascript:void(0)">
+				<p class="cr_pickpic"><img src="{$user.avatar_small}" /></p>
+				<p>{$user.uname}</p>
+			</a>
+		</li>
+	</volist>
+</ul>
+<div class="clear"></div>
+<div class="page">
+	{$page}
+</div>
+<div class="clear sslist"></div>

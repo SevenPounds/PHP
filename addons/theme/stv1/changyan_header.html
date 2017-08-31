@@ -1,0 +1,104 @@
+<style type="text/css">
+#header .head-bd .person a.username:hover{background:#5189D5;}
+.x_link li a span{cursor:pointer}
+</style>
+  <div class="x_header_box  zyin_tbdh head-bd ">
+    <div class="x_header zyin_dh">
+        <div class="x_header_block01 clearfix zyin_dhL">
+            <ul class="x_link">
+                <li><a class="x_home" href="{:C('RS_SITE_URL').'/index.php?app=changyan&mod=Homepage&act=index'}"><span>首页</span></a></li>
+                <li><a class="x_resource" href="{:C('SEARCH')}index.php"><span>资源中心</span></a></li>
+				<li><a class="x_organ" href="{:C('ORGSPACE')}"><span>机构空间</span></a></li>
+                <li><a class="x_city" href="#"><span>智慧校园</span></a></li>
+                    <li><a class="x_space" href="{:U('public/PersonDesk/index')}"><span>个人桌面</span></a></li>
+                <li id="app_list">
+                        <a class="x_app" href="javascript:;"><span>更多</span></a>
+                        <div class="x_app_list" style="display: none">
+                            <a href="{:U('appcenter/Index/index')}">应用中心</a>
+                            <a href="{:C('SAFETY')}">安全监管</a>
+                        </div>
+                </li>
+            </ul>
+          </div>
+        
+        	<div class="zyin_dhR person">
+                    <ul>
+                    	<session name="mid">
+                    	<php>if($user['is_init'] == 1):</php>
+                        <li model-node="person" class="dorp-right">
+                            <a href="{:U('public/Profile/index')}" class="username" title="{$user['uname']}">{$user['uname']|mStr=###,3}</a>
+                        </li>                       
+                        <li model-node="notice" class="dorp-right">
+                        	<a href="javascript:void(0);" class="app option_01" title="消息"></a>
+                            <div  class="dropmenu" model-node="drop_menu_list">
+                            	<ul class="message_list_container message_list_new"  style="display:none;">
+                                    <li rel="unread_comment" style="display:none"><span></span>，<a href="{:U('public/Comment/index',array('type'=>'receive'))}">{:L('PUBLIS_MESSAGE_REMIND')}</a></li>
+                                    <li rel="unread_message" style="display:none"><span></span>，<a href="{:U('public/Message')}" >{:L('PUBLIS_MESSAGE_REMIND')}</a></li>
+                                    <li rel="unread_atme" style="display:none"><span></span>，<a href="{:U('public/Mention')}">{:L('PUBLIS_MESSAGE_REMIND')}</a></li>
+                                    <li rel="unread_notify" style="display:none"><span></span>，<a href="{:U('public/Message/notify')}">{:L('PUBLIS_MESSAGE_REMIND')}</a></li>
+                               		<li rel="unread_praise" style="display:none"><span></span>，<a href="{:U('public/Message/digg')}">{:L('PUBLIS_MESSAGE_REMIND')}</a></li> 
+                                </ul>
+                                <dl class="acc-list W-message" >
+                                    <dd><a  href="{:U('public/Mention/index')}">@提到我的</a></dd>
+                                    <dd><a  href="{:U('public/Message/digg')}">赞</a></dd>
+                                    <dd><a  href="{:U('public/Comment/index', array('type'=>'receive'))}">评论</a></dd>
+                                    <dd><a  href="{:U('public/Message/index')}">我的私信</a></dd>
+                                    <dd><a  href="{:U('public/Message/notify')}">系统消息</a></dd>
+                                    <!-- 消息菜单钩子 -->
+                                    {:Addons::hook('header_message_dropmenu')}
+                                <php>if(CheckPermission('core_normal','send_message')){</php>
+                                <dd class="border"><a event-node="postMsg" href="javascript:void(0)" onclick="ui.sendmessage()">{:L('PUBLIC_SEND_PRIVATE_MESSAGE')}&raquo;</a></dd>
+                                <php>}</php>
+                                </dl>
+                            </div>
+                        </li>
+                        <li model-node="account" class="dorp-right">
+                        	<a href="javascript:void(0);" class="app option_02" title="设置"></a>
+                            <div model-node="drop_menu_list" class="dropmenu" style="width:100px">
+                                <dl class="acc-list">
+                                <dd><a id="t_setting" href="{:U('public/Account/index')}">{:L('PUBLIC_SETTING')}</a></dd>
+                                <dd>
+                                    <!--<a href="{:U('public/Credit/index')}">积分</a>-->
+                                </dd>
+                                <php>if(isInvite() && CheckPermission('core_normal','invite_user')):</php>
+                                <dd><a href="{:U('public/Invite/invite')}">{:L('PUBLIC_INVITE_COLLEAGUE')}</a></dd>
+                                <php>endif;</php>
+                                <!-- 个人设置菜单钩子 -->
+                                {:Addons::hook('header_account_dropmenu')}
+                                <php>if(CheckPermission('core_admin','admin_login')){</php>
+                                <dd><a href="{:U('admin')}">{:L('PUBLIC_SYSTEM_MANAGEMENT')}</a></dd>
+                                <php>}</php>
+                                <dd class="border"><a id="sso_logout" style="cursor: pointer;">{:L('PUBLIC_LOGOUT')}&raquo;</a></dd>
+                                <dd></dd>
+                                </dl>
+                            </div>
+                        </li>
+                        <li>
+                        	<a href="{:Ures('/HelpCenter/questions')}" class="username option_03" title="帮助"></a>
+                        </li>
+                        <php>endif;</php>
+                        </session>
+                        <nosession name="mid">
+		                    <li><a href="{:C('RS_SITE_URL').'/index.php?app=changyan&mod=Index&act=index'}">登录</a></li>
+                            <li><a href="{:C('RS_SITE_URL').'/index.php?app=changyan&mod=Register&act=index'}">注册</a></li>
+                        </nosession>
+                        <li class="logo-jxt" ><a href="{:C('TEACHERASSISTANT_URL')}" target="_blank">教学通</a></li>
+                    </ul>
+                </div>
+                <php> if(MODULE_NAME !='Register'):</php>
+                <div id="message_container" class="layer-massage-box" style="display:none">
+                	<ul class="message_list_container" >
+                		<li rel="unread_comment" style="display:none"><span></span>，<a href="{:U('public/Comment/index',array('type'=>'receive'))}">{:L('PUBLIS_MESSAGE_REMIND')}</a></li>
+                        <li rel="unread_message" style="display:none"><span></span>，<a href="{:U('public/Message')}" >{:L('PUBLIS_MESSAGE_REMIND')}</a></li>
+ 	                    <li rel="unread_atme" style="display:none"><span></span>，<a href="{:U('public/Mention')}">{:L('PUBLIS_MESSAGE_REMIND')}</a></li>
+     	                <li rel="unread_notify" style="display:none"><span></span>，<a href="{:U('public/Message/notify')}">{:L('PUBLIS_MESSAGE_REMIND')}</a></li>
+     	                <li rel="unread_group_atme" style="display:none"><span></span>，<a href="{:U('group/SomeOne/index')}">{:L('PUBLIS_MESSAGE_REMIND')}</a></li>
+     	                <li rel="unread_group_comment" style="display:none"><span></span>，<a href="{:U('group/SomeOne/index')}">{:L('PUBLIS_MESSAGE_REMIND')}</a></li>
+     	                <li rel="unread_praise" style="display:none"><span></span>，<a href="{:U('public/Message/digg')}">{:L('PUBLIS_MESSAGE_REMIND')}</a></li> 
+                	</ul>
+                <a href="javascript:void(0)" onclick="core.dropnotify.closeParentObj()" class="ico-close1"></a>
+                </div>
+                <php>endif;</php>
+        <div class="clear"></div>
+    </div>
+</div>

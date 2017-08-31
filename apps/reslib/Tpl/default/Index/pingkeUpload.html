@@ -1,0 +1,136 @@
+<div class="pop_box1" style="width:505px;">
+
+	<input id="cyuid" value="{$cyuid}" type="hidden">
+	<input id="file_size" value="" type="hidden"/>
+	<input id="uname"  value="{$uname}" type="hidden" />
+	<input id="rid"value="" type="hidden" />
+	
+	<div class="pop_con">
+		<div class="pop_line1" style="width:470px;">
+			<p class="pop_title">选择资源:</p>
+			<p class="style1" style="width:300px;">
+				<input type="text" value=""  id="title" readonly="readonly" style="width:300px;"/>
+			</p>
+			<p class="add_file" >
+				<input type="button" id="file_upload" value="添加文件" class="add_filenor" onMouseover="this.className='add_filehov'" onMouseOut="this.className='add_filenor'">
+			</p>
+			<div class="clear"></div>
+		</div>
+		<div id="uploadQueue">
+		</div>
+		<div class="pop_btn" style="width:450px;">
+			<input type="button" value="上传" class="add_filenor" onMouseover="this.className='add_filehov'" onMouseOut="this.className='add_filenor'" onclick="resUpload.upload();">
+			<input type="button" value="关闭" class="blue4_btn" onMouseover="this.className='blue4_btnhov'" onMouseOut="this.className='blue4_btn'" onclick="resUpload.close();">
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+var RS_SITE_URL = '<php>echo C("RS_SITE_URL");</php>';
+var resUpload=resUpload||{};
+var upload_btnlock = 0; 
+resUpload.uid = $("#cyuid").val();
+resUpload.request_data = {"PHPSESSID":"<php>echo $_session_id;</php>","login":"<php>echo $GLOBALS['ts']['user']['login'];</php>"};
+resUpload.getSelectValue=function(){
+	var title = jQuery("#title").val();
+	var rid = jQuery("#rid").val();
+	var size = jQuery("#file_size").val();
+	if(title == ""){
+		ui.error("文件不能为空！");
+		return;
+	}
+	return {"title":title,'rid':rid,"size":size};
+}
+/**
+ * 上传资源信息
+ */
+resUpload.upload=function(){
+	jQuery("#file_upload").uploadify("upload");
+}
+
+/**
+ * 初始化uploadify控件
+ */
+resUpload.init_uploadify = function(){
+	jQuery("#file_upload").uploadify({
+		auto:  false,
+		multi: false,
+		queueSizeLimit:1,
+		width         : 70,
+		height        : 28,
+		swf           : '__THEME__/js/uploadify/uploadify.swf',
+		uploader      : U('reslib/Ajax/attachUpload'),
+		buttonImage     : "__THEME__/image/green_btn_addfile.gif",
+		buttonText      : '添加文件',
+		fileTypeExts : "*.asf;*.avi;*.wmv;",
+		queueID         : "uploadQueue",
+		progressData   :'all',
+		fileSizeLimit     :'<php>echo C("RESLIB_FILE_SIZE_LIMIT");</php>',
+		successTimeout  : 3600,//将时间变60分钟，不然上传大文件时出现错误，The number of seconds to wait for Flash to detect the server's response after the file has finished uploading
+		debug	: false,
+		formData        : resUpload.request_data, 
+		onSelect:function(file){
+			jQuery("#title").val(file['name']);
+			jQuery("#file_size").val(file.size);
+		},
+		onUploadSuccess:function(file, data, response){
+			if("undefined" != typeof data && data){
+				data=eval('('+data+')');//包含上传文件id
+				if(data['errorCode'] == 0){
+					jQuery("#video_id").val(data['data']['rid']);
+					jQuery("#video_id").attr("video_name",jQuery("#title").val());
+					jQuery("#video_id").attr("video_size",jQuery("#file_size").val());
+					jQuery("#video_id").attr("url",data['data']['url']);
+					resUpload.close();
+				} else{
+					ui.error("文件上传失败");
+				}
+			}else{
+				ui.error("上传失败，请重新上传！");
+			}
+		},
+		onUploadError:function(file, errorCode, errorMsg){
+			ui.error("上传出错，请稍后重新上传!");
+		}
+	});
+	jQuery(".swfupload").css("visibility","visible");
+	
+}
+
+resUpload.destroy_uploadify=function(){	
+	jQuery("#file_upload").uploadify('cancel','*');
+}
+
+//初始化数据
+resUpload.init=function(){
+	resUpload.init_uploadify();
+}
+
+//关闭窗口
+resUpload.close = function(){
+
+	var swf_id = "SWFUpload_" + (SWFUpload.movieCount - 1); 
+	swfobject.removeSWF(swf_id);
+	//上传资源完成后，提交资源信息失败时，将上传的资源删除
+	var upload_status = jQuery("#upload_status").val();
+	if('uploaded' == upload_status){
+		var rid = jQuery("#rid").val();
+		if(rid){
+			$.post(U('reslib/Ajax/deleteRid'), {"rid":rid}, function(msg) {
+				jQuery("#rid").val("");
+			}, 'json');
+		}
+	}
+	//关闭窗口
+	ui.box.close();
+}
+//解决弹出框的关闭问题
+jQuery(function(){
+	resUpload.init();
+	$('#tsbox').find('.ico-close').unbind("click"); 
+	$('#tsbox').find('.ico-close').bind("click",function(){
+		var swf_id = "SWFUpload_" + (SWFUpload.movieCount - 1);
+		swfobject.removeSWF(swf_id);
+		ui.box.close();
+	}); 
+})
+</script>

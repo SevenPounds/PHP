@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" >
+<meta name="renderer" content="ie-stand">
+<title><neq name= '_title' value=''>{$_title}-{$site.site_name}<else />{$site.site_name}</neq></title>
+<meta content="<neq name= '_keywords' value=''>{$_keywords}<else />{$site.site_header_keywords}</neq>" name="keywords">
+<meta content="<neq name= '_description' value=''>{$_description}<else />{$site.site_header_description}</neq>" name="description">
+{:Addons::hook('public_meta')}
+<link href="__THEME__/image/favicon.ico?v={$site.sys_version}" type="image/x-icon" rel="shortcut icon">
+<link href="__THEME__/css/global.css?v={$site.sys_version}" rel="stylesheet" type="text/css" />
+<link href="__THEME__/css/global_extend.css?v={$site.sys_version}" rel="stylesheet" type="text/css" />
+<link href="__THEME__/css/module.css?v={$site.sys_version}" rel="stylesheet" type="text/css" />
+<link href="__THEME__/css/menu.css?v={$site.sys_version}" rel="stylesheet" type="text/css" />
+<link href="__THEME__/css/form.css?v={$site.sys_version}" rel="stylesheet" type="text/css" />
+<link href="__THEME__/css/jquery.atwho.css?v={$site.sys_version}" rel="stylesheet" type="text/css" />
+
+<php>if(!empty($appCssList)):</php>
+<volist name='appCssList' id='cl'>
+<link href="{:APP_PUBLIC_URL}/{$cl}?v={$site.sys_version}" rel="stylesheet" type="text/css"/>
+</volist>
+<php>endif;</php>
+<script>
+/**
+ * 全局变量
+ */
+var SITE_URL  = '<php> echo SITE_URL;</php>';
+var UPLOAD_URL= '<php> echo UPLOAD_URL;</php>';
+var THEME_URL = '__THEME__';
+var RS_SITE_URL = '{:C('RS_SITE_URL')}';
+var RS_VIEW_APP = '{:C('RESLIB_VIEW_APP')}';
+var APPNAME   = '<php> echo APP_NAME;</php>';
+var MID		  = '<php> echo $mid;</php>';
+var UID		  = '<php> echo $uid;</php>';
+var initNums  =  '<php> echo $initNums;</php>';
+var SYS_VERSION = '<php> echo $site["sys_version"];</php>'
+var VOD_URL = '<php> echo C('VOD_URL');</php>';
+var APP = SITE_URL + "/apps/" + APPNAME + "/_static";
+var PUBLIC_HEADER_URL = "{:C('PUBLIC_HEADER_URL')}"; //公共头部
+
+// Js语言变量
+var LANG = new Array();
+
+/**
+ * 百度统计埋点
+ * */
+var _hmt = _hmt || [];
+(function() {
+    var hm = document.createElement("script");
+    hm.src = "https://hm.baidu.com/hm.js?e74186d035167554bfa17eb42f0a2d63";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+})();
+</script>
+<php>if(!empty($langJsList)) {</php>
+<volist name="langJsList" id="vo">
+<script src="{$vo}?v={$site.sys_version}"></script>
+</volist>
+<php>}</php>
+<script src="__THEME__/js/js.php?t=js&f=jquery-1.7.1.min.js,jquery.form.js,common.js,core.js,module.js,module.common.js,jwidget_1.0.0.js,jquery.atwho.js,jquery.caret.js,ui.core.js,ui.draggable.js&v={$site.sys_version}.js"></script>
+<script src="__THEME__/js/plugins/core.comment.js?v={$site.sys_version}"></script>
+<php>if(!in_array(APP_NAME.'/'.MODULE_NAME.'/'.ACTION_NAME,array('class/Index/main','class/Index/class_square','class/Index/school_garden','class/ClassHome/index','class/ClassHome/class_avatar','class/ClassHome/class_star','class/ClassHome/class_schedule','class/ClassHome/class_praise','class/ClassHome/blog','class/ClassHome/album','class/ClassAlbum/classalbums','class/ClassAlbum/muti_edit_classphotos','class/ClassAlbum/classflash','class/ClassAlbum/classphoto','class/ClassAlbum/classalbum','class/ClassAlbum/classaflash','class/ClassAlbum/photo_upload','class/ClassHome/praise','class/CampusHome/schoolIndex','class/CampusHome/school_faculty','class/CampusHome/class_garden','class/CampusHome/school_intro','class/CampusHome/indexNotice','class/CampusHome/detailNotice','channel/Index/index','class/ClassHome/treasurebox','class/ClassHome/class_work','class/ClassHome/class_people','class/ClassHome/class_manage','class/ClassHome/class_follower','class/CampusHome/campus_follower','class/ClassBlog/addBlog','class/ClassBlog/my_class','class/ClassBlog/index_class','class/ClassBlog/news_class','class/ClassBlog/show_class','class/ClassBlog/admin','class/ClassBlog/edit'))){</php>
+{:Addons::hook('public_head',array('uid'=>$uid))}
+<php>}</php>
+
+<script src="videoretrieval/Scripts/swfobject.js" type="text/javascript"></script>
+<script src="videoretrieval/Scripts/Settings.js" type="text/javascript"></script>
+<script src="videoretrieval/Scripts/SpeechRecorder.js" type="text/javascript"></script>
+
+<php>if(in_array(APP_NAME.'/'.MODULE_NAME.'/'.ACTION_NAME,array('public/Index/index','public/Profile/index','public/Index/platform','public/Profile/feed','public/Index/myFeed','public/Comment/index','public/Collection/index','public/Mention/index','public/Search/index','research/Index/show','pingke/Index/show','onlineanswer/Index/detail','public/Rank/weibo','public/Workroom/index','public/Index/userFeed'))){</php>
+<script src="videoretrieval/Scripts/Common.js" type="text/javascript" ></script>
+<link href="SpeechToText/css/speech.css" rel="stylesheet" />
+<link href="SpeechToText/css/send_weibo.css" type="text/css" rel="stylesheet">
+<script src="SpeechToText/js/jquery.json-2.4.js" type="text/javascript"></script>
+<script src="SpeechToText/speechJS/LogUitl.js" type="text/javascript"></script>
+<script src="SpeechToText/Script/talk.js" type="text/javascript"></script>
+<script src="SpeechToText/Script/talkAchieve.js" type="text/javascript"></script>
+<php>}</php>
+<script src="__THEME__/js/jquery-json.js"></script>
+<script src="__THEME__/js/security.js"></script>
+<script src="__THEME__/js/sso.js"></script>
+<!-- jBox begin-->
+<script type="text/javascript" src="__THEME__/js/jBox/jquery.jBox-2.3.min.js"></script>
+<link type="text/css" rel="stylesheet" href="__THEME__/js/jBox/Skins2/Green/jbox.css"/>
+<!-- 新版学生空间样式 -->
+<link rel="stylesheet" href="__THEME__/css/stuspace/index.css" type="text/css">
+<!-- jBox end-->
+</head>
+<body>

@@ -1,0 +1,61 @@
+<div class="right-mod">
+              <h3 class="stu-rgt-tit clearfix"><strong class="fl"><php>if($role == 'student'){</php>我的同学<php>}elseif($role == 'parent'){</php>孩子同学<php>}</php></strong><a href="javascript:void(0);" class="fr" id="changeClassmate" onclick="changeClassmate()">换一换</a></h3>
+<php>
+	$classmate_total = count($teachers);
+	$classmate_totalPage = ceil($classmate_total/$classmate_limit);
+</php>
+<input type="hidden" id="classmate_total" value="{$classmate_total}" />
+<input type="hidden" id="classmate_totalPage" value="{$classmate_totalPage}" />
+
+<volist name="teachers" id="vo">
+	<php>
+		if($i%$classmate_limit == 0){
+			$classmate_nowPage = intval($i/$classmate_limit);
+		 }else{
+		 	$classmate_nowPage = intval($i/$classmate_limit)+1;
+		 }
+	</php>
+	<if condition="$i%$classmate_limit eq 1">
+		<div class="classmate_list" rel="{$classmate_nowPage}" <if condition="$classmate_nowPage gt 1">style="display:none"</if>>
+           <ul class="my-classmate clearfix">
+	</if>
+            <li class="fl" rel='{$i}'>
+                <a  event-node="face_card" uid="{$vo['uid']}" target="_blank" href="{$vo.space_url}" class="head-radius"> <span></span>
+               	 <img src="{$vo.avatar_small}"/>
+               	  <strong><a  event-node="face_card" uid="{$vo['uid']}" target="_blank" href="{$vo.space_url}" >{$vo.uname|getShort=3,'.'}</a></strong>
+                </a>
+                
+            </li>
+      
+	<if condition="($i%$classmate_limit eq 0) OR ($i eq $classmate_total)">
+		 </ul>
+   			 </div>
+	</if>
+</volist>
+</div>
+
+<script type="text/javascript">
+
+function changeClassmate(){
+	var classmate_nextPage = '';
+	$(".classmate_list").each(function(){
+		 if($(this).css("display") == 'block'){
+			 var totalPage = $("#classmate_totalPage").val();
+			 var nowPage = $(this).attr('rel');
+			 if(nowPage == totalPage){
+				 classmate_nextPage = 1;
+			 }else{
+				 classmate_nextPage = parseInt(nowPage) + 1;
+			 }
+		 }
+	});
+	$(".classmate_list").each(function(){
+		 if($(this).attr('rel') == classmate_nextPage){
+			 $(this).css("display","block");
+		 }else{
+			 $(this).css("display","none");
+		 }
+	});
+	
+}
+</script>

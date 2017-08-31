@@ -1,0 +1,32 @@
+{
+	"name":"edu/App.EduSNS",
+	"description":"资源平台SNS",
+    "repositories": [
+    	{
+            "type": "composer",
+            "url": "http://172.16.79.21:8002/iflySatis/"
+        },
+    	{
+        	"type": "composer",
+        	"url": "http://packagist.phpcomposer.com"
+        },
+        {"packagist": false}
+    ],
+    "require": {
+        "apache/thrift"					: "2.0-dev",
+        "rpc/phprpc"					: "3.0-dev",
+        "reprovinci/solr-php-client"	: "1.0.3-dev",
+        "monolog/monolog"				: "1.9.1-dev",
+		"nategood/httpful"				: "0.2.17-dev",      
+        "rrt/iflydiskclient" 			: "1020",
+        "rrt/resourceclient" 			: "1005-dev",
+        "rrt/usercenter" 				: "4.16.5.1040",
+        "rrt/rrtclient" 				: "epsp-1000-dev",
+        "rrt/attachclient"				: "1004",
+		"rrt/trackclient"               : "1000-dev",
+		"rrt/ercclient" 				: "1000-dev",
+		"rrt/epspclient" 				: "1001-dev",
+        "rrt/sensitivewordclient"       : "1000",
+        "rrt/cystorage": "2.2.2"
+    }
+}

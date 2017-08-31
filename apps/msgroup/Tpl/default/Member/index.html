@@ -1,0 +1,52 @@
+<include file="../Public/header" />
+<script type="text/javascript" src="__APP__/js/ms_member.js"></script>
+<link href="__THEME__/css/user_list.css" rel="stylesheet" type="text/css" />
+<script>
+	var msMember;
+	var gid = "{$gid}";
+
+	jQuery(function(){
+		msMember = msMember || new MSMember(gid, 'member_list');
+		msMember.init();
+	});
+	$('#sel_all_up').live('click',function(){
+		$('input[name=res_list]').attr('checked', this.checked);
+		$("#sel_all_down").attr('checked',this.checked);
+	});
+	$('#sel_all_down').live('click',function(){
+		$('input[name=res_list]').attr('checked', this.checked); 
+		$("#sel_all_up").attr('checked',this.checked);
+	});
+</script>
+
+<div class="posbox">&nbsp;&nbsp;您现在的位置：<a href="{:U('msgroup/Index/index', array('gid' => $gid))}" class="blue">{$msgroup_data.group_name}</a>&gt;<a href="{:U('msgroup/Config/index', array('gid' => $gid))}" class="blue">工作室维护</a>&gt;&nbsp;<a class="blue" href="{:U('msgroup/Member/index', array('gid' => $gid))}">工作室成员管理</a></div>     
+<div class="wy_box" style="width:1000px; overflow:hidden;">
+	{:W('LeftMenu', array('gid' => $gid, 'level' => $level))}
+	<div class="right">
+		<div class="teaWS_rgt">
+			
+			<div class="teaWSR_tit"><h3>工作室成员管理</h3></div>
+		</div>
+		<div class="dy_input">
+			<div class="dy_inputsrk" style="width:170px;">
+				<div class="srk_left"></div>
+				<div class="srk_cen">
+					<input type="text" value="" id="keywords" onkeydown="msMember.enter(event)">
+				</div>
+				<div class="srk_right"></div>
+			</div>
+			<div class="dy_btn">
+				<input type="button" value="搜索" class="dy_btnnor" onmouseover="this.className='dy_btnhov'" onmouseout="this.className='dy_btnnor'" onclick="msMember.search();">
+			</div>
+			<input type="button" value="添加成员" class="announce_create" onclick="msMember.showAdd();">
+		</div>
+		<div class="teaWSR_con">
+			<div class="online_title">
+				<div id="member_list">
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="clear"></div>
+</div>
+<include file="__THEME__/public_footer" />
